@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#001685</color>
+    <color name="colorPrimaryDark">#018786</color>
+    <color name="colorDivider">#04908F</color>
+    <color name="colorAccent">#42A5F5</color>
+    <color name="colorLinks">#0000ff</color>
+    <color name="colorAccentDark">#03145F</color>
+    <color name="colorQuickList">#42A5F5</color>
+    <color name="colorQuickListDark">#3E3E6A</color>
+    <color name="colorBackground">#DEDEFB</color>
+    <color name="colorToolbarDark">#2C2C2E</color>
+    <color name="colorCustomButton">#BFBCBC</color>
+    <color name="colorCustomButtonLight">#DCD9D9</color>
+    <color name="colorShadow">#2C2C2E</color>
+</resources>

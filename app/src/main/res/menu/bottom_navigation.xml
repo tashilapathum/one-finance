@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_wallet"
+        android:icon="@drawable/ic_wallet"
+        android:title="@string/wallet"/>
+
+    <item
+        android:id="@+id/nav_bank"
+        android:icon="@drawable/ic_bank"
+        android:title="@string/bank"/>
+
+    <item
+        android:id="@+id/nav_loans"
+        android:icon="@drawable/ic_cart"
+        android:title="@string/cart"/>
+
+    <item
+        android:id="@+id/nav_bills"
+        android:icon="@drawable/ic_bills"
+        android:title="@string/bills"/>
+
+</menu>

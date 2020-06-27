@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "413772004729",
+    "firebase_url": "https://movie-updates-526f1.firebaseio.com",
+    "project_id": "movie-updates-526f1",
+    "storage_bucket": "movie-updates-526f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413772004729:android:6f426f74f6a107e60643a8",
+        "android_client_info": {
+          "package_name": "com.tashila.movieupdates"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "413772004729-86rd9smooa3idqup39pbl63rlcs227gq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBes7EJt3YUKJ1a-sQnS3zY72oCcgByK0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "413772004729-86rd9smooa3idqup39pbl63rlcs227gq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413772004729:android:c9937a311c449f350643a8",
+        "android_client_info": {
+          "package_name": "com.tashila.mywalletfree"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "413772004729-86rd9smooa3idqup39pbl63rlcs227gq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBes7EJt3YUKJ1a-sQnS3zY72oCcgByK0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "413772004729-86rd9smooa3idqup39pbl63rlcs227gq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
