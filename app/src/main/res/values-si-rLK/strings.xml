@@ -190,7 +190,9 @@
     <string name="deposited_to">&#160;ගිණුමට බැර කරන ලදී</string>
     <string name="cart">ලැයිස්තු</string>
     <string name="more_apps">තවත් ඇප්</string>
-    <string name="exit_confirm">Are you sure you want to exit the app?</string>
-    <string name="exit_confirmation">Exit confirmation</string>
-    <string name="show_confirm_dialog_when_trying_to_exit_the_app">Show confirm dialog when trying to exit the app</string>
+    <string name="exit_confirm">ඔබට ඇප් එකෙන් පිටවීමට අවශ්‍ය ද?</string>
+    <string name="exit_confirmation">පිටවීම තහවුරු කිරීම</string>
+    <string name="show_confirm_dialog_when_trying_to_exit_the_app">ඇප් එකෙන් පිටවීමේ දී තහවුරු කිරීමට විමසීම</string>
+    <string name="enjoying_the_app">ඇප් එක ප්‍රයෝජනවත් ද?</string>
+    <string name="rate_description">ඔබට \'මයි වොලට්\' ඇප් එක ප්‍රයෝජනවත් නම් PlayStore හි තරු 5ක් ලබාදී Rate කිරීම මහත් සහයකි. \n\nතව ද ඇප් එක සම්බන්ධ ව ගැටලුවක් ඇත්නම් හෝ නව අංගයක් ඉල්ලීමට අවශ්‍ය නම් එය ද සඳහන් කිරීමට අමතක නොකරන්න :)</string>
 </resources>

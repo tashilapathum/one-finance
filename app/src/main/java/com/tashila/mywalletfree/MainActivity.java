@@ -132,6 +132,44 @@ public class MainActivity extends AppCompatActivity
 
         //calculate interests
         new AccountHandler(this).calculateInterests();
+
+        //rate dialog
+        boolean alreadyRated = sharedPref.getBoolean("alreadyRated", false);
+        int openCount = sharedPref.getInt("openCount", 0);
+        sharedPref.edit().putInt("openCount", openCount + 1).apply();
+        if (!alreadyRated & openCount >= 4) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.enjoying_the_app)
+                    .setMessage(R.string.rate_description)
+                    .setPositiveButton("Rate", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            sharedPref.edit().putBoolean("alreadyRated", true).apply();
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.tashila.mywalletfree"));
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("Later", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            sharedPref.edit().putInt("openCount", 0).apply();
+                        }
+                    })
+                    .setNeutralButton("Never", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            sharedPref.edit().putBoolean("alreadyRated", true).apply();
+                        }
+                    })
+                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialogInterface) {
+                            sharedPref.edit().putInt("openCount", 0).apply();
+                        }
+                    })
+                    .show();
+        }
     }
 
     @Override //so the language change works with dark mode
@@ -209,8 +247,7 @@ public class MainActivity extends AppCompatActivity
                         })
                         .setNegativeButton(R.string.no, null)
                         .show();
-            }
-            else finishAndRemoveTask();
+            } else finishAndRemoveTask();
         }
     }
 

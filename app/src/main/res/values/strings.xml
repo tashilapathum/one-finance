@@ -195,4 +195,6 @@
     <string name="exit_confirm">Are you sure you want to exit the app?</string>
     <string name="exit_confirmation">Exit confirmation</string>
     <string name="show_confirm_dialog_when_trying_to_exit_the_app">Show a confirm dialog when trying to exit the app</string>
+    <string name="enjoying_the_app">Enjoying the app?</string>
+    <string name="rate_description">If you like \"My Wallet\", would you mind rating the app 5 stars on PlayStore? \n\nAlso if you have any problem with the app or want to request a new feature, please let me know in the review so I can help you. I read every review :)</string>
 </resources>
