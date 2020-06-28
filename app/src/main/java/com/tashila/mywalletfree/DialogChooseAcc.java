@@ -85,7 +85,6 @@ public class DialogChooseAcc extends DialogFragment {
                             WalletFrag walletFrag = (WalletFrag) getActivity().getSupportFragmentManager().findFragmentByTag("WalletFrag");
                             walletFrag.doBankStuff();
                             walletFrag.continueLongClickProcess();
-                            sharedPref.edit().putBoolean("chooseAccFromWallet", false).apply();
                         }
                     }
                 });
@@ -116,7 +115,7 @@ public class DialogChooseAcc extends DialogFragment {
         }
 
         //add account button
-        if (!calledFromWallet) {
+        if (!sharedPref.getBoolean("chooseAccFromWallet", false)) {
             Button btnAddAccount = new Button(getActivity());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);

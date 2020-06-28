@@ -21,6 +21,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
     SharedPreferences sharedPref;
     private DrawerLayout drawer;
     String timeString;
+    private CheckBox exitCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,11 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         /*----------------------------------------------------------------------------------------*/
+
+        //exit confirm setting
+        exitCheckBox = findViewById(R.id.exitCheck);
+        boolean confirmExitEnabled = sharedPref.getBoolean("exitConfirmation", false);
+        if (confirmExitEnabled) exitCheckBox.setChecked(true);
     }
 
     @Override //so the language change works with dark mode
@@ -160,6 +167,19 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
         dialogBudget.show(getSupportFragmentManager(), "budget dialog");
     }
 
+    public void exitConfirm(View view) {
+        if (!exitCheckBox.isChecked()) {
+            exitCheckBox.setChecked(true);
+            sharedPref.edit().putBoolean("exitConfirmation", true).apply();
+        }
+        else {
+            exitCheckBox.setChecked(false);
+            sharedPref.edit().putBoolean("exitConfirmation", false).apply();
+        }
+    }
+
+    /*-------------------------Notification time--------------------------*/
+
     public void editNotifyTime(View view) {
         if (sharedPref.getBoolean("MyWalletPro", false)) {
             DialogFragment timePicker = new TimePickerFrag();
@@ -168,7 +188,6 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
         else purchaseProForThis();
     }
 
-    /*---------------Time---------------*/
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         Calendar c = Calendar.getInstance();
@@ -193,7 +212,7 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
 
         Toast.makeText(this, getString(R.string.notification_set_at) + timeString + getString(R.string.everydayy), Toast.LENGTH_LONG).show();
     }
-    /*------------------------------------*/
+    /*------------------end of notification time------------------*/
 
     public void setTheme(View view) {
         if (sharedPref.getBoolean("MyWalletPro", false)) {
@@ -239,5 +258,6 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
         essentials.invertDrawable(findViewById(R.id.image5));
         essentials.invertDrawable(findViewById(R.id.image6));
         essentials.invertDrawable(findViewById(R.id.image7));
+        essentials.invertDrawable(findViewById(R.id.image8));
     }
 }

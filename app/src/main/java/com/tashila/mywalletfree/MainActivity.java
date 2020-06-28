@@ -2,6 +2,7 @@ package com.tashila.mywalletfree;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -14,6 +15,7 @@ import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -107,7 +109,7 @@ public class MainActivity extends AppCompatActivity
             navigateScreens(new CartFrag(), "CartFrag", R.id.nav_loans);
         else if (homeScreen.equalsIgnoreCase("bills"))
             navigateScreens(new BillsFrag(), "BillsFrag", R.id.nav_bills);
-        //when starting the app normally
+            //when starting the app normally
         else {
             navigateScreens(new WalletFrag(), "WalletFrag", R.id.nav_wallet);
             /*transaction.addToBackStack(null); //for back button press*/
@@ -194,8 +196,21 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
-            System.exit(1);
+            boolean confirmExit = sharedPref.getBoolean("exitConfirmation", false);
+            if (confirmExit) {
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.confirm)
+                        .setMessage(R.string.exit_confirm)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                finishAndRemoveTask();
+                            }
+                        })
+                        .setNegativeButton(R.string.no, null)
+                        .show();
+            }
+            else finishAndRemoveTask();
         }
     }
 

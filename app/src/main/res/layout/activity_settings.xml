@@ -34,7 +34,9 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="editQuickList"
-                android:padding="8dp">
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingVertical="16dp">
 
                 <ImageView
                     android:id="@+id/image1"
@@ -43,7 +45,6 @@
                     android:src="@drawable/ic_quick_list"
                     android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
-                    android:contentDescription="Quick list icon"
                     android:layout_margin="8dp"
                     android:paddingEnd="8dp"/>
 
@@ -74,7 +75,9 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="selectLanguage"
-                android:padding="8dp">
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingVertical="16dp">
 
                 <ImageView
                     android:id="@+id/image2"
@@ -83,7 +86,6 @@
                     android:src="@drawable/ic_language"
                     android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
-                    android:contentDescription="Quick list icon"
                     android:layout_margin="8dp"
                     android:paddingEnd="8dp"/>
 
@@ -114,7 +116,9 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="selectCurrency"
-                android:padding="8dp">
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingVertical="16dp">
 
                 <ImageView
                     android:id="@+id/image3"
@@ -123,7 +127,6 @@
                     android:src="@drawable/ic_currency"
                     android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
-                    android:contentDescription="Quick list icon"
                     android:layout_margin="8dp"
                     android:paddingEnd="8dp"/>
 
@@ -155,7 +158,9 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="editBudget"
-                android:padding="8dp">
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingVertical="16dp">
 
                 <ImageView
                     android:id="@+id/image4"
@@ -164,7 +169,6 @@
                     android:src="@drawable/ic_budget"
                     android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
-                    android:contentDescription="Quick list icon"
                     android:layout_margin="8dp"
                     android:paddingEnd="8dp"/>
 
@@ -188,13 +192,63 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:onClick="exitConfirm"
+                android:paddingVertical="16dp">
+
+                <ImageView
+                    android:id="@+id/image8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_exit_confirm"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="8dp"
+                    android:paddingEnd="8dp"/>
+
+                <TextView
+                    android:id="@+id/setting8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/image8"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/exit_confirmation"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                <TextView
+                    android:id="@+id/description8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/setting8"
+                    android:layout_toEndOf="@id/image8"
+                    android:text="@string/show_confirm_dialog_when_trying_to_exit_the_app" />
+
+                <CheckBox
+                    android:id="@+id/exitCheck"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:paddingStart="2dp"
+                    android:paddingEnd="2dp"/>
+
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
                 android:onClick="editNotifyTime"
-                android:padding="8dp">
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingVertical="16dp">
 
                 <ImageView
                     android:id="@+id/image5"
@@ -203,7 +257,6 @@
                     android:src="@drawable/ic_reminder"
                     android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
-                    android:contentDescription="Quick list icon"
                     android:layout_margin="8dp"
                     android:paddingEnd="8dp"/>
 
@@ -245,7 +298,9 @@
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
                 android:onClick="setTheme"
-                android:padding="8dp">
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingVertical="16dp">
 
                 <ImageView
                     android:id="@+id/image6"
@@ -254,7 +309,6 @@
                     android:src="@drawable/ic_theme"
                     android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
-                    android:contentDescription="Quick list icon"
                     android:layout_margin="8dp"
                     android:paddingEnd="4dp"/>
 
@@ -295,7 +349,9 @@
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
                 android:onClick="chooseHome"
-                android:padding="8dp">
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingVertical="16dp">
 
                 <ImageView
                     android:id="@+id/image7"
@@ -304,7 +360,6 @@
                     android:src="@drawable/ic_home"
                     android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
-                    android:contentDescription="Quick list icon"
                     android:layout_margin="8dp"
                     android:paddingEnd="4dp"/>
 

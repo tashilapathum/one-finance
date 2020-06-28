@@ -1,6 +1,7 @@
 package com.tashila.mywalletfree;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -249,6 +250,12 @@ public class WalletFrag extends Fragment {
             if (validateAmount()) {
                 sharedPref.edit().putBoolean("chooseAccFromWallet", true).apply();
                 DialogChooseAcc dialogChooseAcc = new DialogChooseAcc();
+                dialogChooseAcc.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        sharedPref.edit().putBoolean("chooseAccFromWallet", false).apply();
+                    }
+                });
                 dialogChooseAcc.show(getFragmentManager(), "choose account");
             }
         }

@@ -1,5 +1,6 @@
 package com.tashila.mywalletfree;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,7 +35,6 @@ import com.android.billingclient.api.SkuDetailsResponseListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Scanner;
 
 public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedListener, BillingClientStateListener {
     SharedPreferences sharedPref;
@@ -178,7 +178,7 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
                     .build();
             billingClient.acknowledgePurchase(params, new AcknowledgePurchaseResponseListener() {
                 @Override
-                public void onAcknowledgePurchaseResponse(BillingResult billingResult) {
+                public void onAcknowledgePurchaseResponse(@NonNull BillingResult billingResult) {
                     Toast.makeText(UpgradeToPro.this, R.string.thank_u_for_pro, Toast.LENGTH_LONG).show();
                 }
             });
@@ -220,7 +220,7 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
         Log.i(TAG, "querySkuDetailsAsync");
         billingClient.querySkuDetailsAsync(params, new SkuDetailsResponseListener() {
             @Override
-            public void onSkuDetailsResponse(BillingResult billingResult, List<SkuDetails> list) {
+            public void onSkuDetailsResponse(@NonNull BillingResult billingResult, List<SkuDetails> list) {
                 if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && list != null) {
                     for (SkuDetails skuDetails : list) {
                         String sku = skuDetails.getSku();
