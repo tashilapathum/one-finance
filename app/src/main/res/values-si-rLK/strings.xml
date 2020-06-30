@@ -23,8 +23,6 @@
     <string name="home">මුල් පිටුව</string>
     <string name="quick_list">ක්ෂණික ලැයිස්තුව</string>
     <string name="edit_quick_list_items">ක්ෂණික ලැයිස්තුවේ අයිතම වෙනස් කරන්න</string>
-    <string name="quick_list_instructions">- ඔබ සාමාන්‍යයෙන් මිල දී ගන්නා දේවල් පහත ආකාරයට එකතු හෝ ඉවත් කරන්න:\n අයිතමය1\n මිල\n අයිතමය2\n මිල\n\n- අගය පමණක් ඇතුලත් කරන්න (රු / Rs නොමැතිව).\n\n- හිස් පේළි ඇතුලත් නොකරන්න.</string>
-    <string name="quick_list_examples">Eg:-\n වතුර බෝතලයක්\n 35\n පොතක්\n 55\n ඉන්ටනෙට් කාඩ්\n 99</string>
     <string name="edit">සංස්කරණය</string>
     <string name="save">සුරකින්න</string>
     <string name="english">English</string>
@@ -195,4 +193,8 @@
     <string name="show_confirm_dialog_when_trying_to_exit_the_app">ඇප් එකෙන් පිටවීමේ දී තහවුරු කිරීමට විමසීම</string>
     <string name="enjoying_the_app">ඇප් එක ප්‍රයෝජනවත් ද?</string>
     <string name="rate_description">ඔබට \'මයි වොලට්\' ඇප් එක ප්‍රයෝජනවත් නම් PlayStore හි තරු 5ක් ලබාදී Rate කිරීම මහත් සහයකි. \n\nතව ද ඇප් එක සම්බන්ධ ව ගැටලුවක් ඇත්නම් හෝ නව අංගයක් ඉල්ලීමට අවශ්‍ය නම් එය ද සඳහන් කිරීමට අමතක නොකරන්න :)</string>
+    <string name="add_quick_list_item">Add quick list item</string>
+    <string name="item_name">අයිතම(ය)</string>
+    <string name="price">මිල</string>
+    <string name="add_more_quick_items">සීමාවක් නොමැති ව ක්ෂණික ලැයිස්තුවට අයිතම එකතු කිරීමට Pro සංස්කරණය මිල දී ගන්න</string>
 </resources>

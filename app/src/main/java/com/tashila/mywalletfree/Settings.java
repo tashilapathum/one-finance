@@ -242,7 +242,7 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
                         startActivity(intent);
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }

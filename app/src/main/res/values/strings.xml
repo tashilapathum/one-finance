@@ -23,8 +23,6 @@
     <string name="home">Home</string>
     <string name="quick_list">Quick list</string>
     <string name="edit_quick_list_items">Edit quick list items</string>
-    <string name="quick_list_instructions">- Add or remove items you commonly purchase in the following format:\n Item1\n Price\n Item2\n Price\n\n- Do not include the currency.\n\n- Do not add blank lines.</string>
-    <string name="quick_list_examples">Eg:-\n Bottle of water\n 1.45\n A4 bundle\n 2.85\n Another cat\n 60</string>
     <string name="edit">Edit</string>
     <string name="save">Save</string>
     <string name="english">English</string>
@@ -83,7 +81,7 @@
     <string name="r_last_month">Last month</string>
     <string name="notification_set_at">Notification set at&#160;</string>
     <string name="everydayy">&#160;everyday</string>
-    <string name="buy_pro_for_this">Buy the Pro version to use this feature!</string>
+    <string name="buy_pro_for_this">Buy the Pro version to unlock this feature!</string>
     <string name="buy">Buy Now</string>
     <string name="notification_title">Did you add the transactions you made today?</string>
     <string name="notification_msg">Tap here to open My Wallet</string>
@@ -110,7 +108,7 @@
     <string name="you_can_edit_or_delete_the_account_later">You can edit or delete the account later.</string>
     <string name="selected_dot"><b>\u2713</b></string>
     <string name="multiple">-Multiple-</string>
-    <string name="bank_welcome_message">You can manage your bank accounts here. Add a bank account to continue.</string>
+    <string name="bank_welcome_message">You can manage your bank accounts here. Add an account to continue.</string>
     <string name="bank_welcome_title">Welcome</string>
     <string name="account_name_desc">To identify the account (displayed at the top of the bank screen)</string>
     <string name="interest_description">If you add this, the interest will be automatically calculated and added to your balance.</string>
@@ -194,7 +192,11 @@
     <string name="more_apps">More apps</string>
     <string name="exit_confirm">Are you sure you want to exit the app?</string>
     <string name="exit_confirmation">Exit confirmation</string>
-    <string name="show_confirm_dialog_when_trying_to_exit_the_app">Show a confirm dialog when trying to exit the app</string>
+    <string name="show_confirm_dialog_when_trying_to_exit_the_app">Show a confirmation dialog when trying to exit the app</string>
     <string name="enjoying_the_app">Enjoying the app?</string>
     <string name="rate_description">If you like \"My Wallet\", would you mind rating the app 5 stars on PlayStore? \n\nAlso if you have any problem with the app or want to request a new feature, please let me know in the review so I can help you. I read every review :)</string>
+    <string name="add_quick_list_item">Add quick list item</string>
+    <string name="item_name">Item(s)</string>
+    <string name="price">Price</string>
+    <string name="add_more_quick_items">Buy the Pro version to add unlimited quick list items!</string>
 </resources>

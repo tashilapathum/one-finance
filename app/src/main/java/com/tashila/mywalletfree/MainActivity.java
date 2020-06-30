@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity
         boolean alreadyRated = sharedPref.getBoolean("alreadyRated", false);
         int openCount = sharedPref.getInt("openCount", 0);
         sharedPref.edit().putInt("openCount", openCount + 1).apply();
-        if (!alreadyRated & openCount >= 4) {
+        if (!alreadyRated & openCount >= 20) {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.enjoying_the_app)
                     .setMessage(R.string.rate_description)

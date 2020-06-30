@@ -373,7 +373,7 @@ public class WalletFrag extends Fragment {
         String fullQuickListStr = sharedPref.getString("fullQuickListStr", null);
         Log.i(TAG, "fullQuickListStr: " + fullQuickListStr + "end");
         if (fullQuickListStr != null && !fullQuickListStr.equals("")) {
-            ArrayList<String> fullQuickList = new ArrayList<>(Arrays.asList(fullQuickListStr.split("\n")));
+            ArrayList<String> fullQuickList = new ArrayList<>(Arrays.asList(fullQuickListStr.split("~~~")));
 
             for (int i = 0; i < fullQuickList.size(); i += 2) {
                 LinearLayout layout = v.findViewById(R.id.childLinear);
