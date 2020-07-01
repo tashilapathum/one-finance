@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="version">Version 0.2.3 (Beta)</string>
     <string name="recent_transactions">ගනුදෙනු</string>
     <string name="reports">වාර්තා</string>
     <string name="settings">සැකසුම්</string>
@@ -21,7 +22,8 @@
     <string name="_0_00">0.00</string>
     <string name="example_item_1">උදාහරණ අයිතමය 1\nRs.7.25</string>
     <string name="home">මුල් පිටුව</string>
-    <string name="quick_list">ක්ෂණික ලැයිස්තුව</string>
+    <string name="quick_list">- ක්ෂණික ලැයිස්තුව -</string>
+    <string name="settings_quick_list">ක්ෂණික ලැයිස්තුව</string>
     <string name="edit_quick_list_items">ක්ෂණික ලැයිස්තුවේ අයිතම වෙනස් කරන්න</string>
     <string name="edit">සංස්කරණය</string>
     <string name="save">සුරකින්න</string>
@@ -115,7 +117,7 @@
     <string name="deposit_to_bank_descr">මෙමගින් ඔබට මුදල් ඍජුවම බැංකුවෙහි තෝරා ඇති ගිණුමට බැර වේ. වෙනත් ගිණුමක් තේරීමට මෙම බොත්තම කෙටි වේලාවක් ටච් කරගෙන සිටින්න.</string>
     <string name="clear_muliti_thing">මෙය සංස්කරණය කිරීමට පෙර වෙනස් වන පොලී අනුපාත ඉවත් කරන්න.</string>
     <string name="edit_account">ගිණුම සංස්කරණය</string>
-    <string name="recent_activities">මෑත ගනුදෙනු</string>
+    <string name="recent_activities">- මෑත ගනුදෙනු -</string>
     <string name="to_bank">බැංකුවට</string>
     <string name="main_account">ගිණුම: "</string>
     <string name="main_balance">"ශේෂය: "</string>

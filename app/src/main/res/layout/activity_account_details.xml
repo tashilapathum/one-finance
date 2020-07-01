@@ -24,7 +24,7 @@
                     android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="?android:selectableItemBackground"
+                    android:background="?android:selectableItemBackgroundBorderless"
                     android:contentDescription="go back"
                     android:onClick="goBack"
                     android:padding="8dp"

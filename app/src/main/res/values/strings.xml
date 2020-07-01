@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">My Wallet</string>
+    <string name="version">Version 0.2.3 (Beta)</string>
     <string name="recent_transactions">Transactions</string>
     <string name="reports">Reports</string>
     <string name="settings">Settings</string>
@@ -21,7 +22,8 @@
     <string name="_0_00">0.00</string>
     <string name="example_item_1">Example item 1\n$7.25</string>
     <string name="home">Home</string>
-    <string name="quick_list">Quick list</string>
+    <string name="quick_list">- Quick list -</string>
+    <string name="settings_quick_list">Quick list</string>
     <string name="edit_quick_list_items">Edit quick list items</string>
     <string name="edit">Edit</string>
     <string name="save">Save</string>
@@ -117,7 +119,7 @@
     <string name="deposit_to_bank_descr">You can directly deposit money to your selected account using this. Long-tap to select a different account.\nNote: Description is not required for this. Relevant info will be added automatically.</string>
     <string name="clear_muliti_thing">Clear the multiple interests to enable this field</string>
     <string name="edit_account">Edit account</string>
-    <string name="recent_activities">Recent activities</string>
+    <string name="recent_activities">- Recent activities -</string>
     <string name="to_bank">To bank</string>
     <string name="main_account">"Account: "</string>
     <string name="main_balance">"Balance: "</string>

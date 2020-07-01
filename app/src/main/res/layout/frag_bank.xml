@@ -98,6 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/deposit"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textAllCaps="false"
             android:fontFamily="sans-serif-condensed"
             android:textStyle="bold"/>
@@ -107,6 +108,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/withdraw"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textAllCaps="false"
             android:fontFamily="sans-serif-condensed"
             android:textStyle="bold"/>
@@ -130,8 +132,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/recent_activities"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textStyle="bold|italic"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textStyle="italic"
                 android:gravity="center"
                 android:paddingBottom="10dp"/>
 

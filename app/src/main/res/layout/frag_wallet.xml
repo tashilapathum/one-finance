@@ -16,9 +16,9 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
             android:text="@string/balance"
             android:textAllCaps="true"
-            android:layout_marginEnd="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textStyle="bold" />
 
@@ -52,10 +52,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:fontFamily="sans-serif-condensed"
             android:hint="@string/amount"
             android:importantForAutofill="no"
-            android:inputType="numberDecimal"
-            android:fontFamily="sans-serif-condensed"/>
+            android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -69,10 +69,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:fontFamily="sans-serif-condensed"
             android:hint="@string/description"
             android:importantForAutofill="no"
-            android:inputType="textCapSentences"
-            android:fontFamily="sans-serif-condensed"/>
+            android:inputType="textCapSentences" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
@@ -87,28 +87,31 @@
             android:id="@+id/btnToBank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
             android:text="@string/to_bank"
             android:textAllCaps="false"
-            android:fontFamily="sans-serif-condensed"
-            android:textStyle="bold"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnEarned"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
             android:text="@string/earned"
             android:textAllCaps="false"
-            android:fontFamily="sans-serif-condensed"
-            android:textStyle="bold"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnSpent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
             android:text="@string/spent"
             android:textAllCaps="false"
-            android:fontFamily="sans-serif-condensed"
-            android:textStyle="bold"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -134,8 +137,8 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="@string/quick_list"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textStyle="bold|italic" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textStyle="italic" />
 
         </LinearLayout>
     </ScrollView>

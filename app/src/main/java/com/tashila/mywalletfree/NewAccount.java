@@ -158,7 +158,9 @@ public class NewAccount extends AppCompatActivity {
                 createdDate = null;
         int i;
         for (i = 1; i <= accLimit; i++) {
-            if (!sharedPref.getBoolean("isAccountSlot" + i + "Taken", false)) {
+            boolean isSlotTaken = sharedPref.getBoolean("isAccountSlot" + i + "Taken", false);
+            boolean isSlotDeleted = sharedPref.getBoolean("isAccountSlot" + i + "Deleted", false);
+            if (!isSlotTaken && !isSlotDeleted) {
                 accountName = "accountName" + i;
                 accountBalance = "accountBalance" + i;
                 accountNumber = "accountNumber" + i;

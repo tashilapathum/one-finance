@@ -134,12 +134,11 @@ public class DialogChooseAcc extends DialogFragment {
     }
 
     private void addAccount() {
-        int noOfAccounts = sharedPref.getInt("noOfAccounts", 0);
         int accLimit;
-        if (sharedPref.getBoolean("MyWalletPro", false)) accLimit = 20;
-        else accLimit = 2;
+        if (sharedPref.getBoolean("MyWalletPro", false)) accLimit = 50;
+        else accLimit = 4;
 
-        if (noOfAccounts <= accLimit) {
+        if (((ViewGroup) view).getChildCount() < accLimit) {
             Intent intent = new Intent(getActivity(), NewAccount.class);
             startActivity(intent);
         } else {
@@ -149,7 +148,8 @@ public class DialogChooseAcc extends DialogFragment {
                     .setPositiveButton(R.string.buy, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
+                            Intent intent = new Intent(getActivity(), UpgradeToPro.class);
+                            startActivity(intent);
                         }
                     })
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

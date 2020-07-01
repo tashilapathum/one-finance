@@ -111,6 +111,7 @@ public class DialogManageAcc extends DialogFragment {
     private void delete() {
         int manageAccNo = sharedPref.getInt("manageAccNo", 0);
         sharedPref.edit().putBoolean("isAccountSlot" + manageAccNo + "Taken", false).apply(); //clear deleted slot
+        sharedPref.edit().putBoolean("isAccountSlot" + manageAccNo + "Deleted", true).apply(); //mark slot as deleted
         new AccountHandler(getActivity()).minusAccount();
         Toast.makeText(getActivity(), R.string.deleted, Toast.LENGTH_SHORT).show();
 

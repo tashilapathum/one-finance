@@ -10,7 +10,7 @@
         <item name="android:editTextStyle">@style/RobotoEditTextStyle</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">@color/colorAccentDark</item>
+        <item name="android:statusBarColor">@color/colorStatusBarLightMode</item>
         <item name="drawerArrowStyle">@style/DrawerHamburgerStyle</item>
     </style>
 
@@ -22,8 +22,8 @@
         <item name="android:editTextStyle">@style/RobotoEditTextStyle</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">#242427</item>
-        <item name="android:navigationBarColor">#242427</item>
+        <item name="android:statusBarColor">@color/colorStatusBarDarkMode</item>
+        <item name="android:navigationBarColor">@color/colorStatusBarDarkMode</item>
         <item name="drawerArrowStyle">@style/DrawerHamburgerStyle</item>
     </style>
 

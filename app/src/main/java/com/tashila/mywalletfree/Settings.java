@@ -22,6 +22,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -36,7 +38,7 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
     SharedPreferences sharedPref;
     private DrawerLayout drawer;
     String timeString;
-    private CheckBox exitCheckBox;
+    private Switch exitCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,15 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
 
         //exit confirm setting
         exitCheckBox = findViewById(R.id.exitCheck);
+        exitCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked())
+                    sharedPref.edit().putBoolean("exitConfirmation", true).apply();
+                else
+                    sharedPref.edit().putBoolean("exitConfirmation", false).apply();
+            }
+        });
         boolean confirmExitEnabled = sharedPref.getBoolean("exitConfirmation", false);
         if (confirmExitEnabled) exitCheckBox.setChecked(true);
     }
@@ -168,14 +179,10 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     public void exitConfirm(View view) {
-        if (!exitCheckBox.isChecked()) {
+        if (!exitCheckBox.isChecked())
             exitCheckBox.setChecked(true);
-            sharedPref.edit().putBoolean("exitConfirmation", true).apply();
-        }
-        else {
+        else
             exitCheckBox.setChecked(false);
-            sharedPref.edit().putBoolean("exitConfirmation", false).apply();
-        }
     }
 
     /*-------------------------Notification time--------------------------*/

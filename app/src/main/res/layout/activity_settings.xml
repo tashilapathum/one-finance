@@ -55,7 +55,7 @@
                     android:layout_toEndOf="@id/image1"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="@string/quick_list"
+                    android:text="@string/settings_quick_list"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <TextView
@@ -229,14 +229,12 @@
                     android:layout_toEndOf="@id/image8"
                     android:text="@string/show_confirm_dialog_when_trying_to_exit_the_app" />
 
-                <CheckBox
+                <Switch
                     android:id="@+id/exitCheck"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:paddingStart="2dp"
-                    android:paddingEnd="2dp"/>
+                    android:layout_centerVertical="true"/>
 
 
             </RelativeLayout>

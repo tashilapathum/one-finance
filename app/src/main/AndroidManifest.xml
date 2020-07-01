@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeDark"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".UpgradeToPro"></activity>
+        <activity android:name=".UpgradeToPro"/>
         <activity android:name=".AccountDetails" />
         <activity android:name=".NewAccount" />
         <activity android:name=".InitialSetup" />
@@ -21,7 +21,7 @@
             android:label="@string/reports" />
         <activity
             android:name=".EditQuickList"
-            android:label="@string/quick_list" />
+            android:label="@string/settings_quick_list" />
         <activity
             android:name=".TransHistory"
             android:label="@string/recent_transactions" />
