@@ -89,14 +89,13 @@
     <string name="predate_description">පෙර දිනයන්හි දී සිදුකරන ලද ගනුදෙනු ඇතුලත් කිරීමට දින දර්ශනය පෙන්වන තුරු බොත්තම ඔබාගෙන සිටින්න</string>
     <string name="search_description">මෙයින් ඔබගේ පසුගිය ගනුදෙනු දිනය හෝ විස්තරය මගින් සෙවිය හැකියි</string>
     <string name="search">සොයන්න</string>
-    <string name="inaccurate_note">මෙය මුල් අවධියේ ඇති පහසුකමකි. දත්ත නිවැරදි නොමැතිනම් ගූගල් ප්ලේ රිවීව් හරහා දැනුම් දී මෙය සැකසීමට සහය වන්න</string>
     <string name="withdraw">බැර</string>
     <string name="deposit">හර</string>
-    <string name="account_name">ගිණුමේ නම</string>
-    <string name="current_balance">ශේෂය</string>
-    <string name="annual_interest">වාර්ෂික පොලී අනුපාතය (විකල්ප)</string>
-    <string name="account_number_optional">ගිණුම් අංකය (විකල්ප)</string>
-    <string name="additional_info_optional">අමතර තොරතුරු (විකල්ප)</string>
+    <string name="account_name">ගිණුමේ නම*</string>
+    <string name="current_balance">ශේෂය*</string>
+    <string name="annual_interest">වාර්ෂික පොලී අනුපාතය</string>
+    <string name="account_number_optional">ගිණුම් අංකය</string>
+    <string name="additional_info_optional">අමතර තොරතුරු</string>
     <string name="multi_interest_example"><![CDATA[උදා:-\n 0 - 9999 -> 2.00\n 10000 - 49999 -> 2.15\n50000 - 99999999 -> 2.25]]></string>
     <string name="multi_interests_thing">තැන්පත් කර ඇති මුදල අනුව ඔබගේ බැංකුවෙන් ගෙවනු ලබන පොලිය වෙනස් වේ නම් එම අගයන් මෙහි ඇතුලත් කළ හැකිය</string>
     <string name="min_amount">අඩුම අගය</string>
@@ -199,4 +198,5 @@
     <string name="item_name">අයිතම(ය)</string>
     <string name="price">මිල</string>
     <string name="add_more_quick_items">සීමාවක් නොමැති ව ක්ෂණික ලැයිස්තුවට අයිතම එකතු කිරීමට Pro සංස්කරණය මිල දී ගන්න</string>
+    <string name="required_fields">*අත්‍යවශ්‍යයි</string>
 </resources>

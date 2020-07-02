@@ -31,6 +31,7 @@ import org.threeten.bp.format.FormatStyle;
 import org.threeten.bp.temporal.TemporalField;
 import org.threeten.bp.temporal.WeekFields;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,6 +61,7 @@ public class WalletFrag extends Fragment {
     private int viewId; //to differentiate spent, earned, and toBank
     private String activity;
     private String language;
+    private static WalletFrag instance;
 
 
     @Nullable
@@ -70,6 +72,7 @@ public class WalletFrag extends Fragment {
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         AndroidThreeTen.init(context);
         currency = sharedPref.getString("currency", "");
+        instance = this;
 
         //get data
         tvCurrency = v.findViewById(R.id.currency);
@@ -145,6 +148,10 @@ public class WalletFrag extends Fragment {
             tvCurrency.setText(sharedPref.getString("currency", null));
         if (sharedPref.contains("balance"))
             tvBalance.setText(sharedPref.getString("balance", "0.00"));
+    }
+
+    public static WalletFrag getInstance() {
+        return instance;
     }
 
     private void showInstructions(View view) {
@@ -440,10 +447,10 @@ public class WalletFrag extends Fragment {
         }
     }
 
-    private void createReports(double amount) {
+    public void createReports(double amount) {
         double monthlyBudget = Double.parseDouble(sharedPref.getString("monthlyBudget", "0"));
-        double weeklyBudget = monthlyBudget / 4;
-        double dailyBudget = monthlyBudget / YearMonth.now().lengthOfMonth();
+        double weeklyBudget = BigDecimal.valueOf(monthlyBudget / 4).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        double dailyBudget = BigDecimal.valueOf(monthlyBudget / YearMonth.now().lengthOfMonth()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
 
         //--------------------------DAY----------------------------//
         double todaySpent;

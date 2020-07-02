@@ -91,14 +91,13 @@
     <string name="predate_description">Long-tap to add a previous date to the transaction</string>
     <string name="search_description">You can search by either description or date</string>
     <string name="search">Search</string>
-    <string name="inaccurate_note">Note: This is still in the testing stage. Please let the developer know if there are any inaccuracies.</string>
     <string name="withdraw">Withdraw</string>
     <string name="deposit">Deposit</string>
-    <string name="account_name">Account name</string>
-    <string name="current_balance">Current balance</string>
-    <string name="annual_interest">Annual interest rate (optional)</string>
-    <string name="account_number_optional">Account number (Optional)</string>
-    <string name="additional_info_optional">Additional info (Optional)</string>
+    <string name="account_name">Account name*</string>
+    <string name="current_balance">Current balance*</string>
+    <string name="annual_interest">Annual interest rate</string>
+    <string name="account_number_optional">Account number</string>
+    <string name="additional_info_optional">Additional info</string>
     <string name="multi_interest_example"><![CDATA[Eg:-\n 0 - 999 -> 0.01\n 1000 - 4999 -> 0.02\n 5000 - 99999999 -> 0.03\n]]></string>
     <string name="multi_interests_thing">If you bank offers different interests for different balances, you can add them here. Leave the extra spaces blank if there are any. Don\'t include the currency.\n</string>
     <string name="min_amount">minimum</string>
@@ -201,4 +200,5 @@
     <string name="item_name">Item(s)</string>
     <string name="price">Price</string>
     <string name="add_more_quick_items">Buy the Pro version to add unlimited quick list items!</string>
+    <string name="required_fields">*Required fields</string>
 </resources>

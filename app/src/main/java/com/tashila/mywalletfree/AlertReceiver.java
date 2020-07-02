@@ -3,10 +3,12 @@ package com.tashila.mywalletfree;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
 public class AlertReceiver extends BroadcastReceiver {
+    public static final String TAG = "AlertReceiver";
     @Override
     public void onReceive(Context context, Intent intent) {
         NotificationHelper notificationHelper = new NotificationHelper(context);
@@ -15,7 +17,8 @@ public class AlertReceiver extends BroadcastReceiver {
         notificationHelper.getManager().notify(1, nb.build());
 
         //to update reports
-
+        WalletFrag.getInstance().createReports(0);
+        Log.i(TAG, "Reports created!");
 
         //calculate interests
         AccountHandler accountHandler = new AccountHandler(context);

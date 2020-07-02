@@ -118,7 +118,7 @@ class AccountHandler {
 
                         //prepare data
                         interest = balance * interestRate / 100;
-                        double roundedInterest = new BigDecimal(interest).setScale(2, RoundingMode.HALF_DOWN).doubleValue();
+                        double roundedInterest = BigDecimal.valueOf(interest).setScale(2, RoundingMode.HALF_UP).doubleValue();
                         String monthName = LocalDate.now().getMonth().toString();
                         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
                         String timeStamp = formatter.format(LocalDateTime.now());
