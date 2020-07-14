@@ -25,7 +25,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textStyle="bold" />
 
-    <ImageButton
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/switchAcc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -91,6 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/editAmount"
         android:gravity="end"
+        style="?android:attr/buttonBarStyle"
         android:orientation="horizontal">
 
         <Button
@@ -100,18 +101,20 @@
             android:text="@string/deposit"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textAllCaps="false"
-            android:fontFamily="sans-serif-condensed"
-            android:textStyle="bold"/>
+            android:layout_marginHorizontal="4dp"
+            style="?android:attr/buttonBarButtonStyle"
+            android:fontFamily="sans-serif-condensed"/>
 
         <Button
             android:id="@+id/withdraw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/withdraw"
+            android:layout_marginHorizontal="4dp"
+            style="?android:attr/buttonBarButtonStyle"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textAllCaps="false"
-            android:fontFamily="sans-serif-condensed"
-            android:textStyle="bold"/>
+            android:fontFamily="sans-serif-condensed"/>
 
     </LinearLayout>
 

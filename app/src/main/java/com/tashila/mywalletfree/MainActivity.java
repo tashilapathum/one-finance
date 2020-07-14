@@ -37,8 +37,7 @@ import org.threeten.bp.format.FormatStyle;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, DatePickerDialog.OnDateSetListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     SharedPreferences sharedPref;
     public static final String TAG = "MainActivity";
@@ -99,19 +98,19 @@ public class MainActivity extends AppCompatActivity
         ////STARTUP////
         //when requested after applying settings
         if (sharedPref.getBoolean("reqOpenBank", false)) {
-            navigateScreens(new BankFrag(), "BankFrag", R.id.nav_bank);
+            navigateScreens(new BankFragment(), "BankFragment", R.id.nav_bank);
             sharedPref.edit().putBoolean("reqOpenBank", false).apply();
         }
         //when set as home screen (won't set it back to false)
         else if (homeScreen.equalsIgnoreCase("bank"))
-            navigateScreens(new BankFrag(), "BankFrag", R.id.nav_bank);
+            navigateScreens(new BankFragment(), "BankFragment", R.id.nav_bank);
         else if (homeScreen.equalsIgnoreCase("cart"))
-            navigateScreens(new CartFrag(), "CartFrag", R.id.nav_loans);
+            navigateScreens(new CartFragment(), "CartFragment", R.id.nav_loans);
         else if (homeScreen.equalsIgnoreCase("bills"))
-            navigateScreens(new BillsFrag(), "BillsFrag", R.id.nav_bills);
+            navigateScreens(new BillsFragment(), "BillsFragment", R.id.nav_bills);
             //when starting the app normally
         else {
-            navigateScreens(new WalletFrag(), "WalletFrag", R.id.nav_wallet);
+            navigateScreens(new WalletFragment(), "WalletFragment", R.id.nav_wallet);
             /*transaction.addToBackStack(null); //for back button press*/
         }
 
@@ -261,23 +260,23 @@ public class MainActivity extends AppCompatActivity
                     String fragmentTag = null;
                     switch (item.getItemId()) {
                         case R.id.nav_wallet: {
-                            selectedFragment = new WalletFrag();
-                            fragmentTag = "WalletFrag";
+                            selectedFragment = new WalletFragment();
+                            fragmentTag = "WalletFragment";
                             break;
                         }
                         case R.id.nav_bank: {
-                            selectedFragment = new BankFrag();
-                            fragmentTag = "BankFrag";
+                            selectedFragment = new BankFragment();
+                            fragmentTag = "BankFragment";
                             break;
                         }
                         case R.id.nav_loans: {
-                            selectedFragment = new CartFrag();
-                            fragmentTag = "CartFrag";
+                            selectedFragment = new CartFragment();
+                            fragmentTag = "CartFragment";
                             break;
                         }
                         case R.id.nav_bills: {
-                            selectedFragment = new BillsFrag();
-                            fragmentTag = "BillsFrag";
+                            selectedFragment = new BillsFragment();
+                            fragmentTag = "BillsFragment";
                             break;
                         }
                     }
@@ -318,22 +317,8 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/developer?id=Tashila+Pathum"));
         startActivity(intent);
     }
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        LocalDateTime date = LocalDateTime.of(year, month, dayOfMonth,
-                LocalDateTime.now().getHour(), LocalDateTime.now().getMinute());
-        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
-        String preDate = date.format(formatter);
-        sharedPref.edit().putString("preDate", preDate).apply();
-
-        WalletFrag walletFrag = (WalletFrag) getSupportFragmentManager().findFragmentByTag("WalletFrag");
-        walletFrag.continueLongClickProcess();
-    }
 }
 
-//TODO: add rate the app dialog
-//TODO: change edit quick list mechanism!
 //TODO: add starting balance to initial setup
 //TODO: customize drawer items
 

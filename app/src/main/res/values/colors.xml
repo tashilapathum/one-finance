@@ -9,10 +9,15 @@
     <color name="colorStatusBarLightMode">#3D0F74</color>
     <color name="colorToolBarLightMode">#311B92</color>
     <color name="colorQuickList">#42A5F5</color>
-    <color name="colorQuickListDark">#1A237E</color>
+    <color name="colorQuickListDark">#020E8D</color>
     <color name="colorBackground">#DEDEFB</color>
     <color name="colorToolbarDark">#2C2C2E</color>
     <color name="colorCustomButton">#BFBCBC</color>
     <color name="colorCustomButtonLight">#DCD9D9</color>
     <color name="colorShadow">#2C2C2E</color>
+    <color name="colorDue">#FFF176</color>
+    <color name="colorPaid">#81C784</color>
+    <color name="colorOverdue">#FF7043</color>
+    <color name="colorCartFAB">#81C784</color>
+    <color name="colorBillsFAB">#64B5F6</color>
 </resources>

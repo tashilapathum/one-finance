@@ -1,6 +1,6 @@
 package com.tashila.mywalletfree;
 
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,8 +36,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-public class BankFrag extends Fragment {
-    public static final String TAG = "BankFrag";
+public class BankFragment extends Fragment {
+    public static final String TAG = "BankFragment";
     private SharedPreferences sharedPref;
     private TextView tvAccountName;
     private TextView tvCurrency;
@@ -159,6 +159,8 @@ public class BankFrag extends Fragment {
 
         tvAccountName.setText(accountName);
         tvCurrency.setText(currency);
+        DecimalFormat df = new DecimalFormat("#.00");
+        accountBalance = df.format(Double.parseDouble(accountBalance));
         tvAccountBalance.setText(accountBalance);
     }
 
@@ -168,6 +170,7 @@ public class BankFrag extends Fragment {
         final int i = selectedAccNo;
         String activity = null;
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
+        DecimalFormat df = new DecimalFormat("#.00");
         String timeStamp = LocalDateTime.now().format(formatter);
         String savedCurrentBalance = sharedPref.getString("selectedAccBalance", null);
         double currentBalance = Double.parseDouble(savedCurrentBalance);
@@ -181,13 +184,13 @@ public class BankFrag extends Fragment {
             //calculate
             if (isDepositId) {
                 newBalance = currentBalance + inputAmount;
-                if (sinhala) activity = currency + inputAmount + "ක් " + accountName + " ගිණුමෙහි තැන්පත් කරන ලදී" + "###" + timeStamp;
-                else activity = "Deposited " + currency + inputAmount + " to " + accountName + "###" + timeStamp;
+                if (sinhala) activity = currency + df.format(inputAmount) + "ක් " + accountName + " ගිණුමෙහි තැන්පත් කරන ලදී" + "###" + timeStamp;
+                else activity = "Deposited " + currency + df.format(inputAmount) + " to " + accountName + "###" + timeStamp;
             }
             if (isWithdrawId) {
                 newBalance = currentBalance - inputAmount;
-                if (sinhala) activity = currency + inputAmount + "ක් " + accountName + " ගිණුමෙන් ආපසු ගන්නා ලදී" + "###" + timeStamp;
-                else activity = "Withdrew " + currency + inputAmount + " from " + accountName + "###" + timeStamp;
+                if (sinhala) activity = currency + df.format(inputAmount) + "ක් " + accountName + " ගිණුමෙන් ආපසු ගන්නා ලදී" + "###" + timeStamp;
+                else activity = "Withdrew " + currency + df.format(inputAmount) + " from " + accountName + "###" + timeStamp;
 
                 //update wallet
                 double walletBalance = Double.parseDouble(sharedPref.getString("balance", null));
@@ -315,7 +318,7 @@ public class BankFrag extends Fragment {
     }
 
     private void reloadFragment() {
-        Fragment bankFrag = getActivity().getSupportFragmentManager().findFragmentByTag("BankFrag");
+        Fragment bankFrag = getActivity().getSupportFragmentManager().findFragmentByTag("BankFragment");
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.detach(bankFrag).attach(bankFrag).commit();
     }

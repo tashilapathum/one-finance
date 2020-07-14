@@ -215,7 +215,7 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
             pieChart.setCenterTextTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
             pieChart.getLegend().setEnabled(false);
             pieChart.setDrawEntryLabels(false);
-            pieChart.getDescription().setText("Budget state");
+            pieChart.getDescription().setEnabled(false);
             pieChart.getDescription().setTextColor(R.attr.colorAccent);
             pieChart.animateY(1000, Easing.EaseInOutCubic);
 

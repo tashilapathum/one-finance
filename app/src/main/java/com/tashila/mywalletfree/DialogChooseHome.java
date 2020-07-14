@@ -13,11 +13,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.DialogFragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class DialogChooseHome extends AppCompatDialogFragment {
+public class DialogChooseHome extends DialogFragment {
     private RadioGroup radioGroup;
     private View view1;
     private SharedPreferences sharedPref;

@@ -14,11 +14,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.DialogFragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class DialogLanguage extends AppCompatDialogFragment {
+public class DialogLanguage extends DialogFragment {
     private static final String TAG = "DialogLanguage";
     private RadioGroup radioGroup;
     View view1;
@@ -48,7 +48,7 @@ public class DialogLanguage extends AppCompatDialogFragment {
                     }
                 });
         String lang = sharedPref.getString("language", "english");
-        Log.i(TAG, "lang: "+lang);
+        Log.i(TAG, "lang: " + lang);
         if (lang.equals("සිංහල")) radioGroup.check(R.id.sinhala);
         return builder.create();
     }

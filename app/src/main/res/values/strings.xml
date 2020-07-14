@@ -201,4 +201,11 @@
     <string name="price">Price</string>
     <string name="add_more_quick_items">Buy the Pro version to add unlimited quick list items!</string>
     <string name="required_fields">*Required fields</string>
+    <string name="new_shopping_list">New shopping list</string>
+    <string name="add_new_item">Add new item</string>
+    <string name="untitled_list">Untitled list</string>
+    <string name="create">Create</string>
+    <string name="total">Total:</string>
+    <string name="paid_date">Paid date</string>
+    <string name="pay_due_date">Payment due date</string>
 </resources>

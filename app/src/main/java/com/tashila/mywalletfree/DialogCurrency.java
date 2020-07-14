@@ -1,6 +1,6 @@
 package com.tashila.mywalletfree;
 
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,9 +13,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.DialogFragment;
 
-public class DialogCurrency extends AppCompatDialogFragment {
+public class DialogCurrency extends DialogFragment {
     private View view2;
     private EditText editCurrency;
     SharedPreferences sharedPref;

@@ -4,25 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -129,7 +122,7 @@ public class EditQuickList extends AppCompatActivity {
         //show
         LayoutInflater inflater = getLayoutInflater();
         LinearLayout qlContainer = findViewById(R.id.qlContainer);
-        final View sampleQuickItem = inflater.inflate(R.layout.sample_quick_item, null);
+        final View sampleQuickItem = inflater.inflate(R.layout.sample_product_item, null);
         TextView tvItem = sampleQuickItem.findViewById(R.id.itemName);
         TextView tvPrice = sampleQuickItem.findViewById(R.id.itemPrice);
         ImageView ivRemove = sampleQuickItem.findViewById(R.id.itemRemove);

@@ -199,4 +199,11 @@
     <string name="price">මිල</string>
     <string name="add_more_quick_items">සීමාවක් නොමැති ව ක්ෂණික ලැයිස්තුවට අයිතම එකතු කිරීමට Pro සංස්කරණය මිල දී ගන්න</string>
     <string name="required_fields">*අත්‍යවශ්‍යයි</string>
+    <string name="new_shopping_list">නව සාප්පු ලැයිස්තුවක්</string>
+    <string name="add_new_item">අයිතමයක් එකතු කරන්න</string>
+    <string name="untitled_list">ලැයිස්තුව</string>
+    <string name="create">සාදන්න</string>
+    <string name="total">එකතුව:</string>
+    <string name="paid_date">Paid date</string>
+    <string name="pay_due_date">Payment due date</string>
 </resources>

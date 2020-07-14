@@ -1,6 +1,6 @@
 package com.tashila.mywalletfree;
 
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,9 +17,9 @@ import org.threeten.bp.YearMonth;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.DialogFragment;
 
-public class DialogBudget extends AppCompatDialogFragment {
+public class DialogBudget extends DialogFragment {
     private View view3;
     private EditText editBudget;
     SharedPreferences sharedPref;

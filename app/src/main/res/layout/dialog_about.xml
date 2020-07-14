@@ -33,6 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        style="?android:attr/buttonBarStyle"
         android:orientation="horizontal">
 
         <Button
@@ -41,12 +42,16 @@
             android:layout_height="wrap_content"
             android:onClick="rateApp"
             android:text="@string/rate_app"
+            android:layout_marginHorizontal="4dp"
+            style="?android:attr/buttonBarButtonStyle"
             android:textAllCaps="false" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn2"
             android:text="@string/more_apps"
+            android:layout_marginHorizontal="4dp"
+            style="?android:attr/buttonBarButtonStyle"
             android:onClick="moreApps"
             android:textAllCaps="false"/>
 

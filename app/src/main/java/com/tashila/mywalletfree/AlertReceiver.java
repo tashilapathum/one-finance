@@ -17,7 +17,7 @@ public class AlertReceiver extends BroadcastReceiver {
         notificationHelper.getManager().notify(1, nb.build());
 
         //to update reports
-        WalletFrag.getInstance().createReports(0);
+        WalletFragment.getInstance().createReports(0);
         Log.i(TAG, "Reports created!");
 
         //calculate interests

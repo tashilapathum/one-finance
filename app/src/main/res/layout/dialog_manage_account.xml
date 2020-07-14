@@ -14,13 +14,6 @@
         android:backgroundTint="@color/colorCustomButton"
         android:text="@string/details"
         android:textAllCaps="false" />
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorDivider" />
-
     <Button
         android:id="@+id/edit"
         style="?android:attr/buttonBarButtonStyle"
@@ -29,11 +22,6 @@
         android:backgroundTint="@color/colorCustomButton"
         android:text="@string/edit"
         android:textAllCaps="false" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorDivider" />
 
     <Button
         android:id="@+id/delete"

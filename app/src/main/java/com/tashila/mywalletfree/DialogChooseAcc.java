@@ -1,6 +1,6 @@
 package com.tashila.mywalletfree;
 
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,10 +15,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.elconfidencial.bubbleshowcase.BubbleShowCase;
-import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
-import com.elconfidencial.bubbleshowcase.BubbleShowCaseListener;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -82,9 +78,9 @@ public class DialogChooseAcc extends DialogFragment {
                     public void onClick(View v) {
                         chooseAccount(v);
                         if (calledFromWallet) {
-                            WalletFrag walletFrag = (WalletFrag) getActivity().getSupportFragmentManager().findFragmentByTag("WalletFrag");
-                            walletFrag.doBankStuff();
-                            walletFrag.continueLongClickProcess();
+                            WalletFragment walletFragment = (WalletFragment) getActivity().getSupportFragmentManager().findFragmentByTag("WalletFragment");
+                            walletFragment.doBankStuff();
+                            walletFragment.continueLongClickProcess();
                         }
                     }
                 });

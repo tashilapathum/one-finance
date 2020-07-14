@@ -1,6 +1,6 @@
 package com.tashila.mywalletfree;
 
-import android.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -10,8 +10,9 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.DialogFragment;
 
-public class DialogAbout extends AppCompatDialogFragment {
+public class DialogAbout extends DialogFragment {
 
     @NonNull
     @Override

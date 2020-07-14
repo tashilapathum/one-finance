@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.jakewharton.threetenabp.AndroidThreeTen;
@@ -43,8 +44,8 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
-public class WalletFrag extends Fragment {
-    private static final String TAG = "WalletFrag";
+public class WalletFragment extends Fragment {
+    private static final String TAG = "WalletFragment";
     private Context context;
     private SharedPreferences sharedPref;
     private TextInputLayout tilAmount;
@@ -61,7 +62,7 @@ public class WalletFrag extends Fragment {
     private int viewId; //to differentiate spent, earned, and toBank
     private String activity;
     private String language;
-    private static WalletFrag instance;
+    private static WalletFragment instance;
 
 
     @Nullable
@@ -150,7 +151,7 @@ public class WalletFrag extends Fragment {
             tvBalance.setText(sharedPref.getString("balance", "0.00"));
     }
 
-    public static WalletFrag getInstance() {
+    public static WalletFragment getInstance() {
         return instance;
     }
 
@@ -230,7 +231,6 @@ public class WalletFrag extends Fragment {
 
         } else { //for quick list items
             Button quickButton = (Button) view;
-            view.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.onclick_effect));
             String quickItem = quickButton.getText().toString();
             String[] amountAndDescr = quickItem.replace(currency, "").split("\n");
             String descr = amountAndDescr[0];
@@ -240,7 +240,6 @@ public class WalletFrag extends Fragment {
             viewId = R.id.btnSpent; //because they always work as spent
             handleData(viewId);
             etAmount.clearFocus();
-
         }
 
     }
@@ -249,7 +248,10 @@ public class WalletFrag extends Fragment {
         if (viewId == R.id.btnEarned || viewId == R.id.btnSpent) {
             if (validateAmount() | validateDescr()) {
                 sharedPref.edit().putBoolean("longClicked", true).apply();
+                Bundle bundle = new Bundle();
+                bundle.putString("pickDate", "fromWalletFragment");
                 DialogFragment datePicker = new DatePickerFragment();
+                datePicker.setArguments(bundle);
                 datePicker.show(getFragmentManager(), "date picker");
             }
         }
@@ -292,7 +294,7 @@ public class WalletFrag extends Fragment {
 
         //amount
         double doubAmount = Double.valueOf(etAmount.getText().toString());
-        DecimalFormat df = new DecimalFormat("0.00");
+        DecimalFormat df = new DecimalFormat("#.00");
         String amount = df.format(doubAmount);
 
         if ((viewId == R.id.btnSpent || viewId == R.id.btnToBank) && doubAmount > oldBalance)
@@ -389,17 +391,19 @@ public class WalletFrag extends Fragment {
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
                 );
-                params.setMargins(0, 16, 0, 0);
+                params.setMargins(0, 8, 0, 0);
 
-                final Button button = new Button(context);
+                final MaterialButton button = new MaterialButton(context);
                 button.setTag("listItem" + i);
                 button.setLayoutParams(params); //padding
                 button.setText(fullQuickList.get(i) + "\n" + currency + fullQuickList.get(i + 1));
                 String theme = sharedPref.getString("theme", "light");
                 if (theme.equalsIgnoreCase("light"))
                     button.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorQuickList, null));
-                else
+                else {
                     button.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorQuickListDark, null));
+                    button.setTextColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
+                }
                 button.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 button.setAllCaps(false);
                 button.setTypeface(Typeface.DEFAULT);
@@ -420,17 +424,19 @@ public class WalletFrag extends Fragment {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
             );
-            params.setMargins(0, 16, 0, 0);
+            params.setMargins(0, 8, 0, 0);
 
-            Button button = new Button(context);
+            MaterialButton button = new MaterialButton(context);
             button.setTag("sample");
             button.setLayoutParams(params); //padding
             button.setText(getActivity().getResources().getString(R.string.example_quick_item_text));
             String theme = sharedPref.getString("theme", "light");
             if (theme.equalsIgnoreCase("light"))
                 button.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorQuickList, null));
-            else
+            else {
                 button.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorQuickListDark, null));
+                button.setTextColor(ResourcesCompat.getColor(getResources(), R.color.colorAccent, null));
+            }
             button.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             button.setAllCaps(false);
             button.setTypeface(Typeface.DEFAULT);
@@ -438,7 +444,6 @@ public class WalletFrag extends Fragment {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    v.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.onclick_effect));
                     Intent intent = new Intent(getActivity(), EditQuickList.class);
                     startActivity(intent);
                 }

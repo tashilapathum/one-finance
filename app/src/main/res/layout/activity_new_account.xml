@@ -113,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/add_multiple_interests"
-                    android:src="@drawable/ic_add_more" />
+                    android:src="@drawable/ic_add" />
 
             </RelativeLayout>
 

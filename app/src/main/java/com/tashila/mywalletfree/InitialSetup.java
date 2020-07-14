@@ -88,6 +88,7 @@ public class InitialSetup extends AppCompatActivity {
         //next
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
         sharedPref.edit().putBoolean("alreadyDidInitSetup", true).apply();
         Toast.makeText(this, "Welcome to My Wallet!", Toast.LENGTH_SHORT).show();
     }

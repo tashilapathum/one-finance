@@ -1,228 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:paddingVertical="16dp"
+    tools:context=".InitialSetup">
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:paddingVertical="16dp"
-        tools:context=".InitialSetup">
+        android:padding="16dp">
 
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/logo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:alpha="0.5"
+            android:paddingBottom="8dp"
+            android:src="@mipmap/ic_launcher" />
 
-            <ImageView
-                android:id="@+id/logo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:alpha="0.5"
-                android:paddingBottom="8dp"
-                android:src="@mipmap/ic_launcher" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/logo"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="24dp"
+            android:text="@string/one_time_setup"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
-            <TextView
-                android:id="@+id/textView3"
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView3"
+            android:paddingTop="16dp"
+            android:text="@string/all_fields_are_optional_you_can_change_these_settings_later" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView5"
+            android:paddingTop="16dp"
+            android:text="@string/choose_language"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView4">
+
+            <RadioButton
+                android:id="@+id/otEnglish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/logo"
-                android:layout_centerHorizontal="true"
-                android:paddingBottom="24dp"
-                android:text="@string/one_time_setup"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+                android:checked="true"
+                android:onClick="saveLangRadio"
+                android:text="@string/english" />
 
-            <TextView
-                android:id="@+id/textView5"
+            <RadioButton
+                android:id="@+id/otSinhala"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textView3"
-                android:paddingTop="16dp"
-                android:text="@string/all_fields_are_optional_you_can_change_these_settings_later" />
+                android:onClick="saveLangRadio"
+                android:text="@string/sinhala" />
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textView5"
-                android:paddingTop="16dp"
-                android:text="@string/choose_language"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+        </RadioGroup>
 
-            <RadioGroup
-                android:id="@+id/radioGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textView4">
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/radioGroup"
+            android:paddingTop="16dp"
+            android:text="@string/set_currency"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
-                <RadioButton
-                    android:id="@+id/otEnglish"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:onClick="saveLangRadio"
-                    android:text="@string/english" />
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView6"
+            android:text="@string/never_type_in_the_currency_when_adding_amounts_even_if_you_didn_t_set_the_currency" />
 
-                <RadioButton
-                    android:id="@+id/otSinhala"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="saveLangRadio"
-                    android:text="@string/sinhala" />
-
-            </RadioGroup>
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/radioGroup"
-                android:paddingTop="16dp"
-                android:text="@string/set_currency"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textView6"
-                android:text="@string/never_type_in_the_currency_when_adding_amounts_even_if_you_didn_t_set_the_currency" />
-
-            <LinearLayout
-                android:id="@+id/ll1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textView11"
-                style="?android:attr/buttonBarStyle"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/editCurrency"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/eg"
-                    android:padding="16dp"
-                    android:importantForAutofill="no"
-                    android:inputType="text" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp">
-
-                <Button
-                    android:id="@+id/dollar"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="$"
-                    android:minHeight="2dp"
-                    android:minWidth="2dp"
-                    android:onClick="setQuickCurrency"/>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp">
-
-                    <Button
-                        android:id="@+id/euro"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="€"
-                        android:minHeight="2dp"
-                        android:minWidth="2dp"
-                        android:onClick="setQuickCurrency"/>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp">
-
-                    <Button
-                        android:id="@+id/yen"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="¥"
-                        android:minHeight="2dp"
-                        android:minWidth="2dp"
-                        android:onClick="setQuickCurrency"/>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp">
-
-                    <Button
-                        android:id="@+id/pound"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="£"
-                        android:minHeight="2dp"
-                        android:minWidth="2dp"
-                        android:onClick="setQuickCurrency"/>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp">
-
-                    <Button
-                        android:id="@+id/rupee"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="₹"
-                        android:minHeight="2dp"
-                        android:minWidth="2dp"
-                        android:onClick="setQuickCurrency"/>
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
-
-
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/ll1"
-                android:paddingTop="16dp"
-                android:text="@string/add_monthly_budget"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textView7"
-                android:text="@string/weekly_and_daily_budgets_will_be_calculated_based_on_this" />
+        <LinearLayout
+            android:id="@+id/ll1"
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView11"
+            android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editBudget"
+                android:id="@+id/editCurrency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textView10"
-                android:hint="@string/eg_500"
-                android:padding="16dp"
+                android:hint="@string/eg"
                 android:importantForAutofill="no"
-                android:inputType="numberDecimal" />
+                android:inputType="text"
+                android:padding="16dp" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/dollar"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/editBudget"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="32dp"
-                android:onClick="onClickContinue"
-                android:text="@string/continue_next"
-                android:textAllCaps="false" />
+                android:minWidth="2dp"
+                android:minHeight="2dp"
+                android:onClick="setQuickCurrency"
+                android:layout_marginHorizontal="4dp"
+                android:backgroundTint="@color/colorAccent"
+                android:text="$" />
 
-        </RelativeLayout>
-    </ScrollView>
+            <Button
+                android:id="@+id/euro"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="2dp"
+                android:minHeight="2dp"
+                android:layout_marginHorizontal="4dp"
+                android:backgroundTint="@color/colorAccent"
+                android:onClick="setQuickCurrency"
+                android:text="€" />
+
+            <Button
+                android:id="@+id/yen"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="2dp"
+                android:minHeight="2dp"
+                android:layout_marginHorizontal="4dp"
+                android:backgroundTint="@color/colorAccent"
+                android:onClick="setQuickCurrency"
+                android:text="¥" />
+
+            <Button
+                android:id="@+id/pound"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="2dp"
+                android:minHeight="2dp"
+                android:layout_marginHorizontal="4dp"
+                android:backgroundTint="@color/colorAccent"
+                android:onClick="setQuickCurrency"
+                android:text="£" />
+
+            <Button
+                android:id="@+id/rupee"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="2dp"
+                android:minHeight="2dp"
+                android:layout_marginHorizontal="4dp"
+                android:backgroundTint="@color/colorAccent"
+                android:onClick="setQuickCurrency"
+                android:text="₹" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll1"
+            android:paddingTop="16dp"
+            android:text="@string/add_monthly_budget"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView7"
+            android:text="@string/weekly_and_daily_budgets_will_be_calculated_based_on_this" />
+
+        <EditText
+            android:id="@+id/editBudget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView10"
+            android:hint="@string/eg_500"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal"
+            android:padding="16dp" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editBudget"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:onClick="onClickContinue"
+            android:text="@string/continue_next"
+            android:textAllCaps="false" />
+
+    </RelativeLayout>
+</ScrollView>

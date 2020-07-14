@@ -63,7 +63,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editAmnt"
-        app:errorEnabled="true">
+        app:errorEnabled="true"
+        android:layout_marginTop="8dp">
 
         <EditText
             android:layout_width="match_parent"
@@ -81,6 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/editDescr"
         android:gravity="end"
+        style="?android:attr/buttonBarStyle"
         android:orientation="horizontal">
 
         <Button
@@ -89,9 +91,10 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed"
             android:text="@string/to_bank"
+            style="?android:attr/buttonBarButtonStyle"
             android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textStyle="bold" />
+            android:layout_marginHorizontal="4dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
         <Button
             android:id="@+id/btnEarned"
@@ -99,9 +102,10 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed"
             android:text="@string/earned"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_marginHorizontal="4dp"
             android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textStyle="bold" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
         <Button
             android:id="@+id/btnSpent"
@@ -109,9 +113,10 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed"
             android:text="@string/spent"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_marginHorizontal="4dp"
             android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textStyle="bold" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
 
     </LinearLayout>
 
