@@ -122,7 +122,7 @@ public class EditQuickList extends AppCompatActivity {
         //show
         LayoutInflater inflater = getLayoutInflater();
         LinearLayout qlContainer = findViewById(R.id.qlContainer);
-        final View sampleQuickItem = inflater.inflate(R.layout.sample_product_item, null);
+        final View sampleQuickItem = inflater.inflate(R.layout.sample_quicklist_item, null);
         TextView tvItem = sampleQuickItem.findViewById(R.id.itemName);
         TextView tvPrice = sampleQuickItem.findViewById(R.id.itemPrice);
         ImageView ivRemove = sampleQuickItem.findViewById(R.id.itemRemove);

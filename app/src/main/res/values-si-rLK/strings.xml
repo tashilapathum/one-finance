@@ -206,4 +206,6 @@
     <string name="total">එකතුව:</string>
     <string name="paid_date">Paid date</string>
     <string name="pay_due_date">Payment due date</string>
+    <string name="edit_item">Edit item</string>
+    <string name="sure_delete_cart">Are you sure you want to delete the shopping list?</string>
 </resources>
