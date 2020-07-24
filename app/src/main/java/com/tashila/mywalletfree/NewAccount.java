@@ -184,13 +184,14 @@ public class NewAccount extends AppCompatActivity {
         String annualInterestValue = etAnnualInterest.getText().toString();
         if (!sharedPref.getBoolean("hasMultiInterests" + i, false))
             sharedPref.edit().putString(annualInterest, annualInterestValue).apply(); //assigned in the same way as other data
+        //to show on Bank screen
+        sharedPref.edit().putString("selectedAccName", etAccountName.getText().toString()).apply();
+        sharedPref.edit().putString("selectedAccBalance", etCurrentBalance.getText().toString()).apply();
 
         //save created date
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
         String date = LocalDate.now().format(formatter);
         sharedPref.edit().putString(createdDate, date).apply();
-
-        Log.i(TAG, "Line 191 done");
 
         //add first activity
         String activity;

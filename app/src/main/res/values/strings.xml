@@ -138,7 +138,7 @@
     <string name="dark">Dark</string>
     <string name="restore_purchase_des">If you have already purchased the Pro version, you can restore it using this.\nMake sure that you\'re logged in from the same Google account you used to purchase the item.</string>
     <string name="switch_acc">Switch accounts</string>
-    <string name="acc_switch_des">Now tap here to switch to the account you just created.</string>
+    <string name="acc_switch_des">Tap here to switch or add accounts.</string>
     <string name="updated">Updated</string>
     <string name="withdrawn_money">Withdrawn money</string>
     <string name="withdrawn_money_des">Withdrawn money will directly go to the Wallet. You can spend the money from there.</string>
@@ -210,4 +210,5 @@
     <string name="pay_due_date">Payment due date</string>
     <string name="edit_item">Edit item</string>
     <string name="sure_delete_cart">Are you sure you want to delete the shopping list?</string>
+    <string name="d_account_name">Account name</string>
 </resources>

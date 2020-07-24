@@ -107,7 +107,19 @@ public class BankFragment extends Fragment {
         if (theme.equalsIgnoreCase("dark"))
             new Essentials(getActivity()).invertDrawable(view.findViewById(R.id.switchAcc));
 
+        boolean haveNoAccounts = sharedPref.getBoolean("haveNoAccounts", true);
+        if (!haveNoAccounts) {
+            loadDetails();
+            loadActivities();
+        }
 
+        showInstructions(view.findViewById(R.id.switchAcc));
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         boolean haveNoAccounts = sharedPref.getBoolean("haveNoAccounts", true);
         if (haveNoAccounts) {
             new AlertDialog.Builder(getActivity())
@@ -128,14 +140,7 @@ public class BankFragment extends Fragment {
                     .setCancelable(false)
                     .create()
                     .show();
-        } else {
-            loadDetails();
-            loadActivities();
         }
-
-        showInstructions(view.findViewById(R.id.switchAcc));
-
-        return view;
     }
 
     private void showDialog() {
