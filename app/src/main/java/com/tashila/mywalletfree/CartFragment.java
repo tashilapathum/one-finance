@@ -31,12 +31,12 @@ public class CartFragment extends Fragment {
     private static CartFragment instance;
     FloatingActionButton cartFAB;
     private TextView tvItemCount;
-    private int itemCount = 0;
+    private int itemCount;
     private TextView tvTotal;
-    private double total = 0;
+    private double total;
     private String currency;
     public static final String TAG = "CartFragment";
-    private CartItemViewModel cartItemViewModel;
+    private CartViewModel cartViewModel;
     private ImageButton imDeleteCart;
 
     @Nullable
@@ -68,16 +68,18 @@ public class CartFragment extends Fragment {
                 clearCart();
             }
         });
+        itemCount = sharedPref.getInt("cartItemCount", 0);
+        total = Double.parseDouble(sharedPref.getString("cartTotal", "0"));
 
         RecyclerView recyclerView = view.findViewById(R.id.cart_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
-        final CartItemAdapter adapter = new CartItemAdapter();
+        final CartAdapter adapter = new CartAdapter();
         recyclerView.setAdapter(adapter);
 
-        cartItemViewModel = new ViewModelProvider(getActivity(),
-                ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(CartItemViewModel.class);
-        cartItemViewModel.getAllCartItems().observe(getActivity(), new Observer<List<CartItem>>() {
+        cartViewModel = new ViewModelProvider(getActivity(),
+                ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(CartViewModel.class);
+        cartViewModel.getAllCartItems().observe(getActivity(), new Observer<List<CartItem>>() {
             @Override
             public void onChanged(List<CartItem> cartItems) {
                 adapter.submitList(cartItems);
@@ -98,7 +100,7 @@ public class CartFragment extends Fragment {
         }).attachToRecyclerView(recyclerView);
 
 
-        adapter.setOnCartItemClickListener(new CartItemAdapter.OnCartItemClickListener() {
+        adapter.setOnCartItemClickListener(new CartAdapter.OnCartItemClickListener() {
             @Override
             public void OnCartItemClick(CartItem cartItem) {
                 int dbID = cartItem.getId();
@@ -133,21 +135,23 @@ public class CartFragment extends Fragment {
 
     public void addItem(String itemName, String itemPrice, int quantity) {
         CartItem cartItem = new CartItem(itemName, itemPrice, quantity);
-        cartItemViewModel.insert(cartItem);
+        cartViewModel.insert(cartItem);
 
         //update item count and total
         itemCount = itemCount + quantity;
         showItemCount(itemCount);
+        sharedPref.edit().putInt("cartItemCount", itemCount).apply();
         if (!itemPrice.isEmpty()) {
             total = total + Double.parseDouble(itemPrice) * quantity;
             showTotal(total);
+            sharedPref.edit().putString("cartTotal", String.valueOf(total)).apply();
         }
     }
 
     public void updateItem(int dbID, String itemName, String oldItemPrice, String newItemPrice, int oldQuantity, int newQuantity) {
         CartItem cartItem = new CartItem(itemName, newItemPrice, newQuantity);
         cartItem.setId(dbID);
-        cartItemViewModel.update(cartItem);
+        cartViewModel.update(cartItem);
 
         //update item count and total
         if (oldQuantity < newQuantity)
@@ -155,25 +159,29 @@ public class CartFragment extends Fragment {
         else
             itemCount = itemCount - (oldQuantity - newQuantity);
         showItemCount(itemCount);
+        sharedPref.edit().putInt("cartItemCount", itemCount).apply();
 
         double oldPrice = Double.parseDouble(oldItemPrice);
         double newPrice = Double.parseDouble(newItemPrice);
         total = total - oldPrice * oldQuantity + newPrice * newQuantity;
         showTotal(total);
+        sharedPref.edit().putString("cartTotal", String.valueOf(total)).apply();
     }
 
     private void removeItem(CartItem cartItem) {
-        cartItemViewModel.delete(cartItem);
+        cartViewModel.delete(cartItem);
         int quantity = cartItem.getQuantity();
 
         //update item count and total
         itemCount = itemCount - quantity;
         showItemCount(itemCount);
+        sharedPref.edit().putInt("cartItemCount", itemCount).apply();
 
         String itemPrice = cartItem.getItemPrice();
         if (!itemPrice.isEmpty()) {
             total = total - Double.parseDouble(itemPrice) * quantity;
             showTotal(total);
+            sharedPref.edit().putString("cartTotal", String.valueOf(total)).apply();
         }
     }
 
@@ -184,13 +192,17 @@ public class CartFragment extends Fragment {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        cartItemViewModel.deleteAllCartItems();
+                        cartViewModel.deleteAllCartItems();
                     }
                 })
                 .setNegativeButton(R.string.no, null)
                 .show();
         showItemCount(0);
         showTotal(0);
+        itemCount = 0;
+        total = 0;
+        sharedPref.edit().putInt("cartItemCount", 0).apply();
+        sharedPref.edit().putString("cartTotal", "0").apply();
     }
 
     private void showItemCount(int itemCount) {
@@ -199,14 +211,12 @@ public class CartFragment extends Fragment {
             tvItemCount.setText("මිල සහිත අයිතම: " + itemCount);
         else
             tvItemCount.setText(itemCount + " priced items");
-        sharedPref.edit().putInt("cartItemCount", itemCount).apply();
     }
 
     private void showTotal(double total) {
         DecimalFormat df = new DecimalFormat("#.00");
         String totalStr = df.format(total);
         tvTotal.setText(currency + totalStr);
-        sharedPref.edit().putString("cartTotal", totalStr).apply();
     }
 
     private void loadItemCountAndTotal() {

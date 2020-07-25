@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardElevation="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/billPaid">
+
+            <TextView
+                android:id="@+id/billTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                tools:text="Bill title" />
+
+            <TextView
+                android:id="@+id/billAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="$25.00" />
+
+            <TextView
+                android:id="@+id/billDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="10/07/2020"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/billRemarks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Netflix monthly bill"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/billPaid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="remove item"
+            android:onClick="removeItem"
+            android:padding="8dp"
+            android:src="@drawable/ic_paid" />
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>
