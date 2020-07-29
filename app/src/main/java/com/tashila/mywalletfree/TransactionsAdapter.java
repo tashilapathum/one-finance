@@ -13,16 +13,16 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder> implements Filterable {
-    private ArrayList<ExampleItem> mExampleList;
-    private ArrayList<ExampleItem> mExampleListFull;
+public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.TransactionsViewHolder> implements Filterable {
+    private ArrayList<TransactionItem> mExampleList;
+    private ArrayList<TransactionItem> mExampleListFull;
 
-    static class ExampleViewHolder extends RecyclerView.ViewHolder {
+    static class TransactionsViewHolder extends RecyclerView.ViewHolder {
         TextView mAmount;
         TextView mDescr;
         TextView mDate;
 
-        ExampleViewHolder(@NonNull View itemView) {
+        TransactionsViewHolder(@NonNull View itemView) {
             super(itemView);
             mAmount = itemView.findViewById(R.id.hAmount);
             mDescr = itemView.findViewById(R.id.hDescr);
@@ -30,22 +30,22 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
         }
     }
 
-    ExampleAdapter(ArrayList<ExampleItem> exampleList) {
+    TransactionsAdapter(ArrayList<TransactionItem> exampleList) {
         this.mExampleList = exampleList;
         mExampleListFull = new ArrayList<>(mExampleList);
     }
 
     @NonNull
     @Override
-    public ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TransactionsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.example_item, parent, false);
-        ExampleViewHolder evh = new ExampleViewHolder(v);
+        TransactionsViewHolder evh = new TransactionsViewHolder(v);
         return evh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
-        ExampleItem currentItem = mExampleList.get(position);
+    public void onBindViewHolder(@NonNull TransactionsViewHolder holder, int position) {
+        TransactionItem currentItem = mExampleList.get(position);
         holder.mAmount.setText(currentItem.getAmount());
         holder.mDescr.setText(currentItem.getDescr());
         holder.mDate.setText(currentItem.getDate());
@@ -64,7 +64,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
     private Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<ExampleItem> filteredList = new ArrayList<>();
+            List<TransactionItem> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
                 filteredList.addAll(mExampleListFull);
@@ -72,7 +72,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
             else {
                 String filteredPattern = constraint.toString().toLowerCase().trim();
 
-                for (ExampleItem item : mExampleListFull) {
+                for (TransactionItem item : mExampleListFull) {
                     if (item.getDescr().toLowerCase().contains(filteredPattern) || item.getDate().toLowerCase().contains(filteredPattern)) {
                         filteredList.add(item);
                     }

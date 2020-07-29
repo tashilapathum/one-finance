@@ -12,11 +12,13 @@ public class CartItem {
     private String itemName;
     private String itemPrice;
     private int quantity;
+    private String itemTotal;
 
-    public CartItem(String itemName, String itemPrice, int quantity) {
+    public CartItem(String itemName, String itemPrice, int quantity, String itemTotal) {
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.quantity = quantity;
+        this.itemTotal = itemTotal;
     }
 
     public void setId(int id) {
@@ -37,5 +39,9 @@ public class CartItem {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public String getItemTotal() {
+        return itemTotal;
     }
 }

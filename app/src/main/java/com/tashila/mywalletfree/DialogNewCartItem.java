@@ -60,6 +60,8 @@ public class DialogNewCartItem extends DialogFragment {
         int quantity = 1;
         if (!strQuantity.isEmpty())
             quantity = Integer.parseInt(strQuantity);
+        if (itemPrice.isEmpty())
+            itemPrice = "0.00";
         if (!itemName.isEmpty()) {
             CartFragment.getInstance().addItem(itemName, itemPrice, quantity);
         }
@@ -89,6 +91,8 @@ public class DialogNewCartItem extends DialogFragment {
             newQuantity = Integer.parseInt(strQuantity);
         else
             newQuantity = 1;
+        if (newItemPrice.isEmpty())
+            newItemPrice = "0.00";
         if (!itemName.isEmpty()) {
             CartFragment.getInstance().updateItem(dbID, itemName, oldItemPrice, newItemPrice, oldQuantity, newQuantity);
         }

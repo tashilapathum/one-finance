@@ -204,9 +204,12 @@
     <string name="untitled_list">ලැයිස්තුව</string>
     <string name="create">සාදන්න</string>
     <string name="total">එකතුව:</string>
-    <string name="paid_date">Paid date</string>
-    <string name="pay_due_date">Payment due date</string>
-    <string name="edit_item">Edit item</string>
-    <string name="sure_delete_cart">Are you sure you want to delete the shopping list?</string>
-    <string name="d_account_name">Account name</string>
+    <string name="paid_date">ගෙවීම කළ දිනය</string>
+    <string name="pay_due_date">ගෙවීම කළ යුතු දිනය</string>
+    <string name="edit_item">අයිතමය සංස්කරණය කිරීම</string>
+    <string name="sure_delete_cart">ඔබට සාප්පු ලැයිස්තුව මකා දැමීමට අවශ්‍ය ද?</string>
+    <string name="d_account_name">ගිණුමේ නම</string>
+    <string name="c_item_name">අයිතමය</string>
+    <string name="quantity">ප්‍රමාණය</string>
+    <string name="shopping_list">සාප්පු ලැයිස්තුව</string>
 </resources>

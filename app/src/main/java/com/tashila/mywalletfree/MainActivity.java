@@ -12,7 +12,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.app.AlarmManager;
-import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,16 +22,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.DatePicker;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.jakewharton.threetenabp.AndroidThreeTen;
-
-import org.threeten.bp.LocalDateTime;
-import org.threeten.bp.format.DateTimeFormatter;
-import org.threeten.bp.format.FormatStyle;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -200,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             }
             case R.id.nav_recent_trans: {
-                Intent intent = new Intent(this, TransHistory.class);
+                Intent intent = new Intent(this, TransactionHistory.class);
                 startActivity(intent);
                 break;
             }

@@ -21,7 +21,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TimePicker;
@@ -120,7 +119,7 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
                 break;
             }
             case R.id.nav_recent_trans: {
-                Intent intent = new Intent(this, TransHistory.class);
+                Intent intent = new Intent(this, TransactionHistory.class);
                 startActivity(intent);
                 break;
             }

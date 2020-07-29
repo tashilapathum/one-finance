@@ -5,9 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/coming_soon"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textStyle="italic" />
+    </RelativeLayout>
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/bills_tab_layout"
@@ -30,6 +44,7 @@
         android:layout_margin="16dp"
         android:layout_gravity="bottom|end"
         android:backgroundTint="@color/colorBillsFAB"
-        android:src="@drawable/ic_add_bill" />
+        android:src="@drawable/ic_add_bill"
+        android:visibility="gone"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

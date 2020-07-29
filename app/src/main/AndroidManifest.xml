@@ -23,7 +23,7 @@
             android:name=".EditQuickList"
             android:label="@string/settings_quick_list" />
         <activity
-            android:name=".TransHistory"
+            android:name=".TransactionHistory"
             android:label="@string/recent_transactions" />
         <activity
             android:name=".Settings"

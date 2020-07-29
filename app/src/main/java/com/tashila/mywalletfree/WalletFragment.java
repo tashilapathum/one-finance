@@ -378,6 +378,10 @@ public class WalletFragment extends Fragment {
         snackbar.show();
     }
 
+    private void saveToDatabase(String balance, String currency, String prefix, String amount, String description, String date) {
+
+    }
+
     private void loadQuickList() {
         String fullQuickListStr = sharedPref.getString("fullQuickListStr", null);
         Log.i(TAG, "fullQuickListStr: " + fullQuickListStr + "end");

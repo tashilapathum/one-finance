@@ -1,39 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/itemName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:hint="@string/c_item_name"
+        android:importantForAutofill="no"
+        android:inputType="textCapSentences" />
 
-        <EditText
-            android:id="@+id/itemName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Item Name"
-            android:importantForAutofill="no"
-            android:inputType="textCapSentences" />
+    <EditText
+        android:id="@+id/itemPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/price"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal" />
 
-        <EditText
-            android:id="@+id/itemPrice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/price"
-            android:importantForAutofill="no"
-            android:inputType="numberDecimal" />
+    <EditText
+        android:id="@+id/quantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/quantity"
+        android:importantForAutofill="no"
+        android:inputType="number" />
 
-        <EditText
-            android:id="@+id/quantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Quantity"
-            android:importantForAutofill="no"
-            android:inputType="number" />
-
-    </LinearLayout>
-
-
-</RelativeLayout>
+</LinearLayout>

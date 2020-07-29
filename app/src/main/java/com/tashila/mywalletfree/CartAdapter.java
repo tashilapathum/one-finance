@@ -45,6 +45,7 @@ public class CartAdapter extends ListAdapter<CartItem, CartAdapter.CartItemHolde
         holder.tvItemName.setText(currentCartItem.getItemName());
         holder.tvItemPrice.setText(currentCartItem.getItemPrice());
         holder.tvQuantity.setText(String.valueOf(currentCartItem.getQuantity()));
+        holder.tvItemTotal.setText(currentCartItem.getItemTotal());
     }
 
     public CartItem getCartItemAt(int position) {
@@ -55,12 +56,14 @@ public class CartAdapter extends ListAdapter<CartItem, CartAdapter.CartItemHolde
         private TextView tvItemName;
         private TextView tvItemPrice;
         private TextView tvQuantity;
+        private TextView tvItemTotal;
 
         public CartItemHolder(View itemView) {
             super(itemView);
             tvItemName = itemView.findViewById(R.id.itemName);
             tvItemPrice = itemView.findViewById(R.id.itemPrice);
             tvQuantity = itemView.findViewById(R.id.quantity);
+            tvItemTotal = itemView.findViewById(R.id.itemTotal);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

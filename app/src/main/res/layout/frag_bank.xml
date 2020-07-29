@@ -91,27 +91,28 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/editAmount"
         android:gravity="end"
-        style="?android:attr/buttonBarStyle"
         android:orientation="horizontal">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/deposit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/deposit"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textAllCaps="false"
+            android:paddingVertical="12dp"
+            app:cornerRadius="48dp"
             android:layout_marginHorizontal="4dp"
-            style="?android:attr/buttonBarButtonStyle"
             android:fontFamily="sans-serif-condensed"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/withdraw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/withdraw"
+            android:paddingVertical="12dp"
+            app:cornerRadius="48dp"
             android:layout_marginHorizontal="4dp"
-            style="?android:attr/buttonBarButtonStyle"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textAllCaps="false"
             android:fontFamily="sans-serif-condensed"/>

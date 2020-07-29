@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DecimalFormat;
@@ -38,6 +39,8 @@ public class CartFragment extends Fragment {
     public static final String TAG = "CartFragment";
     private CartViewModel cartViewModel;
     private ImageButton imDeleteCart;
+    private RecyclerView recyclerView;
+
 
     @Nullable
     @Override
@@ -71,7 +74,7 @@ public class CartFragment extends Fragment {
         itemCount = sharedPref.getInt("cartItemCount", 0);
         total = Double.parseDouble(sharedPref.getString("cartTotal", "0"));
 
-        RecyclerView recyclerView = view.findViewById(R.id.cart_recyclerview);
+        recyclerView = view.findViewById(R.id.cart_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
         final CartAdapter adapter = new CartAdapter();
@@ -134,7 +137,8 @@ public class CartFragment extends Fragment {
     }
 
     public void addItem(String itemName, String itemPrice, int quantity) {
-        CartItem cartItem = new CartItem(itemName, itemPrice, quantity);
+        String itemTotal = getItemTotal(itemPrice, quantity);
+        CartItem cartItem = new CartItem(itemName, itemPrice, quantity, itemTotal);
         cartViewModel.insert(cartItem);
 
         //update item count and total
@@ -146,10 +150,13 @@ public class CartFragment extends Fragment {
             showTotal(total);
             sharedPref.edit().putString("cartTotal", String.valueOf(total)).apply();
         }
+
+        showInstructions();
     }
 
     public void updateItem(int dbID, String itemName, String oldItemPrice, String newItemPrice, int oldQuantity, int newQuantity) {
-        CartItem cartItem = new CartItem(itemName, newItemPrice, newQuantity);
+        String itemTotal = getItemTotal(newItemPrice, newQuantity);
+        CartItem cartItem = new CartItem(itemName, newItemPrice, newQuantity, itemTotal);
         cartItem.setId(dbID);
         cartViewModel.update(cartItem);
 
@@ -193,29 +200,31 @@ public class CartFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         cartViewModel.deleteAllCartItems();
+                        showItemCount(0);
+                        showTotal(0);
+                        itemCount = 0;
+                        total = 0;
+                        sharedPref.edit().putInt("cartItemCount", 0).apply();
+                        sharedPref.edit().putString("cartTotal", "0.00").apply();
                     }
                 })
                 .setNegativeButton(R.string.no, null)
                 .show();
-        showItemCount(0);
-        showTotal(0);
-        itemCount = 0;
-        total = 0;
-        sharedPref.edit().putInt("cartItemCount", 0).apply();
-        sharedPref.edit().putString("cartTotal", "0").apply();
     }
 
     private void showItemCount(int itemCount) {
         String language = sharedPref.getString("language", "english");
         if (language.equalsIgnoreCase("සිංහල"))
-            tvItemCount.setText("මිල සහිත අයිතම: " + itemCount);
+            tvItemCount.setText("අයිතම ගණන: " + itemCount);
         else
-            tvItemCount.setText(itemCount + " priced items");
+            tvItemCount.setText(itemCount + " items");
     }
 
     private void showTotal(double total) {
         DecimalFormat df = new DecimalFormat("#.00");
         String totalStr = df.format(total);
+        if (total == 0)
+            totalStr = "0.00";
         tvTotal.setText(currency + totalStr);
     }
 
@@ -228,5 +237,26 @@ public class CartFragment extends Fragment {
             showTotal(Double.parseDouble(total));
         else
             tvTotal.setText(currency + "0.00");
+    }
+
+    private String getItemTotal(String itemPrice, int intQuantity) {
+        double price = Double.parseDouble(itemPrice);
+        double itemTotal = price * (double) intQuantity;
+        DecimalFormat df = new DecimalFormat("#.00");
+        String itemTotalStr = df.format(itemTotal);
+        if (itemPrice.equals("0.00"))
+            itemTotalStr = "0.00";
+        return currency + itemTotalStr;
+    }
+
+    private void showInstructions() {
+        boolean hasShown = sharedPref.getBoolean("hasShownCartIns", false);
+        if (!hasShown) {
+            new BubbleShowCaseBuilder(getActivity())
+                    .title("Cart items")
+                    .description("Tap to edit. Swipe to delete.\nAll items are saved automatically.")
+                    .show();
+            sharedPref.edit().putBoolean("hasShownCartIns", true).apply();
+        }
     }
 }

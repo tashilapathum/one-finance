@@ -39,7 +39,7 @@
                         android:id="@+id/tvListName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Shopping list"
+                        android:text="@string/shopping_list"
                         android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
                     <TextView

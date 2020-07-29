@@ -1,11 +1,11 @@
 package com.tashila.mywalletfree;
 
-public class ExampleItem {
+public class TransactionItem {
     private String mAmount;
     private String mDescr;
     private String mDate;
 
-    public ExampleItem(String amount, String descr, String date) {
+    public TransactionItem(String amount, String descr, String date) {
         mAmount = amount;
         mDescr = descr;
         mDate = date;

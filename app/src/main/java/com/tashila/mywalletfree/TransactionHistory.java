@@ -27,12 +27,12 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-public class TransHistory extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class TransactionHistory extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
-    public static final String TAG = "TransHistory";
+    public static final String TAG = "TransactionHistory";
     SharedPreferences sharedPref;
     private RecyclerView mRecyclerView;
-    private ExampleAdapter mAdapter;
+    private TransactionsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
@@ -87,16 +87,16 @@ public class TransHistory extends AppCompatActivity implements NavigationView.On
             fullItemList = fullItemList.replace("null,", "");
             Log.i(TAG, "fullItemList: " + fullItemList);
             String[] transListItems = fullItemList.split(",");
-            ArrayList<ExampleItem> exampleList = new ArrayList<>();
+            ArrayList<TransactionItem> exampleList = new ArrayList<>();
             for (int i = transListItems.length - 1; i >= 0; i--) {
                 String[] threeItems = transListItems[i].split("~");
                 if (threeItems.length >= 3)
-                    exampleList.add(new ExampleItem(threeItems[0], threeItems[1], threeItems[2])); //0-amount, 1-descr, 2-date
+                    exampleList.add(new TransactionItem(threeItems[0], threeItems[1], threeItems[2])); //0-amount, 1-descr, 2-date
             }
             mRecyclerView = findViewById(R.id.recyclerView);
             mRecyclerView.setHasFixedSize(true);
             mLayoutManager = new LinearLayoutManager(this);
-            mAdapter = new ExampleAdapter(exampleList);
+            mAdapter = new TransactionsAdapter(exampleList);
 
             mRecyclerView.setLayoutManager(mLayoutManager);
             mRecyclerView.setAdapter(mAdapter);
@@ -112,7 +112,7 @@ public class TransHistory extends AppCompatActivity implements NavigationView.On
                 break;
             }
             case R.id.nav_recent_trans: {
-                Intent intent = new Intent(this, TransHistory.class);
+                Intent intent = new Intent(this, TransactionHistory.class);
                 startActivity(intent);
                 break;
             }
