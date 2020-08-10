@@ -45,7 +45,7 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
         if (theme.equalsIgnoreCase("dark")) {
             setTheme(R.style.AppThemeDark);
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_reports);
+            setContentView(R.layout.activity_reports_old);
             View layout = findViewById(R.id.drawer_layout);
             layout.setBackground(ContextCompat.getDrawable(this, R.drawable.background_dark));
             toolbar = findViewById(R.id.toolbar);
@@ -53,7 +53,7 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
         } else {
             setTheme(R.style.AppTheme);
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_reports);
+            setContentView(R.layout.activity_reports_old);
             toolbar = findViewById(R.id.toolbar);
         }
 

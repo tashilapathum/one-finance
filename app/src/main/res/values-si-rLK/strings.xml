@@ -88,7 +88,7 @@
     <string name="predate">පෙර ගනුදෙනු</string>
     <string name="predate_description">පෙර දිනයන්හි දී සිදුකරන ලද ගනුදෙනු ඇතුලත් කිරීමට දින දර්ශනය පෙන්වන තුරු බොත්තම ඔබාගෙන සිටින්න</string>
     <string name="search_description">මෙයින් ඔබගේ පසුගිය ගනුදෙනු දිනය හෝ විස්තරය මගින් සෙවිය හැකියි</string>
-    <string name="search">සොයන්න</string>
+    <string name="search">සොයන්න...</string>
     <string name="withdraw">බැර</string>
     <string name="deposit">හර</string>
     <string name="account_name">ගිණුමේ නම*</string>
@@ -212,4 +212,24 @@
     <string name="c_item_name">අයිතමය</string>
     <string name="quantity">ප්‍රමාණය</string>
     <string name="shopping_list">සාප්පු ලැයිස්තුව</string>
+    <string name="undo">අවලංගු කරන්න</string>
+    <string name="confirm_delete_bill">මෙම බිල්පත ඉවත් කිරීමට අවශ්‍ය ද?</string>
+    <string name="you_can_quickly_jot_down_your_shopping_lists_here_n">මෙමඟින් ඔබේ සාප්පු ලැයිස්තු පහසුවෙන් සකසා ගත හැකි ය.\n</string>
+    <string name="add_items_to_the_list">- ලැයිස්තුවට අයිතම එක් කරන්න</string>
+    <string name="swipe_to_delete_items_ntap_to_edit_them">අයිතම ඉවත් කිරීමට පසකට යවන්න (swipe).\nසංස්කරණය කිරීමට ටච් කරන්න.</string>
+    <string name="add_a_new_bill">- නව බිල්පතක් ඇතුලත් කරන්න</string>
+    <string name="mark_as_paid">- ගෙවූ බවට ලකුණු කරන්න</string>
+    <string name="mark_as_unpaid_due">&#160;- ගෙවා නැති බවට ලකුණු කරන්න</string>
+    <string name="ntap_a_bill_to_see_more_details_edit_or_delete">\nබිල්පත පිළිබඳ වැඩි විස්තර බැලීමට, සංස්කරණය කිරීමට හෝ ඉවත් කිරීමට එය ටච් කරන්න.</string>
+    <string name="you_can_manage_your_bills_using_this_feature_n">මෙම අංගය භාවිතයෙන් ඔබට ඔබගේ බිල්පත් කලමනාකරණය කරගත හැකි ය.\n</string>
+    <string name="as_paid">ගෙවූ බවට ලකුණු කරන ලදී</string>
+    <string name="as_due">නොගෙවූ බවට ලකුණු කරන ලදී</string>
+    <string name="monthly">මාසික</string>
+    <string name="paid">ගෙවා ඇති</string>
+    <string name="due">ගෙවීය යුතු</string>
+    <string name="bill_title">බිලෙහි නම</string>
+    <string name="remarks">සටහන්</string>
+    <string name="overdue">ගෙවීමට තිබූ දිනය පසුවී ඇත</string>
+    <string name="paid_">ගෙවූ දිනය:&#160;</string>
+    <string name="due_">ගෙවිය යුතු දිනය:&#160;</string>
 </resources>

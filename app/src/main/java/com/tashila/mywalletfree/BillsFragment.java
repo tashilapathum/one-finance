@@ -1,24 +1,29 @@
 package com.tashila.mywalletfree;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
+import org.threeten.bp.format.FormatStyle;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
 public class BillsFragment extends Fragment {
@@ -26,6 +31,7 @@ public class BillsFragment extends Fragment {
     View view;
     private static BillsFragment instance;
     private ViewPagerAdapter viewPagerAdapter;
+    private BillsViewModel billsViewModel;
 
 
     @Nullable
@@ -41,8 +47,8 @@ public class BillsFragment extends Fragment {
         PaidFragment paidFragment = new PaidFragment();
 
         viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), 0);
-        viewPagerAdapter.addFragment(dueFragment, "Due");
-        viewPagerAdapter.addFragment(paidFragment, "Paid");
+        viewPagerAdapter.addFragment(dueFragment, getActivity().getResources().getString(R.string.due));
+        viewPagerAdapter.addFragment(paidFragment, getActivity().getResources().getString(R.string.paid));
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -54,6 +60,7 @@ public class BillsFragment extends Fragment {
             }
         });
 
+        billsViewModel = new ViewModelProvider(getActivity(), ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(BillsViewModel.class);
         return view;
     }
 
@@ -62,55 +69,55 @@ public class BillsFragment extends Fragment {
     }
 
     private void onClickFAB() {
-        DialogNewBill dialogNewBill = new DialogNewBill();
+        DialogNewBill dialogNewBill = new DialogNewBill(null);
         dialogNewBill.show(getActivity().getSupportFragmentManager(), "new bill dialog");
     }
 
-    public void addBill(String title, String amount, String date, String remarks, String paymentStatus) {
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        //View rootFragment = inflater.inflate(R.layout.frag_bills, null);
-        View paidFragment = inflater.inflate(R.layout.frag_paid, (ViewGroup) view);
-        View dueFragment = inflater.inflate(R.layout.frag_due, (ViewGroup) view);
-        LinearLayout paidContainer = paidFragment.findViewById(R.id.paid_container);
-        LinearLayout dueContainer = dueFragment.findViewById(R.id.due_container);
-        View sampleBill = inflater.inflate(R.layout.sample_bill, null);
-        TextView billTitle = sampleBill.findViewById(R.id.billTitle);
-        TextView billAmount = sampleBill.findViewById(R.id.billAmount);
-        TextView billDate = sampleBill.findViewById(R.id.billDate);
-        TextView billRemarks = sampleBill.findViewById(R.id.billRemarks);
-
-        billTitle.setText(title);
-        billAmount.setText(amount);
-        billDate.setText(date);
-        billRemarks.setText(remarks);
-        sampleBill.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showHiddenDetails();
-            }
-        });
-
-        if (paymentStatus.equals("paid")) {
-            Log.i(TAG, "paid bill added!");
-            paidContainer.addView(sampleBill);
-            paidContainer.invalidate();
-        }
-        if (paymentStatus.equals("due")) {
-            Log.i(TAG, "paid bill added!");
-            dueContainer.addView(sampleBill);
-            dueContainer.invalidate();
-        }
-        viewPagerAdapter.notifyDataSetChanged();
+    public void addBill(Bill bill) {
+        billsViewModel.insert(bill);
     }
 
-    public void showHiddenDetails() {
-        view.findViewById(R.id.billDate).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.billRemarks).setVisibility(View.VISIBLE);
-        view.invalidate();
+    public void markAsPaid(Bill bill) {
+        bill.setPaid(true);
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+        bill.setPaidDate(formatter.format(LocalDate.now()));
+        billsViewModel.update(bill);
+        Toast.makeText(getActivity(), R.string.as_paid, Toast.LENGTH_SHORT).show();
+    }
+
+    public void markUnpaid(Bill bill) {
+        bill.setPaid(false);
+        bill.setPaidDate("N/A");
+        billsViewModel.update(bill);
+        Toast.makeText(getActivity(), R.string.as_due, Toast.LENGTH_SHORT).show();
+    }
+
+    public void editBill(Bill bill) {
+        DialogNewBill dialogNewBill = new DialogNewBill(bill);
+        dialogNewBill.show(getActivity().getSupportFragmentManager(), "edit bill dialog");
+    }
+
+    public void updateBill(Bill editingBill) {
+        billsViewModel.update(editingBill);
+        Toast.makeText(getActivity(), R.string.updated, Toast.LENGTH_SHORT).show();
+    }
+
+    public void deleteBill(final Bill bill) {
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.confirm)
+                .setMessage(R.string.confirm_delete_bill)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        billsViewModel.delete(bill);
+                    }
+                })
+                .setNegativeButton(R.string.no, null)
+                .show();
     }
 
 
-    //--------------------------------------------------------------------------------------------//
+    //------------------------------- for tabbed layout ----------------------------------//
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
 

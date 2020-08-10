@@ -1,6 +1,7 @@
 package com.tashila.mywalletfree;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -10,9 +11,12 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static android.view.View.GONE;
+
 public class CartAdapter extends ListAdapter<CartItem, CartAdapter.CartItemHolder> {
     public static final String TAG = "CartAdapter";
     private OnCartItemClickListener listener;
+    private View itemCard;
 
     public CartAdapter() {
         super(DIFF_CALLBACK);
@@ -58,7 +62,7 @@ public class CartAdapter extends ListAdapter<CartItem, CartAdapter.CartItemHolde
         private TextView tvQuantity;
         private TextView tvItemTotal;
 
-        public CartItemHolder(View itemView) {
+        public CartItemHolder(final View itemView) {
             super(itemView);
             tvItemName = itemView.findViewById(R.id.itemName);
             tvItemPrice = itemView.findViewById(R.id.itemPrice);
@@ -70,6 +74,13 @@ public class CartAdapter extends ListAdapter<CartItem, CartAdapter.CartItemHolde
                     int position = getAdapterPosition();
                     if (listener != null && position != RecyclerView.NO_POSITION)
                         listener.OnCartItemClick(getItem(position));
+                }
+            });
+            itemView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    itemCard = itemView;
+                    return false;
                 }
             });
         }

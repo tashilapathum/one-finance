@@ -31,7 +31,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="true"
-                        android:text="Paid"
+                        android:text="@string/paid"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
@@ -39,17 +39,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
-                        android:text="Due"
+                        android:text="@string/due"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
                 </RadioGroup>
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/billTitle"
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:hint="Bill title"
+                android:hint="@string/bill_title"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -65,10 +65,10 @@
                 android:layout_marginBottom="8dp">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/billAmount"
+                    android:id="@+id/amount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Amount"
+                    android:hint="@string/amount"
                     app:helperText="Bills with a monthly fee will renew automatically.">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -79,12 +79,13 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <CheckBox
+                    android:id="@+id/cbMonthly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_margin="8dp"
-                    android:text="Monthly" />
+                    android:text="@string/monthly" />
             </RelativeLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -92,7 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:hint="Paid date"
+                android:hint="@string/paid_date"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -105,17 +106,17 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/billRemarks"
+                android:id="@+id/remarks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:hint="Remarks">
+                android:hint="@string/remarks">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-condensed"
-                    android:inputType="textCapSentences" />
+                    android:inputType="textImeMultiLine" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
     </ScrollView>

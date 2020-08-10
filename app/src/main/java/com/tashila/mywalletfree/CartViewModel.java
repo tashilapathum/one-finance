@@ -10,12 +10,10 @@ import androidx.lifecycle.LiveData;
 
 public class CartViewModel extends AndroidViewModel {
     private CartRepository repository;
-    private LiveData<List<CartItem>> allCartItems;
 
     public CartViewModel(@NonNull Application application) {
         super(application);
         repository = new CartRepository(application);
-        allCartItems = repository.getAllCartItems();
     }
 
     public void insert(CartItem cartItem) {
@@ -35,6 +33,6 @@ public class CartViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<CartItem>> getAllCartItems() {
-        return allCartItems;
+        return repository.getAllCartItems();
     }
 }

@@ -63,6 +63,7 @@ public class WalletFragment extends Fragment {
     private String activity;
     private String language;
     private static WalletFragment instance;
+    private TransactionsViewModel transactionsViewModel;
 
 
     @Nullable
@@ -74,6 +75,7 @@ public class WalletFragment extends Fragment {
         AndroidThreeTen.init(context);
         currency = sharedPref.getString("currency", "");
         instance = this;
+        transactionsViewModel = new TransactionsViewModel(getActivity().getApplication());
 
         //get data
         tvCurrency = v.findViewById(R.id.currency);
@@ -327,59 +329,64 @@ public class WalletFragment extends Fragment {
             }
             String balance = df.format(doubBalance);
 
-            saveData(balance, currency, prefix, amount, descr, date);
+            //saveData(balance, currency, prefix, amount, descr, date);
+            saveToDatabase(balance, prefix, currency, amount, descr, date);
             etAmount.setText("");
             etDescr.setText("");
             etAmount.requestFocus();
         }
     }
 
-    private void saveData(final String balance, String currency, final String prefix, final String amount, String descr, String date) {
-        //update
-        tvBalance.setText(balance);
-        tvCurrency.setText(currency);
-        String amountStr = prefix + currency + amount; //for the array
+    private void saveToDatabase(final String balance, final String prefix, String currency, final String amount,
+                                final String description, final String userDate) {
+        final int dayOfWeek = LocalDate.now().getDayOfWeek().getValue();
+        final int dayOfMonth = LocalDate.now().getDayOfMonth();
+        final int monthOfYear = LocalDate.now().getMonthValue();
 
-        //save
+        //save to show
         sharedPref.edit().putString("balance", balance).apply();
-        sharedPref.edit().putString("amount", amountStr).apply();
-        sharedPref.edit().putString("descr", descr).apply();
-        sharedPref.edit().putString("date", date).apply();
         sharedPref.edit().putString("currency", currency).apply();
 
-        //full list
-        final String threeItemStr = amountStr + "~" + descr + "~" + date;
-        String fullItemList = sharedPref.getString("fullItemList", null); //get old data
-        fullItemList = fullItemList + "," + threeItemStr; //add new one
-        sharedPref.edit().putString("fullItemList", fullItemList).apply();
+        //separate database date because the user might change the date format
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyy HH:mm");
+        final String databaseDate = formatter.format(LocalDateTime.now());
 
-        final double[] correctedBalance = new double[1];
+        //to show the changed balance to user regardless of saving
+        tvBalance.setText(balance);
+        tvCurrency.setText(currency);
+
         BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottom_navigation);
-        Snackbar snackbar = Snackbar.make(bottomNav, R.string.updated, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(bottomNav, R.string.updated, Snackbar.LENGTH_SHORT);
         snackbar.setAnchorView(bottomNav);
-        snackbar.setAction("Undo", new View.OnClickListener() {
+        snackbar.setAction(R.string.undo, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String fullItemList = sharedPref.getString("fullItemList", null);
-                fullItemList = fullItemList.replace(threeItemStr, "");
-                sharedPref.edit().putString("fullItemList", fullItemList).apply();
-                if (prefix.equals("+")) {
-                    correctedBalance[0] = Double.valueOf(balance) - Double.valueOf(amount);
-                    tvBalance.setText(String.valueOf(correctedBalance[0]));
+                double numBalance = Double.parseDouble(balance);
+                double numAmount = Double.parseDouble(amount);
+
+                if (prefix.equals("+"))
+                    numBalance = numBalance - numAmount;
+                if (prefix.equals("-"))
+                    numBalance = numBalance + numAmount;
+                DecimalFormat df = new DecimalFormat("#.00");
+                String strBalance = df.format(numBalance);
+                tvBalance.setText(strBalance);
+                undoBankStuff(numAmount);
+            }
+        });
+        snackbar.addCallback(new Snackbar.Callback() {
+            @Override
+            public void onDismissed(Snackbar transientBottomBar, int event) {
+                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                    TransactionItem transactionItem =
+                            new TransactionItem(balance, prefix, amount, description, userDate,
+                                    databaseDate, dayOfWeek, dayOfMonth, monthOfYear);
+                    transactionsViewModel.insert(transactionItem);
+                    Log.i(TAG, "Transaction added to database!");
                 }
-                if (prefix.equals("-")) {
-                    correctedBalance[0] = Double.valueOf(balance) + Double.valueOf(amount);
-                    tvBalance.setText(String.valueOf(correctedBalance[0]));
-                }
-                sharedPref.edit().putString("balance", String.valueOf(correctedBalance[0])).apply();
-                if (viewId == R.id.btnToBank) undoBankStuff(Double.valueOf(amount));
             }
         });
         snackbar.show();
-    }
-
-    private void saveToDatabase(String balance, String currency, String prefix, String amount, String description, String date) {
-
     }
 
     private void loadQuickList() {

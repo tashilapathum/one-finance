@@ -3,11 +3,12 @@ package com.tashila.mywalletfree;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,17 +16,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class TransactionHistory extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -34,6 +36,9 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
     private RecyclerView mRecyclerView;
     private TransactionsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private TransactionsViewModel transactionsViewModel;
+    private EditText etSearch;
+    private String currency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +54,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             layout.setBackground(ContextCompat.getDrawable(this, R.drawable.background_dark));
             toolbar = findViewById(R.id.toolbar);
             toolbar.setBackground(getDrawable(R.color.colorToolbarDark));
-        }
-        else {
+        } else {
             setTheme(R.style.AppTheme);
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_trans_history);
@@ -59,7 +63,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
 
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView =findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -67,6 +71,11 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         /*----------------------------------------------------------------------------------------*/
+        currency = sharedPref.getString("currency", "");
+        createItemsNEW();
+        etSearch = findViewById(R.id.etSearch);
+        showInstructions(etSearch);
+        implementSearch();
     }
 
     @Override //so the language change works with dark mode
@@ -77,30 +86,6 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             overrideConfiguration.uiMode = uiMode;
         }
         super.applyOverrideConfiguration(overrideConfiguration);
-    }
-
-    public void onStart() {
-        super.onStart();
-        //load list
-        String fullItemList = sharedPref.getString("fullItemList", null);
-        if (fullItemList != null) {
-            fullItemList = fullItemList.replace("null,", "");
-            Log.i(TAG, "fullItemList: " + fullItemList);
-            String[] transListItems = fullItemList.split(",");
-            ArrayList<TransactionItem> exampleList = new ArrayList<>();
-            for (int i = transListItems.length - 1; i >= 0; i--) {
-                String[] threeItems = transListItems[i].split("~");
-                if (threeItems.length >= 3)
-                    exampleList.add(new TransactionItem(threeItems[0], threeItems[1], threeItems[2])); //0-amount, 1-descr, 2-date
-            }
-            mRecyclerView = findViewById(R.id.recyclerView);
-            mRecyclerView.setHasFixedSize(true);
-            mLayoutManager = new LinearLayoutManager(this);
-            mAdapter = new TransactionsAdapter(exampleList);
-
-            mRecyclerView.setLayoutManager(mLayoutManager);
-            mRecyclerView.setAdapter(mAdapter);
-        }
     }
 
     @Override
@@ -144,43 +129,72 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.trans_search, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
+    private void createItemsNEW() {
+        mAdapter = new TransactionsAdapter(currency);
+        mRecyclerView = findViewById(R.id.THRecyclerView);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
 
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+
+        transactionsViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(TransactionsViewModel.class);
+        transactionsViewModel.getAllTransactionItems().observe(this, new Observer<List<TransactionItem>>() {
             @Override
-            public boolean onQueryTextChange(String newText) {
-                if (mAdapter != null)
-                    mAdapter.getFilter().filter(newText);
-                return false;
+            public void onChanged(List<TransactionItem> transactionItems) {
+                mAdapter.submitList(transactionItems);
             }
         });
+    }
 
-        //show instructions
+    private void implementSearch() {
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                try {
+                    filter(editable.toString());
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void filter(String text) throws ExecutionException, InterruptedException {
+        List<TransactionItem> fullList = transactionsViewModel.getTransactionsList();
+        ArrayList<TransactionItem> filteredList = new ArrayList<>();
+        for (TransactionItem item : fullList) {
+            if (item.getDescription().toLowerCase().contains(text.toLowerCase()) || item.getUserDate().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        mAdapter.submitList(filteredList);
+    }
+
+    private void showInstructions(View view) {
         boolean alreadyShown = sharedPref.getBoolean("insSearch", false);
         if (!alreadyShown) {
             new BubbleShowCaseBuilder(this)
                     .title(getString(R.string.search))
                     .description(getString(R.string.search_description))
-                    .targetView(searchView)
+                    .targetView(view)
                     .show();
             sharedPref.edit().putBoolean("insSearch", true).apply();
         }
-        return true;
     }
 }

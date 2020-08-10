@@ -65,7 +65,7 @@ public class NewAccount extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_new_account);
             View layout = findViewById(R.id.rootLayout);
-            layout.setBackground(ContextCompat.getDrawable(this, R.drawable.background_dark));
+            //layout.setBackground(ContextCompat.getDrawable(this, R.drawable.background_dark));
             new Essentials(this).invertDrawable(findViewById(R.id.multiInterests));
         } else {
             setTheme(R.style.AppTheme);

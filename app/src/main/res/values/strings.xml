@@ -90,7 +90,7 @@
     <string name="predate">Predate</string>
     <string name="predate_description">Long-tap to add a previous date to the transaction</string>
     <string name="search_description">You can search by either description or date</string>
-    <string name="search">Search</string>
+    <string name="search">Search...</string>
     <string name="withdraw">Withdraw</string>
     <string name="deposit">Deposit</string>
     <string name="account_name">Account name*</string>
@@ -214,4 +214,24 @@
     <string name="c_item_name">Item Name</string>
     <string name="quantity">Quantity</string>
     <string name="shopping_list">Shopping list</string>
+    <string name="undo">Undo</string>
+    <string name="confirm_delete_bill">Are you sure you want to delete this bill?</string>
+    <string name="you_can_quickly_jot_down_your_shopping_lists_here_n">You can quickly jot down your shopping lists here.\n</string>
+    <string name="add_items_to_the_list">- Add items to the list</string>
+    <string name="swipe_to_delete_items_ntap_to_edit_them">Swipe to delete items.\nTap to edit them.</string>
+    <string name="add_a_new_bill">- Add a new bill</string>
+    <string name="mark_as_paid">- Mark as paid</string>
+    <string name="mark_as_unpaid_due">&#160;- Mark as due</string>
+    <string name="ntap_a_bill_to_see_more_details_edit_or_delete">\nTap a bill to see more details, and to show edit and delete options.</string>
+    <string name="you_can_manage_your_bills_using_this_feature_n">You can manage your bills using this feature.\n</string>
+    <string name="as_paid">Marked as paid</string>
+    <string name="as_due">Marked as due</string>
+    <string name="monthly">Monthly</string>
+    <string name="paid">Paid</string>
+    <string name="due">Due</string>
+    <string name="bill_title">Bill title</string>
+    <string name="remarks">Remarks</string>
+    <string name="overdue">Overdue</string>
+    <string name="paid_">Paid:&#160;</string>
+    <string name="due_">Due:&#160;</string>
 </resources>

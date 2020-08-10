@@ -8,10 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -40,7 +42,8 @@ public class CartFragment extends Fragment {
     private CartViewModel cartViewModel;
     private ImageButton imDeleteCart;
     private RecyclerView recyclerView;
-
+    private LinearLayout cart_instructions;
+    private String theme;
 
     @Nullable
     @Override
@@ -48,7 +51,7 @@ public class CartFragment extends Fragment {
         instance = this;
         view = inflater.inflate(R.layout.frag_cart, container, false);
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
-        String theme = sharedPref.getString("theme", "light");
+        theme = sharedPref.getString("theme", "light");
         currency = sharedPref.getString("currency", "");
         if (theme.equalsIgnoreCase("dark")) {
             Essentials essentials = new Essentials(getActivity());
@@ -62,6 +65,7 @@ public class CartFragment extends Fragment {
                 addToList();
             }
         });
+        cart_instructions = view.findViewById(R.id.cart_instructions);
         tvItemCount = view.findViewById(R.id.itemCount);
         tvTotal = view.findViewById(R.id.cartTotal);
         imDeleteCart = view.findViewById(R.id.cart_delete);
@@ -77,15 +81,15 @@ public class CartFragment extends Fragment {
         recyclerView = view.findViewById(R.id.cart_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
-        final CartAdapter adapter = new CartAdapter();
-        recyclerView.setAdapter(adapter);
+        final CartAdapter cartAdapter = new CartAdapter();
+        recyclerView.setAdapter(cartAdapter);
 
-        cartViewModel = new ViewModelProvider(getActivity(),
-                ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(CartViewModel.class);
+        cartViewModel = new ViewModelProvider(getActivity(), ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(CartViewModel.class);
         cartViewModel.getAllCartItems().observe(getActivity(), new Observer<List<CartItem>>() {
             @Override
             public void onChanged(List<CartItem> cartItems) {
-                adapter.submitList(cartItems);
+                cartAdapter.submitList(cartItems);
+                toggleInsVisibility(cartItems.size());
             }
         });
 
@@ -96,14 +100,30 @@ public class CartFragment extends Fragment {
             }
 
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                CartItem cartItem = adapter.getCartItemAt(viewHolder.getAdapterPosition());
-                removeItem(cartItem);
+            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
+                final CartItem cartItem = cartAdapter.getCartItemAt(viewHolder.getAdapterPosition());
+                Snackbar snackbar = Snackbar.make(recyclerView, R.string.deleted, Snackbar.LENGTH_SHORT)
+                        .setAction(R.string.undo, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                cartAdapter.notifyDataSetChanged();
+                            }
+                        })
+                        .addCallback(new Snackbar.Callback() {
+                            @Override
+                            public void onDismissed(Snackbar transientBottomBar, int event) {
+                                super.onDismissed(transientBottomBar, event);
+                                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                                    removeItem(cartItem);
+                                }
+                            }
+                        });
+                snackbar.show();
             }
         }).attachToRecyclerView(recyclerView);
 
 
-        adapter.setOnCartItemClickListener(new CartAdapter.OnCartItemClickListener() {
+        cartAdapter.setOnCartItemClickListener(new CartAdapter.OnCartItemClickListener() {
             @Override
             public void OnCartItemClick(CartItem cartItem) {
                 int dbID = cartItem.getId();
@@ -150,8 +170,6 @@ public class CartFragment extends Fragment {
             showTotal(total);
             sharedPref.edit().putString("cartTotal", String.valueOf(total)).apply();
         }
-
-        showInstructions();
     }
 
     public void updateItem(int dbID, String itemName, String oldItemPrice, String newItemPrice, int oldQuantity, int newQuantity) {
@@ -249,14 +267,13 @@ public class CartFragment extends Fragment {
         return currency + itemTotalStr;
     }
 
-    private void showInstructions() {
-        boolean hasShown = sharedPref.getBoolean("hasShownCartIns", false);
-        if (!hasShown) {
-            new BubbleShowCaseBuilder(getActivity())
-                    .title("Cart items")
-                    .description("Tap to edit. Swipe to delete.\nAll items are saved automatically.")
-                    .show();
-            sharedPref.edit().putBoolean("hasShownCartIns", true).apply();
-        }
+    private void toggleInsVisibility(int itemCount) {
+        if (theme.equalsIgnoreCase("dark"))
+            new Essentials(getActivity()).invertDrawable(cart_instructions.findViewById(R.id.cartIcon));
+        cart_instructions.setAlpha(0.5f);
+        if (itemCount > 0)
+            cart_instructions.setVisibility(View.GONE);
+        else
+            cart_instructions.setVisibility(View.VISIBLE);
     }
 }

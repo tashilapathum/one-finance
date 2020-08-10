@@ -54,6 +54,7 @@
             android:ems="10"
             android:fontFamily="sans-serif-condensed"
             android:hint="@string/amount"
+            android:background="@android:color/transparent"
             android:importantForAutofill="no"
             android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -72,6 +73,7 @@
             android:ems="10"
             android:fontFamily="sans-serif-condensed"
             android:hint="@string/description"
+            android:background="@android:color/transparent"
             android:importantForAutofill="no"
             android:inputType="textCapSentences" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -93,7 +95,6 @@
             android:paddingVertical="12dp"
             app:cornerRadius="48dp"
             android:layout_marginHorizontal="4dp"
-            android:elevation="8dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
         <com.google.android.material.button.MaterialButton

@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -31,11 +33,13 @@ public class DialogNewBill extends DialogFragment {
     private EditText etAmount;
     private EditText etDate;
     private EditText etRemarks;
-    private String paymentStatus;
+    private boolean isPaid;
+    private boolean isMonthly;
     private RadioGroup radioGroup;
     private DateTimeFormatter formatter;
     private static DialogNewBill instance;
-
+    private Bill editingBill;
+    private CheckBox cbMonthly;
 
     @NonNull
     @Override
@@ -45,28 +49,17 @@ public class DialogNewBill extends DialogFragment {
         instance = this;
 
         view = getActivity().getLayoutInflater().inflate(R.layout.dialog_new_bill, null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(view)
-                .setTitle("New bill")
-                .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                })
-                .setNegativeButton(R.string.cancel, null);
-
-        tilTitle = view.findViewById(R.id.billTitle);
-        tilAmount = view.findViewById(R.id.billAmount);
+        tilTitle = view.findViewById(R.id.title);
+        tilAmount = view.findViewById(R.id.amount);
         tilDate = view.findViewById(R.id.billDate);
-        tilRemarks = view.findViewById(R.id.billRemarks);
+        tilRemarks = view.findViewById(R.id.remarks);
         etTitle = tilTitle.getEditText();
         etAmount = tilAmount.getEditText();
         etDate = tilDate.getEditText();
         etRemarks = tilRemarks.getEditText();
-        paymentStatus = "paid";
+        isPaid = true;
         radioGroup = view.findViewById(R.id.rgPaidOrDue);
-
+        cbMonthly = view.findViewById(R.id.cbMonthly);
         setDate(LocalDate.now().format(formatter));
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,15 +67,68 @@ public class DialogNewBill extends DialogFragment {
                 showDatePicker();
             }
         });
-
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 setPaymentStatus(radioGroup);
             }
         });
+        cbMonthly.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                isMonthly = isChecked;
+            }
+        });
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        if (getActivity().getSupportFragmentManager().findFragmentByTag("edit bill dialog") == null) {
+            builder.setView(view)
+                    .setTitle("New bill")
+                    .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //handled in onResume
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, null);
+        } else {
+            builder.setView(view)
+                    .setTitle("Edit bill")
+                    .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //handled in onResume
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, null);
+            fillDetails(editingBill);
+        }
 
         return builder.create();
+    }
+
+    public DialogNewBill(Bill editingBill) {
+        this.editingBill = editingBill;
+    }
+
+    private void fillDetails(Bill editingBill) {
+        String title = editingBill.getTitle();
+        String amount = editingBill.getAmount();
+        String date;
+        if (editingBill.isPaid())
+            date = editingBill.getPaidDate();
+        else {
+            date = editingBill.getDueDate();
+            radioGroup.check(radioGroup.getChildAt(1).getId());
+        }
+        if (editingBill.isMonthly())
+            cbMonthly.setChecked(true);
+        String remarks = editingBill.getRemarks();
+        etTitle.setText(title);
+        etAmount.setText(amount);
+        etDate.setText(date);
+        etRemarks.setText(remarks);
     }
 
     public static DialogNewBill getInstance() {
@@ -96,18 +142,28 @@ public class DialogNewBill extends DialogFragment {
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickAdd();
+                onClickAddOrEdit();
             }
         });
     }
 
-    private void onClickAdd() {
+    private void onClickAddOrEdit() {
         if (validateTitle() && validateAmount()) {
             String title = etTitle.getText().toString();
             String amount = etAmount.getText().toString();
-            String date = etDate.getText().toString();
+            String paidDate = null;
+            String dueDate = null;
+            if (isPaid)
+                paidDate = etDate.getText().toString();
+            else
+                dueDate = etDate.getText().toString();
             String remarks = etRemarks.getText().toString();
-            BillsFragment.getInstance().addBill(title, amount, date, remarks, paymentStatus);
+            Bill bill = new Bill(isPaid, title, amount, paidDate, dueDate, remarks, isMonthly);
+            if (editingBill != null) {
+                bill.setId(editingBill.getId());
+                BillsFragment.getInstance().updateBill(bill);
+            } else
+                BillsFragment.getInstance().addBill(bill);
             dialog.dismiss();
         }
     }
@@ -149,12 +205,11 @@ public class DialogNewBill extends DialogFragment {
         RadioButton rbDue = (RadioButton) radioGroup.getChildAt(1);
         if (rbPaid.isChecked()) {
             tilDate.setHint(getString(R.string.paid_date));
-            paymentStatus = "paid";
+            isPaid = true;
         }
         if (rbDue.isChecked()) {
             tilDate.setHint(getString(R.string.pay_due_date));
-            paymentStatus = "due";
+            isPaid = false;
         }
     }
-
 }

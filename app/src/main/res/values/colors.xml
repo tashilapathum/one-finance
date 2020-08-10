@@ -15,9 +15,7 @@
     <color name="colorCustomButton">#BFBCBC</color>
     <color name="colorCustomButtonLight">#DCD9D9</color>
     <color name="colorShadow">#2C2C2E</color>
-    <color name="colorDue">#FFF176</color>
-    <color name="colorPaid">#81C784</color>
     <color name="colorOverdue">#FF7043</color>
     <color name="colorCartFAB">#81C784</color>
-    <color name="colorBillsFAB">#64B5F6</color>
+    <color name="colorBillsFAB">#FFB74D</color>
 </resources>

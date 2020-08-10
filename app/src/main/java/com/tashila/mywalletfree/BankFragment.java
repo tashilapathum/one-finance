@@ -200,7 +200,8 @@ public class BankFragment extends Fragment {
                 //update wallet
                 double walletBalance = Double.parseDouble(sharedPref.getString("balance", null));
                 double newWalletBalance = walletBalance + inputAmount;
-                sharedPref.edit().putString("balance", String.valueOf(newWalletBalance)).apply();
+                String balanceStr = df.format(newWalletBalance);
+                sharedPref.edit().putString("balance", balanceStr).apply();
             }
 
             //save
