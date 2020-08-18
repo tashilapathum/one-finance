@@ -69,7 +69,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/amount"
-                    app:helperText="Bills with a monthly fee will renew automatically.">
+                    app:helperText="@string/renew">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"

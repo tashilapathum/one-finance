@@ -30,7 +30,6 @@ import java.util.Locale;
 
 public class NewAccount extends AppCompatActivity {
     SharedPreferences sharedPref;
-    boolean primaryChecked;
     TextInputLayout tilAccountName;
     TextInputLayout tilCurrentBalance;
     TextInputLayout tilAnnualInterest;
@@ -131,13 +130,12 @@ public class NewAccount extends AppCompatActivity {
         Button button = (Button) view;
         if (validateAccName() && validateAccBalance()) {
             if (button.getText().equals("Add") || button.getText().equals("එකතු කරන්න"))
-                createAccount();
+                createAccountNEW();
             if (button.getText().equals("Save") || button.getText().equals("සුරකින්න"))
                 updateAccount();
 
             //go back to bank fragment
-            sharedPref.edit().putBoolean("reqOpenBank", true).apply();
-            startActivity(new Intent(this, MainActivity.class));
+            finish();
         }
     }
 
@@ -172,8 +170,6 @@ public class NewAccount extends AppCompatActivity {
             }
         }
         ////end of account creation logic////
-
-        Log.i(TAG, "Line 174 done");
 
         //save data of the created account
         saveString(etAccountName, accountName);
@@ -294,5 +290,13 @@ public class NewAccount extends AppCompatActivity {
         sharedPref.edit().putBoolean("reqEditing", false).apply();
     }
 
-    //TODO: new accounts are not creating!!
+
+
+
+
+    //--------------------------------------------------------------------------------------------//
+
+    private void createAccountNEW() {
+
+    }
 }

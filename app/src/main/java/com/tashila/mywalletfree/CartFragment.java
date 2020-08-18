@@ -11,7 +11,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -44,6 +43,8 @@ public class CartFragment extends Fragment {
     private RecyclerView recyclerView;
     private LinearLayout cart_instructions;
     private String theme;
+    private CartAdapter cartAdapter;
+
 
     @Nullable
     @Override
@@ -81,7 +82,7 @@ public class CartFragment extends Fragment {
         recyclerView = view.findViewById(R.id.cart_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
-        final CartAdapter cartAdapter = new CartAdapter();
+        cartAdapter = new CartAdapter();
         recyclerView.setAdapter(cartAdapter);
 
         cartViewModel = new ViewModelProvider(getActivity(), ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(CartViewModel.class);
@@ -89,6 +90,7 @@ public class CartFragment extends Fragment {
             @Override
             public void onChanged(List<CartItem> cartItems) {
                 cartAdapter.submitList(cartItems);
+                showItemCount(cartItems.size());
                 toggleInsVisibility(cartItems.size());
             }
         });
@@ -130,12 +132,14 @@ public class CartFragment extends Fragment {
                 String itemName = cartItem.getItemName();
                 String oldItemPrice = cartItem.getItemPrice();
                 int oldQuantity = cartItem.getQuantity();
+                boolean isChecked = cartItem.isChecked();
 
                 Bundle bundle = new Bundle();
                 bundle.putInt("cart dbID", dbID);
                 bundle.putString("cart itemName", itemName);
                 bundle.putString("cart itemPrice", oldItemPrice);
                 bundle.putInt("cart quantity", oldQuantity);
+                bundle.putBoolean("cart isChecked", isChecked);
 
                 DialogNewCartItem dialogNewCartItem = new DialogNewCartItem();
                 dialogNewCartItem.setArguments(bundle);
@@ -158,13 +162,10 @@ public class CartFragment extends Fragment {
 
     public void addItem(String itemName, String itemPrice, int quantity) {
         String itemTotal = getItemTotal(itemPrice, quantity);
-        CartItem cartItem = new CartItem(itemName, itemPrice, quantity, itemTotal);
+        CartItem cartItem = new CartItem(itemName, itemPrice, quantity, itemTotal, false);
         cartViewModel.insert(cartItem);
 
-        //update item count and total
-        itemCount = itemCount + quantity;
-        showItemCount(itemCount);
-        sharedPref.edit().putInt("cartItemCount", itemCount).apply();
+        //update total
         if (!itemPrice.isEmpty()) {
             total = total + Double.parseDouble(itemPrice) * quantity;
             showTotal(total);
@@ -172,19 +173,11 @@ public class CartFragment extends Fragment {
         }
     }
 
-    public void updateItem(int dbID, String itemName, String oldItemPrice, String newItemPrice, int oldQuantity, int newQuantity) {
+    public void updateItem(int dbID, String itemName, String oldItemPrice, String newItemPrice, int oldQuantity, int newQuantity, boolean isChecked) {
         String itemTotal = getItemTotal(newItemPrice, newQuantity);
-        CartItem cartItem = new CartItem(itemName, newItemPrice, newQuantity, itemTotal);
+        CartItem cartItem = new CartItem(itemName, newItemPrice, newQuantity, itemTotal, isChecked);
         cartItem.setId(dbID);
         cartViewModel.update(cartItem);
-
-        //update item count and total
-        if (oldQuantity < newQuantity)
-            itemCount = itemCount + (newQuantity - oldQuantity);
-        else
-            itemCount = itemCount - (oldQuantity - newQuantity);
-        showItemCount(itemCount);
-        sharedPref.edit().putInt("cartItemCount", itemCount).apply();
 
         double oldPrice = Double.parseDouble(oldItemPrice);
         double newPrice = Double.parseDouble(newItemPrice);
@@ -197,10 +190,7 @@ public class CartFragment extends Fragment {
         cartViewModel.delete(cartItem);
         int quantity = cartItem.getQuantity();
 
-        //update item count and total
-        itemCount = itemCount - quantity;
-        showItemCount(itemCount);
-        sharedPref.edit().putInt("cartItemCount", itemCount).apply();
+        //update total
 
         String itemPrice = cartItem.getItemPrice();
         if (!itemPrice.isEmpty()) {
@@ -208,6 +198,16 @@ public class CartFragment extends Fragment {
             showTotal(total);
             sharedPref.edit().putString("cartTotal", String.valueOf(total)).apply();
         }
+    }
+
+    public void checkItem(CartItem cartItem) {
+        cartItem.setChecked(true);
+        cartViewModel.update(cartItem);
+    }
+
+    public void uncheckItem(CartItem cartItem) {
+        cartItem.setChecked(false);
+        cartViewModel.update(cartItem);
     }
 
     public void clearCart() {
@@ -218,11 +218,8 @@ public class CartFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         cartViewModel.deleteAllCartItems();
-                        showItemCount(0);
                         showTotal(0);
-                        itemCount = 0;
                         total = 0;
-                        sharedPref.edit().putInt("cartItemCount", 0).apply();
                         sharedPref.edit().putString("cartTotal", "0.00").apply();
                     }
                 })
@@ -247,9 +244,6 @@ public class CartFragment extends Fragment {
     }
 
     private void loadItemCountAndTotal() {
-        int itemCount = sharedPref.getInt("cartItemCount", 0);
-        showItemCount(itemCount);
-
         String total = sharedPref.getString("cartTotal", "");
         if (!total.isEmpty())
             showTotal(Double.parseDouble(total));

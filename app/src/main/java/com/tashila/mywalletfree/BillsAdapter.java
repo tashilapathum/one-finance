@@ -1,6 +1,9 @@
 package com.tashila.mywalletfree;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,8 +16,13 @@ import android.widget.TextView;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.OffsetDateTime;
+import org.threeten.bp.ZoneId;
+import org.threeten.bp.ZoneOffset;
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.FormatStyle;
+import org.threeten.bp.temporal.TemporalUnit;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -27,6 +35,7 @@ public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
     private SharedPreferences sharedPref;
     private String currency;
     private String theme;
+    private String language;
 
 
     public BillsAdapter(Context context) {
@@ -36,6 +45,7 @@ public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
         sharedPref = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
         currency = sharedPref.getString("currency", "");
         theme = sharedPref.getString("theme", "light");
+        language = sharedPref.getString("language", "english");
     }
 
     private static final DiffUtil.ItemCallback<Bill> DIFF_CALLBACK = new DiffUtil.ItemCallback<Bill>() {
@@ -103,22 +113,35 @@ public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
         }
 
         //show and hide "overdue"
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+        DateTimeFormatter formatterSI = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        int today = LocalDate.now().getDayOfYear();
+        int dueDay = 0;
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-            int today = LocalDate.now().getDayOfYear();
-            int dueDay;
-            if (!currentBill.getDueDate().equals("N/A")) {
-                dueDay = LocalDate.parse(currentBill.getDueDate(), formatter).getDayOfYear();
-                if (today > dueDay &&
-                        !currentBill.isPaid())
-                    holder.tvOverdue.setVisibility(View.VISIBLE);
+            if (!currentBill.getDueDate().equals("N/A"))
+                if (language.equalsIgnoreCase("සිංහල"))
+                    dueDay = LocalDate.parse(currentBill.getDueDate(), formatterSI).getDayOfYear();
                 else
-                    holder.tvOverdue.setVisibility(View.GONE);
-            }
+                    dueDay = LocalDate.parse(currentBill.getDueDate(), formatter).getDayOfYear();
+                setNotifications(dueDay);
         } catch (Exception e) { //because the user might change the localization
             e.printStackTrace();
         }
+        if (today > dueDay && !currentBill.isPaid())
+            holder.tvOverdue.setVisibility(View.VISIBLE);
+        else
+            holder.tvOverdue.setVisibility(View.GONE);
+    }
+
+    private void setNotifications(int dueDayOfYear) {
+        LocalDate dueDate = LocalDate.ofYearDay(LocalDate.now().getYear(), dueDayOfYear);
+        LocalDateTime prevDay = dueDate.minusDays(1).atStartOfDay().plusHours(13).plusMinutes(30);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, AlertReceiver.class);
+        int reqCode = (int) System.currentTimeMillis();
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, reqCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, prevDay.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(), pendingIntent);
+        Log.i(TAG, "due notification set!");
     }
 
 

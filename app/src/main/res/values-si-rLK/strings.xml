@@ -83,7 +83,7 @@
     <string name="everydayy">ට</string>
     <string name="buy_pro_for_this">මෙම පහසුකම සඳහා Pro සංස්කරණය මිළ දී ගන්න</string>
     <string name="buy">මිළ දී ගන්න</string>
-    <string name="notification_title">ඔබ අද දිනයේ සිදුකළ ගනුදෙනු ඇතුලත් කළා ද?</string>
+    <string name="trans_notify_title">ඔබ අද දිනයේ සිදුකළ ගනුදෙනු ඇතුලත් කළා ද?</string>
     <string name="notification_msg">\"මයි වොලට්\" විවෘත කිරීමට මෙතන ටච් කරන්න</string>
     <string name="predate">පෙර ගනුදෙනු</string>
     <string name="predate_description">පෙර දිනයන්හි දී සිදුකරන ලද ගනුදෙනු ඇතුලත් කිරීමට දින දර්ශනය පෙන්වන තුරු බොත්තම ඔබාගෙන සිටින්න</string>
@@ -232,4 +232,12 @@
     <string name="overdue">ගෙවීමට තිබූ දිනය පසුවී ඇත</string>
     <string name="paid_">ගෙවූ දිනය:&#160;</string>
     <string name="due_">ගෙවිය යුතු දිනය:&#160;</string>
+    <string name="new_bill">නව බිල්පතක් එකතු කිරීම</string>
+    <string name="edit_bill">බිල්පත සංස්කරණය කිරීම</string>
+    <string name="renew">මාසික බිල්පත් සෑම මසකම ස්වයංක්‍රීයව අලුත් වේ</string>
+    <string name="bills_notify_title">You have due payments of your bills tomorrow</string>
+    <string name="type_in_or_select_the_currency">Type in or select the currency</string>
+    <string name="add_balance">Add the balance you currently have in your wallet</string>
+    <string name="monthly_budget">Monthly budget</string>
+    <string name="transfer">Transfer</string>
 </resources>

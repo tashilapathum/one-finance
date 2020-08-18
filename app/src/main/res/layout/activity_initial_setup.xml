@@ -8,42 +8,37 @@
     android:paddingVertical="16dp"
     tools:context=".InitialSetup">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/logo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:alpha="0.5"
+            android:alpha="0.7"
             android:paddingBottom="8dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_launcher"
+            android:contentDescription="logo" />
 
         <TextView
-            android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/logo"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
             android:paddingBottom="24dp"
             android:text="@string/one_time_setup"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
         <TextView
-            android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textView3"
-            android:paddingTop="16dp"
             android:text="@string/all_fields_are_optional_you_can_change_these_settings_later" />
 
         <TextView
-            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textView5"
             android:paddingTop="16dp"
             android:text="@string/choose_language"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
@@ -52,7 +47,7 @@
             android:id="@+id/radioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textView4">
+            android:layout_marginHorizontal="8dp">
 
             <RadioButton
                 android:id="@+id/otEnglish"
@@ -71,38 +66,25 @@
 
         </RadioGroup>
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/radioGroup"
-            android:paddingTop="16dp"
-            android:text="@string/set_currency"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+            app:helperText="@string/type_in_or_select_the_currency"
+            android:id="@+id/addCurrency">
 
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textView6"
-            android:text="@string/never_type_in_the_currency_when_adding_amounts_even_if_you_didn_t_set_the_currency" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/currency"
+                android:inputType="textCapSentences"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
-            android:id="@+id/ll1"
             style="?android:attr/buttonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textView11"
             android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/editCurrency"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="@string/eg"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:padding="16dp" />
 
             <Button
                 android:id="@+id/dollar"
@@ -165,43 +147,45 @@
                 android:text="₹" />
         </LinearLayout>
 
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:paddingTop="8dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ll1"
+            app:helperText="@string/add_balance"
+            android:id="@+id/addBalance">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/balance"
+                android:inputType="numberDecimal"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addBudget"
             android:paddingTop="16dp"
-            android:text="@string/add_monthly_budget"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textView7"
-            android:text="@string/weekly_and_daily_budgets_will_be_calculated_based_on_this" />
+            app:helperText="@string/weekly_and_daily_budgets_will_be_calculated_based_on_this">
 
-        <EditText
-            android:id="@+id/editBudget"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textView10"
-            android:hint="@string/eg_500"
-            android:importantForAutofill="no"
-            android:inputType="numberDecimal"
-            android:padding="16dp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/monthly_budget"
+                android:inputType="numberDecimal"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnContinue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/editBudget"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="32dp"
+            android:layout_gravity="center"
+            android:layout_marginVertical="32dp"
             android:onClick="onClickContinue"
             android:text="@string/continue_next"
             android:textAllCaps="false" />
 
-    </RelativeLayout>
+    </LinearLayout>
 </ScrollView>

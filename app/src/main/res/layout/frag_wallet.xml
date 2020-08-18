@@ -91,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed"
-            android:text="@string/to_bank"
+            android:text="@string/transfer"
             android:paddingVertical="12dp"
             app:cornerRadius="48dp"
             android:layout_marginHorizontal="4dp"

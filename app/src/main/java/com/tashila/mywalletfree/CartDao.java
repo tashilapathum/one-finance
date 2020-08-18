@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -24,6 +25,6 @@ public interface CartDao {
     @Query("DELETE FROM cart_items_table")
     void deleteAllCartItems();
 
-    @Query("SELECT * FROM cart_items_table")
+    @Query("SELECT * FROM cart_items_table ORDER BY isChecked ASC")
     LiveData<List<CartItem>> getAllCartItems();
 }

@@ -84,7 +84,7 @@ public class DialogNewBill extends DialogFragment {
 
         if (getActivity().getSupportFragmentManager().findFragmentByTag("edit bill dialog") == null) {
             builder.setView(view)
-                    .setTitle("New bill")
+                    .setTitle(R.string.new_bill)
                     .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -94,7 +94,7 @@ public class DialogNewBill extends DialogFragment {
                     .setNegativeButton(R.string.cancel, null);
         } else {
             builder.setView(view)
-                    .setTitle("Edit bill")
+                    .setTitle(R.string.edit_bill)
                     .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

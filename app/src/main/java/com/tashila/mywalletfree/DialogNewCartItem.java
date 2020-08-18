@@ -83,6 +83,7 @@ public class DialogNewCartItem extends DialogFragment {
         int dbID = bundle.getInt("cart dbID");
         String oldItemPrice = bundle.getString("cart itemPrice");
         int oldQuantity = bundle.getInt("cart quantity");
+        boolean isChecked = bundle.getBoolean("cart isChecked");
         String itemName = etItemName.getText().toString();
         String newItemPrice = etItemPrice.getText().toString();
         String strQuantity = etQuantity.getText().toString();
@@ -94,7 +95,7 @@ public class DialogNewCartItem extends DialogFragment {
         if (newItemPrice.isEmpty())
             newItemPrice = "0.00";
         if (!itemName.isEmpty()) {
-            CartFragment.getInstance().updateItem(dbID, itemName, oldItemPrice, newItemPrice, oldQuantity, newQuantity);
+            CartFragment.getInstance().updateItem(dbID, itemName, oldItemPrice, newItemPrice, oldQuantity, newQuantity, isChecked);
         }
     }
 }

@@ -56,7 +56,7 @@ public class TransactionsAdapter extends ListAdapter<TransactionItem, Transactio
     @Override
     public void onBindViewHolder(@NonNull TransactionsViewHolder holder, int position) {
         TransactionItem currentItem = getItem(position);
-        holder.mAmount.setText(currency + currentItem.getAmount());
+        holder.mAmount.setText(currentItem.getPrefix() +  currency + currentItem.getAmount());
         holder.mDescr.setText(currentItem.getDescription());
         holder.mDate.setText(currentItem.getUserDate());
     }

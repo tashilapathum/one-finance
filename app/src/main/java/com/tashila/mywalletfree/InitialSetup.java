@@ -13,6 +13,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import org.threeten.bp.YearMonth;
@@ -70,11 +72,19 @@ public class InitialSetup extends AppCompatActivity {
         sharedPref.edit().putString("language", language).apply();
 
         //currency
-        EditText editCurrency = findViewById(R.id.editCurrency);
-        sharedPref.edit().putString("currency", editCurrency.getText().toString()).apply();
+        TextInputLayout tilAddCurrency = findViewById(R.id.addCurrency);
+        EditText addCurrency = tilAddCurrency.getEditText();
+        sharedPref.edit().putString("currency", addCurrency.getText().toString()).apply();
+
+        //balance
+        TextInputLayout tilAddBalance = findViewById(R.id.addBalance);
+        EditText addBalance = tilAddBalance.getEditText();
+        if (!addBalance.getText().toString().isEmpty())
+            sharedPref.edit().putString("balance", addBalance.getText().toString()).apply();
 
         //budget
-        EditText editBudget = findViewById(R.id.editBudget);
+        TextInputLayout tilAddBudget = findViewById(R.id.addBudget);
+        EditText editBudget = tilAddBudget.getEditText();
         if (!editBudget.getText().toString().isEmpty()) {
             String monthlyBudget = editBudget.getText().toString();
             String weeklyBudget = String.valueOf(Double.parseDouble(monthlyBudget) / 4);
@@ -90,12 +100,15 @@ public class InitialSetup extends AppCompatActivity {
         startActivity(intent);
         finish();
         sharedPref.edit().putBoolean("alreadyDidInitSetup", true).apply();
-        Toast.makeText(this, "Welcome to My Wallet!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Welcome to My Wallet!", Toast.LENGTH_LONG).show();
+
+        finish();
     }
 
     public void setQuickCurrency(View view) {
         int btnID = view.getId();
-        EditText etCurrency = findViewById(R.id.editCurrency);
+        TextInputLayout tilCurrency = findViewById(R.id.addCurrency);
+        EditText etCurrency = tilCurrency.getEditText();
         String currency = null;
         switch (btnID) {
             case R.id.dollar: {

@@ -13,12 +13,14 @@ public class CartItem {
     private String itemPrice;
     private int quantity;
     private String itemTotal;
+    private boolean isChecked;
 
-    public CartItem(String itemName, String itemPrice, int quantity, String itemTotal) {
+    public CartItem(String itemName, String itemPrice, int quantity, String itemTotal, boolean isChecked) {
         this.itemName = itemName;
         this.itemPrice = itemPrice;
         this.quantity = quantity;
         this.itemTotal = itemTotal;
+        this.isChecked = isChecked;
     }
 
     public void setId(int id) {
@@ -43,5 +45,13 @@ public class CartItem {
 
     public String getItemTotal() {
         return itemTotal;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 }

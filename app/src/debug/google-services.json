@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:615339790521:android:a54ce30e1047dc49fdcb68",
         "android_client_info": {
-          "package_name": "com.tashila.mywalletfree"
+          "package_name": "com.tashila.mywalletfree.debug"
         }
       },
       "oauth_client": [
