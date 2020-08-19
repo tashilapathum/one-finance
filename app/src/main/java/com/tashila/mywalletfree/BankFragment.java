@@ -1,6 +1,7 @@
 package com.tashila.mywalletfree;
 
 import androidx.appcompat.app.AlertDialog;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -143,6 +144,16 @@ public class BankFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!sharedPref.getBoolean("bankFragAlreadyReloaded", false)) {
+            reloadFragment();
+            sharedPref.edit().putBoolean("bankFragAlreadyReloaded", true).apply();
+        }
+
+    }
+
     private void showDialog() {
         DialogChooseAcc dialogChooseAcc = new DialogChooseAcc();
         dialogChooseAcc.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -189,13 +200,17 @@ public class BankFragment extends Fragment {
             //calculate
             if (isDepositId) {
                 newBalance = currentBalance + inputAmount;
-                if (sinhala) activity = currency + df.format(inputAmount) + "ක් " + accountName + " ගිණුමෙහි තැන්පත් කරන ලදී" + "###" + timeStamp;
-                else activity = "Deposited " + currency + df.format(inputAmount) + " to " + accountName + "###" + timeStamp;
+                if (sinhala)
+                    activity = currency + df.format(inputAmount) + "ක් " + accountName + " ගිණුමෙහි තැන්පත් කරන ලදී" + "###" + timeStamp;
+                else
+                    activity = "Deposited " + currency + df.format(inputAmount) + " to " + accountName + "###" + timeStamp;
             }
             if (isWithdrawId) {
                 newBalance = currentBalance - inputAmount;
-                if (sinhala) activity = currency + df.format(inputAmount) + "ක් " + accountName + " ගිණුමෙන් ආපසු ගන්නා ලදී" + "###" + timeStamp;
-                else activity = "Withdrew " + currency + df.format(inputAmount) + " from " + accountName + "###" + timeStamp;
+                if (sinhala)
+                    activity = currency + df.format(inputAmount) + "ක් " + accountName + " ගිණුමෙන් ආපසු ගන්නා ලදී" + "###" + timeStamp;
+                else
+                    activity = "Withdrew " + currency + df.format(inputAmount) + " from " + accountName + "###" + timeStamp;
 
                 //update wallet
                 double walletBalance = Double.parseDouble(sharedPref.getString("balance", null));

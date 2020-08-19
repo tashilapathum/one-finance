@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group>
+    <group
+        android:id="@+id/top_group">
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
@@ -22,7 +23,8 @@
             android:title="@string/settings" />
     </group>
 
-    <group>
+    <group
+        android:id="@+id/bottom_group">
         <item
             android:id="@+id/nav_get_pro"
             android:icon="@drawable/ic_get_pro"

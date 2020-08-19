@@ -138,7 +138,7 @@ public class NewAccount extends AppCompatActivity {
         Button button = (Button) view;
         if (validateAccName() && validateAccBalance()) {
             if (button.getText().equals("Add") || button.getText().equals("එකතු කරන්න"))
-                createAccountNEW();
+                createAccount();
             if (button.getText().equals("Save") || button.getText().equals("සුරකින්න"))
                 updateAccount();
 

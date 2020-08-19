@@ -245,6 +245,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                sharedPref.edit().putBoolean("exit", true).apply();
                                 finishAndRemoveTask();
                             }
                         })
