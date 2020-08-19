@@ -109,6 +109,20 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
         super.applyOverrideConfiguration(overrideConfiguration);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sharedPref.getBoolean("exit", false)) {
+            finishAndRemoveTask();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sharedPref.edit().putBoolean("exit", false).apply();
+    }
+
     //nav drawer
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -141,6 +155,11 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
             case R.id.nav_about: {
                 DialogAbout dialogAbout = new DialogAbout();
                 dialogAbout.show(getSupportFragmentManager(), "about dialog");
+                break;
+            }
+            case R.id.nav_exit: {
+                sharedPref.edit().putBoolean("exit", true).apply();
+                finishAndRemoveTask();
                 break;
             }
         }

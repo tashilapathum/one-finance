@@ -121,6 +121,11 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
                 dialogAbout.show(getSupportFragmentManager(), "about dialog");
                 break;
             }
+            case R.id.nav_exit: {
+                sharedPref.edit().putBoolean("exit", true).apply();
+                finishAndRemoveTask();
+                break;
+            }
         }
         return true;
     }
@@ -132,6 +137,20 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sharedPref.getBoolean("exit", false)) {
+            finishAndRemoveTask();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sharedPref.edit().putBoolean("exit", false).apply();
     }
 
     private void createItemsNEW() {

@@ -104,6 +104,14 @@ public class NewAccount extends AppCompatActivity {
         super.applyOverrideConfiguration(overrideConfiguration);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sharedPref.getBoolean("exit", false)) {
+            finishAndRemoveTask();
+        }
+    }
+
     private boolean validateAccName() {
         String accNameInput = tilAccountName.getEditText().getText().toString();
         if (accNameInput.isEmpty()) {
@@ -288,6 +296,7 @@ public class NewAccount extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         sharedPref.edit().putBoolean("reqEditing", false).apply();
+        sharedPref.edit().putBoolean("exit", false).apply();
     }
 
 

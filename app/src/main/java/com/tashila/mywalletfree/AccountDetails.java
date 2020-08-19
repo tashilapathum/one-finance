@@ -107,6 +107,20 @@ public class AccountDetails extends AppCompatActivity {
         super.applyOverrideConfiguration(overrideConfiguration);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sharedPref.getBoolean("exit", false)) {
+            finishAndRemoveTask();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sharedPref.edit().putBoolean("exit", false).apply();
+    }
+
     public void setDetail(TextView view, String stringKey) {
         String detail = sharedPref.getString(stringKey + accountNo, null);
         //^determines which account from here

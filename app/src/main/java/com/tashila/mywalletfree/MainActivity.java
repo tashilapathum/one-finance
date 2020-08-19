@@ -39,6 +39,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //to exit the app
+        if (getIntent().getBooleanExtra("shouldExit", false))
+            finish();
+
         /*------------------------------Essential for every activity------------------------------*/
         Toolbar toolbar;
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
@@ -103,10 +107,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if (homeScreen.equalsIgnoreCase("bills"))
             navigateScreens(new BillsFragment(), "BillsFragment", R.id.nav_bills);
             //when starting the app normally
-        else {
+        else
             navigateScreens(new WalletFragment(), "WalletFragment", R.id.nav_wallet);
-            /*transaction.addToBackStack(null); //for back button press*/
-        }
 
         //set notification
         boolean isNotificationSet = sharedPref.getBoolean("isNotificationSet", false);
@@ -163,6 +165,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     })
                     .show();
         }
+
+        if (getPackageName().contains("debug"))
+            sharedPref.edit().putBoolean("MyWalletPro", true).apply();
     }
 
     @Override //so the language change works with dark mode
@@ -218,6 +223,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 dialogAbout.show(getSupportFragmentManager(), "about dialog");
                 break;
             }
+            case R.id.nav_exit: {
+                sharedPref.edit().putBoolean("exit", true).apply();
+                finishAndRemoveTask();
+                break;
+            }
         }
         return true;
     }
@@ -244,6 +254,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sharedPref.getBoolean("exit", false)) {
+            finishAndRemoveTask();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sharedPref.edit().putBoolean("exit", false).apply();
+    }
 
     //bottom nav
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -313,8 +336,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 }
 
-//TODO: add starting balance to initial setup
-//TODO: customize drawer items
 
 
 

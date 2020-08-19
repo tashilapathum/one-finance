@@ -51,10 +51,10 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:ems="10"
             android:fontFamily="sans-serif-condensed"
             android:hint="@string/amount"
-            android:background="@android:color/transparent"
             android:importantForAutofill="no"
             android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -64,16 +64,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editAmnt"
-        app:errorEnabled="true"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="8dp"
+        app:errorEnabled="true">
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:ems="10"
             android:fontFamily="sans-serif-condensed"
             android:hint="@string/description"
-            android:background="@android:color/transparent"
             android:importantForAutofill="no"
             android:inputType="textCapSentences" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -90,36 +90,36 @@
             android:id="@+id/btnToBank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed"
-            android:text="@string/transfer"
-            android:paddingVertical="12dp"
-            app:cornerRadius="48dp"
             android:layout_marginHorizontal="4dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+            android:fontFamily="sans-serif-condensed"
+            android:paddingVertical="12dp"
+            android:text="@string/transfer"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            app:cornerRadius="48dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnEarned"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed"
-            android:text="@string/earned"
-            android:paddingVertical="12dp"
-            app:cornerRadius="48dp"
             android:layout_marginHorizontal="2dp"
+            android:fontFamily="sans-serif-condensed"
+            android:paddingVertical="12dp"
+            android:text="@string/earned"
             android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            app:cornerRadius="48dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSpent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed"
-            android:text="@string/spent"
-            android:paddingVertical="12dp"
-            app:cornerRadius="48dp"
             android:layout_marginHorizontal="4dp"
+            android:fontFamily="sans-serif-condensed"
+            android:paddingVertical="12dp"
+            android:text="@string/spent"
             android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            app:cornerRadius="48dp" />
 
     </LinearLayout>
 
@@ -138,15 +138,31 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <TextView
-                android:id="@+id/textView2"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="8dp"
-                android:text="@string/quick_list"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textStyle="italic" />
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/quick_list"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textStyle="italic" />
+
+                <ImageButton
+                    android:id="@+id/editQuickList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_edit"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:padding="4dp"
+                    android:background="?android:selectableItemBackgroundBorderless"
+                    android:contentDescription="edit quick list" />
+            </RelativeLayout>
 
         </LinearLayout>
     </ScrollView>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">Version 0.2.3 (Beta)</string>
+    <string name="version">Version 0.2.6 (Beta)</string>
     <string name="recent_transactions">ගනුදෙනු</string>
     <string name="reports">වාර්තා</string>
     <string name="settings">සැකසුම්</string>
@@ -89,8 +89,8 @@
     <string name="predate_description">පෙර දිනයන්හි දී සිදුකරන ලද ගනුදෙනු ඇතුලත් කිරීමට දින දර්ශනය පෙන්වන තුරු බොත්තම ඔබාගෙන සිටින්න</string>
     <string name="search_description">මෙයින් ඔබගේ පසුගිය ගනුදෙනු දිනය හෝ විස්තරය මගින් සෙවිය හැකියි</string>
     <string name="search">සොයන්න...</string>
-    <string name="withdraw">බැර</string>
-    <string name="deposit">හර</string>
+    <string name="withdraw">ආපසු ගන්න</string>
+    <string name="deposit">තැන්පත් කරන්න</string>
     <string name="account_name">ගිණුමේ නම*</string>
     <string name="current_balance">ශේෂය*</string>
     <string name="annual_interest">වාර්ෂික පොලී අනුපාතය</string>
@@ -235,9 +235,11 @@
     <string name="new_bill">නව බිල්පතක් එකතු කිරීම</string>
     <string name="edit_bill">බිල්පත සංස්කරණය කිරීම</string>
     <string name="renew">මාසික බිල්පත් සෑම මසකම ස්වයංක්‍රීයව අලුත් වේ</string>
-    <string name="bills_notify_title">You have due payments of your bills tomorrow</string>
-    <string name="type_in_or_select_the_currency">Type in or select the currency</string>
-    <string name="add_balance">Add the balance you currently have in your wallet</string>
-    <string name="monthly_budget">Monthly budget</string>
-    <string name="transfer">Transfer</string>
+    <string name="bills_notify_title">ඔබට හෙට දිනයේදී ගෙවීමට බිල්පත් ඇත</string>
+    <string name="type_in_or_select_the_currency">මුදල් වර්ගය තෝරන්න හෝ ඇතුලත් කරන්න</string>
+    <string name="add_balance">ඔබගේ පසුම්බියෙහි මේ මොහොතේ තිබෙන මුදල් ප්‍රමාණය ඇතුලත් කරන්න</string>
+    <string name="monthly_budget">මාසික බජට් අගය</string>
+    <string name="transfer">ගිණුමකට</string>
+    <string name="exit">පිටවෙන්න</string>
+    <string name="uncheck_to_edit">අයිතමය සංස්කරණය කිරීමට \'හරි\' ලකුණ ඉවත් කරන්න</string>
 </resources>

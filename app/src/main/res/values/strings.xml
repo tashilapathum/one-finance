@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">My Wallet</string>
-    <string name="version">Version 0.2.3 (Beta)</string>
+    <string name="version">Version 0.2.6 (Beta)</string>
     <string name="recent_transactions">Transactions</string>
     <string name="reports">Reports</string>
     <string name="settings">Settings</string>
@@ -147,7 +147,7 @@
     <string name="edit_monthly_budget">Edit monthly budget</string>
     <string name="choose_acc">Choose account</string>
     <string name="reached_acc_limit">You\'ve reached account limit</string>
-    <string name="r_a_l_des">Upgrade to Pro version to add an unlimited number of accounts!</string>
+    <string name="r_a_l_des">Upgrade to Pro version to add multiple accounts!</string>
     <string name="set_home_screen">Set home screen</string>
     <string name="add_currency">Add currency</string>
     <string name="select_lang">Select language</string>
@@ -237,9 +237,11 @@
     <string name="new_bill">New bill</string>
     <string name="edit_bill">Edit bill</string>
     <string name="renew">Bills with a monthly fee will renew automatically.</string>
-    <string name="bills_notify_title">You have due payments of your bills tomorrow</string>
+    <string name="bills_notify_title">You have bill payments due for tomorrow</string>
     <string name="type_in_or_select_the_currency">Type in or select the currency</string>
     <string name="add_balance">Add the balance you currently have in your wallet</string>
     <string name="monthly_budget">Monthly budget</string>
     <string name="transfer">Transfer</string>
+    <string name="exit">Exit</string>
+    <string name="uncheck_to_edit">Uncheck item to edit</string>
 </resources>

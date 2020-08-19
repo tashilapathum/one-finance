@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,9 +53,6 @@ public class WalletFragment extends Fragment {
     private TextInputLayout tilDescr;
     private EditText etAmount;
     private EditText etDescr;
-    private Button btnEarned;
-    private Button btnSpent;
-    private Button btnToBank;
     private TextView tvBalance;
     private TextView tvCurrency;
     private View v;
@@ -64,6 +62,7 @@ public class WalletFragment extends Fragment {
     private String language;
     private static WalletFragment instance;
     private TransactionsViewModel transactionsViewModel;
+    private String theme;
 
 
     @Nullable
@@ -74,6 +73,7 @@ public class WalletFragment extends Fragment {
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         AndroidThreeTen.init(context);
         currency = sharedPref.getString("currency", "");
+        theme = sharedPref.getString("theme", "light");
         instance = this;
         transactionsViewModel = new TransactionsViewModel(getActivity().getApplication());
 
@@ -84,9 +84,10 @@ public class WalletFragment extends Fragment {
         etAmount = tilAmount.getEditText();
         tilDescr = v.findViewById(R.id.editDescr);
         etDescr = tilDescr.getEditText();
-        btnEarned = v.findViewById(R.id.btnEarned);
-        btnSpent = v.findViewById(R.id.btnSpent);
-        btnToBank = v.findViewById(R.id.btnToBank);
+        Button btnEarned = v.findViewById(R.id.btnEarned);
+        Button btnSpent = v.findViewById(R.id.btnSpent);
+        Button btnToBank = v.findViewById(R.id.btnToBank);
+        ImageButton imEditQuickList = v.findViewById(R.id.editQuickList);
         language = sharedPref.getString("language", "english");
 
         btnEarned.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +139,15 @@ public class WalletFragment extends Fragment {
                 return true;
             }
         });
+        imEditQuickList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), EditQuickList.class);
+                startActivity(intent);
+            }
+        });
+        if (theme.equalsIgnoreCase("dark"))
+            new Essentials(getActivity()).invertDrawable(imEditQuickList);
 
         loadQuickList();
         createReports(0);
