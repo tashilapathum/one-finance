@@ -41,9 +41,11 @@ import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 public class WalletFragment extends Fragment {
     private static final String TAG = "WalletFragment";
@@ -87,6 +89,7 @@ public class WalletFragment extends Fragment {
         Button btnEarned = v.findViewById(R.id.btnEarned);
         Button btnSpent = v.findViewById(R.id.btnSpent);
         Button btnToBank = v.findViewById(R.id.btnToBank);
+        Button btnUpdate = v.findViewById(R.id.btnUpdate);
         ImageButton imEditQuickList = v.findViewById(R.id.editQuickList);
         language = sharedPref.getString("language", "english");
 
@@ -139,6 +142,13 @@ public class WalletFragment extends Fragment {
                 return true;
             }
         });
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogUpdateBalance dialogUpdateBalance = new DialogUpdateBalance(getActivity());
+                dialogUpdateBalance.show(getActivity().getSupportFragmentManager(), "update balance dialog");
+            }
+        });
         imEditQuickList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,10 +167,27 @@ public class WalletFragment extends Fragment {
     public void onStart() {
         super.onStart();
         //load data
+        String balance = sharedPref.getString("balance", "0.00");
         if (sharedPref.contains("currency"))
             tvCurrency.setText(sharedPref.getString("currency", null));
         if (sharedPref.contains("balance"))
-            tvBalance.setText(sharedPref.getString("balance", "0.00"));
+            tvBalance.setText(balance);
+
+        ImageButton imWarning = v.findViewById(R.id.warning);
+        if (balance.contains("-")) {
+            imWarning.setVisibility(View.VISIBLE);
+            imWarning.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle(R.string.neg_balance)
+                            .setMessage(R.string.update_balance_des)
+                            .setPositiveButton(R.string.ok, null)
+                            .show();
+                }
+            });
+        } else
+            imWarning.setVisibility(View.GONE);
     }
 
     public static WalletFragment getInstance() {
@@ -226,20 +253,22 @@ public class WalletFragment extends Fragment {
             }
 
         } else if (view.getId() == R.id.btnToBank) {
-            if (!sharedPref.getBoolean("hasNoAccounts", true))
-                Toast.makeText(getActivity(), R.string.add_acc_first, Toast.LENGTH_LONG).show();
-            else if (validateAmount()) {
-                String accountName = sharedPref.getString("selectedAccName", null);
-                if (etDescr.getText().toString().isEmpty()) {
-                    if (language.equals("සිංහල"))
-                        etDescr.setText(accountName + getString(R.string.deposited_to));
-                    else
-                        etDescr.setText(getString(R.string.deposited_to) + accountName);
+            if (sharedPref.getBoolean("haveAccounts", false)) {
+                if (validateAmount()) {
+                    String accountName = sharedPref.getString("selectedAccName", null);
+                    if (etDescr.getText().toString().isEmpty()) {
+                        if (language.equals("සිංහල"))
+                            etDescr.setText(accountName + getString(R.string.deposited_to));
+                        else
+                            etDescr.setText(getString(R.string.deposited_to) + accountName);
+                    }
+                    doBankStuff();
+                    sharedPref.edit().putBoolean("transferred", true).apply();
+                    viewId = R.id.btnToBank;
+                    handleData(viewId);
                 }
-                doBankStuff();
-                viewId = R.id.btnToBank;
-                handleData(viewId);
-            }
+            } else
+                Toast.makeText(getActivity(), R.string.add_acc_first, Toast.LENGTH_LONG).show();
 
         } else { //for quick list items
             Button quickButton = (Button) view;
@@ -339,7 +368,6 @@ public class WalletFragment extends Fragment {
             }
             String balance = df.format(doubBalance);
 
-            //saveData(balance, currency, prefix, amount, descr, date);
             saveToDatabase(balance, prefix, currency, amount, descr, date);
             etAmount.setText("");
             etDescr.setText("");
@@ -381,7 +409,10 @@ public class WalletFragment extends Fragment {
                 DecimalFormat df = new DecimalFormat("#.00");
                 String strBalance = df.format(numBalance);
                 tvBalance.setText(strBalance);
-                undoBankStuff(numAmount);
+                if (sharedPref.getBoolean("transferred", false)) {
+                    undoBankStuff(numAmount);
+                    sharedPref.edit().putBoolean("transferred", false).apply();
+                }
             }
         });
         snackbar.addCallback(new Snackbar.Callback() {
@@ -393,6 +424,10 @@ public class WalletFragment extends Fragment {
                                     databaseDate, dayOfWeek, dayOfMonth, monthOfYear);
                     transactionsViewModel.insert(transactionItem);
                     Log.i(TAG, "Transaction added to database!");
+                    if (sharedPref.getBoolean("transferred", false)) {
+                        doBankStuff();
+                        sharedPref.edit().putBoolean("transferred", false).apply();
+                    }
                 }
             }
         });
@@ -587,6 +622,18 @@ public class WalletFragment extends Fragment {
         undoBalance = undoBalance - inputAmount;
         sharedPref.edit().putString("accountBalance" + i, String.valueOf(undoBalance)).apply();
         sharedPref.edit().putString("selectedAccBalance", String.valueOf(undoBalance)).apply();
+    }
+
+    public void updateBalance(String newBalance) {
+        sharedPref.edit().putString("balance", newBalance).apply();
+        Toast.makeText(getActivity(), R.string.updated, Toast.LENGTH_SHORT).show();
+        reloadFragment();
+    }
+
+    private void reloadFragment() {
+        Fragment walletFrag = getActivity().getSupportFragmentManager().findFragmentByTag("WalletFragment");
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.detach(walletFrag).attach(walletFrag).commit();
     }
 }
 

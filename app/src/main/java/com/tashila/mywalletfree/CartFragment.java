@@ -135,21 +135,17 @@ public class CartFragment extends Fragment {
                 String oldItemPrice = cartItem.getItemPrice();
                 int oldQuantity = cartItem.getQuantity();
                 boolean isChecked = cartItem.isChecked();
+                Bundle bundle = new Bundle();
+                bundle.putInt("cart dbID", dbID);
+                bundle.putString("cart itemName", itemName);
+                bundle.putString("cart itemPrice", oldItemPrice);
+                bundle.putInt("cart quantity", oldQuantity);
+                bundle.putBoolean("cart isChecked", isChecked);
 
-                if (isChecked)
-                    Toast.makeText(getActivity(), R.string.uncheck_to_edit, Toast.LENGTH_SHORT).show();
-                else {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("cart dbID", dbID);
-                    bundle.putString("cart itemName", itemName);
-                    bundle.putString("cart itemPrice", oldItemPrice);
-                    bundle.putInt("cart quantity", oldQuantity);
-                    bundle.putBoolean("cart isChecked", isChecked);
+                DialogNewCartItem dialogNewCartItem = new DialogNewCartItem();
+                dialogNewCartItem.setArguments(bundle);
+                dialogNewCartItem.show(getActivity().getSupportFragmentManager(), "edit cart item dialog");
 
-                    DialogNewCartItem dialogNewCartItem = new DialogNewCartItem();
-                    dialogNewCartItem.setArguments(bundle);
-                    dialogNewCartItem.show(getActivity().getSupportFragmentManager(), "edit cart item dialog");
-                }
             }
         });
 

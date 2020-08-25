@@ -55,6 +55,7 @@ public class BankFragment extends Fragment {
     private View view;
     private boolean sinhala;
     LinearLayout linearRecent;
+    boolean haveAccounts;
 
     @Nullable
     @Override
@@ -108,8 +109,8 @@ public class BankFragment extends Fragment {
         if (theme.equalsIgnoreCase("dark"))
             new Essentials(getActivity()).invertDrawable(view.findViewById(R.id.switchAcc));
 
-        boolean haveNoAccounts = sharedPref.getBoolean("haveNoAccounts", true);
-        if (!haveNoAccounts) {
+        haveAccounts = sharedPref.getBoolean("haveAccounts", false);
+        if (haveAccounts) {
             loadDetails();
             loadActivities();
         }
@@ -118,11 +119,15 @@ public class BankFragment extends Fragment {
         return view;
     }
 
+
     @Override
-    public void onStart() {
-        super.onStart();
-        boolean haveNoAccounts = sharedPref.getBoolean("haveNoAccounts", true);
-        if (haveNoAccounts) {
+    public void onResume() {
+        super.onResume();
+        if (!sharedPref.getBoolean("bankFragAlreadyReloaded", false)) {
+            reloadFragment();
+            sharedPref.edit().putBoolean("bankFragAlreadyReloaded", true).apply();
+        }
+        if (!haveAccounts) {
             new AlertDialog.Builder(getActivity())
                     .setTitle(R.string.bank_welcome_title)
                     .setMessage(R.string.bank_welcome_message)
@@ -142,16 +147,6 @@ public class BankFragment extends Fragment {
                     .create()
                     .show();
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (!sharedPref.getBoolean("bankFragAlreadyReloaded", false)) {
-            reloadFragment();
-            sharedPref.edit().putBoolean("bankFragAlreadyReloaded", true).apply();
-        }
-
     }
 
     private void showDialog() {

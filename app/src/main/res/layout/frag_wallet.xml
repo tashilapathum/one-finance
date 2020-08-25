@@ -12,32 +12,69 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:text="@string/balance"
-            android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textStyle="bold" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/currency"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:alpha="0.7"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="5dp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:text="@string/balance"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
-        <TextView
-            android:id="@+id/balance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:alpha="0.7"
-            android:text="@string/_0_00"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/textView"
+                android:alpha="0.7"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+            <TextView
+                android:id="@+id/balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/currency"
+                android:alpha="0.7"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:text="@string/_0_00"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+            <ImageButton
+                android:id="@+id/warning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginHorizontal="8dp"
+                android:layout_toEndOf="@id/balance"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:contentDescription="negative balance warning"
+                android:src="@drawable/ic_warning"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnUpdate"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:textAlignment="textEnd"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/update_balance"
+                android:textAllCaps="false"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+        </RelativeLayout>
     </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -146,8 +183,8 @@
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
                     android:layout_centerHorizontal="true"
+                    android:padding="8dp"
                     android:text="@string/quick_list"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textStyle="italic" />
@@ -156,12 +193,12 @@
                     android:id="@+id/editQuickList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_edit"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:padding="4dp"
                     android:background="?android:selectableItemBackgroundBorderless"
-                    android:contentDescription="edit quick list" />
+                    android:contentDescription="edit quick list"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_edit" />
             </RelativeLayout>
 
         </LinearLayout>

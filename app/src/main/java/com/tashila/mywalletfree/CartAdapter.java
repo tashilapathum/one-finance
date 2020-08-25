@@ -18,11 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 public class CartAdapter extends ListAdapter<CartItem, CartAdapter.CartItemHolder> {
     public static final String TAG = "CartAdapter";
     private OnCartItemClickListener listener;
-    private int uncheckedItemCount;
 
     public CartAdapter() {
         super(DIFF_CALLBACK);
-        uncheckedItemCount = getItemCount();
     }
 
     private static final DiffUtil.ItemCallback<CartItem> DIFF_CALLBACK = new DiffUtil.ItemCallback<CartItem>() {

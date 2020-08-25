@@ -1,9 +1,12 @@
 package com.tashila.mywalletfree;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -13,10 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 public class TransactionsAdapter extends ListAdapter<TransactionItem, TransactionsAdapter.TransactionsViewHolder> {
     public static final String TAG = "TransactionsAdapter";
     private String currency;
+    public Context context;
+    private OnTransactionClickListener listener;
 
-    public TransactionsAdapter(String currency) {
+    public TransactionsAdapter(@NonNull Context context) {
         super(DIFF_CALLBACK);
-        this.currency = currency;
+        this.context = context;
+        SharedPreferences sharedPref = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
+        currency = sharedPref.getString("currency", "");
     }
 
     private static final DiffUtil.ItemCallback<TransactionItem> DIFF_CALLBACK = new DiffUtil.ItemCallback<TransactionItem>() {
@@ -30,20 +37,6 @@ public class TransactionsAdapter extends ListAdapter<TransactionItem, Transactio
             return false;
         }
     };
-
-    static class TransactionsViewHolder extends RecyclerView.ViewHolder {
-        TextView mAmount;
-        TextView mDescr;
-        TextView mDate;
-
-        TransactionsViewHolder(@NonNull View itemView) {
-            super(itemView);
-            mAmount = itemView.findViewById(R.id.hAmount);
-            mDescr = itemView.findViewById(R.id.hDescr);
-            mDate = itemView.findViewById(R.id.hDate);
-        }
-    }
-
 
     @NonNull
     @Override
@@ -60,4 +53,39 @@ public class TransactionsAdapter extends ListAdapter<TransactionItem, Transactio
         holder.mDescr.setText(currentItem.getDescription());
         holder.mDate.setText(currentItem.getUserDate());
     }
+
+    public TransactionItem getTransactionItemAt(int position) {
+        return getItem(position);
+    }
+
+    class TransactionsViewHolder extends RecyclerView.ViewHolder {
+        TextView mAmount;
+        TextView mDescr;
+        TextView mDate;
+
+        TransactionsViewHolder(@NonNull View itemView) {
+            super(itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION)
+                        listener.OnTransactionClick(getItem(position));
+                }
+            });
+            final Context context = itemView.getContext();
+            mAmount = itemView.findViewById(R.id.hAmount);
+            mDescr = itemView.findViewById(R.id.hDescr);
+            mDate = itemView.findViewById(R.id.hDate);
+        }
+    }
+
+    public interface OnTransactionClickListener {
+        void OnTransactionClick(TransactionItem transactionItem);
+    }
+
+    public void setOnTransactionClickListener(OnTransactionClickListener listener) {
+        this.listener = listener;
+    }
+
 }

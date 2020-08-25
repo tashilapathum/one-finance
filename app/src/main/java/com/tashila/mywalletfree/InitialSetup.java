@@ -33,10 +33,17 @@ public class InitialSetup extends AppCompatActivity {
         setContentView(R.layout.activity_initial_setup);
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
         AndroidThreeTen.init(this);
+        radioGroup = findViewById(R.id.radioGroup);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sharedPref.getString("language", "english").equalsIgnoreCase("සිංහල"))
+            radioGroup.check(radioGroup.getChildAt(1).getId());
     }
 
     public void saveLangRadio(View view) {
-        radioGroup = findViewById(R.id.radioGroup);
         View radioButton = findViewById(radioGroup.getCheckedRadioButtonId());
         int radioId = radioGroup.indexOfChild(radioButton);
         RadioButton btn = (RadioButton) radioGroup.getChildAt(radioId);
@@ -44,22 +51,17 @@ public class InitialSetup extends AppCompatActivity {
         sharedPref.edit().putString("language", language).apply();
 
         Locale locale = null;
-        int checkingId=0;
-        if (radioId == 1) {//0-en, 1-si
+        if (radioId == 1) //0-en, 1-si
             locale = new Locale("si");
-            checkingId = R.id.otSinhala;
-        }
-        if (radioId == 0) {
+        if (radioId == 0)
             locale = new Locale("en");
-            checkingId = R.id.otEnglish;
-        }
 
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.setLocale(locale);
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         setContentView(R.layout.activity_initial_setup);
-        radioGroup.check(checkingId);
+        recreate();
     }
 
     public void onClickContinue(View view) {

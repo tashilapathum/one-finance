@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">My Wallet</string>
-    <string name="version">Version 0.2.6 (Beta)</string>
+    <string name="version" translatable="false">Version 0.2.7 (Beta)</string>
     <string name="recent_transactions">Transactions</string>
     <string name="reports">Reports</string>
     <string name="settings">Settings</string>
@@ -244,4 +244,12 @@
     <string name="transfer">Transfer</string>
     <string name="exit">Exit</string>
     <string name="uncheck_to_edit">Uncheck item to edit</string>
+    <string name="date">Date</string>
+    <string name="remove_transaction_note">Note: If you want to remove the transaction, swipe it left or right.</string>
+    <string name="edit_transaction">Edit transaction</string>
+    <string name="new_balance">New balance</string>
+    <string name="edit_balance">Edit balance</string>
+    <string name="update_balance">Update\nbalance</string>
+    <string name="neg_balance">Negative balance</string>
+    <string name="update_balance_des">You have a negative balance. This is usually caused by adding wrong values when editing the transactions. You can\'t spend money unless you have a positive balance in your wallet. \n\nPlease double-check if you have edited your transactions correctly or update the balance manually.</string>
 </resources>

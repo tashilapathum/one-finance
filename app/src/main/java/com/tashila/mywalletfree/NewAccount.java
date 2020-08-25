@@ -143,7 +143,8 @@ public class NewAccount extends AppCompatActivity {
                 updateAccount();
 
             //go back to bank fragment
-            finish();
+            sharedPref.edit().putBoolean("reqOpenBank", true).apply();
+            startActivity(new Intent(this, MainActivity.class));
         }
     }
 
@@ -208,7 +209,7 @@ public class NewAccount extends AppCompatActivity {
         activities = activities + "~~~" + activity;
         sharedPref.edit().putString("activities" + i, activities).apply();
 
-        sharedPref.edit().putBoolean("haveNoAccounts", false).apply(); //when the first account was created
+        sharedPref.edit().putBoolean("haveAccounts", true).apply(); //when the first account was created
         sharedPref.edit().putBoolean("isTempMultiAvailable", false).apply(); //reset temp data
         new AccountHandler(this).plusAccount();
         Toast.makeText(this, R.string.acc_added, Toast.LENGTH_SHORT).show();

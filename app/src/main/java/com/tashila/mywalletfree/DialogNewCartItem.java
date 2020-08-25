@@ -4,53 +4,64 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
-public class DialogNewCartItem extends DialogFragment {
-    View view;
-    EditText etItemName;
-    EditText etItemPrice;
-    EditText etQuantity;
+public class DialogNewCartItem extends BottomSheetDialogFragment {
+    private BottomSheetDialog dialog = null;
+    private View view;
+    private EditText etItemName;
+    private EditText etItemPrice;
+    private EditText etQuantity;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        AndroidThreeTen.init(getActivity());
         view = getActivity().getLayoutInflater().inflate(R.layout.dialog_cart_item, null);
         etItemName = view.findViewById(R.id.itemName);
         etItemPrice = view.findViewById(R.id.itemPrice);
         etQuantity = view.findViewById(R.id.quantity);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        Button btnAdd = view.findViewById(R.id.addCartItem);
+        Button btnCancel = view.findViewById(R.id.cancel);
+        dialog = new BottomSheetDialog(getActivity());
+        dialog.setContentView(view);
 
         if (getActivity().getSupportFragmentManager().findFragmentByTag("edit cart item dialog") == null) {
-            builder.setView(view)
-                    .setTitle(R.string.add_new_item)
-                    .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            addItem();
-                        }
-                    })
-                    .setNegativeButton(R.string.cancel, null);
+            btnAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    addItem();
+                }
+            });
         }
         else {
-            builder.setView(view)
-                    .setTitle(R.string.edit_item)
-                    .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            editItem();
-                        }
-                    })
-                    .setNegativeButton(R.string.cancel, null);
+            btnAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    editItem();
+                }
+            });
+            btnAdd.setText(R.string.save);
             fillDetails();
         }
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
 
-        return builder.create();
+        return dialog;
     }
 
     private void addItem() {
@@ -65,6 +76,7 @@ public class DialogNewCartItem extends DialogFragment {
         if (!itemName.isEmpty()) {
             CartFragment.getInstance().addItem(itemName, itemPrice, quantity);
         }
+        dialog.cancel();
     }
 
     private void fillDetails() {
@@ -97,5 +109,6 @@ public class DialogNewCartItem extends DialogFragment {
         if (!itemName.isEmpty()) {
             CartFragment.getInstance().updateItem(dbID, itemName, oldItemPrice, newItemPrice, oldQuantity, newQuantity, isChecked);
         }
+        dialog.cancel();
     }
 }

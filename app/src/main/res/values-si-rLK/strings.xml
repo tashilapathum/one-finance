@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">Version 0.2.6 (Beta)</string>
     <string name="recent_transactions">ගනුදෙනු</string>
     <string name="reports">වාර්තා</string>
     <string name="settings">සැකසුම්</string>
@@ -242,4 +241,12 @@
     <string name="transfer">ගිණුමකට</string>
     <string name="exit">පිටවෙන්න</string>
     <string name="uncheck_to_edit">අයිතමය සංස්කරණය කිරීමට \'හරි\' ලකුණ ඉවත් කරන්න</string>
+    <string name="date">දිනය</string>
+    <string name="remove_transaction_note">සටහන: ඔබට අවශ්‍ය අයිතමයක් ඉවත් කිරීමට නම් එම අයිතමය පසකට යවන්න (swipe).</string>
+    <string name="edit_transaction">ගනුදෙනුව සංස්කරණය කිරීම</string>
+    <string name="new_balance">අගය</string>
+    <string name="edit_balance">නව ශේෂය</string>
+    <string name="update_balance">ශේෂය\nසංස්කරණය</string>
+    <string name="neg_balance">ඍණ ශේෂය</string>
+    <string name="update_balance_des">ඔබගේ ශේෂය ඍණ අගයකි. ගනුදෙනු සංස්කරණය කිරීමේදී වැරදි අගයන් ඇතුලත් කිරීමෙන් මෙය සාමාන්‍යයෙන් සිදුවේ. ඔබට මුදල් වියදම් කළ හැක්කේ ශේෂය ධන අගයක් නම් පමණි. \n\nකරුණාකර ගනුදෙනු නිවැරදි කිරීම හෝ ශේෂයේ අගය සංස්කරණය කර ධන අගයක් ඇතුලත් කරන්න.</string>
 </resources>
