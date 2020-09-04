@@ -7,17 +7,18 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-@Database(entities = {TransactionItem.class}, version = 1, exportSchema = false)
-public abstract class TransactionsDatabase extends RoomDatabase {
+@Database(entities = {Account.class}, version = 1, exportSchema = false)
+@TypeConverters(Converters.class)
+public abstract class AccountsDatabase extends RoomDatabase {
 
-    private static TransactionsDatabase instance;
+    private static AccountsDatabase instance;
 
-    public abstract TransactionsDao transactionsDao();
+    public abstract AccountsDao accountsDao();
 
-    public static synchronized TransactionsDatabase getInstance(Context context) {
+    public static synchronized AccountsDatabase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                    TransactionsDatabase.class, "transactions_database")
+                    AccountsDatabase.class, "accounts_database")
                     .fallbackToDestructiveMigration()
                     .build();
         }

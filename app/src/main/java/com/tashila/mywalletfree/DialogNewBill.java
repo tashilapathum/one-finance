@@ -153,12 +153,20 @@ public class DialogNewBill extends DialogFragment {
             String amount = etAmount.getText().toString();
             String paidDate = null;
             String dueDate = null;
-            if (isPaid)
+            int lastPaidMonth = -1; //to check if this was set
+            if (isPaid) {
                 paidDate = etDate.getText().toString();
+                DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+                try {
+                    lastPaidMonth = LocalDate.parse(paidDate, formatter).getMonthValue();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             else
                 dueDate = etDate.getText().toString();
             String remarks = etRemarks.getText().toString();
-            Bill bill = new Bill(isPaid, title, amount, paidDate, dueDate, remarks, isMonthly);
+            Bill bill = new Bill(isPaid, title, amount, paidDate, dueDate, remarks, isMonthly, lastPaidMonth);
             if (editingBill != null) {
                 bill.setId(editingBill.getId());
                 BillsFragment.getInstance().updateBill(bill);

@@ -17,9 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.elconfidencial.bubbleshowcase.BubbleShowCase;
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
-import com.elconfidencial.bubbleshowcase.BubbleShowCaseListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -28,14 +26,14 @@ import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.FormatStyle;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 public class BankFragment extends Fragment {
     public static final String TAG = "BankFragment";
@@ -51,17 +49,32 @@ public class BankFragment extends Fragment {
     private ImageButton btnSwitch;
     private TextInputLayout tilAmount;
     private EditText etAmount;
-    private int selectedAccNo;
     private View view;
     private boolean sinhala;
     LinearLayout linearRecent;
     boolean haveAccounts;
+    private AccountsViewModel accountsViewModel;
+    private TransactionsViewModel transactionsViewModel;
+    private Account selectedAccount;
+    private DecimalFormat df;
+    private Snackbar snackbar;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         view = inflater.inflate(R.layout.frag_bank, container, false);
+
+        accountsViewModel = new ViewModelProvider(getActivity(), ViewModelProvider.AndroidViewModelFactory
+                .getInstance(getActivity().getApplication())).get(AccountsViewModel.class);
+        transactionsViewModel = new ViewModelProvider(getActivity(), ViewModelProvider.AndroidViewModelFactory
+                .getInstance(getActivity().getApplication())).get(TransactionsViewModel.class);
+        List<Account> accountList = accountsViewModel.getAllAccounts();
+        for (int i = 0; i < accountList.size(); i++) {
+            if (accountList.get(i).isSelected())
+                selectedAccount = accountList.get(i);
+        }
 
         tvAccountName = view.findViewById(R.id.accountName);
         tvCurrency = view.findViewById(R.id.currency);
@@ -71,9 +84,6 @@ public class BankFragment extends Fragment {
         btnSwitch = view.findViewById(R.id.switchAcc);
         tilAmount = view.findViewById(R.id.editAmount);
         etAmount = tilAmount.getEditText();
-        selectedAccNo = sharedPref.getInt("selectedAccNo", 1);
-        accountBalance = sharedPref.getString("selectedAccBalance", null);
-        accountName = sharedPref.getString("selectedAccName", null);
         currency = sharedPref.getString("currency", null);
         String language = sharedPref.getString("language", "english");
         if (language.equalsIgnoreCase("සිංහල")) sinhala = true;
@@ -134,7 +144,9 @@ public class BankFragment extends Fragment {
                     .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            startActivity(new Intent(getActivity(), NewAccount.class));
+                            Intent intent = new Intent(getActivity(), NewAccount.class);
+                            intent.putExtra("isNewAccount", true);
+                            startActivity(intent);
                         }
                     })
                     .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -163,10 +175,14 @@ public class BankFragment extends Fragment {
     }
 
     private void loadDetails() {
-        accountName = sharedPref.getString("selectedAccName", null);
-        currency = sharedPref.getString("currency", null);
-        accountBalance = sharedPref.getString("selectedAccBalance", null);
-        selectedAccNo = sharedPref.getInt("selectedAccNo", 1);
+        List<Account> accountList = accountsViewModel.getAllAccounts();
+        for (int i = 0; i < accountList.size(); i++) {
+            if (accountList.get(i).isSelected())
+                selectedAccount = accountList.get(i);
+        }
+
+        accountName = selectedAccount.getAccName();
+        accountBalance = selectedAccount.getAccBalance();
 
         tvAccountName.setText(accountName);
         tvCurrency.setText(currency);
@@ -178,12 +194,12 @@ public class BankFragment extends Fragment {
     private void onClickDepositOrWithdraw(View v) {
         //get data
         double newBalance = 0;
-        final int i = selectedAccNo;
+        //final int i = selectedAccNo;
         String activity = null;
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
-        DecimalFormat df = new DecimalFormat("#.00");
-        String timeStamp = LocalDateTime.now().format(formatter);
-        String savedCurrentBalance = sharedPref.getString("selectedAccBalance", null);
+        df = new DecimalFormat("#.00");
+        final String timeStamp = LocalDateTime.now().format(formatter);
+        String savedCurrentBalance = selectedAccount.getAccBalance();
         double currentBalance = Double.parseDouble(savedCurrentBalance);
         final double inputAmount = Double.parseDouble(etAmount.getText().toString());
 
@@ -196,52 +212,47 @@ public class BankFragment extends Fragment {
             if (isDepositId) {
                 newBalance = currentBalance + inputAmount;
                 if (sinhala)
-                    activity = currency + df.format(inputAmount) + "ක් " + accountName + " ගිණුමෙහි තැන්පත් කරන ලදී" + "###" + timeStamp;
+                    activity = currency + df.format(inputAmount) + "ක් තැන්පත් කරන ලදී" + "###" + timeStamp;
                 else
-                    activity = "Deposited " + currency + df.format(inputAmount) + " to " + accountName + "###" + timeStamp;
+                    activity = "Deposited " + currency + df.format(inputAmount) + "###" + timeStamp;
             }
             if (isWithdrawId) {
                 newBalance = currentBalance - inputAmount;
                 if (sinhala)
-                    activity = currency + df.format(inputAmount) + "ක් " + accountName + " ගිණුමෙන් ආපසු ගන්නා ලදී" + "###" + timeStamp;
+                    activity = currency + df.format(inputAmount) + "ක් ආපසු ගන්නා ලදී" + "###" + timeStamp;
                 else
-                    activity = "Withdrew " + currency + df.format(inputAmount) + " from " + accountName + "###" + timeStamp;
+                    activity = "Withdrew " + currency + df.format(inputAmount) + "###" + timeStamp;
 
                 //update wallet
-                double walletBalance = Double.parseDouble(sharedPref.getString("balance", null));
+                double walletBalance = Double.parseDouble(sharedPref.getString("balance", "0"));
                 double newWalletBalance = walletBalance + inputAmount;
                 String balanceStr = df.format(newWalletBalance);
                 sharedPref.edit().putString("balance", balanceStr).apply();
             }
 
-            //save
-            String newBalanceStr = String.valueOf(newBalance);
-            sharedPref.edit().putString("accountBalance" + i, newBalanceStr).apply();
-            sharedPref.edit().putString("selectedAccBalance", newBalanceStr).apply();
+            //show
+            final String newBalanceStr = df.format(newBalance);
             tvAccountBalance.setText(newBalanceStr); //update balance on screen
-
-            String activities = sharedPref.getString("activities" + i, null);
-            activities = activities + "~~~" + activity;
-            sharedPref.edit().putString("activities" + i, activities).apply();
+            etAmount.setText("");
+            selectedAccount.setAccBalance(newBalanceStr);
+            List<String> activities = selectedAccount.getActivities();
+            activities.add(activity);
+            selectedAccount.setActivities(activities);
+            loadActivities();
 
             BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottom_navigation);
-            Snackbar snackbar = Snackbar.make(bottomNav, R.string.updated, Snackbar.LENGTH_LONG);
+            snackbar = Snackbar.make(bottomNav, R.string.updated, Snackbar.LENGTH_LONG);
             snackbar.setAnchorView(bottomNav);
             final boolean finalIsDepositId = isDepositId;
-            final String finalActivity = activity;
             final boolean finalIsWithdrawId = isWithdrawId;
-            snackbar.setAction("Undo", new View.OnClickListener() {
+            snackbar.setAction(R.string.undo, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String undoActivities = sharedPref.getString("activities" + i, null);
-                    undoActivities = undoActivities.replace("~~~" + finalActivity, "");
-                    sharedPref.edit().putString("activities" + i, undoActivities).apply();
+                    //update screen
                     double undoBalance = 0;
-                    undoBalance = Double.parseDouble(sharedPref.getString("selectedAccBalance", null));
+                    undoBalance = Double.parseDouble(selectedAccount.getAccBalance());
                     if (finalIsDepositId) undoBalance = undoBalance - inputAmount;
                     if (finalIsWithdrawId) undoBalance = undoBalance + inputAmount;
-                    sharedPref.edit().putString("accountBalance" + i, String.valueOf(undoBalance)).apply();
-                    sharedPref.edit().putString("selectedAccBalance", String.valueOf(undoBalance)).apply();
                     tvAccountBalance.setText(String.valueOf(undoBalance));
                     //update wallet
                     double walletBalance = Double.parseDouble(sharedPref.getString("balance", null));
@@ -250,12 +261,33 @@ public class BankFragment extends Fragment {
                     reloadFragment();
                 }
             });
+            final String transactionDescription;
+            if (sinhala)
+                transactionDescription = accountName + " ගිණුමෙන් ආපසු ගත්";
+            else
+                transactionDescription = "Withdrawal from " + accountName;
+            final LocalDateTime date = LocalDateTime.now();
+            snackbar.addCallback(new Snackbar.Callback() {
+                @Override
+                public void onDismissed(Snackbar transientBottomBar, int event) {
+                    super.onDismissed(transientBottomBar, event);
+                    if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                        accountsViewModel.update(selectedAccount); //update for real
+                        //add transaction
+                        if (finalIsWithdrawId) {
+                            TransactionItem transaction = new TransactionItem(
+                                    sharedPref.getString("balance", "0"), "+",
+                                    df.format(inputAmount), transactionDescription, timeStamp,
+                                    DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").format(date),
+                                    date.getDayOfWeek().getValue(), date.getDayOfMonth(), date.getDayOfYear());
+                            transactionsViewModel.insert(transaction);
+                        }
+                        if (BankFragment.this.isVisible())
+                            loadActivities();
+                    }
+                }
+            });
             snackbar.show();
-
-            //show
-            etAmount.setText("");
-            loadActivities();
-            reloadFragment();
 
         } else
             Toast.makeText(getActivity(), R.string.spend_more_than_have, Toast.LENGTH_LONG).show();
@@ -300,36 +332,29 @@ public class BankFragment extends Fragment {
     }
 
     private void loadActivities() {
-        int i = sharedPref.getInt("selectedAccNo", 1);
-        String activities = sharedPref.getString("activities" + i, null);
-        String[] activitiesArr = activities.split("~~~");
-        for (int j = activitiesArr.length - 1; j >= 0; j--) {
-            if (!activitiesArr[j].equals("null")) {
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-                ViewGroup parent = (ViewGroup) view;
-                linearRecent = parent.findViewById(R.id.linearRecent);
-                View sampleRecentActivity = inflater.inflate(R.layout.sample_recent_activity, null);
-                TextView tvActivity = sampleRecentActivity.findViewById(R.id.activity);
-                TextView tvDate = sampleRecentActivity.findViewById(R.id.date);
-                String[] arr = activitiesArr[j].split("###"); //to separate the timestamp
-                String activityPart = arr[0];
-                String datePart = arr[1];
-                tvActivity.setText(activityPart);
-                tvDate.setText(datePart);
+        List<String> activities = selectedAccount.getActivities();
+        ViewGroup parent = (ViewGroup) view;
+        linearRecent = parent.findViewById(R.id.linearRecent);
+        linearRecent.removeAllViews();
+        for (int j = activities.size() - 1; j >= 0; j--) {
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            ViewGroup parent2 = (ViewGroup) view;
+            linearRecent = parent2.findViewById(R.id.linearRecent);
+            View sampleRecentActivity = inflater.inflate(R.layout.sample_recent_activity, null);
+            TextView tvActivity = sampleRecentActivity.findViewById(R.id.activity);
+            TextView tvDate = sampleRecentActivity.findViewById(R.id.date);
+            String[] arr = activities.get(j).split("###"); //to separate the timestamp
+            String activityPart = arr[0];
+            String datePart = arr[1];
+            tvActivity.setText(activityPart);
+            tvDate.setText(datePart);
 
-                //remove all views once
-                if (!sharedPref.getBoolean("removedViewsOnceB", false)) {
-                    linearRecent.removeAllViews();            //B -> Bank
-                    sharedPref.edit().putBoolean("removedViewsOnceB", true).apply();
-                }
+            linearRecent.addView(sampleRecentActivity);
 
-                linearRecent.addView(sampleRecentActivity);
-
-                //empty textView
-                TextView textView = new TextView(getActivity());
-                textView.setText(" ");
-                linearRecent.addView(textView);
-            }
+            //empty textView
+            TextView textView = new TextView(getActivity());
+            textView.setText(" ");
+            linearRecent.addView(textView);
         }
     }
 
@@ -338,4 +363,5 @@ public class BankFragment extends Fragment {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.detach(bankFrag).attach(bankFrag).commit();
     }
+
 }

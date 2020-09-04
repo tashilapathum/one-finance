@@ -131,6 +131,10 @@ public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
             holder.tvOverdue.setVisibility(View.VISIBLE);
         else
             holder.tvOverdue.setVisibility(View.GONE);
+
+        //renew monthly payments
+        if (currentBill.isMonthly() && currentBill.getLastPaidMonth() < LocalDate.now().getMonthValue())
+            currentBill.setPaid(false);
     }
 
     private void setNotifications(int dueDayOfYear) {
@@ -141,7 +145,6 @@ public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
         int reqCode = (int) System.currentTimeMillis();
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, reqCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, prevDay.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(), pendingIntent);
-        Log.i(TAG, "due notification set!");
     }
 
 
@@ -195,3 +198,5 @@ public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
         }
     }
 }
+
+//TODO: renew monthly payments

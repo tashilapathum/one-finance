@@ -43,7 +43,8 @@ public class PaidFragment extends Fragment {
         final BillsAdapter billsAdapter = new BillsAdapter(getActivity());
         recyclerView.setAdapter(billsAdapter);
 
-        billsViewModel = new ViewModelProvider(getActivity(), ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(BillsViewModel.class);
+        billsViewModel = new ViewModelProvider(getActivity(), ViewModelProvider.AndroidViewModelFactory
+                .getInstance(getActivity().getApplication())).get(BillsViewModel.class);
         billsViewModel.getAllBills(true).observe(getActivity(), new Observer<List<Bill>>() {
             @Override
             public void onChanged(List<Bill> bills) {

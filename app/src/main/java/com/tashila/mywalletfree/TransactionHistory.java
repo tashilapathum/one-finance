@@ -89,7 +89,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             }
 
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
                 final TransactionItem transactionItem = transactionsAdapter.getTransactionItemAt(viewHolder.getAdapterPosition());
                 Snackbar snackbar = Snackbar.make(recyclerView, R.string.deleted, Snackbar.LENGTH_SHORT)
                         .setAction(R.string.undo, new View.OnClickListener() {
@@ -103,7 +103,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
                             public void onDismissed(Snackbar transientBottomBar, int event) {
                                 super.onDismissed(transientBottomBar, event);
                                 if (event != Snackbar.Callback.DISMISS_EVENT_ACTION)
-                                    deleteTransaction(transactionItem);
+                                    deleteTransaction(transactionItem, viewHolder);
                             }
                         });
                 snackbar.show();
@@ -211,8 +211,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
                 String date = null;
                 try {
                     date = transactionItem.getUserDate().split(" ")[0];
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -279,7 +278,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         Toast.makeText(this, R.string.updated, Toast.LENGTH_SHORT).show();
     }
 
-    private void deleteTransaction(TransactionItem transactionItem) {
+    private void deleteTransaction(TransactionItem transactionItem, RecyclerView.ViewHolder viewHolder) {
         String prefix = transactionItem.getPrefix();
         double balance = Double.parseDouble(sharedPref.getString("balance", "0"));
         double amount = Double.parseDouble(transactionItem.getAmount());
@@ -291,5 +290,6 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         String newBalance = df.format(balance);
         sharedPref.edit().putString("balance", newBalance).apply();
         transactionsViewModel.delete(transactionItem);
+        transactionsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
     }
 }

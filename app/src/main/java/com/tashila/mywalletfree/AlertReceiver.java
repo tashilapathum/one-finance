@@ -34,7 +34,7 @@ public class AlertReceiver extends BroadcastReceiver {
         WalletFragment.getInstance().createReports(0);
 
         //calculate interests
-        AccountHandler accountHandler = new AccountHandler(context);
-        accountHandler.calculateInterests();
+        /*AccountHandler accountHandler = new AccountHandler(context);
+        accountHandler.calculateInterests();*/
     }
 }

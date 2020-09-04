@@ -112,7 +112,7 @@
     <string name="bank_welcome_message">You can manage your bank accounts here. Add an account to continue.</string>
     <string name="bank_welcome_title">Welcome</string>
     <string name="account_name_desc">To identify the account (displayed at the top of the bank screen)</string>
-    <string name="interest_description">If you add this, the interest will be automatically calculated and added to your balance.</string>
+    <string name="interest_description">If you add this, the interest will be automatically calculated and added to your balance. \nNote:The accuracy depends on the location, bank, taxes… etc.</string>
     <string name="add">Add</string>
     <string name="deposit_to_bank">Deposit to bank</string>
     <string name="deposit_to_bank_descr">You can directly deposit money to your selected account using this. Long-tap to select a different account.\nNote: Description is not required for this. Relevant info will be added automatically.</string>
@@ -163,7 +163,6 @@
     <string name="lowest">Lowest:&#160;</string>
     <string name="acc_added">Account added!</string>
     <string name="new_interest_note">New interest will be used from now on. Previous amounts won\'t be affected.</string>
-    <string name="acc_in_use">You can\'t delete the account currently in use. Please switch to a different account first.</string>
     <string name="confirm_part1">You\'ve chosen to delete the account \"</string>
     <string name="confirm_part2">\". This action cannot be undone. Transaction history items and amounts won\'t be removed.\nDo you want to proceed?</string>
     <string name="yes">Yes</string>
@@ -252,4 +251,21 @@
     <string name="update_balance">Update\nbalance</string>
     <string name="neg_balance">Negative balance</string>
     <string name="update_balance_des">You have a negative balance. This is usually caused by adding wrong values when editing the transactions. You can\'t spend money unless you have a positive balance in your wallet. \n\nPlease double-check if you have edited your transactions correctly or update the balance manually.</string>
+    <string name="updated_acc_details">Updated account details</string>
+    <string name="accounts">Accounts</string>
+    <string name="edit_delete_or_view_details_of_your_accounts">Edit, delete or view details of your accounts</string>
+    <string name="what_s_new_in_version" translatable="false">What\'s new in version 0.2.7 (Beta)</string>
+    <string name="whats_new_descr" translatable="false">
+        \n - Moved \"Bank\" section to an efficient database\n
+        - Moved account manager to settings\n
+        - UI changes\n
+        - Translation updates\n
+        \nThank you for testing My Wallet! This app is still in beta stage so please let the developer if there are any bugs, Try clearing app data in case of constant crashes to get the app working again.
+    </string>
+    <string name="thanks_review">Thank you for your review!</string>
+    <string name="delete_acc_confirm">Are you sure you want to delete this account?</string>
+    <string name="manage_acc">Manage Accounts</string>
+    <string name="account_in_use">You can\'t delete the account currently in use. Please switch to a different account first.</string>
+    <string name="switched">Switched</string>
+    <string name="in_use">IN USE</string>
 </resources>

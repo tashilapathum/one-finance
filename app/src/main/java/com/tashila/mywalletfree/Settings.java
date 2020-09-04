@@ -26,6 +26,7 @@ import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.navigation.NavigationView;
 
 import java.text.DateFormat;
@@ -37,7 +38,7 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
     SharedPreferences sharedPref;
     private DrawerLayout drawer;
     String timeString;
-    private Switch exitCheckBox;
+    private MaterialCheckBox exitCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -256,6 +257,11 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
         else purchaseProForThis();
     }
 
+    public void manageAccounts(View view) {
+        Intent intent = new Intent(this, AccountManager.class);
+        startActivity(intent);
+    }
+
     public void purchaseProForThis() {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.pro_feature)
@@ -285,5 +291,6 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
         essentials.invertDrawable(findViewById(R.id.image6));
         essentials.invertDrawable(findViewById(R.id.image7));
         essentials.invertDrawable(findViewById(R.id.image8));
+        essentials.invertDrawable(findViewById(R.id.image9));
     }
 }

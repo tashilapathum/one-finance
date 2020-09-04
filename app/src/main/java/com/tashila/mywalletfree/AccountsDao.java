@@ -2,6 +2,7 @@ package com.tashila.mywalletfree;
 
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -22,5 +23,8 @@ public interface AccountsDao {
 
     @Query("SELECT * FROM accounts_table")
     List<Account> getAllAccounts();
+
+    @Query("SELECT * FROM accounts_table")
+    LiveData<List<Account>> getAllAccountsLive();
 
 }

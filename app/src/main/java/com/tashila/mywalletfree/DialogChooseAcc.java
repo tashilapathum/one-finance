@@ -16,6 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
+
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -24,8 +28,8 @@ public class DialogChooseAcc extends DialogFragment {
     public static final String TAG = "DialogChooseAcc";
     private View view;
     private SharedPreferences sharedPref;
-    private View v;
     AlertDialog thisDialog;
+    private AccountsViewModel accountsViewModel;
 
     private DialogInterface.OnDismissListener onDismissListener;
 
@@ -57,145 +61,73 @@ public class DialogChooseAcc extends DialogFragment {
                 });
         thisDialog = builder.create();
 
-        v = inflater.inflate(R.layout.sample_acc_switch, null);
-        createAccSwitches();
+        accountsViewModel = new AccountsViewModel(getActivity().getApplication());
+        showAccountsList();
 
         return thisDialog;
     }
 
-    private void createAccSwitches() {
-        String accountName, currency, accountBalance, selectedAccName;
-        currency = sharedPref.getString("currency", null);
+    private void showAccountsList() {
+        String currency = sharedPref.getString("currency", null);
         final boolean calledFromWallet = sharedPref.getBoolean("chooseAccFromWallet", false);
-        for (int i = 1; i <= 20; i++) {
-            Log.i(TAG, "from for loop (i): "+i);
-            if (sharedPref.getBoolean("isAccountSlot"+i+"Taken", false)) {
-                //prepare layouts
-                ViewGroup baseLayout = (ViewGroup) view;
-                View sampleSwitchLayout = LayoutInflater.from(getActivity()).inflate(R.layout.sample_acc_switch, null);
-                sampleSwitchLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        chooseAccount(v);
-                        if (calledFromWallet) {
-                            WalletFragment walletFragment = (WalletFragment) getActivity().getSupportFragmentManager().findFragmentByTag("WalletFragment");
-                            walletFragment.doBankStuff();
-                            walletFragment.continueLongClickProcess();
+
+        final List<Account> accountsList = accountsViewModel.getAllAccounts();
+        for (int i=0; i<accountsList.size(); i++) {
+            ViewGroup baseLayout = (ViewGroup) view;
+            View sampleSwitchLayout = LayoutInflater.from(getActivity()).inflate(R.layout.sample_acc_switch, null);
+            TextView tvAccountName = sampleSwitchLayout.findViewById(R.id.accountName);
+            TextView tvAccountBalance = sampleSwitchLayout.findViewById(R.id.accountBalance);
+            TextView tvSelectedDot = sampleSwitchLayout.findViewById(R.id.selectedDot);
+
+            tvAccountName.setText(accountsList.get(i).getAccName());
+            tvAccountBalance.setText(currency + accountsList.get(i).getAccBalance());
+            if (accountsList.get(i).isSelected())
+                tvSelectedDot.setVisibility(View.VISIBLE);
+            final int finalI = i;
+            sampleSwitchLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //select the tapped account
+                    accountsList.get(finalI).setSelected(true);
+                    accountsViewModel.update(accountsList.get(finalI));
+                    //deselect all other accounts
+                    int selectedAccID = accountsList.get(finalI).getId();
+                    List<Account> allAccounts = accountsViewModel.getAllAccounts();
+                    for (int i=0; i<allAccounts.size(); i++) {
+                        if (allAccounts.get(i).getId() != selectedAccID) {
+                            allAccounts.get(i).setSelected(false);
+                            accountsViewModel.update(allAccounts.get(i));
                         }
                     }
-                });
-                if (!calledFromWallet) {
-                    sampleSwitchLayout.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            manageAccount(v);
-                            return true;
-                        }
-                    });
+                    Toast.makeText(getActivity(), R.string.switched, Toast.LENGTH_SHORT).show();
+                    thisDialog.dismiss();
+                    //transfer from wallet to account
+                    if (calledFromWallet) {
+                        WalletFragment walletFragment = (WalletFragment) getActivity().getSupportFragmentManager().findFragmentByTag("WalletFragment");
+                        walletFragment.doBankStuffNEW();
+                        walletFragment.continueLongClickProcess();
+                    }
                 }
-                TextView tvAccountName = sampleSwitchLayout.findViewById(R.id.accountName);
-                TextView tvAccountBalance = sampleSwitchLayout.findViewById(R.id.accountBalance);
-                TextView tvSelectedDot = sampleSwitchLayout.findViewById(R.id.selectedDot);
-
-                //assign values
-                accountName = sharedPref.getString("accountName" + i, null);
-                accountBalance = sharedPref.getString("accountBalance" + i, null);
-                selectedAccName = sharedPref.getString("selectedAccName", "n/a");
-                tvAccountName.setText(accountName);
-                tvAccountBalance.setText(currency + accountBalance);
-                if (selectedAccName.equals(accountName)) tvSelectedDot.setVisibility(View.VISIBLE);
-                else tvSelectedDot.setVisibility(View.INVISIBLE);
-                sampleSwitchLayout.setTag("account" + i);
-                baseLayout.addView(sampleSwitchLayout);
-            }
+            });
+            baseLayout.addView(sampleSwitchLayout);
         }
 
-        //add account button
-        if (!sharedPref.getBoolean("chooseAccFromWallet", false)) {
-            Button btnAddAccount = new Button(getActivity());
+        if (!calledFromWallet) {
+            MaterialButton btnAddAccount = new MaterialButton(getActivity());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             params.setMargins(0, 8, 0, 0);
             btnAddAccount.setLayoutParams(params);
-            btnAddAccount.setText(R.string.add_acc);
+            btnAddAccount.setText(R.string.manage_acc);
             btnAddAccount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addAccount();
+                    Intent intent = new Intent(getActivity(), AccountManager.class);
+                    startActivity(intent);
                 }
             });
             LinearLayout baseLayout = view.findViewById(R.id.dialogChooseAcc);
             baseLayout.addView(btnAddAccount);
         }
-    }
-
-    private void addAccount() {
-        int accLimit;
-        if (sharedPref.getBoolean("MyWalletPro", false)) accLimit = 50;
-        else accLimit = 4;
-
-        if (((ViewGroup) view).getChildCount() < accLimit) {
-            Intent intent = new Intent(getActivity(), NewAccount.class);
-            startActivity(intent);
-        } else {
-            new AlertDialog.Builder(getActivity())
-                    .setTitle(R.string.reached_acc_limit)
-                    .setMessage(R.string.r_a_l_des)
-                    .setPositiveButton(R.string.buy, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(getActivity(), UpgradeToPro.class);
-                            startActivity(intent);
-                        }
-                    })
-                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    })
-                    .create()
-                    .show();
-        }
-    }
-
-    private void chooseAccount(View v) {
-        int accountNo = findAccountNo(v);
-        String accountName = sharedPref.getString("accountName" + accountNo, null);
-        String accountBalance = sharedPref.getString("accountBalance" + accountNo, null);
-        sharedPref.edit().putString("selectedAccName", accountName).apply();
-        sharedPref.edit().putString("selectedAccBalance", accountBalance).apply();
-        sharedPref.edit().putInt("selectedAccNo", accountNo).apply(); //for future use
-        TextView tvSelectedDot = v.findViewById(R.id.selectedDot);
-        tvSelectedDot.setVisibility(View.VISIBLE);
-        Toast.makeText(getActivity(), "Switched", Toast.LENGTH_SHORT).show();
-        thisDialog.dismiss();
-    }
-
-    //details, edit, delete operations
-    private void manageAccount(View v) {
-        int accountNo = findAccountNo(v);
-        Log.i(TAG, "accountNo: "+accountNo);
-        sharedPref.edit().putInt("manageAccNo", accountNo).apply(); //to use for other operations
-        DialogManageAcc dialogManageAcc = new DialogManageAcc();
-        dialogManageAcc.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                thisDialog.dismiss();
-            }
-        });
-        dialogManageAcc.show(getActivity().getSupportFragmentManager(), "manage account dialog");
-    }
-
-    private int findAccountNo(View v) {
-        String selectedAccount = v.getTag().toString();
-        int accountNo = 0;
-        for (int i = 1; i <= 20; i++) {
-            if (selectedAccount.contains(String.valueOf(i))) {
-                accountNo = i;
-                break;
-            }
-        }
-        return accountNo;
     }
 }

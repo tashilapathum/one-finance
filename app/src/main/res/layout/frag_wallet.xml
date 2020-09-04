@@ -33,7 +33,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/textView"
-                android:alpha="0.7"
+                tools:text="$"
+                android:textColor="@android:color/holo_green_dark"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
@@ -43,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/currency"
-                android:alpha="0.7"
+                android:textColor="@android:color/holo_green_dark"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/_0_00"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
@@ -85,10 +86,9 @@
         android:paddingTop="16dp"
         app:errorEnabled="true">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
             android:ems="10"
             android:fontFamily="sans-serif-condensed"
             android:hint="@string/amount"
@@ -104,10 +104,9 @@
         android:layout_marginTop="8dp"
         app:errorEnabled="true">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
             android:ems="10"
             android:fontFamily="sans-serif-condensed"
             android:hint="@string/description"

@@ -29,7 +29,7 @@ public class TransactionsAdapter extends ListAdapter<TransactionItem, Transactio
     private static final DiffUtil.ItemCallback<TransactionItem> DIFF_CALLBACK = new DiffUtil.ItemCallback<TransactionItem>() {
         @Override
         public boolean areItemsTheSame(@NonNull TransactionItem oldItem, @NonNull TransactionItem newItem) {
-            return false;
+            return oldItem.getId() == newItem.getId();
         }
 
         @Override
@@ -49,8 +49,15 @@ public class TransactionsAdapter extends ListAdapter<TransactionItem, Transactio
     @Override
     public void onBindViewHolder(@NonNull TransactionsViewHolder holder, int position) {
         TransactionItem currentItem = getItem(position);
-        holder.mAmount.setText(currentItem.getPrefix() +  currency + currentItem.getAmount());
-        holder.mDescr.setText(currentItem.getDescription());
+        holder.mAmount.setText(currentItem.getPrefix() + currency + currentItem.getAmount());
+        if (currentItem.getPrefix().equals("+"))
+            holder.mAmount.setTextColor(context.getResources().getColor(android.R.color.holo_green_dark));
+        else
+            holder.mAmount.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
+        if (currentItem.getDescription().contains("###")) //for withdrawals
+            holder.mDescr.setText(currentItem.getDescription().split("###")[0]);
+        else
+            holder.mDescr.setText(currentItem.getDescription());
         holder.mDate.setText(currentItem.getUserDate());
     }
 
@@ -73,7 +80,6 @@ public class TransactionsAdapter extends ListAdapter<TransactionItem, Transactio
                         listener.OnTransactionClick(getItem(position));
                 }
             });
-            final Context context = itemView.getContext();
             mAmount = itemView.findViewById(R.id.hAmount);
             mDescr = itemView.findViewById(R.id.hDescr);
             mDate = itemView.findViewById(R.id.hDate);

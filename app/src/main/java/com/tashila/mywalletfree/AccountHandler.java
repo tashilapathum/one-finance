@@ -18,52 +18,28 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 class AccountHandler {
-    /*
-    SharedPreferences should be initiate in every method because it's not initiated when calling
-     */
-    private EditText editText = null;
-    private TextView textView = null;
     public static final String TAG = "AccountHandler";
     private Context context;
+    private SharedPreferences sharedPref;
 
     AccountHandler(Context context) {
         this.context = context;
+        sharedPref = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
     }
 
     void setDetail(View view, String stringKey, boolean isEditText) {
         SharedPreferences sharedPref = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
         String detail = sharedPref.getString(stringKey, null);
         if (isEditText) {
-            editText = (EditText) view;
+            EditText editText = (EditText) view;
             editText.setText(detail);
         } else {
-            textView = (TextView) view;
+            TextView textView = (TextView) view;
             textView.setText(detail);
         }
     }
 
-    void saveDetail(EditText editText, String stringKey) {
-        SharedPreferences sharedPref = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
-        String detail = editText.getText().toString();
-        sharedPref.edit().putString(stringKey, detail).apply();
-    }
-
-    void plusAccount() {
-        SharedPreferences sharedPref = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
-        int noOfAccounts = sharedPref.getInt("noOfAccounts", 0);
-        noOfAccounts = noOfAccounts + 1;
-        sharedPref.edit().putInt("noOfAccounts", noOfAccounts).apply();
-    }
-
-    void minusAccount() {
-        SharedPreferences sharedPref = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
-        int noOfAccounts = sharedPref.getInt("noOfAccounts", 0);
-        noOfAccounts = noOfAccounts - 1;
-        sharedPref.edit().putInt("noOfAccounts", noOfAccounts).apply();
-    }
-
-    void calculateInterests() {
-        SharedPreferences sharedPref = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
+    /*void calculateInterests() {
         String language = sharedPref.getString("language", "english");
         String currency = sharedPref.getString("currency", null);
         for (int accNo = 1; accNo <= 20; accNo++) {
@@ -208,5 +184,5 @@ class AccountHandler {
                 }
             }
         }
-    }
+    }*/
 }

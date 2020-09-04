@@ -2,6 +2,7 @@ package com.tashila.mywalletfree;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,6 +82,8 @@ public class BillsFragment extends Fragment {
         bill.setPaid(true);
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
         bill.setPaidDate(formatter.format(LocalDate.now()));
+        bill.setLastPaidMonth(LocalDate.now().getMonthValue());
+        Log.i(TAG, "month value: " + LocalDate.now().getMonthValue());
         billsViewModel.update(bill);
         Toast.makeText(getActivity(), R.string.as_paid, Toast.LENGTH_SHORT).show();
     }

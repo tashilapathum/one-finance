@@ -13,7 +13,7 @@
         android:text="@string/main_account"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:textStyle="bold" />
+        android:fontFamily="sans-serif-condensed-medium" />
 
     <TextView
         android:id="@+id/accountName"
@@ -23,7 +23,7 @@
         android:alpha="0.7"
         android:text="N/A"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:textStyle="bold" />
+        android:fontFamily="sans-serif-condensed-medium" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/switchAcc"
@@ -48,25 +48,25 @@
             android:text="@string/main_balance"
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textStyle="bold" />
+            android:fontFamily="sans-serif-condensed-medium" />
 
         <TextView
             android:id="@+id/currency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:alpha="0.7"
-            android:text=" "
+            tools:text="$"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textStyle="bold" />
+            android:textColor="@android:color/holo_green_dark"
+            android:fontFamily="sans-serif-condensed-medium" />
 
         <TextView
             android:id="@+id/balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:alpha="0.7"
             android:text="@string/_0_00"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textStyle="bold" />
+            android:textColor="@android:color/holo_green_dark"
+            android:fontFamily="sans-serif-condensed-medium" />
     </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -82,7 +82,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed"
-            android:background="@android:color/transparent"
             android:inputType="numberDecimal"/>
     </com.google.android.material.textfield.TextInputLayout>
 

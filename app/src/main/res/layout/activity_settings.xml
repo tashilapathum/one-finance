@@ -196,8 +196,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="manageAccounts"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
+                android:paddingVertical="16dp">
+
+                <ImageView
+                    android:id="@+id/image9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_accounts"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="8dp"
+                    android:paddingEnd="8dp"/>
+
+                <TextView
+                    android:id="@+id/setting9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/image9"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/accounts"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                <TextView
+                    android:id="@+id/description9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/setting9"
+                    android:layout_toEndOf="@id/image9"
+                    android:text="@string/edit_delete_or_view_details_of_your_accounts" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingStart="8dp"
                 android:onClick="exitConfirm"
                 android:paddingVertical="16dp">
 
@@ -229,7 +269,7 @@
                     android:layout_toEndOf="@id/image8"
                     android:text="@string/show_confirm_dialog_when_trying_to_exit_the_app" />
 
-                <Switch
+                <com.google.android.material.checkbox.MaterialCheckBox
                     android:id="@+id/exitCheck"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -308,7 +348,7 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
                     android:layout_margin="8dp"
-                    android:paddingEnd="4dp"/>
+                    android:paddingEnd="8dp"/>
 
                 <TextView
                     android:id="@+id/setting6"
@@ -359,7 +399,7 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
                     android:layout_margin="8dp"
-                    android:paddingEnd="4dp"/>
+                    android:paddingEnd="8dp"/>
 
                 <TextView
                     android:id="@+id/setting7"

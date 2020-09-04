@@ -16,11 +16,13 @@ public class Bill {
     private String dueDate;
     private String remarks;
     private boolean isMonthly;
+    private int lastPaidMonth;
 
-    public Bill(boolean isPaid, String title, String amount, String paidDate, String dueDate, String remarks, boolean isMonthly) {
+    public Bill(boolean isPaid, String title, String amount, String paidDate, String dueDate, String remarks, boolean isMonthly, int lastPaidMonth) {
         this.isPaid = isPaid;
         this.title = title;
         this.amount = amount;
+        this.lastPaidMonth = lastPaidMonth;
         if (paidDate == null || paidDate.isEmpty())
             this.paidDate = "N/A";
         else
@@ -75,5 +77,33 @@ public class Bill {
 
     public void setPaidDate(String paidDate) {
         this.paidDate = paidDate;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public void setMonthly(boolean monthly) {
+        isMonthly = monthly;
+    }
+
+    public int getLastPaidMonth() {
+        return lastPaidMonth;
+    }
+
+    public void setLastPaidMonth(int lastPaidMonth) {
+        this.lastPaidMonth = lastPaidMonth;
     }
 }

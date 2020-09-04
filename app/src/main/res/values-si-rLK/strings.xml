@@ -96,7 +96,7 @@
     <string name="account_number_optional">ගිණුම් අංකය</string>
     <string name="additional_info_optional">අමතර තොරතුරු</string>
     <string name="multi_interest_example"><![CDATA[උදා:-\n 0 - 9999 -> 2.00\n 10000 - 49999 -> 2.15\n50000 - 99999999 -> 2.25]]></string>
-    <string name="multi_interests_thing">තැන්පත් කර ඇති මුදල අනුව ඔබගේ බැංකුවෙන් ගෙවනු ලබන පොලිය වෙනස් වේ නම් එම අගයන් මෙහි ඇතුලත් කළ හැකිය</string>
+    <string name="multi_interests_thing">තැන්පත් කර ඇති මුදල අනුව ඔබගේ බැංකුවෙන් ගෙවනු ලබන පොලිය වෙනස් වේ නම් එම අගයන් මෙහි ඇතුලත් කළ හැකිය. \nසටහන: නිරවද්‍යතාවය බැංකුව, බදු, රෙගුලාසි යනාදිය මත වෙනස් විය හැකි ය. </string>
     <string name="min_amount">අඩුම අගය</string>
     <string name="max_amount">වැඩිම අගය</string>
     <string name="interest">පොලිය</string>
@@ -160,7 +160,6 @@
     <string name="lowest">අඩුම:&#160;</string>
     <string name="acc_added">ගිණුම ඇතුලත් කිරීම සම්පූර්ණයි!</string>
     <string name="new_interest_note">මෙම මොහොතේ සිට නව පොලී අනුපාත භාවිත වනු ඇත. පෙර ඇතුලත් කර තිබූ අගයන්හි වෙනසක් සිදු නොවේ.</string>
-    <string name="acc_in_use">දැනට භාවිතයේ පවතින ගිණුම ඉවත් කළ නොහැකි ය. පළමුව වෙනත් ගිණුමක් තෝරා, ඉන් පසුව මෙම ගිණුම ඉවත් කරන්න.</string>
     <string name="confirm_part1">ඔබ \"</string>
     <string name="confirm_part2">\". ගිණුම ඉවත් කිරීමට තෝරා ඇත. මෙය ඉවත් කළ පසු නැවත ලබාගත නොහැක. පෙර ගනුදෙනු සහ මුදල් අගයන් වල වෙනසක් සිදු නොවේ. මෙය සිදුකිරීමට අවශ්‍ය ද? </string>
     <string name="yes">ඔව්</string>
@@ -193,7 +192,7 @@
     <string name="show_confirm_dialog_when_trying_to_exit_the_app">ඇප් එකෙන් පිටවීමේ දී තහවුරු කිරීමට විමසීම</string>
     <string name="enjoying_the_app">ඇප් එක ප්‍රයෝජනවත් ද?</string>
     <string name="rate_description">ඔබට \'මයි වොලට්\' ඇප් එක ප්‍රයෝජනවත් නම් PlayStore හි තරු 5ක් ලබාදී Rate කිරීම මහත් සහයකි. \n\nතව ද ඇප් එක සම්බන්ධ ව ගැටලුවක් ඇත්නම් හෝ නව අංගයක් ඉල්ලීමට අවශ්‍ය නම් එය ද සඳහන් කිරීමට අමතක නොකරන්න :)</string>
-    <string name="add_quick_list_item">Add quick list item</string>
+    <string name="add_quick_list_item">අයිතමයක් එක් කරන්න</string>
     <string name="item_name">අයිතම(ය)</string>
     <string name="price">මිල</string>
     <string name="add_more_quick_items">සීමාවක් නොමැති ව ක්ෂණික ලැයිස්තුවට අයිතම එකතු කිරීමට Pro සංස්කරණය මිල දී ගන්න</string>
@@ -249,4 +248,13 @@
     <string name="update_balance">ශේෂය\nසංස්කරණය</string>
     <string name="neg_balance">ඍණ ශේෂය</string>
     <string name="update_balance_des">ඔබගේ ශේෂය ඍණ අගයකි. ගනුදෙනු සංස්කරණය කිරීමේදී වැරදි අගයන් ඇතුලත් කිරීමෙන් මෙය සාමාන්‍යයෙන් සිදුවේ. ඔබට මුදල් වියදම් කළ හැක්කේ ශේෂය ධන අගයක් නම් පමණි. \n\nකරුණාකර ගනුදෙනු නිවැරදි කිරීම හෝ ශේෂයේ අගය සංස්කරණය කර ධන අගයක් ඇතුලත් කරන්න.</string>
+    <string name="updated_acc_details">ගිණුමේ තොරතුරු යාවත්කාලීන කරන ලදී</string>
+    <string name="accounts">ගිණුම්</string>
+    <string name="edit_delete_or_view_details_of_your_accounts">ගිණුම් සංස්කරණය, ඉවත් කිරීම, එකතු කිරීම හෝ ගිණුම් පිළිබඳ විස්තර</string>
+    <string name="thanks_review">Thank you for your review!</string>
+    <string name="delete_acc_confirm">මෙම ගිණුම ඉවත් කිරීමට අවශ්‍යද?</string>
+    <string name="manage_acc">ගිණුම් කලමනාකරණය</string>
+    <string name="account_in_use">දැනට භාවිතයේ පවතින ගිණුම ඉවත් කළ නොහැකියි. පළමුව වෙනත් ගිණුමක් තෝරා ඉන් පසුව මෙම ගිණුම ඉවත් කරන්න.</string>
+    <string name="switched">Switched</string>
+    <string name="in_use">භාවිතයේ ඇත</string>
 </resources>

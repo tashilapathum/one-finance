@@ -20,12 +20,20 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.play.core.review.ReviewInfo;
+import com.google.android.play.core.review.ReviewManager;
+import com.google.android.play.core.review.ReviewManagerFactory;
+import com.google.android.play.core.tasks.OnCompleteListener;
+import com.google.android.play.core.tasks.OnFailureListener;
+import com.google.android.play.core.tasks.Task;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import java.util.Calendar;
@@ -125,47 +133,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             sharedPref.edit().putBoolean("isNotificationSet", true).apply();
         }
 
-        //calculate interests
-        new AccountHandler(this).calculateInterests();
-
-        //rate dialog
-        boolean alreadyRated = sharedPref.getBoolean("alreadyRated", false);
-        int openCount = sharedPref.getInt("openCount", 0);
-        sharedPref.edit().putInt("openCount", openCount + 1).apply();
-        if (!alreadyRated & openCount >= 20) {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.enjoying_the_app)
-                    .setMessage(R.string.rate_description)
-                    .setPositiveButton("Rate", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            sharedPref.edit().putBoolean("alreadyRated", true).apply();
-                            Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.tashila.mywalletfree"));
-                            startActivity(intent);
-                        }
-                    })
-                    .setNegativeButton("Later", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            sharedPref.edit().putInt("openCount", 0).apply();
-                        }
-                    })
-                    .setNeutralButton("Never", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            sharedPref.edit().putBoolean("alreadyRated", true).apply();
-                        }
-                    })
-                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialogInterface) {
-                            sharedPref.edit().putInt("openCount", 0).apply();
-                        }
-                    })
-                    .show();
-        }
-
         if (getPackageName().contains("debug"))
             sharedPref.edit().putBoolean("MyWalletPro", true).apply();
     }
@@ -186,8 +153,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = new Intent(this, InitialSetup.class);
         boolean alreadyDid = sharedPref.getBoolean("alreadyDidInitSetup", false);
         if (!alreadyDid) startActivity(intent);
-    }
 
+        //what's new
+        if (!sharedPref.getBoolean("whatsNewShown", false)) {
+            DialogWhatsNew dialogWhatsNew = new DialogWhatsNew();
+            dialogWhatsNew.show(getSupportFragmentManager(), "whats new dialog");
+            sharedPref.edit().putBoolean("whatsNewShown", true).apply();
+        }
+    }
 
     //nav drawer
     @Override
@@ -299,6 +272,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         }
                     }
                     navigateScreens(selectedFragment, fragmentTag, item.getItemId());
+                    rateApp(); //to make counts when navigating screens
                     return true;
                 }
             };
@@ -334,6 +308,67 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void moreApps(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/developer?id=Tashila+Pathum"));
         startActivity(intent);
+    }
+
+    private void rateApp() {
+        boolean alreadyRated = sharedPref.getBoolean("alreadyRated", false);
+        int actionCount = sharedPref.getInt("actionCount", 0);
+        sharedPref.edit().putInt("actionCount", actionCount + 1).apply();
+        if (!alreadyRated & actionCount >= 15) {
+            final ReviewManager reviewManager = ReviewManagerFactory.create(this);
+            Task<ReviewInfo> request = reviewManager.requestReviewFlow();
+            request.addOnCompleteListener(new OnCompleteListener<ReviewInfo>() {
+                @Override
+                public void onComplete(@NonNull Task<ReviewInfo> task) {
+                    if (task.isSuccessful()) {
+                        ReviewInfo reviewInfo = task.getResult();
+                        Task<Void> flow = reviewManager.launchReviewFlow(MainActivity.this, reviewInfo);
+                        flow.addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                sharedPref.edit().putInt("actionCount", 0).apply();
+                            }
+                        });
+                    }
+                }
+            });
+            request.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(Exception e) {
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle(R.string.enjoying_the_app)
+                            .setMessage(R.string.rate_description)
+                            .setPositiveButton("Rate", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    sharedPref.edit().putBoolean("alreadyRated", true).apply();
+                                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                                    intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.tashila.mywalletfree"));
+                                    startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton("Later", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    sharedPref.edit().putInt("actionCount", 0).apply();
+                                }
+                            })
+                            .setNeutralButton("Never", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    sharedPref.edit().putBoolean("alreadyRated", true).apply();
+                                }
+                            })
+                            .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                @Override
+                                public void onDismiss(DialogInterface dialogInterface) {
+                                    sharedPref.edit().putInt("actionCount", 0).apply();
+                                }
+                            })
+                            .show();
+                }
+            });
+        }
     }
 }
 

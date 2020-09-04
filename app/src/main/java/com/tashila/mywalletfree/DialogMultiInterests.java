@@ -1,6 +1,7 @@
 package com.tashila.mywalletfree;
 
 import androidx.appcompat.app.AlertDialog;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +12,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -18,8 +22,9 @@ import androidx.fragment.app.DialogFragment;
 public class DialogMultiInterests extends DialogFragment {
     private SharedPreferences sharedPref;
     private View v;
-    private int accNo;
     private AlertDialog dialog;
+    private Account account;
+    private AccountsViewModel accountsViewModel;
 
     private DialogInterface.OnDismissListener onDismissListener;
 
@@ -34,18 +39,16 @@ public class DialogMultiInterests extends DialogFragment {
             onDismissListener.onDismiss(dialog);
     }
 
+    public DialogMultiInterests(Account account) {
+        this.account = account;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
-
-        //that "same logic" mentioned in NewAccount
-        for (int i = 1; i <= 20; i++) {
-            if (!sharedPref.getBoolean("isAccountSlot" + i + "Taken", false))
-                accNo = i; //when creating a new account
-            if (i == 20)
-                accNo = sharedPref.getInt("manageAccNo", 0); //when coming from edit account
-        }
+        accountsViewModel = new AccountsViewModel(getActivity().getApplication());
+        account = getSelectedAccount();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -64,12 +67,7 @@ public class DialogMultiInterests extends DialogFragment {
                         clearMultiInterests();
                     }
                 })
-                .setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
+                .setNeutralButton(R.string.cancel, null);
 
         prepareForEditing();
         dialog = builder.create();
@@ -97,18 +95,12 @@ public class DialogMultiInterests extends DialogFragment {
                 break;
             }
 
-            //for account details section
-            String interestStr = sharedPref.getString("annualInterestStr", "");
-            interestStr = interestStr + minAmount + " - " + maxAmount + " -> " + interest + "\n";
-            sharedPref.edit().putString("annualInterestStr", interestStr).apply();
+            String interestItem = account.getInterestRate() + minAmount + "~" + maxAmount + "~" + interest + "~~~";
+            account.setMultiInterest(true);
+            interestItem = interestItem.replace("null", "");
+            account.setInterestRate(interestItem);
+            accountsViewModel.update(account);
 
-            //save
-            sharedPref.edit().putString("account" + accNo + "MinAmount" + i, minAmount).apply();
-            sharedPref.edit().putString("account" + accNo + "MaxAmount" + i, maxAmount).apply();
-            sharedPref.edit().putString("account" + accNo + "Interest" + i, interest).apply();
-            sharedPref.edit().putInt("noOfInterestRanges"+accNo, i).apply();
-
-            sharedPref.edit().putBoolean("hasMultiInterests"+i, true).apply();
             sharedPref.edit().putBoolean("addedMultiInterests", true).apply();
             Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT).show();
 
@@ -131,17 +123,20 @@ public class DialogMultiInterests extends DialogFragment {
                     .getIdentifier("i" + i, "id", getActivity().getPackageName()));
 
             //when editing a previously created account
-            if (sharedPref.getBoolean("reqEditing", true)) {
-                accountHandler.setDetail(etMinAmount, "Account" + accNo + "minAmount" + i, true);
-                accountHandler.setDetail(etMaxAmount, "Account" + accNo + "maxAmount" + i, true);
-                accountHandler.setDetail(etInterest, "Account" + accNo + "interest" + i, true);
+            if (account != null && account.isMultiInterest()) {
+                String[] interestList = account.getInterestRate().split("~~~");
+                if (sharedPref.getBoolean("reqEditing", true)) {
+                    etMinAmount.setText(interestList[i].split("~")[0]);
+                    etMaxAmount.setText(interestList[i].split("~")[1]);
+                    etInterest.setText(interestList[i].split("~")[2]);
+                }
             }
 
             //when reopening the dialog of new account
             if (sharedPref.getBoolean("isTempMultiAvailable", false)) {
-                accountHandler.setDetail(etMinAmount, "tempMinAmount"+i, true);
-                accountHandler.setDetail(etMaxAmount, "tempMaxAmount"+i, true);
-                accountHandler.setDetail(etInterest, "tempInterest"+i, true);
+                accountHandler.setDetail(etMinAmount, "tempMinAmount" + i, true);
+                accountHandler.setDetail(etMaxAmount, "tempMaxAmount" + i, true);
+                accountHandler.setDetail(etInterest, "tempInterest" + i, true);
             }
         }
     }
@@ -150,5 +145,20 @@ public class DialogMultiInterests extends DialogFragment {
         sharedPref.edit().putBoolean("addedMultiInterests", false).apply();
         Toast.makeText(getActivity(), R.string.cleared, Toast.LENGTH_SHORT).show();
         dialog.dismiss();
+    }
+
+    private Account getSelectedAccount() {
+        AccountsViewModel accountsViewModel = new AccountsViewModel(getActivity().getApplication());
+        Account account = null;
+        List<Account> accountList = accountsViewModel.getAllAccounts();
+        for (int i = 0; i < accountList.size(); i++) {
+            if (accountList.get(i).isSelected())
+                account = accountList.get(i);
+        }
+        if (account != null)
+            return account;
+        else
+            return new Account(null, null, null, null,
+                    false, null, null, null, false);
     }
 }
