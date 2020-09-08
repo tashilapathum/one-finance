@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -16,9 +17,11 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -27,13 +30,23 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.navigation.NavigationView;
+import com.jakewharton.threetenabp.AndroidThreeTen;
+
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.YearMonth;
+import org.threeten.bp.format.DateTimeFormatter;
+import org.threeten.bp.temporal.WeekFields;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 public class Reports extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     SharedPreferences sharedPref;
     private DrawerLayout drawer;
+    public static final String TAG = "Reports";
 
     @SuppressLint("WrongConstant")
     @Override
@@ -67,7 +80,7 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         /*----------------------------------------------------------------------------------------*/
-
+        AndroidThreeTen.init(this);
         boolean alreadyShown = sharedPref.getBoolean("betaInaccuracy", false);
         if (!alreadyShown) {
             new AlertDialog.Builder(this)
@@ -82,6 +95,10 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
                     .show();
         }
 
+        createReports();
+    }
+
+    private void createReportsOLD() {
         //-------------------DAY-------------------//
         //get views
         TextView tvTodaySpent = findViewById(R.id.todaySpent);
@@ -200,6 +217,161 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
     protected void onDestroy() {
         super.onDestroy();
         sharedPref.edit().putBoolean("exit", false).apply();
+    }
+
+    private void createReports() {
+        TextView tvTodayIncome = findViewById(R.id.todayIncome);
+        TextView tvTodaySpent = findViewById(R.id.todaySpent);
+        TextView tvTodayBudget = findViewById(R.id.todayBudgetLeft);
+        TextView tvTodayBudgetLeft = findViewById(R.id.todayPercent);
+        TextView tvYesterdayIncome = findViewById(R.id.yesterIncome);
+        TextView tvYesterdaySpent = findViewById(R.id.yesterSpent);
+        TextView tvYesterdayBudget = findViewById(R.id.yesterBudgetLeft);
+        TextView tvYesterdayBudgetLeft = findViewById(R.id.yesterPercent);
+        TextView tvThisWeekIncome = findViewById(R.id.thisWeekIncome);
+        TextView tvThisWeekSpent = findViewById(R.id.thisWeekSpent);
+        TextView tvThisWeekBudget = findViewById(R.id.thisWeekBudgetLeft);
+        TextView tvThisWeekBudgetLeft = findViewById(R.id.thisWeekPercent);
+        TextView tvLastWeekIncome = findViewById(R.id.lastWeekIncome);
+        TextView tvLastWeekSpent = findViewById(R.id.lastWeekSpent);
+        TextView tvLastWeekBudget = findViewById(R.id.lastWeekBudgetLeft);
+        TextView tvLastWeekBudgetLeft = findViewById(R.id.lastWeekPercent);
+        TextView tvThisMonthIncome = findViewById(R.id.thisMonthIncome);
+        TextView tvThisMonthSpent = findViewById(R.id.thisMonthSpent);
+        TextView tvThisMonthBudget = findViewById(R.id.thisMonthBudgetLeft);
+        TextView tvThisMonthBudgetLeft = findViewById(R.id.thisMonthPercent);
+        TextView tvLastMonthIncome = findViewById(R.id.lastMonthIncome);
+        TextView tvLastMonthSpent = findViewById(R.id.lastMonthSpent);
+        TextView tvLastMonthBudget = findViewById(R.id.lastMonthBudgetLeft);
+        TextView tvLastMonthBudgetLeft = findViewById(R.id.lastMonthPercent);
+
+        //get all records from database
+        TransactionsViewModel transactionsViewModel = new ViewModelProvider(this, ViewModelProvider
+                .AndroidViewModelFactory.getInstance(getApplication())).get(TransactionsViewModel.class);
+        List<TransactionItem> transactionsList = null;
+        try {
+            transactionsList = transactionsViewModel.getTransactionsList();
+        } catch (ExecutionException | InterruptedException e) {
+            Toast.makeText(this, "Error reading from database", Toast.LENGTH_SHORT).show();
+        }
+
+        double dTodayIncome = 0;
+        double dTodaySpent = 0;
+        double dYesterdayIncome = 0;
+        double dYesterdaySpent = 0;
+        double dThisWeekIncome = 0;
+        double dThisWeekSpent = 0;
+        double dLastWeekIncome = 0;
+        double dLastWeekSpent = 0;
+        double dThisMonthIncome = 0;
+        double dThisMonthSpent = 0;
+        double dLastMonthIncome = 0;
+        double dLastMonthSpent = 0;
+
+        //income and expenses
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        for (int i = 0; i < transactionsList.size(); i++) {
+            TransactionItem transaction = transactionsList.get(i);
+            LocalDate transactionDate = LocalDate.parse(transaction.getDatabaseDate(), formatter);
+            if (!transaction.isBankRelated()) {
+                //daily
+                if (transactionDate.getDayOfYear() == currentDate.getDayOfYear()) {
+                    if (transaction.getPrefix().equals("+"))
+                        dTodayIncome = dTodayIncome + Double.parseDouble(transaction.getAmount());
+                    else
+                        dTodaySpent = dTodaySpent + Double.parseDouble(transaction.getAmount());
+                }
+                if (transactionDate.getDayOfYear() == currentDate.getDayOfYear() - 1) {
+                    if (transaction.getPrefix().equals("+"))
+                        dYesterdayIncome = dYesterdayIncome + Double.parseDouble(transaction.getAmount());
+                    else
+                        dYesterdaySpent = dYesterdaySpent + Double.parseDouble(transaction.getAmount());
+                }
+                //weekly
+                WeekFields weekFields = WeekFields.of(Locale.getDefault());
+                int weekOfYearTransaction = transactionDate.get(weekFields.weekBasedYear());
+                int weekOfYearCurrent = currentDate.get(weekFields.weekBasedYear());
+                if (weekOfYearTransaction == weekOfYearCurrent) {
+                    if (transaction.getPrefix().equals("+"))
+                        dThisWeekIncome = dThisWeekIncome + Double.parseDouble(transaction.getAmount());
+                    else
+                        dThisWeekSpent = dThisWeekSpent + Double.parseDouble(transaction.getAmount());
+                }
+                if (weekOfYearTransaction == weekOfYearCurrent - 1) {
+                    if (transaction.getPrefix().equals("+"))
+                        dLastWeekIncome = dLastWeekIncome + Double.parseDouble(transaction.getAmount());
+                    else
+                        dLastWeekSpent = dLastWeekSpent + Double.parseDouble(transaction.getAmount());
+                }
+                //monthly
+                if (transactionDate.getMonthValue() == currentDate.getMonthValue()) {
+                    if (transaction.getPrefix().equals("+"))
+                        dThisMonthIncome = dThisMonthIncome + Double.parseDouble(transaction.getAmount());
+                    else
+                        dThisMonthSpent = dThisMonthSpent + Double.parseDouble(transaction.getAmount());
+                }
+                if (transactionDate.getMonthValue() == currentDate.getMonthValue() - 1) {
+                    if (transaction.getPrefix().equals("+"))
+                        dLastMonthIncome = dLastMonthIncome + Double.parseDouble(transaction.getAmount());
+                    else
+                        dLastMonthSpent = dLastMonthSpent + Double.parseDouble(transaction.getAmount());
+                }
+            }
+        }
+        setData(tvTodayIncome, dTodayIncome);
+        setData(tvTodaySpent, dTodaySpent);
+        setData(tvYesterdayIncome, dYesterdayIncome);
+        setData(tvYesterdaySpent, dYesterdaySpent);
+        setData(tvThisWeekIncome, dThisWeekIncome);
+        setData(tvThisWeekSpent, dThisWeekSpent);
+        setData(tvLastWeekIncome, dLastWeekIncome);
+        setData(tvLastWeekSpent, dLastWeekSpent);
+        setData(tvThisMonthIncome, dThisMonthIncome);
+        setData(tvThisMonthSpent, dThisMonthSpent);
+        setData(tvLastMonthSpent, dLastMonthSpent);
+        setData(tvLastMonthIncome, dLastMonthIncome);
+
+        //budget and budget left
+        String monthlyBudgetStr = sharedPref.getString("monthlyBudget", "N/A");
+        double monthlyBudget = 0;
+        double weeklyBudget;
+        double dailyBudget;
+        if (monthlyBudgetStr != null && !monthlyBudgetStr.equals("N/A")) {
+            monthlyBudget = Double.parseDouble(monthlyBudgetStr);
+        }
+        weeklyBudget = monthlyBudget / 4;
+        dailyBudget = monthlyBudget / YearMonth.now().lengthOfMonth();
+        setData(tvTodayBudget, dailyBudget);
+        setData(tvYesterdayBudget, dailyBudget);
+        setData(tvThisWeekBudget, weeklyBudget);
+        setData(tvLastWeekBudget, weeklyBudget);
+        setData(tvThisMonthBudget, monthlyBudget);
+        setData(tvLastMonthBudget, monthlyBudget);
+        setData(tvTodayBudgetLeft, dailyBudget - dTodaySpent);
+        setData(tvYesterdayBudgetLeft, dailyBudget - dYesterdaySpent);
+        setData(tvThisWeekBudgetLeft, weeklyBudget - dThisWeekSpent);
+        setData(tvLastWeekBudgetLeft, weeklyBudget - dLastWeekSpent);
+        setData(tvThisMonthBudgetLeft, monthlyBudget - dThisMonthSpent);
+        setData(tvLastMonthBudgetLeft, monthlyBudget - dLastMonthSpent);
+
+        //charts
+        createChart(String.valueOf(dTodaySpent), String.valueOf(dailyBudget), R.id.todayChart);
+        createChart(String.valueOf(dYesterdaySpent), String.valueOf(dailyBudget), R.id.yesterChart);
+        createChart(String.valueOf(dThisWeekSpent), String.valueOf(weeklyBudget), R.id.thisWeekChart);
+        createChart(String.valueOf(dLastWeekSpent), String.valueOf(weeklyBudget), R.id.lastWeekChart);
+        createChart(String.valueOf(dThisMonthSpent), String.valueOf(monthlyBudget), R.id.thisMonthChart);
+        createChart(String.valueOf(dLastMonthSpent), String.valueOf(monthlyBudget), R.id.lastMonthChart);
+
+    }
+
+    private void setData(TextView textView, double value) {
+        String currency = sharedPref.getString("currency", "");
+        DecimalFormat df = new DecimalFormat("#.00");
+        if (value == 0)
+            textView.append(currency + "0.00");
+        else
+            textView.append(currency + df.format(value));
     }
 
     private void createChart(String spentAmount, String budget, int chartId) {

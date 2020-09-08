@@ -137,18 +137,32 @@ public class EditQuickList extends AppCompatActivity {
         });
         qlContainer.addView(sampleQuickItem);
         qlContainer.invalidate();
+
+        //to notify wallet screen
+        sharedPref.edit().putBoolean("quickItemsChanged", true).apply();
     }
 
-    public void removeItem(View quickItem) {
-        TextView tvItemName = quickItem.findViewById(R.id.itemName);
-        TextView tvItemPrice = quickItem.findViewById(R.id.itemPrice);
-        String itemName = tvItemName.getText().toString();
-        String itemPrice = tvItemPrice.getText().toString();
-        String removingPart = itemName + "~~~" + itemPrice + "~~~";
-        String fullString = sharedPref.getString("fullQuickListStr", null);
-        fullString = fullString.replace(removingPart, "");
-        sharedPref.edit().putString("fullQuickListStr", fullString).apply();
-        quickItem.setVisibility(View.GONE);
+    public void removeItem(final View quickItem) {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.confirm)
+                .setMessage(R.string.delete_item_confirm)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        TextView tvItemName = quickItem.findViewById(R.id.itemName);
+                        TextView tvItemPrice = quickItem.findViewById(R.id.itemPrice);
+                        String itemName = tvItemName.getText().toString();
+                        String itemPrice = tvItemPrice.getText().toString();
+                        String removingPart = itemName + "~~~" + itemPrice + "~~~";
+                        String fullString = sharedPref.getString("fullQuickListStr", null);
+                        fullString = fullString.replace(removingPart, "");
+                        sharedPref.edit().putString("fullQuickListStr", fullString).apply();
+                        quickItem.setVisibility(View.GONE);
+                        sharedPref.edit().putBoolean("quickItemsChanged", true).apply();
+                    }
+                })
+                .setNegativeButton(R.string.no, null)
+                .show();
     }
 
     private void loadItems() {

@@ -56,7 +56,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/settings_quick_list"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                 <TextView
                     android:id="@+id/description1"
@@ -97,7 +97,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/language"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                 <TextView
                     android:id="@+id/description2"
@@ -138,7 +138,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/currency"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                 <TextView
                     android:id="@+id/description3"
@@ -180,7 +180,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/budget"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                 <TextView
                     android:id="@+id/description4"
@@ -221,7 +221,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/accounts"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                 <TextView
                     android:id="@+id/description9"
@@ -259,7 +259,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/exit_confirmation"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                 <TextView
                     android:id="@+id/description8"
@@ -306,7 +306,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/notification_time"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                 <TextView
                     android:id="@+id/description5"
@@ -358,7 +358,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/theme"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                 <TextView
                     android:id="@+id/description6"
@@ -409,7 +409,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/home_screen"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                 <TextView
                     android:id="@+id/description7"

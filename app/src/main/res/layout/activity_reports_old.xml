@@ -61,6 +61,12 @@
                             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                         <TextView
+                            android:id="@+id/todayIncome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/r_income" />
+
+                        <TextView
                             android:id="@+id/todaySpent"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -116,6 +122,12 @@
                             android:paddingTop="16dp"
                             android:text="@string/r_yesterday"
                             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                        <TextView
+                            android:id="@+id/yesterIncome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/r_income" />
 
                         <TextView
                             android:id="@+id/yesterSpent"
@@ -175,6 +187,12 @@
                             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                         <TextView
+                            android:id="@+id/thisWeekIncome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/r_income" />
+
+                        <TextView
                             android:id="@+id/thisWeekSpent"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -230,6 +248,12 @@
                             android:paddingTop="16dp"
                             android:text="@string/r_last_week"
                             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                        <TextView
+                            android:id="@+id/lastWeekIncome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/r_income" />
 
                         <TextView
                             android:id="@+id/lastWeekSpent"
@@ -289,6 +313,12 @@
                             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                         <TextView
+                            android:id="@+id/thisMonthIncome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/r_income" />
+
+                        <TextView
                             android:id="@+id/thisMonthSpent"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -346,6 +376,12 @@
                             android:paddingTop="16dp"
                             android:text="@string/r_last_month"
                             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                        <TextView
+                            android:id="@+id/lastMonthIncome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/r_income" />
 
                         <TextView
                             android:id="@+id/lastMonthSpent"

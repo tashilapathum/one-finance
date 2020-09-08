@@ -15,21 +15,16 @@ public class TransactionItem {
     private String description;
     private String userDate;
     private String databaseDate;
-    private int dayOfWeek;
-    private int dayOfMonth;
-    private int monthOfYear;
+    private boolean isBankRelated;
 
-    public TransactionItem(String balance, String prefix, String amount, String description, String userDate, //for user
-                           String databaseDate, int dayOfWeek, int dayOfMonth, int monthOfYear) { //for database
+    public TransactionItem(String balance, String prefix, String amount, String description, String userDate,
+                           String databaseDate, boolean isBankRelated) {
         this.balance = balance;
         this.prefix = prefix;
         this.amount = amount;
         this.description = description;
         this.userDate = userDate;
         this.databaseDate = databaseDate;
-        this.dayOfWeek = dayOfWeek;
-        this.dayOfMonth = dayOfMonth;
-        this.monthOfYear = monthOfYear;
     }
 
     public void setId(int id) {
@@ -46,18 +41,6 @@ public class TransactionItem {
 
     public void setUserDate(String userDate) {
         this.userDate = userDate;
-    }
-
-    public void setDayOfWeek(int dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
-    }
-
-    public void setDayOfMonth(int dayOfMonth) {
-        this.dayOfMonth = dayOfMonth;
-    }
-
-    public void setMonthOfYear(int monthOfYear) {
-        this.monthOfYear = monthOfYear;
     }
 
     public int getId() {
@@ -88,15 +71,23 @@ public class TransactionItem {
         return databaseDate;
     }
 
-    public int getDayOfWeek() {
-        return dayOfWeek;
+    public void setBalance(String balance) {
+        this.balance = balance;
     }
 
-    public int getDayOfMonth() {
-        return dayOfMonth;
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
     }
 
-    public int getMonthOfYear() {
-        return monthOfYear;
+    public void setDatabaseDate(String databaseDate) {
+        this.databaseDate = databaseDate;
+    }
+
+    public boolean isBankRelated() {
+        return isBankRelated;
+    }
+
+    public void setBankRelated(boolean bankRelated) {
+        isBankRelated = bankRelated;
     }
 }

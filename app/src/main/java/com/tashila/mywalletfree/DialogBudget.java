@@ -1,6 +1,7 @@
 package com.tashila.mywalletfree;
 
 import androidx.appcompat.app.AlertDialog;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -55,17 +56,7 @@ public class DialogBudget extends DialogFragment {
 
     private void saveBudget() {
         String monthlyBudget = editBudget.getText().toString();
-        if (!monthlyBudget.isEmpty()) {
-            String weeklyBudget = String.valueOf(Double.parseDouble(monthlyBudget) / 4);
-            String dailyBudget = String.valueOf(Double.parseDouble(monthlyBudget) / YearMonth.now().lengthOfMonth());
-
-            sharedPref.edit().putString("monthlyBudget", monthlyBudget).apply();
-            sharedPref.edit().putString("weeklyBudget", weeklyBudget).apply();
-            sharedPref.edit().putString("dailyBudget", dailyBudget).apply();
-        }
-        else {
-            sharedPref.edit().putString("monthlyBudget", "").apply();
-        }
-            Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT).show();
+        sharedPref.edit().putString("monthlyBudget", monthlyBudget).apply();
+        Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT).show();
     }
 }

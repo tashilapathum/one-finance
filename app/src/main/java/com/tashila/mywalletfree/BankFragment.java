@@ -278,8 +278,8 @@ public class BankFragment extends Fragment {
                             TransactionItem transaction = new TransactionItem(
                                     sharedPref.getString("balance", "0"), "+",
                                     df.format(inputAmount), transactionDescription, timeStamp,
-                                    DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").format(date),
-                                    date.getDayOfWeek().getValue(), date.getDayOfMonth(), date.getDayOfYear());
+                                    DateTimeFormatter.ofPattern("dd/MM/yyyy").format(date),
+                                    true);
                             transactionsViewModel.insert(transaction);
                         }
                         if (BankFragment.this.isVisible())

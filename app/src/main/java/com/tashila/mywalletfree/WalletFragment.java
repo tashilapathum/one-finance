@@ -168,7 +168,6 @@ public class WalletFragment extends Fragment {
         if (theme.equalsIgnoreCase("dark"))
             new Essentials(getActivity()).invertDrawable(imEditQuickList);
 
-        createReports(0);
         loadQuickList();
         return v;
     }
@@ -201,6 +200,15 @@ public class WalletFragment extends Fragment {
             imWarning.setVisibility(View.GONE);
             tvBalance.setTextColor(context.getResources().getColor(android.R.color.holo_green_dark));
             tvCurrency.setTextColor(context.getResources().getColor(android.R.color.holo_green_dark));
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (sharedPref.getBoolean("quickItemsChanged", false)) {
+            reloadFragment();
+            sharedPref.edit().putBoolean("quickItemsChanged", false).apply();
         }
     }
 
@@ -381,13 +389,13 @@ public class WalletFragment extends Fragment {
             if (viewId == R.id.btnSpent) {
                 prefix = "-";
                 doubBalance = oldBalance - doubAmount;
-                createReports(doubAmount);
             }
             if (viewId == R.id.btnToBank) {
                 prefix = "-";
                 doubBalance = oldBalance - doubAmount;
             }
             String balance = df.format(doubBalance);
+
 
             saveToDatabase(balance, prefix, currency, amount, descr, date);
             etAmount.setText("");
@@ -398,17 +406,13 @@ public class WalletFragment extends Fragment {
 
     private void saveToDatabase(final String balance, final String prefix, String currency, final String amount,
                                 final String description, final String userDate) {
-        final int dayOfWeek = LocalDate.now().getDayOfWeek().getValue();
-        final int dayOfMonth = LocalDate.now().getDayOfMonth();
-        final int monthOfYear = LocalDate.now().getMonthValue();
-
         //save to show
         sharedPref.edit().putString("balance", balance).apply();
         sharedPref.edit().putString("currency", currency).apply();
 
         //separate database date because the user might change the date format
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyy HH:mm");
-        final String databaseDate = formatter.format(LocalDateTime.now());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyy");
+        final String databaseDate = formatter.format(LocalDate.now());
 
         //to show the changed balance to user regardless of saving
         tvBalance.setText(balance);
@@ -438,8 +442,7 @@ public class WalletFragment extends Fragment {
             public void onDismissed(Snackbar transientBottomBar, int event) {
                 if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
                     TransactionItem transactionItem =
-                            new TransactionItem(balance, prefix, amount, description, userDate,
-                                    databaseDate, dayOfWeek, dayOfMonth, monthOfYear);
+                            new TransactionItem(balance, prefix, amount, description, userDate, databaseDate, false);
                     transactionsViewModel.insert(transactionItem);
                     if (viewId == R.id.btnToBank && !longClicked)
                         doBankStuffNEW();
@@ -523,7 +526,7 @@ public class WalletFragment extends Fragment {
         }
     }
 
-    public void createReports(double amount) {
+    /*public void createReports(double amount) {
         double monthlyBudget = Double.parseDouble(sharedPref.getString("monthlyBudget", "0"));
         double weeklyBudget = BigDecimal.valueOf(monthlyBudget / 4).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
         double dailyBudget = BigDecimal.valueOf(monthlyBudget / YearMonth.now().lengthOfMonth()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
@@ -602,7 +605,7 @@ public class WalletFragment extends Fragment {
             sharedPref.edit().putString("monthBudgetLeft", String.valueOf(monthlyBudget)).apply();
         }
         sharedPref.edit().putInt("lastSavedMonth", monthOfYear).apply();
-    }
+    }*/
 
     void doBankStuffNEW() {
         Account account = getSelectedAccount();

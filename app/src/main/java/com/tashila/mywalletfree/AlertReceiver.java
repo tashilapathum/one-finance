@@ -30,8 +30,6 @@ public class AlertReceiver extends BroadcastReceiver {
         //-------------------------------------------------------------//
 
         //TODO: remove these
-        //to update reports
-        WalletFragment.getInstance().createReports(0);
 
         //calculate interests
         /*AccountHandler accountHandler = new AccountHandler(context);

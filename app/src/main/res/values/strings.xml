@@ -22,7 +22,7 @@
     <string name="_0_00">0.00</string>
     <string name="example_item_1">Example item 1\n$7.25</string>
     <string name="home">Home</string>
-    <string name="quick_list">- Quick list -</string>
+    <string name="quick_list">Quick list</string>
     <string name="settings_quick_list">Quick list</string>
     <string name="edit_quick_list_items">Edit quick list items</string>
     <string name="edit">Edit</string>
@@ -73,6 +73,7 @@
     <string name="rate_app">Rate app!</string>
     <string name="contact_the_developer_problems">Contact the developer if you encounter ANY problem with the app:</string>
     <string name="budget_left">Budget left:&#160;</string>
+    <string name="r_income">Income:&#160;</string>
     <string name="r_spent">Spent:&#160;</string>
     <string name="r_budget">Budget:&#160;</string>
     <string name="r_today">Today</string>
@@ -268,4 +269,5 @@
     <string name="account_in_use">You can\'t delete the account currently in use. Please switch to a different account first.</string>
     <string name="switched">Switched</string>
     <string name="in_use">IN USE</string>
+    <string name="delete_item_confirm">Are you sure you want to delete this item?</string>
 </resources>

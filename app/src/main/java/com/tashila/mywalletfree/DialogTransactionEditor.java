@@ -147,14 +147,11 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
                     dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
                 }
                 DateTimeFormatter timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
+                DateTimeFormatter databaseFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 localDate = LocalDate.parse(date, dateFormatter);
-                int dayOfWeek = localDate.getDayOfWeek().getValue();
-                int dayOfMonth = localDate.getDayOfMonth();
-                int monthOfYear = localDate.getMonthValue();
+                String databaseDate = databaseFormatter.format(localDate);
                 transactionItem.setUserDate(date + " " + timeFormatter.format(LocalDateTime.now()));
-                transactionItem.setDayOfWeek(dayOfWeek);
-                transactionItem.setDayOfMonth(dayOfMonth);
-                transactionItem.setMonthOfYear(monthOfYear);
+                transactionItem.setDatabaseDate(databaseDate);
             }
             catch (Exception e) {
                 Toast.makeText(context, "Failed to update the date", Toast.LENGTH_SHORT).show();

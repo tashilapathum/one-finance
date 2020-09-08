@@ -21,7 +21,7 @@
     <string name="_0_00">0.00</string>
     <string name="example_item_1">උදාහරණ අයිතමය 1\nRs.7.25</string>
     <string name="home">මුල් පිටුව</string>
-    <string name="quick_list">- ක්ෂණික ලැයිස්තුව -</string>
+    <string name="quick_list">ක්ෂණික ලැයිස්තුව</string>
     <string name="settings_quick_list">ක්ෂණික ලැයිස්තුව</string>
     <string name="edit_quick_list_items">ක්ෂණික ලැයිස්තුවේ අයිතම වෙනස් කරන්න</string>
     <string name="edit">සංස්කරණය</string>
@@ -72,6 +72,7 @@
     <string name="budget_left">වෙන් කළ මුදලෙන් ඉතිරිය:&#160;</string>
     <string name="r_today">අද</string>
     <string name="r_spent">වියදම්:&#160;</string>
+    <string name="r_income">ආදායම්:&#160;</string>
     <string name="r_budget">වෙන් කර ඇති මුදල:&#160;</string>
     <string name="r_yesterday">ඊයේ දිනය</string>
     <string name="r_this_week">මෙම සතිය</string>
@@ -257,4 +258,5 @@
     <string name="account_in_use">දැනට භාවිතයේ පවතින ගිණුම ඉවත් කළ නොහැකියි. පළමුව වෙනත් ගිණුමක් තෝරා ඉන් පසුව මෙම ගිණුම ඉවත් කරන්න.</string>
     <string name="switched">Switched</string>
     <string name="in_use">භාවිතයේ ඇත</string>
+    <string name="delete_item_confirm">මෙම අයිතමය ඉවත් කිරීමට අවශ්‍යද?</string>
 </resources>

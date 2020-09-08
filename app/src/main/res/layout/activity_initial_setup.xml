@@ -145,6 +145,42 @@
                 android:backgroundTint="@color/colorAccent"
                 android:onClick="setQuickCurrency"
                 android:text="₹" />
+
+            <Button
+                android:id="@+id/ru"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="2dp"
+                android:minHeight="2dp"
+                android:layout_marginHorizontal="4dp"
+                android:backgroundTint="@color/colorAccent"
+                android:onClick="setQuickCurrency"
+                android:text="රු" />
+
+            <Button
+                android:id="@+id/rs"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="2dp"
+                android:minHeight="2dp"
+                android:layout_marginHorizontal="4dp"
+                android:backgroundTint="@color/colorAccent"
+                android:onClick="setQuickCurrency"
+                android:text="Rs." />
+
+            <Button
+                android:id="@+id/lkr"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="2dp"
+                android:minHeight="2dp"
+                android:layout_marginHorizontal="4dp"
+                android:backgroundTint="@color/colorAccent"
+                android:onClick="setQuickCurrency"
+                android:text="LKR" />
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout

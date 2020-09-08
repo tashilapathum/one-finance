@@ -7,7 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-@Database(entities = {TransactionItem.class}, version = 1, exportSchema = false)
+@Database(entities = {TransactionItem.class}, version = 2, exportSchema = false)
 public abstract class TransactionsDatabase extends RoomDatabase {
 
     private static TransactionsDatabase instance;
