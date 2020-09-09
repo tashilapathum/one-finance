@@ -103,7 +103,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
                             public void onDismissed(Snackbar transientBottomBar, int event) {
                                 super.onDismissed(transientBottomBar, event);
                                 if (event != Snackbar.Callback.DISMISS_EVENT_ACTION)
-                                    deleteTransaction(transactionItem, viewHolder);
+                                    deleteTransaction(transactionItem);
                             }
                         });
                 snackbar.show();
@@ -275,10 +275,12 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
 
     public void updateTransaction(TransactionItem transactionItem) {
         transactionsViewModel.update(transactionItem);
+        transactionsAdapter.notifyDataSetChanged();
         Toast.makeText(this, R.string.updated, Toast.LENGTH_SHORT).show();
     }
 
-    private void deleteTransaction(TransactionItem transactionItem, RecyclerView.ViewHolder viewHolder) {
+    private void deleteTransaction(TransactionItem transactionItem) {
+        transactionsViewModel.delete(transactionItem);
         String prefix = transactionItem.getPrefix();
         double balance = Double.parseDouble(sharedPref.getString("balance", "0"));
         double amount = Double.parseDouble(transactionItem.getAmount());
@@ -289,7 +291,6 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         DecimalFormat df = new DecimalFormat("#.00");
         String newBalance = df.format(balance);
         sharedPref.edit().putString("balance", newBalance).apply();
-        transactionsViewModel.delete(transactionItem);
-        transactionsAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+        transactionsAdapter.notifyDataSetChanged();
     }
 }

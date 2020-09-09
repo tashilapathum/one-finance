@@ -5,6 +5,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,14 +22,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.List;
 
 public class EditQuickList extends AppCompatActivity {
     SharedPreferences sharedPref;
     public static final String TAG = "EditQuickList";
     boolean MyWalletPro;
     int maxNoOfItems;
+    private QuickListViewModel quickListViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +80,20 @@ public class EditQuickList extends AppCompatActivity {
             }
         });
 
-        //load list
-        loadItems();
+        //loadItems();
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+        final QuickListAdapter quickListAdapter = new QuickListAdapter(this);
+        recyclerView.setAdapter(quickListAdapter);
+        quickListViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
+                .getInstance(getApplication())).get(QuickListViewModel.class);
+        quickListViewModel.getQuickItemsLiveData().observe(this, new Observer<List<QuickItem>>() {
+            @Override
+            public void onChanged(List<QuickItem> quickItems) {
+                quickListAdapter.submitList(quickItems);
+            }
+        });
     }
 
     @Override //so the language change works with dark mode
@@ -110,70 +131,40 @@ public class EditQuickList extends AppCompatActivity {
         }
     }
 
-    public void addItem(String item, String price, boolean fromOnCreate) {
-        //save
-        if (!fromOnCreate) {
-            String fullQuickListStr = sharedPref.getString("fullQuickListStr", null);
-            fullQuickListStr = fullQuickListStr + item + "~~~" + price + "~~~";
-            if (fullQuickListStr.contains("null"))
-                fullQuickListStr = fullQuickListStr.replace("null", "");
-            sharedPref.edit().putString("fullQuickListStr", fullQuickListStr).apply();
-        }
-
-        //show
-        LayoutInflater inflater = getLayoutInflater();
-        LinearLayout qlContainer = findViewById(R.id.qlContainer);
-        final View sampleQuickItem = inflater.inflate(R.layout.sample_quicklist_item, null);
-        TextView tvItem = sampleQuickItem.findViewById(R.id.itemName);
-        TextView tvPrice = sampleQuickItem.findViewById(R.id.itemPrice);
-        ImageView ivRemove = sampleQuickItem.findViewById(R.id.itemRemove);
-        tvItem.setText(item);
-        tvPrice.setText(price);
-        ivRemove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                removeItem(sampleQuickItem);
-            }
-        });
-        qlContainer.addView(sampleQuickItem);
-        qlContainer.invalidate();
-
-        //to notify wallet screen
+    public void addItemNEW(QuickItem quickItem) {
+        quickListViewModel.insert(quickItem);
         sharedPref.edit().putBoolean("quickItemsChanged", true).apply();
     }
 
-    public void removeItem(final View quickItem) {
+    public void editItem(QuickItem quickItem) {
+        DialogAddQuickItem dialogAddQuickItem = new DialogAddQuickItem();
+        Bundle bundle = new Bundle();
+        bundle.putInt("itemID", quickItem.getId());
+        bundle.putString("itemName", quickItem.getItemName());
+        bundle.putString("itemPrice", quickItem.getItemPrice());
+        dialogAddQuickItem.setArguments(bundle);
+        dialogAddQuickItem.show(getSupportFragmentManager(), "edit quick item");
+    }
+
+    public void saveItem(QuickItem quickItem) {
+        quickListViewModel.update(quickItem);
+        sharedPref.edit().putBoolean("quickItemsChanged", true).apply();
+        Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
+    }
+
+    public void removeItemNEW(final QuickItem quickItem) {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.confirm)
                 .setMessage(R.string.delete_item_confirm)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        TextView tvItemName = quickItem.findViewById(R.id.itemName);
-                        TextView tvItemPrice = quickItem.findViewById(R.id.itemPrice);
-                        String itemName = tvItemName.getText().toString();
-                        String itemPrice = tvItemPrice.getText().toString();
-                        String removingPart = itemName + "~~~" + itemPrice + "~~~";
-                        String fullString = sharedPref.getString("fullQuickListStr", null);
-                        fullString = fullString.replace(removingPart, "");
-                        sharedPref.edit().putString("fullQuickListStr", fullString).apply();
-                        quickItem.setVisibility(View.GONE);
+                        quickListViewModel.delete(quickItem);
                         sharedPref.edit().putBoolean("quickItemsChanged", true).apply();
                     }
                 })
                 .setNegativeButton(R.string.no, null)
                 .show();
-    }
-
-    private void loadItems() {
-        String fullQuickListStr = sharedPref.getString("fullQuickListStr", null);
-        if (fullQuickListStr != null) {
-            String[] fullQuickList = fullQuickListStr.split("~~~");
-            for (int i = 0; i < fullQuickList.length; i = i + 2) {
-                if (!fullQuickList[i].isEmpty())
-                    addItem(fullQuickList[i], fullQuickList[i + 1], true);
-            }
-        }
     }
 }
 

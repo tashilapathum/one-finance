@@ -270,4 +270,7 @@
     <string name="switched">Switched</string>
     <string name="in_use">IN USE</string>
     <string name="delete_item_confirm">Are you sure you want to delete this item?</string>
+    <string name="add_q_item">Add quick item</string>
+    <string name="edit_q_item">Edit quick item</string>
+    <string name="saved">Saved</string>
 </resources>

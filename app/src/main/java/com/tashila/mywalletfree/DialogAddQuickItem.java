@@ -9,13 +9,14 @@ import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.DecimalFormat;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 public class DialogAddQuickItem extends DialogFragment {
-    private View view;
     private TextInputLayout tilItem;
     private TextInputLayout tilPrice;
     private EditText etItem;
@@ -23,28 +24,42 @@ public class DialogAddQuickItem extends DialogFragment {
     private String item;
     private String price;
     private AlertDialog dialog;
-
+    private Bundle bundle;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        view = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_quickitem, null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_quickitem, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.add_quick_list_item)
-                .setView(view)
-                .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+        bundle = this.getArguments();
+        if (bundle == null) {
+            builder.setTitle(R.string.add_q_item)
+                    .setView(view)
+                    .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                    }
-                })
-                .setNegativeButton(R.string.cancel, null);
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, null);
+        } else {
+            builder.setTitle(R.string.edit_q_item)
+                    .setView(view)
+                    .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, null);
+        }
 
         tilItem = view.findViewById(R.id.etItem);
         etItem = tilItem.getEditText();
         tilPrice = view.findViewById(R.id.etPrice);
         etPrice = tilPrice.getEditText();
 
+        fillDetails();
         return builder.create();
     }
 
@@ -80,12 +95,29 @@ public class DialogAddQuickItem extends DialogFragment {
         }
     }
 
-    public void onClickAdd() {
+    private void onClickAdd() {
         item = etItem.getText().toString();
         price = etPrice.getText().toString();
+        DecimalFormat df = new DecimalFormat("#.00");
+        price = df.format(Double.parseDouble(price));
         if (validateItem() && validatePrice()) {
             dialog.dismiss();
-            ((EditQuickList) getActivity()).addItem(item, price, false);
+            QuickItem quickItem = new QuickItem(item, price);
+            if (bundle == null)
+                ((EditQuickList) getActivity()).addItemNEW(quickItem);
+            else {
+                quickItem.setId((Integer) bundle.get("itemID"));
+                ((EditQuickList) getActivity()).saveItem(quickItem);
+            }
+
+        }
+    }
+
+    private void fillDetails() {
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            etItem.setText(bundle.getString("itemName"));
+            etPrice.setText(bundle.getString("itemPrice"));
         }
     }
 

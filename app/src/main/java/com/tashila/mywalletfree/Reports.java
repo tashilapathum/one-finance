@@ -81,19 +81,6 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
         toggle.syncState();
         /*----------------------------------------------------------------------------------------*/
         AndroidThreeTen.init(this);
-        boolean alreadyShown = sharedPref.getBoolean("betaInaccuracy", false);
-        if (!alreadyShown) {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.beta_feature)
-                    .setMessage(R.string.reports_test_des)
-                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            sharedPref.edit().putBoolean("betaInaccuracy", true).apply();
-                        }
-                    })
-                    .show();
-        }
 
         createReports();
     }

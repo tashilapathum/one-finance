@@ -71,6 +71,7 @@ public class WalletFragment extends Fragment {
     private AccountsViewModel accountsViewModel;
     private Account account;
     private boolean longClicked;
+    private QuickListViewModel quickListViewModel;
 
     @Nullable
     @Override
@@ -86,6 +87,8 @@ public class WalletFragment extends Fragment {
                 .getInstance(getActivity().getApplication())).get(TransactionsViewModel.class);
         accountsViewModel = new ViewModelProvider(getActivity(), ViewModelProvider.AndroidViewModelFactory
                 .getInstance(getActivity().getApplication())).get(AccountsViewModel.class);
+        quickListViewModel = new ViewModelProvider(getActivity(), ViewModelProvider.AndroidViewModelFactory
+                .getInstance(getActivity().getApplication())).get(QuickListViewModel.class);
 
         //get data
         tvCurrency = v.findViewById(R.id.currency);
@@ -453,12 +456,9 @@ public class WalletFragment extends Fragment {
     }
 
     private void loadQuickList() {
-        String fullQuickListStr = sharedPref.getString("fullQuickListStr", null);
-        Log.i(TAG, "fullQuickListStr: " + fullQuickListStr + "end");
-        if (fullQuickListStr != null && !fullQuickListStr.equals("")) {
-            ArrayList<String> fullQuickList = new ArrayList<>(Arrays.asList(fullQuickListStr.split("~~~")));
-
-            for (int i = 0; i < fullQuickList.size(); i += 2) {
+        List<QuickItem> fullQuickList = quickListViewModel.getQuickItemsList();
+        if (fullQuickList != null) {
+            for (int i = 0; i < fullQuickList.size(); i++) {
                 LinearLayout layout = v.findViewById(R.id.childLinear);
 
                 //padding
@@ -470,7 +470,7 @@ public class WalletFragment extends Fragment {
                 final MaterialButton button = new MaterialButton(context);
                 button.setTag("listItem" + i);
                 button.setLayoutParams(params); //padding
-                button.setText(fullQuickList.get(i) + "\n" + currency + fullQuickList.get(i + 1));
+                button.setText(fullQuickList.get(i).getItemName() + "\n" + currency + fullQuickList.get(i).getItemPrice());
                 String theme = sharedPref.getString("theme", "light");
                 if (theme.equalsIgnoreCase("light"))
                     button.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.colorQuickList, null));
@@ -525,87 +525,6 @@ public class WalletFragment extends Fragment {
             layout.addView(button);
         }
     }
-
-    /*public void createReports(double amount) {
-        double monthlyBudget = Double.parseDouble(sharedPref.getString("monthlyBudget", "0"));
-        double weeklyBudget = BigDecimal.valueOf(monthlyBudget / 4).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-        double dailyBudget = BigDecimal.valueOf(monthlyBudget / YearMonth.now().lengthOfMonth()).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-
-        //--------------------------DAY----------------------------//
-        double todaySpent;
-        double todayBudgetLeft;
-
-        //day count
-        int dayOfWeek = LocalDate.now().getDayOfWeek().getValue();
-        int lastSavedDay = sharedPref.getInt("lastSavedDay", dayOfWeek);
-
-        if (lastSavedDay == dayOfWeek) {
-            double oldTodaySpent = Double.parseDouble(sharedPref.getString("todaySpent", "0"));
-            todaySpent = oldTodaySpent + amount;
-            sharedPref.edit().putString("todaySpent", String.valueOf(todaySpent)).apply();
-            todayBudgetLeft = dailyBudget - todaySpent;
-            sharedPref.edit().putString("todayBudgetLeft", String.valueOf(todayBudgetLeft)).apply();
-        } else {
-            String yesterSpent = sharedPref.getString("todaySpent", "0");
-            sharedPref.edit().putString("yesterSpent", yesterSpent).apply();
-            sharedPref.edit().putString("todaySpent", "0").apply();
-            String yesterBudgetLeft = sharedPref.getString("todayBudgetLeft", String.valueOf(dailyBudget));
-            sharedPref.edit().putString("yesterBudgetLeft", yesterBudgetLeft).apply();
-            sharedPref.edit().putString("todayBudgetLeft", String.valueOf(dailyBudget)).apply();
-        }
-        sharedPref.edit().putInt("lastSavedDay", dayOfWeek).apply();
-
-
-        //--------------------------WEEK----------------------------//
-        double weekSpent;
-        double weekBudgetLeft;
-
-        //week count
-        TemporalField woy = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
-        int weekOfYear = LocalDate.now().get(woy);
-        int lastSavedWeek = sharedPref.getInt("lastSavedWeek", weekOfYear);
-
-        if (lastSavedWeek == weekOfYear) {
-            double oldWeekSpent = Double.parseDouble(sharedPref.getString("weekSpent", "0"));
-            weekSpent = oldWeekSpent + amount;
-            sharedPref.edit().putString("weekSpent", String.valueOf(weekSpent)).apply();
-            weekBudgetLeft = weeklyBudget - weekSpent;
-            sharedPref.edit().putString("weekBudgetLeft", String.valueOf(weekBudgetLeft)).apply();
-        } else {
-            String lastWeekSpent = sharedPref.getString("weekSpent", "0");
-            sharedPref.edit().putString("lastWeekSpent", lastWeekSpent).apply();
-            sharedPref.edit().putString("weekSpent", "0").apply();
-            String lastWeekBudgetLeft = sharedPref.getString("weekBudgetLeft", String.valueOf(weeklyBudget));
-            sharedPref.edit().putString("lastWeekBudgetLeft", lastWeekBudgetLeft).apply();
-            sharedPref.edit().putString("weekBudgetLeft", String.valueOf(weeklyBudget)).apply();
-        }
-        sharedPref.edit().putInt("lastSavedWeek", weekOfYear).apply();
-
-
-        //--------------------------MONTH----------------------------//
-        double monthSpent;
-        double monthBudgetLeft;
-
-        //day count
-        int monthOfYear = LocalDate.now().getMonthValue();
-        int lastSavedMonth = sharedPref.getInt("lastSavedMonth", monthOfYear);
-
-        if (lastSavedMonth == monthOfYear) {
-            double oldMonthSpent = Double.parseDouble(sharedPref.getString("monthSpent", "0"));
-            monthSpent = oldMonthSpent + amount;
-            sharedPref.edit().putString("monthSpent", String.valueOf(monthSpent)).apply();
-            monthBudgetLeft = monthlyBudget - monthSpent;
-            sharedPref.edit().putString("monthBudgetLeft", String.valueOf(monthBudgetLeft)).apply();
-        } else {
-            String lastMonthSpent = sharedPref.getString("monthSpent", "0");
-            sharedPref.edit().putString("lastMonthSpent", lastMonthSpent).apply();
-            sharedPref.edit().putString("monthSpent", "0").apply();
-            String lastMonthBudgetLeft = sharedPref.getString("monthBudgetLeft", String.valueOf(monthlyBudget));
-            sharedPref.edit().putString("lastMonthBudgetLeft", lastMonthBudgetLeft).apply();
-            sharedPref.edit().putString("monthBudgetLeft", String.valueOf(monthlyBudget)).apply();
-        }
-        sharedPref.edit().putInt("lastSavedMonth", monthOfYear).apply();
-    }*/
 
     void doBankStuffNEW() {
         Account account = getSelectedAccount();

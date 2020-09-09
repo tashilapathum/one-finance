@@ -34,7 +34,9 @@ public class TransactionsAdapter extends ListAdapter<TransactionItem, Transactio
 
         @Override
         public boolean areContentsTheSame(@NonNull TransactionItem oldItem, @NonNull TransactionItem newItem) {
-            return false;
+            return oldItem.getDescription().equals(newItem.getDescription()) &&
+                    oldItem.getAmount().equals(newItem.getAmount()) &&
+                    oldItem.getUserDate().equals(newItem.getUserDate());
         }
     };
 
@@ -42,8 +44,7 @@ public class TransactionsAdapter extends ListAdapter<TransactionItem, Transactio
     @Override
     public TransactionsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_transaction_item, parent, false);
-        TransactionsViewHolder evh = new TransactionsViewHolder(v);
-        return evh;
+        return new TransactionsViewHolder(v);
     }
 
     @Override

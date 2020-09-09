@@ -193,7 +193,6 @@ public class CartFragment extends Fragment {
         int quantity = cartItem.getQuantity();
 
         //update total
-
         String itemPrice = cartItem.getItemPrice();
         if (!itemPrice.isEmpty()) {
             total = total - Double.parseDouble(itemPrice) * quantity;

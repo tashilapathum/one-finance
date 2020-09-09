@@ -259,4 +259,7 @@
     <string name="switched">Switched</string>
     <string name="in_use">භාවිතයේ ඇත</string>
     <string name="delete_item_confirm">මෙම අයිතමය ඉවත් කිරීමට අවශ්‍යද?</string>
+    <string name="add_q_item">නව ක්ෂණික අයිතමයක්</string>
+    <string name="edit_q_item">ක්ෂණික අයිතමය සංස්කරණය</string>
+    <string name="saved">සුරකින ලදී</string>
 </resources>
