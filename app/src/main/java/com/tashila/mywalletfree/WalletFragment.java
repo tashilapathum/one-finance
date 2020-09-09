@@ -72,6 +72,8 @@ public class WalletFragment extends Fragment {
     private Account account;
     private boolean longClicked;
     private QuickListViewModel quickListViewModel;
+    private String date;
+    private String databaseDate;
 
     @Nullable
     @Override
@@ -354,10 +356,8 @@ public class WalletFragment extends Fragment {
 
         //date
         longClicked = sharedPref.getBoolean("longClicked", false);
-        String date;
         if (longClicked && (viewId == R.id.btnSpent || viewId == R.id.btnEarned)) {
             date = sharedPref.getString("preDate", null);
-            sharedPref.edit().putBoolean("longClicked", false).apply();
         } else {
             DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
             date = LocalDateTime.now().format(formatter);
@@ -414,8 +414,13 @@ public class WalletFragment extends Fragment {
         sharedPref.edit().putString("currency", currency).apply();
 
         //separate database date because the user might change the date format
+        final String databaseDate;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyy");
-        final String databaseDate = formatter.format(LocalDate.now());
+        if (sharedPref.getString("preDate", null) != null) {
+            databaseDate = formatter.format(LocalDate.parse(date.split(" ")[0], formatter));
+            sharedPref.edit().putBoolean("preDate", false).apply();
+        } else
+            databaseDate = formatter.format(LocalDate.now());
 
         //to show the changed balance to user regardless of saving
         tvBalance.setText(balance);

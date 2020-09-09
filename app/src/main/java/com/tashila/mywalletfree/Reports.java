@@ -85,112 +85,6 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
         createReports();
     }
 
-    private void createReportsOLD() {
-        //-------------------DAY-------------------//
-        //get views
-        TextView tvTodaySpent = findViewById(R.id.todaySpent);
-        TextView tvTodayBudget = findViewById(R.id.todayBudgetLeft);
-        TextView tvTodayBudgetLeft = findViewById(R.id.todayPercent);
-        TextView tvYesterSpent = findViewById(R.id.yesterSpent);
-        TextView tvYesterBudget = findViewById(R.id.yesterBudgetLeft);
-        TextView tvYesterBudgetLeft = findViewById(R.id.yesterPercent);
-
-        //get Data
-        String todaySpent = sharedPref.getString("todaySpent", "0");
-        String dailyBudget = sharedPref.getString("dailyBudget", "N/A");
-        String todayBudgetLeft = sharedPref.getString("todayBudgetLeft", "N/A");
-        String yesterSpent = sharedPref.getString("yesterSpent", "0");
-        String yesterBudgetLeft = sharedPref.getString("yesterBudgetLeft", "N/A");
-        DecimalFormat df = new DecimalFormat("0.00");
-        if (!dailyBudget.equals("N/A"))
-            dailyBudget = df.format(Double.parseDouble(dailyBudget));
-        if (!todayBudgetLeft.equals("N/A"))
-            todayBudgetLeft = df.format(Double.parseDouble(todayBudgetLeft));
-        if (!yesterBudgetLeft.equals("N/A"))
-            yesterBudgetLeft = df.format(Double.parseDouble(yesterBudgetLeft));
-
-        //set data to views
-        tvTodaySpent.append(todaySpent);
-        tvTodayBudget.append(dailyBudget);
-        tvTodayBudgetLeft.append(todayBudgetLeft);
-        tvYesterSpent.append(yesterSpent);
-        tvYesterBudget.append(dailyBudget);
-        tvYesterBudgetLeft.append(yesterBudgetLeft);
-
-        //pie charts
-        createChart(todaySpent, dailyBudget, R.id.todayChart); //today
-        createChart(yesterSpent, dailyBudget, R.id.yesterChart); //yesterday
-
-
-        //-------------------WEEK-------------------//
-        //get views
-        TextView tvThisWeekSpent = findViewById(R.id.thisWeekSpent);
-        TextView tvThisWeekBudget = findViewById(R.id.thisWeekBudgetLeft);
-        TextView tvThisWeekBudgetLeft = findViewById(R.id.thisWeekPercent);
-        TextView tvLastWeekSpent = findViewById(R.id.lastWeekSpent);
-        TextView tvLastWeekBudget = findViewById(R.id.lastWeekBudgetLeft);
-        TextView tvLastWeekBudgetLeft = findViewById(R.id.lastWeekPercent);
-
-        //get Data
-        String thisWeekSpent = sharedPref.getString("weekSpent", "0");
-        String weeklyBudget = sharedPref.getString("weeklyBudget", "N/A");
-        String thisWeekBudgetLeft = sharedPref.getString("weekBudgetLeft", "N/A");
-        String lastWeekSpent = sharedPref.getString("lastWeekSpent", "0");
-        String lastWeekBudgetLeft = sharedPref.getString("lastWeekBudgetLeft", "N/A");
-        if (!weeklyBudget.equals("N/A"))
-            weeklyBudget = df.format(Double.parseDouble(weeklyBudget));
-        if (!thisWeekBudgetLeft.equals("N/A"))
-            thisWeekBudgetLeft = df.format(Double.parseDouble(thisWeekBudgetLeft));
-        if (!lastWeekBudgetLeft.equals("N/A"))
-            lastWeekBudgetLeft = df.format(Double.parseDouble(lastWeekBudgetLeft));
-
-        //set data to views
-        tvThisWeekSpent.append(thisWeekSpent);
-        tvThisWeekBudget.append(weeklyBudget);
-        tvThisWeekBudgetLeft.append(thisWeekBudgetLeft);
-        tvLastWeekSpent.append(lastWeekSpent);
-        tvLastWeekBudget.append(weeklyBudget);
-        tvLastWeekBudgetLeft.append(lastWeekBudgetLeft);
-
-        //charts
-        createChart(thisWeekSpent, weeklyBudget, R.id.thisWeekChart);
-        createChart(lastWeekSpent, weeklyBudget, R.id.lastWeekChart);
-
-
-        //-------------------MONTH-------------------//
-        //get views
-        TextView tvThisMonthSpent = findViewById(R.id.thisMonthSpent);
-        TextView tvThisMonthBudget = findViewById(R.id.thisMonthBudgetLeft);
-        TextView tvThisMonthBudgetLeft = findViewById(R.id.thisMonthPercent);
-        TextView tvLastMonthSpent = findViewById(R.id.lastMonthSpent);
-        TextView tvLastMonthBudget = findViewById(R.id.lastMonthBudgetLeft);
-        TextView tvLastMonthBudgetLeft = findViewById(R.id.lastMonthPercent);
-
-        //get Data
-        String thisMonthSpent = sharedPref.getString("monthSpent", "0");
-        String monthlyBudget = sharedPref.getString("monthlyBudget", "N/A");
-        String thisMonthBudgetLeft = sharedPref.getString("monthBudgetLeft", "N/A");
-        String lastMonthSpent = sharedPref.getString("lastMonthSpent", "0");
-        String lastMonthBudgetLeft = sharedPref.getString("lastMonthBudgetLeft", "N/A");
-        if (!monthlyBudget.equals("N/A"))
-            monthlyBudget = df.format(Double.parseDouble(monthlyBudget));
-        if (!thisMonthBudgetLeft.equals("N/A"))
-            thisMonthBudgetLeft = df.format(Double.parseDouble(thisMonthBudgetLeft));
-        if (!lastMonthBudgetLeft.equals("N/A"))
-            lastMonthBudgetLeft = df.format(Double.parseDouble(lastMonthBudgetLeft));
-
-        //set data to views
-        tvThisMonthSpent.append(thisMonthSpent);
-        tvThisMonthBudget.append(monthlyBudget);
-        tvThisMonthBudgetLeft.append(thisMonthBudgetLeft);
-        tvLastMonthSpent.append(lastMonthSpent);
-        tvLastMonthBudget.append(monthlyBudget);
-        tvLastMonthBudgetLeft.append(lastMonthBudgetLeft);
-
-        //charts
-        createChart(thisMonthSpent, monthlyBudget, R.id.thisMonthChart);
-        createChart(lastMonthSpent, monthlyBudget, R.id.lastMonthChart);
-    }
 
     @Override
     protected void onResume() {
@@ -277,8 +171,9 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
                 }
                 //weekly
                 WeekFields weekFields = WeekFields.of(Locale.getDefault());
-                int weekOfYearTransaction = transactionDate.get(weekFields.weekBasedYear());
-                int weekOfYearCurrent = currentDate.get(weekFields.weekBasedYear());
+                int weekOfYearTransaction = transactionDate.get(weekFields.weekOfWeekBasedYear());
+                int weekOfYearCurrent = currentDate.get(weekFields.weekOfWeekBasedYear());
+                Log.i(TAG, "week1:" + weekOfYearTransaction + " ,week2:"+ weekOfYearCurrent);
                 if (weekOfYearTransaction == weekOfYearCurrent) {
                     if (transaction.getPrefix().equals("+"))
                         dThisWeekIncome = dThisWeekIncome + Double.parseDouble(transaction.getAmount());
