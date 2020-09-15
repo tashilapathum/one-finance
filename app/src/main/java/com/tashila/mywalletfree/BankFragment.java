@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +23,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.YearMonth;
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.FormatStyle;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -123,6 +128,7 @@ public class BankFragment extends Fragment {
         if (haveAccounts) {
             loadDetails();
             loadActivities();
+            calculateInterests();
         }
 
         showInstructions(view.findViewById(R.id.switchAcc));
@@ -364,4 +370,115 @@ public class BankFragment extends Fragment {
         ft.detach(bankFrag).attach(bankFrag).commit();
     }
 
+    private void calculateInterests() {
+        String language = sharedPref.getString("language", "english");
+        String currency = sharedPref.getString("currency", null);
+        List<Account> accountList = accountsViewModel.getAllAccounts();
+        for (int i = 0; i < accountList.size(); i++) {
+            Account account = accountList.get(i);
+            if (account.getInterestRate() != null) {
+                if (!account.getInterestRate().isEmpty()) {
+                    int lastMonth = LocalDate.now().minusMonths(1).getMonthValue();
+
+                    if (account.getInterestLastCalcMonth() != lastMonth) {
+                        double balance = Double.parseDouble(account.getAccBalance());
+                        double interestRate = 0;
+                        double interest;
+                        if (account.isMultiInterest()) {
+                            //assign multi ranges and interests
+                            String[] multiInterests = account.getInterestRate().split("~~~");
+                            for (String multiInterest : multiInterests) {
+                                double min = Double.parseDouble(multiInterest.split("~")[0]);
+                                double max = Double.parseDouble(multiInterest.split("~")[1]);
+                                double MI = Double.parseDouble(multiInterest.split("~")[2]);
+                                if (balance >= min && balance <= max) {
+                                    interestRate = MI / 12;
+                                    break;
+                                }
+                            }
+                        } else {
+                            interestRate = Double.parseDouble(account.getInterestRate()) / 12;
+                        }
+
+                        //prepare data
+                        interest = balance * interestRate / 100;
+                        double roundedInterest = BigDecimal.valueOf(interest).setScale(2, RoundingMode.HALF_UP).doubleValue();
+                        String monthName = LocalDate.now().minusMonths(1).getMonth().toString();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
+                        String timeStamp = formatter.format(LocalDateTime.now());
+
+                        //save the activity
+                        String activity;
+                        if (language.equalsIgnoreCase("english"))
+                            activity = "Added " + currency + roundedInterest + " as the interest of " + monthName + "###" + timeStamp;
+                        else {
+                            switch (lastMonth) {
+                                case 1: {
+                                    monthName = "ජනවාරි";
+                                    break;
+                                }
+                                case 2: {
+                                    monthName = "පෙබරවාරි";
+                                    break;
+                                }
+                                case 3: {
+                                    monthName = "මාර්තු";
+                                    break;
+                                }
+                                case 4: {
+                                    monthName = "අප්‍රේල්";
+                                    break;
+                                }
+                                case 5: {
+                                    monthName = "මැයි";
+                                    break;
+                                }
+                                case 6: {
+                                    monthName = "ජූනි";
+                                    break;
+                                }
+                                case 7: {
+                                    monthName = "ජූලි";
+                                    break;
+                                }
+                                case 8: {
+                                    monthName = "අගෝස්තු";
+                                    break;
+                                }
+                                case 9: {
+                                    monthName = "සැප්තැම්බර්";
+                                    break;
+                                }
+                                case 10: {
+                                    monthName = "ඔක්තෝබර්";
+                                    break;
+                                }
+                                case 11: {
+                                    monthName = "නොවැම්බර්";
+                                    break;
+                                }
+                                case 12: {
+                                    monthName = "දෙසැම්බර්";
+                                    break;
+                                }
+                            }
+                            activity = monthName + " මස පොලිය ලෙස " + currency + roundedInterest + " ක් එකතු කරන ලදී###" + timeStamp;
+                        }
+                        List<String> activities = account.getActivities();
+                        activities.add(activity);
+                        account.setActivities(activities);
+
+                        //update balance
+                        balance = balance + roundedInterest;
+                        account.setAccBalance(String.valueOf(balance));
+
+                        //finalize
+                        account.setInterestLastCalcMonth(lastMonth);
+                        accountsViewModel.update(account);
+                        Log.i(TAG, "Calculate interest complete!");
+                    }
+                }
+            }
+        }
+    }
 }

@@ -48,7 +48,7 @@
     <string name="restart_for_changes">වෙනස්කම් අන්තර්ගත කිරීමට ඇප් එක නැවත විවෘත කරන්න</string>
     <string name="example_quick_item_text">ක්ෂණික ලැයිස්තුවට අයිතම එකතු කිරීමට මෙතන ටච් කරන්න</string>
     <string name="spend_more_than_have">ශේෂයට වඩා වැඩි ගණනක් වියදම් කළ නොහැකියි!</string>
-    <string name="coming_soon">ළඟදීම...</string>
+    <string name="coming_soon">ළඟදීම…</string>
     <string name="email">tashila.pathum@gmail.com</string>
     <string name="pro_features">
         &#160;- ක්ෂණික ලැයිස්තුවේ සීමාවක් නොමැත\n
@@ -88,7 +88,7 @@
     <string name="predate">පෙර ගනුදෙනු</string>
     <string name="predate_description">පෙර දිනයන්හි දී සිදුකරන ලද ගනුදෙනු ඇතුලත් කිරීමට දින දර්ශනය පෙන්වන තුරු බොත්තම ඔබාගෙන සිටින්න</string>
     <string name="search_description">මෙයින් ඔබගේ පසුගිය ගනුදෙනු දිනය හෝ විස්තරය මගින් සෙවිය හැකියි</string>
-    <string name="search">සොයන්න...</string>
+    <string name="search">සොයන්න…</string>
     <string name="withdraw">ආපසු ගන්න</string>
     <string name="deposit">තැන්පත් කරන්න</string>
     <string name="account_name">ගිණුමේ නම*</string>
@@ -234,7 +234,7 @@
     <string name="new_bill">නව බිල්පතක් එකතු කිරීම</string>
     <string name="edit_bill">බිල්පත සංස්කරණය කිරීම</string>
     <string name="renew">මාසික බිල්පත් සෑම මසකම ස්වයංක්‍රීයව අලුත් වේ</string>
-    <string name="bills_notify_title">ඔබට හෙට දිනයේදී ගෙවීමට බිල්පත් ඇත</string>
+    <string name="bills_notify_title">ඔබට ගෙවීමට තිබෙන බිල්පත් ඇත</string>
     <string name="type_in_or_select_the_currency">මුදල් වර්ගය තෝරන්න හෝ ඇතුලත් කරන්න</string>
     <string name="add_balance">ඔබගේ පසුම්බියෙහි මේ මොහොතේ තිබෙන මුදල් ප්‍රමාණය ඇතුලත් කරන්න</string>
     <string name="monthly_budget">මාසික බජට් අගය</string>
@@ -262,4 +262,11 @@
     <string name="add_q_item">නව ක්ෂණික අයිතමයක්</string>
     <string name="edit_q_item">ක්ෂණික අයිතමය සංස්කරණය</string>
     <string name="saved">සුරකින ලදී</string>
+    <string name="detailed_acc_soon">ගිණුම් විස්තර බැලීමේ පහසුකම ඉදිරියේදී එක් වේ</string>
+    <string name="transactions">ගනුදෙනු අයිතම</string>
+    <string name="transactions_help">
+        ගනුදෙනු සංස්කරණය කිරීමට අයිතමයක් ටච් කරන්න. ඉවත් කිරීමට පසකට තල්ලු කරන්න (swipe). අයිතමයක් ඉවත් කළ විට පසුම්බියේ ශේෂය ඒ අනුව නිවැරැදි වේ.\n\n
+        සටහන: බැංකුව හා පසුම්බිය අතර ගනුදෙනු ඉවත් කළ විට බැංකු ගිණුමේ ශේෂය ඔබ විසින් නිවැරැදි කළ යුතු ය.
+    </string>
+    <string name="budget_na">බජට් අගය\nනොමැත</string>
 </resources>

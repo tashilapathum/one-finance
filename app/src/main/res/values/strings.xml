@@ -91,7 +91,7 @@
     <string name="predate">Predate</string>
     <string name="predate_description">Long-tap to add a previous date to the transaction</string>
     <string name="search_description">You can search by either description or date</string>
-    <string name="search">Search...</string>
+    <string name="search">Search…</string>
     <string name="withdraw">Withdraw</string>
     <string name="deposit">Deposit</string>
     <string name="account_name">Account name*</string>
@@ -112,11 +112,11 @@
     <string name="multiple">-Multiple-</string>
     <string name="bank_welcome_message">You can manage your bank accounts here. Add an account to continue.</string>
     <string name="bank_welcome_title">Welcome</string>
-    <string name="account_name_desc">To identify the account (displayed at the top of the bank screen)</string>
+    <string name="account_name_desc">To identify the account (displayed at the top of the "Bank" screen)</string>
     <string name="interest_description">If you add this, the interest will be automatically calculated and added to your balance. \nNote:The accuracy depends on the location, bank, taxes… etc.</string>
     <string name="add">Add</string>
     <string name="deposit_to_bank">Deposit to bank</string>
-    <string name="deposit_to_bank_descr">You can directly deposit money to your selected account using this. Long-tap to select a different account.\nNote: Description is not required for this. Relevant info will be added automatically.</string>
+    <string name="deposit_to_bank_descr">You can directly deposit money to your selected account using this. Long-tap to select a different account.\n\nNote: Description is not required for this. Relevant info will be added automatically.</string>
     <string name="clear_muliti_thing">Clear the multiple interests to enable this field</string>
     <string name="edit_account">Edit account</string>
     <string name="recent_activities">- Recent activities -</string>
@@ -131,7 +131,7 @@
     <string name="created_date">Created date</string>
     <string name="last_updated">Last Updated</string>
     <string name="upgrade_to_pro">Upgrade to Pro</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
     <string name="thank_u_for_pro">Thank you for purchasing the Pro version!</string>
     <string name="loans">Loans</string>
     <string name="bills">Bills</string>
@@ -237,7 +237,7 @@
     <string name="new_bill">New bill</string>
     <string name="edit_bill">Edit bill</string>
     <string name="renew">Bills with a monthly fee will renew automatically.</string>
-    <string name="bills_notify_title">You have bill payments due for tomorrow</string>
+    <string name="bills_notify_title">You have due payments of your bills</string>
     <string name="type_in_or_select_the_currency">Type in or select the currency</string>
     <string name="add_balance">Add the balance you currently have in your wallet</string>
     <string name="monthly_budget">Monthly budget</string>
@@ -273,4 +273,11 @@
     <string name="add_q_item">Add quick item</string>
     <string name="edit_q_item">Edit quick item</string>
     <string name="saved">Saved</string>
+    <string name="detailed_acc_soon">Detailed account reports coming soon</string>
+    <string name="transactions">Transactions</string>
+    <string name="transactions_help">
+        Tap to edit transactions. Swipe to delete them. Wallet balance will be automatically updated when deleting any transaction.\n\n
+        Note: When deleting a transaction between Wallet and bank accounts, you should update the account balance manually.
+    </string>
+    <string name="budget_na">Budget not\navailable</string>
 </resources>

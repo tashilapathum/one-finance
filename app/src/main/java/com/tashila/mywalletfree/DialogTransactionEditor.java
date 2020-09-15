@@ -141,11 +141,7 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
             try {
                 LocalDate localDate;
                 DateTimeFormatter dateFormatter;
-                if (language.equalsIgnoreCase("සිංහල")) {
-                    dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                } else {
-                    dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-                }
+                dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
                 DateTimeFormatter timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
                 DateTimeFormatter databaseFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 localDate = LocalDate.parse(date, dateFormatter);

@@ -1,7 +1,9 @@
 package com.tashila.mywalletfree;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -40,11 +42,13 @@ public class DialogNewBill extends DialogFragment {
     private static DialogNewBill instance;
     private Bill editingBill;
     private CheckBox cbMonthly;
+    private SharedPreferences sharedPref;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AndroidThreeTen.init(getActivity());
+        sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
         instance = this;
 
@@ -170,8 +174,10 @@ public class DialogNewBill extends DialogFragment {
             if (editingBill != null) {
                 bill.setId(editingBill.getId());
                 BillsFragment.getInstance().updateBill(bill);
-            } else
+            } else {
                 BillsFragment.getInstance().addBill(bill);
+                sharedPref.edit().putBoolean("haveBills", true).apply();
+            }
             dialog.dismiss();
         }
     }

@@ -114,23 +114,20 @@ public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
 
         //show and hide "overdue"
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-        DateTimeFormatter formatterSI = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         int today = LocalDate.now().getDayOfYear();
-        int dueDay = 0;
+        int dueDay;
         try {
-            if (!currentBill.getDueDate().equals("N/A"))
-                if (language.equalsIgnoreCase("සිංහල"))
-                    dueDay = LocalDate.parse(currentBill.getDueDate(), formatterSI).getDayOfYear();
-                else
-                    dueDay = LocalDate.parse(currentBill.getDueDate(), formatter).getDayOfYear();
+            if (!currentBill.getDueDate().equals("N/A")) {
+                dueDay = LocalDate.parse(currentBill.getDueDate(), formatter).getDayOfYear();
                 setNotifications(dueDay);
+                if (today > dueDay && !currentBill.isPaid())
+                    holder.tvOverdue.setVisibility(View.VISIBLE);
+                else
+                    holder.tvOverdue.setVisibility(View.GONE);
+            }
         } catch (Exception e) { //because the user might change the localization
             e.printStackTrace();
         }
-        if (today > dueDay && !currentBill.isPaid())
-            holder.tvOverdue.setVisibility(View.VISIBLE);
-        else
-            holder.tvOverdue.setVisibility(View.GONE);
 
         //renew monthly payments
         if (currentBill.isMonthly() && currentBill.getLastPaidMonth() < LocalDate.now().getMonthValue())

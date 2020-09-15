@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,18 +25,11 @@ import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
-import org.threeten.bp.YearMonth;
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.FormatStyle;
-import org.threeten.bp.temporal.TemporalField;
-import org.threeten.bp.temporal.WeekFields;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -360,7 +352,7 @@ public class WalletFragment extends Fragment {
             date = sharedPref.getString("preDate", null);
         } else {
             DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
-            date = LocalDateTime.now().format(formatter);
+            date = formatter.format(LocalDateTime.now());
         }
 
         //amount
@@ -453,7 +445,8 @@ public class WalletFragment extends Fragment {
                             new TransactionItem(balance, prefix, amount, description, userDate, databaseDate, false);
                     transactionsViewModel.insert(transactionItem);
                     if (viewId == R.id.btnToBank && !longClicked)
-                        doBankStuffNEW();
+                        doBankStuff(null);
+                    sharedPref.edit().putBoolean("longClicked", false).apply();
                 }
             }
         });
@@ -462,7 +455,7 @@ public class WalletFragment extends Fragment {
 
     private void loadQuickList() {
         List<QuickItem> fullQuickList = quickListViewModel.getQuickItemsList();
-        if (fullQuickList != null) {
+        if (fullQuickList.size() != 0) {
             for (int i = 0; i < fullQuickList.size(); i++) {
                 LinearLayout layout = v.findViewById(R.id.childLinear);
 
@@ -531,8 +524,9 @@ public class WalletFragment extends Fragment {
         }
     }
 
-    void doBankStuffNEW() {
-        Account account = getSelectedAccount();
+    void doBankStuff(Account account) {
+        if (account == null)
+            account = getSelectedAccount();
 
         //update activity
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);

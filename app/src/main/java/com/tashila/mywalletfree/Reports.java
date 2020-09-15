@@ -173,7 +173,7 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
                 WeekFields weekFields = WeekFields.of(Locale.getDefault());
                 int weekOfYearTransaction = transactionDate.get(weekFields.weekOfWeekBasedYear());
                 int weekOfYearCurrent = currentDate.get(weekFields.weekOfWeekBasedYear());
-                Log.i(TAG, "week1:" + weekOfYearTransaction + " ,week2:"+ weekOfYearCurrent);
+                Log.i(TAG, "week1:" + weekOfYearTransaction + " ,week2:" + weekOfYearCurrent);
                 if (weekOfYearTransaction == weekOfYearCurrent) {
                     if (transaction.getPrefix().equals("+"))
                         dThisWeekIncome = dThisWeekIncome + Double.parseDouble(transaction.getAmount());
@@ -267,13 +267,17 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
             fBudget = Float.parseFloat(budget);
             fBudgetLeft = fBudget - fSpent;
             fSpentPercent = (fSpent / fBudget) * 100;
+            if (fBudget == 0) fSpentPercent = 0;
             fBudgetLeftPercent = 100 - fSpentPercent;
 
             //prepare chart
             PieChart pieChart = findViewById(chartId);
             pieChart.setUsePercentValues(true);
             pieChart.setDrawHoleEnabled(false);
-            pieChart.setCenterText(((int) fSpentPercent) + getString(R.string.spent_percent));
+            if (fBudget != 0)
+                pieChart.setCenterText(((int) fSpentPercent) + getString(R.string.spent_percent));
+            else
+                pieChart.setCenterText(getString(R.string.budget_na));
             pieChart.setCenterTextTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
             pieChart.getLegend().setEnabled(false);
             pieChart.setDrawEntryLabels(false);

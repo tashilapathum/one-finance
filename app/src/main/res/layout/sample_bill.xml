@@ -52,6 +52,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_toStartOf="@id/markAsPaid"
                 android:text="@string/overdue"
+                android:visibility="gone"
                 android:textStyle="italic"
                 android:textColor="@android:color/holo_red_light"/>
 

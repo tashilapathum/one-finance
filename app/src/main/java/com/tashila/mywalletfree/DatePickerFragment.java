@@ -47,20 +47,20 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
             LocalDateTime date = LocalDateTime.of(day, month, year,
                     LocalDateTime.now().getHour(), LocalDateTime.now().getMinute());
             DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
-            String preDate = date.format(formatter);
+            String preDate = formatter.format(date);
             sharedPref.edit().putString("preDate", preDate).apply();
             WalletFragment.getInstance().continueLongClickProcess();
         }
 
         if (fromContext.equals("fromCartFragment")) {
             DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-            String date = LocalDate.of(day, month, year).format(formatter);
+            String date = formatter.format(LocalDate.of(day, month, year));
             DialogNewBill.getInstance().setDate(date);
         }
 
         if (fromContext.equals("fromTransactionEditor")) {
             DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-            String date = LocalDate.of(day, month, year).format(formatter);
+            String date = formatter.format(LocalDate.of(day, month, year));
             DialogTransactionEditor.getInstance().setDate(date);
         }
     }

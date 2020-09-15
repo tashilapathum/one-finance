@@ -24,7 +24,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.elconfidencial.bubbleshowcase.BubbleShowCase;
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
+import com.elconfidencial.bubbleshowcase.BubbleShowCaseListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -79,7 +81,6 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         currency = sharedPref.getString("currency", "");
         createItems();
         etSearch = findViewById(R.id.etSearch);
-        showInstructions(etSearch);
         implementSearch();
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -181,6 +182,18 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        if (!sharedPref.getBoolean("insTransactionsShown", false)) {
+            new BubbleShowCaseBuilder(this)
+                    .title(getString(R.string.transactions))
+                    .description(getString(R.string.transactions_help))
+                    .show();
+            sharedPref.edit().putBoolean("insTransactionsShown", true).apply();
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         sharedPref.edit().putBoolean("exit", false).apply();
@@ -259,18 +272,6 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             }
         }
         transactionsAdapter.submitList(filteredList);
-    }
-
-    private void showInstructions(View view) {
-        boolean alreadyShown = sharedPref.getBoolean("insSearch", false);
-        if (!alreadyShown) {
-            new BubbleShowCaseBuilder(this)
-                    .title(getString(R.string.search))
-                    .description(getString(R.string.search_description))
-                    .targetView(view)
-                    .show();
-            sharedPref.edit().putBoolean("insSearch", true).apply();
-        }
     }
 
     public void updateTransaction(TransactionItem transactionItem) {

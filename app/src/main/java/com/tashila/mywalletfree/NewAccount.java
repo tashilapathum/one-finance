@@ -145,9 +145,11 @@ public class NewAccount extends AppCompatActivity {
     public void onClickAdd(View view) {
         if (validateAccName() & validateAccBalance()) {
             if (isNewAccount)
-                createAccountNEW();
+                createAccount();
             else
-                updateAccountNEW(updatingAccount);
+                updateAccount(updatingAccount);
+
+            sharedPref.edit().putBoolean("addedMultiInterests", false).apply();
 
             //go back to bank fragment
             sharedPref.edit().putBoolean("reqOpenBank", true).apply();
@@ -155,7 +157,7 @@ public class NewAccount extends AppCompatActivity {
         }
     }
 
-    private void createAccountNEW() {
+    private void createAccount() {
         String accountName = etAccountName.getText().toString();
         //balance
         String accountBalance = etCurrentBalance.getText().toString();
@@ -164,7 +166,7 @@ public class NewAccount extends AppCompatActivity {
         //interest
         boolean isMultiInterest = false;
         String interestRate = etAnnualInterest.getText().toString();
-        if (sharedPref.getString("multiInterests", null) != null) {
+        if (sharedPref.getBoolean("addedMultiInterests", true)) {
             interestRate = sharedPref.getString("multiInterests", null);
             isMultiInterest = true;
         }
@@ -177,7 +179,7 @@ public class NewAccount extends AppCompatActivity {
         if (language.equalsIgnoreCase("සිංහල"))
             activity = "\"" + accountName + "\"" + " ගිණුම සාදන ලදී" + "###" + date;
         else
-            activity = "Added the account " + "\"" + accountName + "\"###" + date;
+            activity = "Created the account " + "\"" + accountName + "\"###" + date;
         List<String> activities = new ArrayList<>();
         activities.add(activity);
 
@@ -189,7 +191,7 @@ public class NewAccount extends AppCompatActivity {
         }
         //save
         Account account = new Account(accountName, accountBalance, balanceHistory, interestRate,
-                isMultiInterest, accountNumber, additionalInfo, activities, true);
+                isMultiInterest, 0, accountNumber, additionalInfo, activities, true);
 
         accountsViewModel.insert(account);
         this.account = account;
@@ -197,7 +199,7 @@ public class NewAccount extends AppCompatActivity {
         Toast.makeText(this, R.string.acc_added, Toast.LENGTH_SHORT).show();
     }
 
-    private void updateAccountNEW(Account account) {
+    private void updateAccount(Account account) {
         String accountName = etAccountName.getText().toString();
         //balance
         String accountBalance = etCurrentBalance.getText().toString();

@@ -104,6 +104,7 @@ public class AccountsAdapter extends ListAdapter<Account, AccountsAdapter.Accoun
 
     private void edit(Account account) {
         Intent intent = new Intent(context, NewAccount.class);
+        intent.putExtra("isNewAccount", false);
         intent.putExtra("updatingAccount", account);
         context.startActivity(intent);
     }
@@ -125,7 +126,7 @@ public class AccountsAdapter extends ListAdapter<Account, AccountsAdapter.Accoun
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, "Detailed account reports coming soon", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.detailed_acc_soon, Toast.LENGTH_SHORT).show();
                 }
             });
 

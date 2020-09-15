@@ -57,13 +57,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //language
         String language = sharedPref.getString("language", "english");
-        if (language.equals("සිංහල")) {
-            Locale locale = new Locale("si");
-            Locale.setDefault(locale);
-            Configuration config = new Configuration();
-            config.setLocale(locale);
-            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-        }
+        Locale locale = null;
+        if (language.equals("සිංහල"))
+            locale = new Locale("si");
+        else
+            locale = new Locale("en");
+
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
 
         //theme
         String theme = sharedPref.getString("theme", "light");
@@ -153,12 +157,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = new Intent(this, InitialSetup.class);
         boolean alreadyDid = sharedPref.getBoolean("alreadyDidInitSetup", false);
         if (!alreadyDid) startActivity(intent);
-
-        //what's new
-        if (!sharedPref.getBoolean("whatsNewShown", false)) {
-            DialogWhatsNew dialogWhatsNew = new DialogWhatsNew();
-            dialogWhatsNew.show(getSupportFragmentManager(), "whats new dialog");
-            sharedPref.edit().putBoolean("whatsNewShown", true).apply();
+        else {
+            //what's new
+            if (!sharedPref.getBoolean("whatsNewShown", false)) {
+                DialogWhatsNew dialogWhatsNew = new DialogWhatsNew();
+                dialogWhatsNew.show(getSupportFragmentManager(), "whats new dialog");
+                sharedPref.edit().putBoolean("whatsNewShown", true).apply();
+            }
         }
     }
 

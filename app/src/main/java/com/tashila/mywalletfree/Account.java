@@ -17,19 +17,21 @@ public class Account implements Serializable {
     private List<Double> balanceHistory;
     private String interestRate;
     private boolean isMultiInterest;
+    private int interestLastCalcMonth;
     private String accNumber;
     private String moreDetails;
     private List<String> activities;
     private boolean isSelected;
 
     public Account(String accName, String accBalance, List<Double> balanceHistory, String interestRate,
-                   boolean isMultiInterest, String accNumber, String moreDetails, List<String> activities,
+                   boolean isMultiInterest, int interestLastCalcMonth, String accNumber, String moreDetails, List<String> activities,
                    boolean isSelected) {
         this.accName = accName;
         this.accBalance = accBalance;
         this.balanceHistory = balanceHistory;
         this.interestRate = interestRate;
         this.isMultiInterest = isMultiInterest;
+        this.interestLastCalcMonth = interestLastCalcMonth;
         this.accNumber = accNumber;
         this.moreDetails = moreDetails;
         this.activities = activities;
@@ -114,5 +116,13 @@ public class Account implements Serializable {
 
     public void setActivities(List<String> activities) {
         this.activities = activities;
+    }
+
+    public int getInterestLastCalcMonth() {
+        return interestLastCalcMonth;
+    }
+
+    public void setInterestLastCalcMonth(int interestLastCalcMonth) {
+        this.interestLastCalcMonth = interestLastCalcMonth;
     }
 }

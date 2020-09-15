@@ -54,14 +54,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:onClick="saveLangRadio"
                 android:text="@string/english" />
 
             <RadioButton
                 android:id="@+id/otSinhala"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="saveLangRadio"
                 android:text="@string/sinhala" />
 
         </RadioGroup>

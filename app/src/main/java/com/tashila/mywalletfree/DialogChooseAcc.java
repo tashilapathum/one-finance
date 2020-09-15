@@ -1,17 +1,16 @@
 package com.tashila.mywalletfree;
 
 import androidx.appcompat.app.AlertDialog;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,7 +71,7 @@ public class DialogChooseAcc extends DialogFragment {
         final boolean calledFromWallet = sharedPref.getBoolean("chooseAccFromWallet", false);
 
         final List<Account> accountsList = accountsViewModel.getAllAccounts();
-        for (int i=0; i<accountsList.size(); i++) {
+        for (int i = 0; i < accountsList.size(); i++) {
             ViewGroup baseLayout = (ViewGroup) view;
             View sampleSwitchLayout = LayoutInflater.from(getActivity()).inflate(R.layout.sample_acc_switch, null);
             TextView tvAccountName = sampleSwitchLayout.findViewById(R.id.accountName);
@@ -93,20 +92,21 @@ public class DialogChooseAcc extends DialogFragment {
                     //deselect all other accounts
                     int selectedAccID = accountsList.get(finalI).getId();
                     List<Account> allAccounts = accountsViewModel.getAllAccounts();
-                    for (int i=0; i<allAccounts.size(); i++) {
+                    for (int i = 0; i < allAccounts.size(); i++) {
                         if (allAccounts.get(i).getId() != selectedAccID) {
                             allAccounts.get(i).setSelected(false);
                             accountsViewModel.update(allAccounts.get(i));
                         }
                     }
-                    Toast.makeText(getActivity(), R.string.switched, Toast.LENGTH_SHORT).show();
-                    thisDialog.dismiss();
-                    //transfer from wallet to account
-                    if (calledFromWallet) {
+                    if (!calledFromWallet)
+                        Toast.makeText(getActivity(), R.string.switched, Toast.LENGTH_SHORT).show();
+                    else {
+                        //transfer from wallet to account
                         WalletFragment walletFragment = (WalletFragment) getActivity().getSupportFragmentManager().findFragmentByTag("WalletFragment");
-                        walletFragment.doBankStuffNEW();
+                        walletFragment.doBankStuff(accountsList.get(finalI));
                         walletFragment.continueLongClickProcess();
                     }
+                    thisDialog.dismiss();
                 }
             });
             baseLayout.addView(sampleSwitchLayout);
@@ -124,6 +124,7 @@ public class DialogChooseAcc extends DialogFragment {
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), AccountManager.class);
                     startActivity(intent);
+                    thisDialog.dismiss();
                 }
             });
             LinearLayout baseLayout = view.findViewById(R.id.dialogChooseAcc);

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -75,6 +76,7 @@ public class DialogMultiInterests extends DialogFragment {
     }
 
     private void saveData() {
+        String multiInterests = null;
         for (int i = 1; i <= 5; i++) {
             EditText etMinAmount = v.findViewById(getActivity().getResources()
                     .getIdentifier("min" + i, "id", getActivity().getPackageName()));
@@ -95,10 +97,10 @@ public class DialogMultiInterests extends DialogFragment {
                 break;
             }
 
-            String interestItem = account.getInterestRate() + minAmount + "~" + maxAmount + "~" + interest + "~~~";
+            multiInterests = account.getInterestRate() + minAmount + "~" + maxAmount + "~" + interest + "~~~";
             account.setMultiInterest(true);
-            interestItem = interestItem.replace("null", "");
-            account.setInterestRate(interestItem);
+            multiInterests = multiInterests.replace("null", "");
+            account.setInterestRate(multiInterests);
             accountsViewModel.update(account);
 
             sharedPref.edit().putBoolean("addedMultiInterests", true).apply();
@@ -110,10 +112,10 @@ public class DialogMultiInterests extends DialogFragment {
             sharedPref.edit().putString("tempInterest" + i, interest).apply();
             sharedPref.edit().putBoolean("isTempMultiAvailable", true).apply();
         }
+        sharedPref.edit().putString("multiInterests", multiInterests).apply();
     }
 
     private void prepareForEditing() {
-        AccountHandler accountHandler = new AccountHandler(getActivity());
         for (int i = 1; i <= 5; i++) {
             EditText etMinAmount = v.findViewById(getActivity().getResources()
                     .getIdentifier("min" + i, "id", getActivity().getPackageName()));
@@ -134,9 +136,9 @@ public class DialogMultiInterests extends DialogFragment {
 
             //when reopening the dialog of new account
             if (sharedPref.getBoolean("isTempMultiAvailable", false)) {
-                accountHandler.setDetail(etMinAmount, "tempMinAmount" + i, true);
-                accountHandler.setDetail(etMaxAmount, "tempMaxAmount" + i, true);
-                accountHandler.setDetail(etInterest, "tempInterest" + i, true);
+                setDetail(etMinAmount, "tempMinAmount" + i);
+                setDetail(etMaxAmount, "tempMaxAmount" + i);
+                setDetail(etInterest, "tempInterest" + i);
             }
         }
     }
@@ -159,6 +161,12 @@ public class DialogMultiInterests extends DialogFragment {
             return account;
         else
             return new Account(null, null, null, null,
-                    false, null, null, null, false);
+                    false, 0, null, null, null, false);
+    }
+
+    private void setDetail(View view, String stringKey) {
+        String detail = sharedPref.getString(stringKey, null);
+        EditText editText = (EditText) view;
+        editText.setText(detail);
     }
 }

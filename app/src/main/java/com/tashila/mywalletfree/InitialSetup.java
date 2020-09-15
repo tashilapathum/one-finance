@@ -34,6 +34,20 @@ public class InitialSetup extends AppCompatActivity {
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
         AndroidThreeTen.init(this);
         radioGroup = findViewById(R.id.radioGroup);
+        RadioButton rb1 = findViewById(R.id.otEnglish);
+        RadioButton rb2 = findViewById(R.id.otSinhala);
+        rb1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveLangRadio(view.getId());
+            }
+        });
+        rb2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveLangRadio(view.getId());
+            }
+        });
     }
 
     @Override
@@ -43,19 +57,20 @@ public class InitialSetup extends AppCompatActivity {
             radioGroup.check(radioGroup.getChildAt(1).getId());
     }
 
-    public void saveLangRadio(View view) {
-        View radioButton = findViewById(radioGroup.getCheckedRadioButtonId());
-        int radioId = radioGroup.indexOfChild(radioButton);
-        RadioButton btn = (RadioButton) radioGroup.getChildAt(radioId);
-        String language = btn.getText().toString();
-        sharedPref.edit().putString("language", language).apply();
-
+    public void saveLangRadio(int i) {
+        Log.i(TAG, "value of i: "+i);
         Locale locale = null;
-        if (radioId == 1) //0-en, 1-si
+        String language = null;
+        if (i == R.id.otSinhala) {//0-en, 1-si
             locale = new Locale("si");
-        if (radioId == 0)
+            language = "සිංහල";
+        }
+        if (i == R.id.otEnglish) {
             locale = new Locale("en");
-
+            language = "English";
+        }
+        
+        sharedPref.edit().putString("language", language).apply();
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.setLocale(locale);
@@ -89,12 +104,7 @@ public class InitialSetup extends AppCompatActivity {
         EditText editBudget = tilAddBudget.getEditText();
         if (!editBudget.getText().toString().isEmpty()) {
             String monthlyBudget = editBudget.getText().toString();
-            String weeklyBudget = String.valueOf(Double.parseDouble(monthlyBudget) / 4);
-            String dailyBudget = String.valueOf(Double.parseDouble(monthlyBudget) / YearMonth.now().lengthOfMonth());
-
             sharedPref.edit().putString("monthlyBudget", monthlyBudget).apply();
-            sharedPref.edit().putString("weeklyBudget", weeklyBudget).apply();
-            sharedPref.edit().putString("dailyBudget", dailyBudget).apply();
         }
 
         //next
@@ -131,6 +141,18 @@ public class InitialSetup extends AppCompatActivity {
             }
             case R.id.rupee: {
                 currency = "₹";
+                break;
+            }
+            case R.id.ru: {
+                currency = "රු";
+                break;
+            }
+            case R.id.rs: {
+                currency = "Rs. ";
+                break;
+            }
+            case R.id.lkr: {
+                currency = "LKR";
                 break;
             }
         }
