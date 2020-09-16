@@ -128,6 +128,7 @@ public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
         } catch (Exception e) { //because the user might change the localization
             e.printStackTrace();
         }
+        //comment
 
         //renew monthly payments
         if (currentBill.isMonthly() && currentBill.getLastPaidMonth() < LocalDate.now().getMonthValue())
