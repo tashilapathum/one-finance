@@ -296,8 +296,6 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
     }
 
     private void loadFilters() {
-        final List<TransactionItem> filteredList = new ArrayList<>();
-
         //date
         Spinner dateSpinner = findViewById(R.id.date_spinner);
         String[] dateList = getResources().getStringArray(R.array.date_list);
@@ -306,11 +304,8 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         dateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                List<TransactionItem> transactionsList = new ArrayList<>();
-                if (filteredList.size() > 0)
-                    transactionsList.addAll(filteredList);
-                else
-                    transactionsList = transactionsViewModel.getTransactionsList();
+                List<TransactionItem> transactionsList = transactionsViewModel.getTransactionsList();
+                List<TransactionItem> filteredList = new ArrayList<>();
                 switch (position) {
                     case 1: { //all
                         transactionsAdapter.submitList(transactionsViewModel.getTransactionsList());
@@ -369,11 +364,8 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                List<TransactionItem> transactionsList = new ArrayList<>();
-                if (filteredList.size() > 0)
-                    transactionsList.addAll(filteredList);
-                else
-                    transactionsList = transactionsViewModel.getTransactionsList();
+                List<TransactionItem> transactionsList = transactionsViewModel.getTransactionsList();
+                List<TransactionItem> filteredList = new ArrayList<>();
                 switch (position) {
                     case 1: { //all
                         transactionsAdapter.submitList(transactionsViewModel.getTransactionsList());
@@ -420,11 +412,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                List<TransactionItem> transactionsList = new ArrayList<>();
-                if (filteredList.size() > 0)
-                    transactionsList.addAll(filteredList);
-                else
-                    transactionsList = transactionsViewModel.getTransactionsList();
+                List<TransactionItem> transactionsList = transactionsViewModel.getTransactionsList();
                 switch (position) {
                     case 1: { //all
                         transactionsAdapter.submitList(transactionsViewModel.getTransactionsList());
@@ -437,7 +425,6 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
                                 return Double.valueOf(o2.getUserDate()).compareTo(Double.valueOf(o1.getUserDate()));
                             }
                         });
-                        transactionsAdapter.submitList(transactionsList);
                         break;
                     }
                     case 3: { //date - ascending
@@ -447,7 +434,6 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
                                 return Double.valueOf(o1.getUserDate()).compareTo(Double.valueOf(o2.getUserDate()));
                             }
                         });
-                        transactionsAdapter.submitList(transactionsList);
                         break;
                     }
                     case 4: { //amount - descending
@@ -457,7 +443,6 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
                                 return Double.valueOf(o2.getAmount()).compareTo(Double.valueOf(o1.getAmount()));
                             }
                         });
-                        transactionsAdapter.submitList(transactionsList);
                         break;
                     }
                     case 5: { //amount - ascending
@@ -467,10 +452,10 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
                                 return Double.valueOf(o1.getAmount()).compareTo(Double.valueOf(o2.getAmount()));
                             }
                         });
-                        transactionsAdapter.submitList(transactionsList);
                         break;
                     }
                 }
+                transactionsAdapter.submitList(transactionsList);
             }
 
             @Override
