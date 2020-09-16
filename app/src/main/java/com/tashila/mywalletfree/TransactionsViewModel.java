@@ -33,7 +33,12 @@ public class TransactionsViewModel extends AndroidViewModel {
        return repository.getAllTransactionItems();
     }
 
-    public List<TransactionItem> getTransactionsList() throws ExecutionException, InterruptedException {
-        return repository.getTransactionsList();
+    public List<TransactionItem> getTransactionsList() {
+        try {
+            return repository.getTransactionsList();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

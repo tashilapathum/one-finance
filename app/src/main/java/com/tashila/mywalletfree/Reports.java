@@ -130,12 +130,8 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
         //get all records from database
         TransactionsViewModel transactionsViewModel = new ViewModelProvider(this, ViewModelProvider
                 .AndroidViewModelFactory.getInstance(getApplication())).get(TransactionsViewModel.class);
-        List<TransactionItem> transactionsList = null;
-        try {
-            transactionsList = transactionsViewModel.getTransactionsList();
-        } catch (ExecutionException | InterruptedException e) {
-            Toast.makeText(this, "Error reading from database", Toast.LENGTH_SHORT).show();
-        }
+        List<TransactionItem> transactionsList;
+        transactionsList = transactionsViewModel.getTransactionsList();
 
         double dTodayIncome = 0;
         double dTodaySpent = 0;

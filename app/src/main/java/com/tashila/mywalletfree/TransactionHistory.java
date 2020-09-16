@@ -296,6 +296,8 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
     }
 
     private void loadFilters() {
+        final List<TransactionItem> filteredList = new ArrayList<>();
+
         //date
         Spinner dateSpinner = findViewById(R.id.date_spinner);
         String[] dateList = getResources().getStringArray(R.array.date_list);
@@ -304,26 +306,19 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         dateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                List<TransactionItem> transactionsList = null;
-                List<TransactionItem> filteredList = new ArrayList<>();
-                try {
+                List<TransactionItem> transactionsList = new ArrayList<>();
+                if (filteredList.size() > 0)
+                    transactionsList.addAll(filteredList);
+                else
                     transactionsList = transactionsViewModel.getTransactionsList();
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
                 switch (position) {
                     case 1: { //all
-                        try {
-                            transactionsAdapter.submitList(transactionsViewModel.getTransactionsList());
-                        } catch (ExecutionException | InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        transactionsAdapter.submitList(transactionsViewModel.getTransactionsList());
                         break;
                     }
                     case 2: { //today
                         for (int i = 0; i < transactionsList.size(); i++) {
-                            DateTimeHandler dateTimeHandler =
-                                    new DateTimeHandler(transactionsList.get(i).getUserDate());
+                            DateTimeHandler dateTimeHandler = new DateTimeHandler(transactionsList.get(i).getUserDate());
                             if (dateTimeHandler.getDayOfYear() == LocalDate.now().getDayOfYear())
                                 filteredList.add(transactionsList.get(i));
                         }
@@ -332,8 +327,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
                     }
                     case 3: { //yesterday
                         for (int i = 0; i < transactionsList.size(); i++) {
-                            DateTimeHandler dateTimeHandler =
-                                    new DateTimeHandler(transactionsList.get(i).getUserDate());
+                            DateTimeHandler dateTimeHandler = new DateTimeHandler(transactionsList.get(i).getUserDate());
                             if (dateTimeHandler.getDayOfYear() == LocalDate.now().minusDays(1).getDayOfYear())
                                 filteredList.add(transactionsList.get(i));
                         }
@@ -342,8 +336,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
                     }
                     case 4: { //this week
                         for (int i = 0; i < transactionsList.size(); i++) {
-                            DateTimeHandler dateTimeHandler =
-                                    new DateTimeHandler(transactionsList.get(i).getUserDate());
+                            DateTimeHandler dateTimeHandler = new DateTimeHandler(transactionsList.get(i).getUserDate());
                             if (dateTimeHandler.getWeek() == dateTimeHandler.getWeek(LocalDateTime.now()))
                                 filteredList.add(transactionsList.get(i));
                         }
@@ -352,8 +345,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
                     }
                     case 5: { //last week
                         for (int i = 0; i < transactionsList.size(); i++) {
-                            DateTimeHandler dateTimeHandler =
-                                    new DateTimeHandler(transactionsList.get(i).getUserDate());
+                            DateTimeHandler dateTimeHandler = new DateTimeHandler(transactionsList.get(i).getUserDate());
                             if (dateTimeHandler.getWeek() == dateTimeHandler.getWeek(LocalDateTime.now().minusDays(7)))
                                 filteredList.add(transactionsList.get(i));
                         }
@@ -377,20 +369,14 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                List<TransactionItem> transactionsList = null;
-                List<TransactionItem> filteredList = new ArrayList<>();
-                try {
+                List<TransactionItem> transactionsList = new ArrayList<>();
+                if (filteredList.size() > 0)
+                    transactionsList.addAll(filteredList);
+                else
                     transactionsList = transactionsViewModel.getTransactionsList();
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
                 switch (position) {
                     case 1: { //all
-                        try {
-                            transactionsAdapter.submitList(transactionsViewModel.getTransactionsList());
-                        } catch (ExecutionException | InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        transactionsAdapter.submitList(transactionsViewModel.getTransactionsList());
                         break;
                     }
                     case 2: { //incomes
@@ -434,20 +420,14 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                List<TransactionItem> transactionsList = null;
-                List<TransactionItem> filteredList = new ArrayList<>();
-                try {
+                List<TransactionItem> transactionsList = new ArrayList<>();
+                if (filteredList.size() > 0)
+                    transactionsList.addAll(filteredList);
+                else
                     transactionsList = transactionsViewModel.getTransactionsList();
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
                 switch (position) {
                     case 1: { //all
-                        try {
-                            transactionsAdapter.submitList(transactionsViewModel.getTransactionsList());
-                        } catch (ExecutionException | InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        transactionsAdapter.submitList(transactionsViewModel.getTransactionsList());
                         break;
                     }
                     case 2: { //date - descending
