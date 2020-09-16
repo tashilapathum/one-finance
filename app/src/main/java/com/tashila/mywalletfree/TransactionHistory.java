@@ -226,12 +226,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             public void OnTransactionClick(TransactionItem transactionItem) {
                 String amount = transactionItem.getAmount();
                 String description = transactionItem.getDescription();
-                String date = null;
-                try {
-                    date = transactionItem.getUserDate().split(" ")[0];
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                String date = new DateTimeHandler(transactionItem.getUserDate()).getTimestamp().split(" ")[0];
 
                 Bundle bundle = new Bundle();
                 bundle.putString("amount", amount);
@@ -326,7 +321,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
                         break;
                     }
                     case 2: { //today
-                        for (int i=0; i<transactionsList.size(); i++) {
+                        for (int i = 0; i < transactionsList.size(); i++) {
                             DateTimeHandler dateTimeHandler =
                                     new DateTimeHandler(transactionsList.get(i).getUserDate());
                             if (dateTimeHandler.getDayOfYear() == LocalDate.now().getDayOfYear())
@@ -336,7 +331,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
                         break;
                     }
                     case 3: { //yesterday
-                        for (int i=0; i<transactionsList.size(); i++) {
+                        for (int i = 0; i < transactionsList.size(); i++) {
                             DateTimeHandler dateTimeHandler =
                                     new DateTimeHandler(transactionsList.get(i).getUserDate());
                             if (dateTimeHandler.getDayOfYear() == LocalDate.now().minusDays(1).getDayOfYear())
@@ -346,7 +341,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
                         break;
                     }
                     case 4: { //this week
-                        for (int i=0; i<transactionsList.size(); i++) {
+                        for (int i = 0; i < transactionsList.size(); i++) {
                             DateTimeHandler dateTimeHandler =
                                     new DateTimeHandler(transactionsList.get(i).getUserDate());
                             if (dateTimeHandler.getWeek() == dateTimeHandler.getWeek(LocalDateTime.now()))
@@ -356,7 +351,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
                         break;
                     }
                     case 5: { //last week
-                        for (int i=0; i<transactionsList.size(); i++) {
+                        for (int i = 0; i < transactionsList.size(); i++) {
                             DateTimeHandler dateTimeHandler =
                                     new DateTimeHandler(transactionsList.get(i).getUserDate());
                             if (dateTimeHandler.getWeek() == dateTimeHandler.getWeek(LocalDateTime.now().minusDays(7)))
@@ -399,7 +394,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
                         break;
                     }
                     case 2: { //incomes
-                        for (int i=0; i<transactionsList.size(); i++) {
+                        for (int i = 0; i < transactionsList.size(); i++) {
                             if (transactionsList.get(i).getPrefix().equals("+"))
                                 filteredList.add(transactionsList.get(i));
                         }
@@ -407,7 +402,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
                         break;
                     }
                     case 3: { //expenses
-                        for (int i=0; i<transactionsList.size(); i++) {
+                        for (int i = 0; i < transactionsList.size(); i++) {
                             if (transactionsList.get(i).getPrefix().equals("-"))
                                 filteredList.add(transactionsList.get(i));
                         }
