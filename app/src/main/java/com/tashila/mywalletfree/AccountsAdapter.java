@@ -12,9 +12,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
@@ -136,7 +133,7 @@ public class AccountsAdapter extends ListAdapter<Account, AccountsAdapter.Accoun
 
         private void invertDrawables(ImageButton... imageButtons) {
             for (ImageButton imageButton : imageButtons)
-                new Essentials(context).invertDrawable(imageButton);
+                new DrawableHandler(context).invertDrawable(imageButton);
         }
     }
 }

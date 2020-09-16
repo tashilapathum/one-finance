@@ -21,18 +21,22 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.elconfidencial.bubbleshowcase.BubbleShowCase;
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
-import com.elconfidencial.bubbleshowcase.BubbleShowCaseListener;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -79,7 +83,8 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         toggle.syncState();
         /*----------------------------------------------------------------------------------------*/
         currency = sharedPref.getString("currency", "");
-        createItems();
+        loadFilters();
+        loadItems();
         etSearch = findViewById(R.id.etSearch);
         implementSearch();
 
@@ -199,7 +204,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         sharedPref.edit().putBoolean("exit", false).apply();
     }
 
-    private void createItems() {
+    private void loadItems() {
         transactionsAdapter = new TransactionsAdapter(this);
         recyclerView = findViewById(R.id.THRecyclerView);
         recyclerView.setHasFixedSize(true);
@@ -293,5 +298,210 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         String newBalance = df.format(balance);
         sharedPref.edit().putString("balance", newBalance).apply();
         transactionsAdapter.notifyDataSetChanged();
+    }
+
+    private void loadFilters() {
+        //date
+        Spinner dateSpinner = findViewById(R.id.date_spinner);
+        String[] dateList = getResources().getStringArray(R.array.date_list);
+        CustomArrayAdapter dateAdapter = new CustomArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, dateList);
+        dateSpinner.setAdapter(dateAdapter);
+        dateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                List<TransactionItem> transactionsList = null;
+                List<TransactionItem> filteredList = new ArrayList<>();
+                try {
+                    transactionsList = transactionsViewModel.getTransactionsList();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+                switch (position) {
+                    case 1: { //all
+                        try {
+                            transactionsAdapter.submitList(transactionsViewModel.getTransactionsList());
+                        } catch (ExecutionException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
+                    case 2: { //today
+                        for (int i=0; i<transactionsList.size(); i++) {
+                            DateTimeHandler dateTimeHandler =
+                                    new DateTimeHandler(transactionsList.get(i).getUserDate());
+                            if (dateTimeHandler.getDayOfYear() == LocalDate.now().getDayOfYear())
+                                filteredList.add(transactionsList.get(i));
+                        }
+                        transactionsAdapter.submitList(filteredList);
+                        break;
+                    }
+                    case 3: { //yesterday
+                        for (int i=0; i<transactionsList.size(); i++) {
+                            DateTimeHandler dateTimeHandler =
+                                    new DateTimeHandler(transactionsList.get(i).getUserDate());
+                            if (dateTimeHandler.getDayOfYear() == LocalDate.now().minusDays(1).getDayOfYear())
+                                filteredList.add(transactionsList.get(i));
+                        }
+                        transactionsAdapter.submitList(filteredList);
+                        break;
+                    }
+                    case 4: { //this week
+                        for (int i=0; i<transactionsList.size(); i++) {
+                            DateTimeHandler dateTimeHandler =
+                                    new DateTimeHandler(transactionsList.get(i).getUserDate());
+                            if (dateTimeHandler.getWeek() == dateTimeHandler.getWeek(LocalDateTime.now()))
+                                filteredList.add(transactionsList.get(i));
+                        }
+                        transactionsAdapter.submitList(filteredList);
+                        break;
+                    }
+                    case 5: { //last week
+                        for (int i=0; i<transactionsList.size(); i++) {
+                            DateTimeHandler dateTimeHandler =
+                                    new DateTimeHandler(transactionsList.get(i).getUserDate());
+                            if (dateTimeHandler.getWeek() == dateTimeHandler.getWeek(LocalDateTime.now().minusDays(7)))
+                                filteredList.add(transactionsList.get(i));
+                        }
+                        transactionsAdapter.submitList(filteredList);
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        //type
+        Spinner typeSpinner = findViewById(R.id.type_spinner);
+        String[] typeList = getResources().getStringArray(R.array.type_list);
+        CustomArrayAdapter typeAdapter = new CustomArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, typeList);
+        typeSpinner.setAdapter(typeAdapter);
+        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                List<TransactionItem> transactionsList = null;
+                List<TransactionItem> filteredList = new ArrayList<>();
+                try {
+                    transactionsList = transactionsViewModel.getTransactionsList();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+                switch (position) {
+                    case 1: { //all
+                        try {
+                            transactionsAdapter.submitList(transactionsViewModel.getTransactionsList());
+                        } catch (ExecutionException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
+                    case 2: { //incomes
+                        for (int i=0; i<transactionsList.size(); i++) {
+                            if (transactionsList.get(i).getPrefix().equals("+"))
+                                filteredList.add(transactionsList.get(i));
+                        }
+                        transactionsAdapter.submitList(filteredList);
+                        break;
+                    }
+                    case 3: { //expenses
+                        for (int i=0; i<transactionsList.size(); i++) {
+                            if (transactionsList.get(i).getPrefix().equals("-"))
+                                filteredList.add(transactionsList.get(i));
+                        }
+                        transactionsAdapter.submitList(filteredList);
+                        break;
+                    }/*
+                    case 4: { //bank
+                        for (int i=0; i<transactionsList.size(); i++) {
+                            if (transactionsList.get(i).isBankRelated())
+                                filteredList.add(transactionsList.get(i));
+                        }
+                        transactionsAdapter.submitList(filteredList);
+                        break;
+                    }*/
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        //sort
+        Spinner sortSpinner = findViewById(R.id.sort_spinner);
+        String[] sortList = getResources().getStringArray(R.array.sort_list);
+        CustomArrayAdapter sortAdapter = new CustomArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sortList);
+        sortSpinner.setAdapter(sortAdapter);
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                List<TransactionItem> transactionsList = null;
+                List<TransactionItem> filteredList = new ArrayList<>();
+                try {
+                    transactionsList = transactionsViewModel.getTransactionsList();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+                switch (position) {
+                    case 1: { //all
+                        try {
+                            transactionsAdapter.submitList(transactionsViewModel.getTransactionsList());
+                        } catch (ExecutionException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
+                    case 2: { //date - descending
+                        Collections.sort(transactionsList, new Comparator<TransactionItem>() {
+                            @Override
+                            public int compare(TransactionItem o1, TransactionItem o2) {
+                                return Double.valueOf(o2.getUserDate()).compareTo(Double.valueOf(o1.getUserDate()));
+                            }
+                        });
+                        transactionsAdapter.submitList(transactionsList);
+                        break;
+                    }
+                    case 3: { //date - ascending
+                        Collections.sort(transactionsList, new Comparator<TransactionItem>() {
+                            @Override
+                            public int compare(TransactionItem o1, TransactionItem o2) {
+                                return Double.valueOf(o1.getUserDate()).compareTo(Double.valueOf(o2.getUserDate()));
+                            }
+                        });
+                        transactionsAdapter.submitList(transactionsList);
+                        break;
+                    }
+                    case 4: { //amount - descending
+                        Collections.sort(transactionsList, new Comparator<TransactionItem>() {
+                            @Override
+                            public int compare(TransactionItem o1, TransactionItem o2) {
+                                return Double.valueOf(o2.getAmount()).compareTo(Double.valueOf(o1.getAmount()));
+                            }
+                        });
+                        transactionsAdapter.submitList(transactionsList);
+                        break;
+                    }
+                    case 5: { //amount - ascending
+                        Collections.sort(transactionsList, new Comparator<TransactionItem>() {
+                            @Override
+                            public int compare(TransactionItem o1, TransactionItem o2) {
+                                return Double.valueOf(o1.getAmount()).compareTo(Double.valueOf(o2.getAmount()));
+                            }
+                        });
+                        transactionsAdapter.submitList(transactionsList);
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 }

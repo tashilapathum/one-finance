@@ -69,7 +69,7 @@ public class NewAccount extends AppCompatActivity {
         if (theme.equalsIgnoreCase("dark")) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_new_account);
-            new Essentials(this).invertDrawable(findViewById(R.id.multiInterests));
+            new DrawableHandler(this).invertDrawable(findViewById(R.id.multiInterests));
         } else {
             setTheme(R.style.AppTheme);
             super.onCreate(savedInstanceState);

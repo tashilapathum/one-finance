@@ -22,7 +22,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -282,15 +281,15 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
     }
 
     private void invertDrawables() {
-        Essentials essentials = new Essentials(this);
-        essentials.invertDrawable(findViewById(R.id.image1));
-        essentials.invertDrawable(findViewById(R.id.image2));
-        essentials.invertDrawable(findViewById(R.id.image3));
-        essentials.invertDrawable(findViewById(R.id.image4));
-        essentials.invertDrawable(findViewById(R.id.image5));
-        essentials.invertDrawable(findViewById(R.id.image6));
-        essentials.invertDrawable(findViewById(R.id.image7));
-        essentials.invertDrawable(findViewById(R.id.image8));
-        essentials.invertDrawable(findViewById(R.id.image9));
+        DrawableHandler drawableHandler = new DrawableHandler(this);
+        drawableHandler.invertDrawable(findViewById(R.id.image1));
+        drawableHandler.invertDrawable(findViewById(R.id.image2));
+        drawableHandler.invertDrawable(findViewById(R.id.image3));
+        drawableHandler.invertDrawable(findViewById(R.id.image4));
+        drawableHandler.invertDrawable(findViewById(R.id.image5));
+        drawableHandler.invertDrawable(findViewById(R.id.image6));
+        drawableHandler.invertDrawable(findViewById(R.id.image7));
+        drawableHandler.invertDrawable(findViewById(R.id.image8));
+        drawableHandler.invertDrawable(findViewById(R.id.image9));
     }
 }

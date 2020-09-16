@@ -144,11 +144,11 @@ public class InitialSetup extends AppCompatActivity {
                 break;
             }
             case R.id.ru: {
-                currency = "රු";
+                currency = "රු.";
                 break;
             }
             case R.id.rs: {
-                currency = "Rs. ";
+                currency = "Rs.";
                 break;
             }
             case R.id.lkr: {

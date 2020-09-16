@@ -59,7 +59,7 @@ public class TransactionsAdapter extends ListAdapter<TransactionItem, Transactio
             holder.mDescr.setText(currentItem.getDescription().split("###")[0]);
         else
             holder.mDescr.setText(currentItem.getDescription());
-        holder.mDate.setText(currentItem.getUserDate());
+        holder.mDate.setText(new DateTimeHandler(currentItem.getUserDate()).getTimestamp());
     }
 
     public TransactionItem getTransactionItemAt(int position) {

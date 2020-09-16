@@ -6,10 +6,10 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 
-public class Essentials {
+public class DrawableHandler {
     private Context context;
 
-    Essentials(Context context) {
+    DrawableHandler(Context context) {
         this.context = context;
     }
 

@@ -11,6 +11,8 @@ import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.ZoneId;
+import org.threeten.bp.ZonedDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.FormatStyle;
 
@@ -44,10 +46,10 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
             fromContext = bundle.getString("pickDate", "fromWalletFragment");
 
         if (fromContext.equals("fromWalletFragment")) {
-            LocalDateTime date = LocalDateTime.of(day, month, year,
-                    LocalDateTime.now().getHour(), LocalDateTime.now().getMinute());
-            DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
-            String preDate = formatter.format(date);
+            LocalDateTime dateTime = LocalDateTime.of(day, month, year,
+                    LocalDateTime.now().getHour(), LocalDateTime.now().getHour());
+            ZonedDateTime zdt = dateTime.atZone(ZoneId.systemDefault());
+            String preDate = String.valueOf(zdt.toInstant().toEpochMilli());
             sharedPref.edit().putString("preDate", preDate).apply();
             WalletFragment.getInstance().continueLongClickProcess();
         }

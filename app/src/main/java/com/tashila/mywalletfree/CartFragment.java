@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -22,7 +21,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -57,8 +55,8 @@ public class CartFragment extends Fragment {
         theme = sharedPref.getString("theme", "light");
         currency = sharedPref.getString("currency", "");
         if (theme.equalsIgnoreCase("dark")) {
-            Essentials essentials = new Essentials(getActivity());
-            essentials.invertDrawable(view.findViewById(R.id.cart_delete));
+            DrawableHandler drawableHandler = new DrawableHandler(getActivity());
+            drawableHandler.invertDrawable(view.findViewById(R.id.cart_delete));
         }
 
         cartFAB = view.findViewById(R.id.cartFAB);
@@ -264,7 +262,7 @@ public class CartFragment extends Fragment {
 
     private void toggleInsVisibility(int itemCount) {
         if (theme.equalsIgnoreCase("dark"))
-            new Essentials(getActivity()).invertDrawable(cart_instructions.findViewById(R.id.cartIcon));
+            new DrawableHandler(getActivity()).invertDrawable(cart_instructions.findViewById(R.id.cartIcon));
         cart_instructions.setAlpha(0.5f);
         if (itemCount > 0)
             cart_instructions.setVisibility(View.GONE);

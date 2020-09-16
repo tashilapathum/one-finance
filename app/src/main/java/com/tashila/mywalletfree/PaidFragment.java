@@ -3,7 +3,6 @@ package com.tashila.mywalletfree;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,9 +62,9 @@ public class PaidFragment extends Fragment {
             ImageView im1 = bills_instructions.findViewById(R.id.paid);
             ImageView im2 = bills_instructions.findViewById(R.id.unpaid);
             ImageView im3 = bills_instructions.findViewById(R.id.add);
-            new Essentials(getActivity()).invertDrawable(im1);
-            new Essentials(getActivity()).invertDrawable(im2);
-            new Essentials(getActivity()).invertDrawable(im3);
+            new DrawableHandler(getActivity()).invertDrawable(im1);
+            new DrawableHandler(getActivity()).invertDrawable(im2);
+            new DrawableHandler(getActivity()).invertDrawable(im3);
         }
     }
 

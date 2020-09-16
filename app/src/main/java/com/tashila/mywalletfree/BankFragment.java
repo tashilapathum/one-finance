@@ -25,7 +25,6 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
-import org.threeten.bp.YearMonth;
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.FormatStyle;
 
@@ -122,7 +121,7 @@ public class BankFragment extends Fragment {
 
         String theme = sharedPref.getString("theme", "light");
         if (theme.equalsIgnoreCase("dark"))
-            new Essentials(getActivity()).invertDrawable(view.findViewById(R.id.switchAcc));
+            new DrawableHandler(getActivity()).invertDrawable(view.findViewById(R.id.switchAcc));
 
         haveAccounts = sharedPref.getBoolean("haveAccounts", false);
         if (haveAccounts) {
@@ -272,7 +271,6 @@ public class BankFragment extends Fragment {
                 transactionDescription = accountName + " ගිණුමෙන් ආපසු ගත්";
             else
                 transactionDescription = "Withdrawal from " + accountName;
-            final LocalDateTime date = LocalDateTime.now();
             snackbar.addCallback(new Snackbar.Callback() {
                 @Override
                 public void onDismissed(Snackbar transientBottomBar, int event) {
@@ -283,9 +281,8 @@ public class BankFragment extends Fragment {
                         if (finalIsWithdrawId) {
                             TransactionItem transaction = new TransactionItem(
                                     sharedPref.getString("balance", "0"), "+",
-                                    df.format(inputAmount), transactionDescription, timeStamp,
-                                    DateTimeFormatter.ofPattern("dd/MM/yyyy").format(date),
-                                    true);
+                                    df.format(inputAmount), transactionDescription,
+                                    String.valueOf(System.currentTimeMillis()), null, true);
                             transactionsViewModel.insert(transaction);
                         }
                         if (BankFragment.this.isVisible())

@@ -65,7 +65,7 @@ public class WalletFragment extends Fragment {
     private boolean longClicked;
     private QuickListViewModel quickListViewModel;
     private String date;
-    private String databaseDate;
+    private boolean isBankRelated;
 
     @Nullable
     @Override
@@ -163,7 +163,7 @@ public class WalletFragment extends Fragment {
             }
         });
         if (theme.equalsIgnoreCase("dark"))
-            new Essentials(getActivity()).invertDrawable(imEditQuickList);
+            new DrawableHandler(getActivity()).invertDrawable(imEditQuickList);
 
         loadQuickList();
         return v;
@@ -265,6 +265,7 @@ public class WalletFragment extends Fragment {
     }
 
     private void onClickThreeButtons(View view) { //onClick earned, spent or quick list
+        sharedPref.edit().putBoolean("longClicked", false).apply();
         if (view.getId() == R.id.btnEarned || view.getId() == R.id.btnSpent) {
             if (validateAmount() & validateDescr()) {
                 amount = Double.parseDouble(etAmount.getText().toString());
@@ -350,10 +351,10 @@ public class WalletFragment extends Fragment {
         longClicked = sharedPref.getBoolean("longClicked", false);
         if (longClicked && (viewId == R.id.btnSpent || viewId == R.id.btnEarned)) {
             date = sharedPref.getString("preDate", null);
-        } else {
-            DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
-            date = formatter.format(LocalDateTime.now());
+            sharedPref.edit().putBoolean("longClicked", false).apply();
         }
+        else
+            date = String.valueOf(System.currentTimeMillis());
 
         //amount
         double doubAmount = Double.valueOf(etAmount.getText().toString());
@@ -384,6 +385,7 @@ public class WalletFragment extends Fragment {
             if (viewId == R.id.btnSpent) {
                 prefix = "-";
                 doubBalance = oldBalance - doubAmount;
+                isBankRelated = true;
             }
             if (viewId == R.id.btnToBank) {
                 prefix = "-";
@@ -404,15 +406,6 @@ public class WalletFragment extends Fragment {
         //save to show
         sharedPref.edit().putString("balance", balance).apply();
         sharedPref.edit().putString("currency", currency).apply();
-
-        //separate database date because the user might change the date format
-        final String databaseDate;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyy");
-        if (sharedPref.getString("preDate", null) != null) {
-            databaseDate = formatter.format(LocalDate.parse(date.split(" ")[0], formatter));
-            sharedPref.edit().putBoolean("preDate", false).apply();
-        } else
-            databaseDate = formatter.format(LocalDate.now());
 
         //to show the changed balance to user regardless of saving
         tvBalance.setText(balance);
@@ -442,7 +435,7 @@ public class WalletFragment extends Fragment {
             public void onDismissed(Snackbar transientBottomBar, int event) {
                 if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
                     TransactionItem transactionItem =
-                            new TransactionItem(balance, prefix, amount, description, userDate, databaseDate, false);
+                            new TransactionItem(balance, prefix, amount, description, userDate, null, isBankRelated);
                     transactionsViewModel.insert(transactionItem);
                     if (viewId == R.id.btnToBank && !longClicked)
                         doBankStuff(null);

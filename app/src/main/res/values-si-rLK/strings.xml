@@ -269,4 +269,27 @@
         සටහන: බැංකුව හා පසුම්බිය අතර ගනුදෙනු ඉවත් කළ විට බැංකු ගිණුමේ ශේෂය ඔබ විසින් නිවැරැදි කළ යුතු ය.
     </string>
     <string name="budget_na">බජට් අගය\nනොමැත</string>
+    <string-array name="date_list">
+        <item>Date</item>
+        <item>Anytime (Default)</item>
+        <item>Today</item>
+        <item>Yesterday</item>
+        <item>This week</item>
+        <item>Last week</item>
+        <item>Pick a date…</item>
+    </string-array>
+    <string-array name="type_list">
+        <item>Type</item>
+        <item>All (Default)</item>
+        <item>Incomes</item>
+        <item>Expenses</item>
+    </string-array>
+    <string-array name="sort_list">
+        <item>Sort by…</item>
+        <item>Added order (Default)</item>
+        <item>Date - Descending</item>
+        <item>Date - Ascending</item>
+        <item>Amount - high to low</item>
+        <item>Amount - low to high</item>
+    </string-array>
 </resources>

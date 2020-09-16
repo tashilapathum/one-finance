@@ -5,7 +5,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +16,9 @@ import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
-import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.ZoneId;
-import org.threeten.bp.ZoneOffset;
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.FormatStyle;
-import org.threeten.bp.temporal.TemporalUnit;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -192,7 +188,7 @@ public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
 
         private void invertDrawables(ImageButton... imageButtons) {
             for (ImageButton imageButton : imageButtons)
-                new Essentials(context).invertDrawable(imageButton);
+                new DrawableHandler(context).invertDrawable(imageButton);
         }
     }
 }

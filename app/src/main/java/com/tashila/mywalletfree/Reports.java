@@ -33,6 +33,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.YearMonth;
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.temporal.WeekFields;
@@ -151,10 +152,9 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
 
         //income and expenses
         LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         for (int i = 0; i < transactionsList.size(); i++) {
             TransactionItem transaction = transactionsList.get(i);
-            LocalDate transactionDate = LocalDate.parse(transaction.getDatabaseDate(), formatter);
+            LocalDateTime transactionDate = new DateTimeHandler(transaction.getUserDate()).getLocalDateTime();
             if (!transaction.isBankRelated()) {
                 //daily
                 if (transactionDate.getDayOfYear() == currentDate.getDayOfYear()) {
