@@ -23,7 +23,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
-import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.FormatStyle;
@@ -93,7 +92,7 @@ public class WalletFragment extends Fragment {
         etDescr = tilDescr.getEditText();
         Button btnEarned = v.findViewById(R.id.btnEarned);
         Button btnSpent = v.findViewById(R.id.btnSpent);
-        Button btnToBank = v.findViewById(R.id.btnToBank);
+        Button btnToBank = v.findViewById(R.id.btnTransfer);
         Button btnUpdate = v.findViewById(R.id.btnUpdate);
         ImageButton imEditQuickList = v.findViewById(R.id.editQuickList);
         language = sharedPref.getString("language", "english");
@@ -229,7 +228,7 @@ public class WalletFragment extends Fragment {
                 }
                 break;
             }
-            case R.id.btnToBank: {
+            case R.id.btnTransfer: {
                 boolean alreadyShown = sharedPref.getBoolean("insLongClickToBank", false);
                 if (!alreadyShown) {
                     new BubbleShowCaseBuilder(getActivity())
@@ -273,7 +272,7 @@ public class WalletFragment extends Fragment {
                 handleData(viewId);
             }
 
-        } else if (view.getId() == R.id.btnToBank) {
+        } else if (view.getId() == R.id.btnTransfer) {
             if (sharedPref.getBoolean("haveAccounts", false)) {
                 if (validateAmount()) {
                     amount = Double.parseDouble(etAmount.getText().toString());
@@ -284,7 +283,7 @@ public class WalletFragment extends Fragment {
                         else
                             etDescr.setText(getString(R.string.deposited_to) + accountName);
                     }
-                    viewId = R.id.btnToBank;
+                    viewId = R.id.btnTransfer;
                     handleData(viewId);
                 }
             } else
@@ -308,7 +307,7 @@ public class WalletFragment extends Fragment {
     private void onLongClickThreeButtons(int viewId) {
         sharedPref.edit().putBoolean("longClicked", true).apply();
         if (viewId == R.id.btnEarned || viewId == R.id.btnSpent) {
-            if (validateAmount() | validateDescr()) {
+            if (validateAmount() & validateDescr()) {
                 Bundle bundle = new Bundle();
                 bundle.putString("pickDate", "fromWalletFragment");
                 DialogFragment datePicker = new DatePickerFragment();
@@ -316,7 +315,7 @@ public class WalletFragment extends Fragment {
                 datePicker.show(getFragmentManager(), "date picker");
             }
         }
-        if (viewId == R.id.btnToBank) {
+        if (viewId == R.id.btnTransfer) {
             if (sharedPref.getBoolean("haveAccounts", false)) {
                 if (validateAmount()) {
                     amount = Double.parseDouble(etAmount.getText().toString());
@@ -360,7 +359,7 @@ public class WalletFragment extends Fragment {
         double doubAmount = Double.valueOf(etAmount.getText().toString());
         String amount = df.format(doubAmount);
 
-        if ((viewId == R.id.btnSpent || viewId == R.id.btnToBank) && doubAmount > oldBalance)
+        if ((viewId == R.id.btnSpent || viewId == R.id.btnTransfer) && doubAmount > oldBalance)
             Toast.makeText(context, getActivity().getResources().getString(R.string.spend_more_than_have), Toast.LENGTH_LONG).show();
         else {
             //description
@@ -387,7 +386,7 @@ public class WalletFragment extends Fragment {
                 doubBalance = oldBalance - doubAmount;
                 isBankRelated = true;
             }
-            if (viewId == R.id.btnToBank) {
+            if (viewId == R.id.btnTransfer) {
                 prefix = "-";
                 doubBalance = oldBalance - doubAmount;
             }
@@ -437,7 +436,7 @@ public class WalletFragment extends Fragment {
                     TransactionItem transactionItem =
                             new TransactionItem(balance, prefix, amount, description, userDate, null, isBankRelated);
                     transactionsViewModel.insert(transactionItem);
-                    if (viewId == R.id.btnToBank && !longClicked)
+                    if (viewId == R.id.btnTransfer && !longClicked)
                         doBankStuff(null);
                     sharedPref.edit().putBoolean("longClicked", false).apply();
                 }
