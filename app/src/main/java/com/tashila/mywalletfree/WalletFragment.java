@@ -384,11 +384,11 @@ public class WalletFragment extends Fragment {
             if (viewId == R.id.btnSpent) {
                 prefix = "-";
                 doubBalance = oldBalance - doubAmount;
-                isBankRelated = true;
             }
             if (viewId == R.id.btnTransfer) {
                 prefix = "-";
                 doubBalance = oldBalance - doubAmount;
+                isBankRelated = true;
             }
             String balance = df.format(doubBalance);
 
@@ -406,7 +406,7 @@ public class WalletFragment extends Fragment {
         sharedPref.edit().putString("balance", balance).apply();
         sharedPref.edit().putString("currency", currency).apply();
 
-        //to show the changed balance to user regardless of saving
+        //to show the changed balance to user regardless of saving to database
         tvBalance.setText(balance);
         tvCurrency.setText(currency);
 

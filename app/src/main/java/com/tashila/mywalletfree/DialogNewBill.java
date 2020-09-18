@@ -204,7 +204,7 @@ public class DialogNewBill extends DialogFragment {
 
     private void showDatePicker() {
         Bundle bundle = new Bundle();
-        bundle.putString("pickDate", "fromCartFragment");
+        bundle.putString("pickDate", "fromBillsFragment");
         DialogFragment billDatePicker = new DatePickerFragment();
         billDatePicker.setArguments(bundle);
         billDatePicker.show(getActivity().getSupportFragmentManager(), "bill date picker");

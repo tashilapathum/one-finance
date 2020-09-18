@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -19,6 +20,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -37,6 +39,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -50,6 +53,15 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
     private TransactionsViewModel transactionsViewModel;
     private EditText etSearch;
     private String currency;
+    private Spinner dateSpinner;
+    private Spinner typeSpinner;
+    private Spinner sortSpinner;
+    private int date;
+    private int type;
+    private int sort;
+    List<TransactionItem> transactionsList;
+    List<TransactionItem> filteredList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +95,8 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         toggle.syncState();
         /*----------------------------------------------------------------------------------------*/
         currency = sharedPref.getString("currency", "");
-        loadFilters();
         loadItems();
+        loadFilters();
         etSearch = findViewById(R.id.etSearch);
         implementSearch();
 
@@ -181,9 +193,8 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
     @Override
     protected void onResume() {
         super.onResume();
-        if (sharedPref.getBoolean("exit", false)) {
+        if (sharedPref.getBoolean("exit", false))
             finishAndRemoveTask();
-        }
     }
 
     @Override
@@ -254,24 +265,17 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
 
             @Override
             public void afterTextChanged(Editable editable) {
-                try {
-                    filter(editable.toString());
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
+                String text = editable.toString();
+                List<TransactionItem> fullList = transactionsViewModel.getTransactionsList();
+                ArrayList<TransactionItem> filteredList = new ArrayList<>();
+                for (TransactionItem item : fullList) {
+                    if (item.getDescription().toLowerCase().contains(text.toLowerCase()) || item.getAmount().toLowerCase().contains(text.toLowerCase())) {
+                        filteredList.add(item);
+                    }
                 }
+                transactionsAdapter.submitList(filteredList);
             }
         });
-    }
-
-    private void filter(String text) throws ExecutionException, InterruptedException {
-        List<TransactionItem> fullList = transactionsViewModel.getTransactionsList();
-        ArrayList<TransactionItem> filteredList = new ArrayList<>();
-        for (TransactionItem item : fullList) {
-            if (item.getDescription().toLowerCase().contains(text.toLowerCase()) || item.getUserDate().toLowerCase().contains(text.toLowerCase())) {
-                filteredList.add(item);
-            }
-        }
-        transactionsAdapter.submitList(filteredList);
     }
 
     public void updateTransaction(TransactionItem transactionItem) {
@@ -296,56 +300,24 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
     }
 
     private void loadFilters() {
+        dateSpinner = findViewById(R.id.date_spinner);
+        typeSpinner = findViewById(R.id.type_spinner);
+        sortSpinner = findViewById(R.id.sort_spinner);
+
         //date
-        Spinner dateSpinner = findViewById(R.id.date_spinner);
         String[] dateList = getResources().getStringArray(R.array.date_list);
         CustomArrayAdapter dateAdapter = new CustomArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, dateList);
         dateSpinner.setAdapter(dateAdapter);
         dateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                List<TransactionItem> transactionsList = transactionsViewModel.getTransactionsList();
-                List<TransactionItem> filteredList = new ArrayList<>();
-                switch (position) {
-                    case 1: { //all
-                        transactionsAdapter.submitList(transactionsViewModel.getTransactionsList());
-                        break;
-                    }
-                    case 2: { //today
-                        for (int i = 0; i < transactionsList.size(); i++) {
-                            DateTimeHandler dateTimeHandler = new DateTimeHandler(transactionsList.get(i).getUserDate());
-                            if (dateTimeHandler.getDayOfYear() == LocalDate.now().getDayOfYear())
-                                filteredList.add(transactionsList.get(i));
-                        }
-                        transactionsAdapter.submitList(filteredList);
-                        break;
-                    }
-                    case 3: { //yesterday
-                        for (int i = 0; i < transactionsList.size(); i++) {
-                            DateTimeHandler dateTimeHandler = new DateTimeHandler(transactionsList.get(i).getUserDate());
-                            if (dateTimeHandler.getDayOfYear() == LocalDate.now().minusDays(1).getDayOfYear())
-                                filteredList.add(transactionsList.get(i));
-                        }
-                        transactionsAdapter.submitList(filteredList);
-                        break;
-                    }
-                    case 4: { //this week
-                        for (int i = 0; i < transactionsList.size(); i++) {
-                            DateTimeHandler dateTimeHandler = new DateTimeHandler(transactionsList.get(i).getUserDate());
-                            if (dateTimeHandler.getWeek() == dateTimeHandler.getWeek(LocalDateTime.now()))
-                                filteredList.add(transactionsList.get(i));
-                        }
-                        transactionsAdapter.submitList(filteredList);
-                        break;
-                    }
-                    case 5: { //last week
-                        for (int i = 0; i < transactionsList.size(); i++) {
-                            DateTimeHandler dateTimeHandler = new DateTimeHandler(transactionsList.get(i).getUserDate());
-                            if (dateTimeHandler.getWeek() == dateTimeHandler.getWeek(LocalDateTime.now().minusDays(7)))
-                                filteredList.add(transactionsList.get(i));
-                        }
-                        transactionsAdapter.submitList(filteredList);
-                        break;
+                if (position > 0) {
+                    try {
+                        typeSpinner.setSelection(0);
+                        sortSpinner.setSelection(0);
+                        filter();
+                    } catch (ConcurrentModificationException e) {
+                        Toast.makeText(TransactionHistory.this, "Error", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -357,44 +329,20 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         });
 
         //type
-        Spinner typeSpinner = findViewById(R.id.type_spinner);
         String[] typeList = getResources().getStringArray(R.array.type_list);
         CustomArrayAdapter typeAdapter = new CustomArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, typeList);
         typeSpinner.setAdapter(typeAdapter);
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                List<TransactionItem> transactionsList = transactionsViewModel.getTransactionsList();
-                List<TransactionItem> filteredList = new ArrayList<>();
-                switch (position) {
-                    case 1: { //all
-                        transactionsAdapter.submitList(transactionsViewModel.getTransactionsList());
-                        break;
+                if (position > 0) {
+                    try {
+                        dateSpinner.setSelection(0);
+                        sortSpinner.setSelection(0);
+                        filter();
+                    } catch (ConcurrentModificationException e) {
+                        Toast.makeText(TransactionHistory.this, "Error", Toast.LENGTH_SHORT).show();
                     }
-                    case 2: { //incomes
-                        for (int i = 0; i < transactionsList.size(); i++) {
-                            if (transactionsList.get(i).getPrefix().equals("+"))
-                                filteredList.add(transactionsList.get(i));
-                        }
-                        transactionsAdapter.submitList(filteredList);
-                        break;
-                    }
-                    case 3: { //expenses
-                        for (int i = 0; i < transactionsList.size(); i++) {
-                            if (transactionsList.get(i).getPrefix().equals("-"))
-                                filteredList.add(transactionsList.get(i));
-                        }
-                        transactionsAdapter.submitList(filteredList);
-                        break;
-                    }/*
-                    case 4: { //bank
-                        for (int i=0; i<transactionsList.size(); i++) {
-                            if (transactionsList.get(i).isBankRelated())
-                                filteredList.add(transactionsList.get(i));
-                        }
-                        transactionsAdapter.submitList(filteredList);
-                        break;
-                    }*/
                 }
             }
 
@@ -405,57 +353,21 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         });
 
         //sort
-        Spinner sortSpinner = findViewById(R.id.sort_spinner);
         String[] sortList = getResources().getStringArray(R.array.sort_list);
         CustomArrayAdapter sortAdapter = new CustomArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sortList);
         sortSpinner.setAdapter(sortAdapter);
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                List<TransactionItem> transactionsList = transactionsViewModel.getTransactionsList();
-                switch (position) {
-                    case 1: { //all
-                        transactionsAdapter.submitList(transactionsViewModel.getTransactionsList());
-                        break;
-                    }
-                    case 2: { //date - descending
-                        Collections.sort(transactionsList, new Comparator<TransactionItem>() {
-                            @Override
-                            public int compare(TransactionItem o1, TransactionItem o2) {
-                                return Double.valueOf(o2.getUserDate()).compareTo(Double.valueOf(o1.getUserDate()));
-                            }
-                        });
-                        break;
-                    }
-                    case 3: { //date - ascending
-                        Collections.sort(transactionsList, new Comparator<TransactionItem>() {
-                            @Override
-                            public int compare(TransactionItem o1, TransactionItem o2) {
-                                return Double.valueOf(o1.getUserDate()).compareTo(Double.valueOf(o2.getUserDate()));
-                            }
-                        });
-                        break;
-                    }
-                    case 4: { //amount - descending
-                        Collections.sort(transactionsList, new Comparator<TransactionItem>() {
-                            @Override
-                            public int compare(TransactionItem o1, TransactionItem o2) {
-                                return Double.valueOf(o2.getAmount()).compareTo(Double.valueOf(o1.getAmount()));
-                            }
-                        });
-                        break;
-                    }
-                    case 5: { //amount - ascending
-                        Collections.sort(transactionsList, new Comparator<TransactionItem>() {
-                            @Override
-                            public int compare(TransactionItem o1, TransactionItem o2) {
-                                return Double.valueOf(o1.getAmount()).compareTo(Double.valueOf(o2.getAmount()));
-                            }
-                        });
-                        break;
+                if (position > 0) {
+                    try {
+                        dateSpinner.setSelection(0);
+                        typeSpinner.setSelection(0);
+                        filter();
+                    } catch (ConcurrentModificationException e) {
+                        Toast.makeText(TransactionHistory.this, "Error", Toast.LENGTH_SHORT).show();
                     }
                 }
-                transactionsAdapter.submitList(transactionsList);
             }
 
             @Override
@@ -463,5 +375,208 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
 
             }
         });
+    }
+
+    private void filter() {
+        date = dateSpinner.getSelectedItemPosition();
+        type = typeSpinner.getSelectedItemPosition();
+        sort = sortSpinner.getSelectedItemPosition();
+
+        transactionsList = transactionsViewModel.getTransactionsList();
+        filteredList = new ArrayList<>();
+        switch (date) {
+            case 1: { //all
+                filteredList.addAll(transactionsList);
+                break;
+            }
+            case 2: { //today
+                for (TransactionItem item : transactionsList) {
+                    DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
+                    if (dateTimeHandler.getDayOfYear() == LocalDate.now().getDayOfYear()
+                            && !filteredList.contains(item))
+                        filteredList.add(item);
+                    else
+                        filteredList.remove(item);
+                }
+                break;
+            }
+            case 3: { //yesterday
+                for (TransactionItem item : transactionsList) {
+                    DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
+                    if (dateTimeHandler.getDayOfYear() == LocalDate.now().minusDays(1).getDayOfYear()
+                            && !filteredList.contains(item))
+                        filteredList.add(item);
+                    else
+                        filteredList.remove(item);
+                }
+                break;
+            }
+            case 4: { //this week
+                for (TransactionItem item : transactionsList) {
+                    DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
+                    if (dateTimeHandler.getWeek() == dateTimeHandler.getWeek(LocalDateTime.now())
+                            && !filteredList.contains(item))
+                        filteredList.add(item);
+                    else
+                        filteredList.remove(item);
+                }
+                break;
+            }
+            case 5: { //last week
+                for (TransactionItem item : transactionsList) {
+                    DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
+                    if (dateTimeHandler.getWeek() == dateTimeHandler.getWeek(LocalDateTime.now().minusDays(7))
+                            && !filteredList.contains(item))
+                        filteredList.add(item);
+                    else
+                        filteredList.remove(item);
+                }
+                break;
+            }
+            case 6: { //pick date
+                Bundle bundle = new Bundle();
+                bundle.putString("pickDate", "fromTransactionFilter");
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.setArguments(bundle);
+                datePicker.show(getSupportFragmentManager(), "date picker dialog");
+                break;
+            }
+        }
+
+        switch (type) {
+            case 1: { //all
+                filteredList.addAll(transactionsList);
+                break;
+            }
+            case 2: { //incomes
+                for (TransactionItem item : transactionsList) {
+                    if (item.getPrefix().equals("+")
+                            && !filteredList.contains(item))
+                        filteredList.add(item);
+                    else
+                        filteredList.remove(item);
+                }
+                break;
+            }
+            case 3: { //expenses
+                for (TransactionItem item : transactionsList) {
+                    if (item.getPrefix().equals("-")
+                            && !filteredList.contains(item))
+                        filteredList.add(item);
+                    else
+                        filteredList.remove(item);
+                }
+                break;
+            }
+            /*case 4: { //bank
+                for (TransactionItem item : transactionsList) {
+                    if (item.isBankRelated())
+                        filteredList.add(item);
+                }
+                transactionsAdapter.submitList(filteredList);
+                break;
+            }*/
+        }
+
+        switch (sort) {
+            case 1: { //added order
+                filteredList.addAll(transactionsList);
+                break;
+            }
+            case 2: { //date - descending
+                if (!filteredList.isEmpty())
+                    Collections.sort(filteredList, new Comparator<TransactionItem>() {
+                        @Override
+                        public int compare(TransactionItem o1, TransactionItem o2) {
+                            return Double.valueOf(o2.getUserDate()).compareTo(Double.valueOf(o1.getUserDate()));
+                        }
+                    });
+                else
+                    Collections.sort(transactionsList, new Comparator<TransactionItem>() {
+                        @Override
+                        public int compare(TransactionItem o1, TransactionItem o2) {
+                            return Double.valueOf(o2.getUserDate()).compareTo(Double.valueOf(o1.getUserDate()));
+                        }
+                    });
+
+                break;
+            }
+            case 3: { //date - ascending
+                if (!filteredList.isEmpty())
+                    Collections.sort(filteredList, new Comparator<TransactionItem>() {
+                        @Override
+                        public int compare(TransactionItem o1, TransactionItem o2) {
+                            return Double.valueOf(o1.getUserDate()).compareTo(Double.valueOf(o2.getUserDate()));
+                        }
+                    });
+                else
+                    Collections.sort(transactionsList, new Comparator<TransactionItem>() {
+                        @Override
+                        public int compare(TransactionItem o1, TransactionItem o2) {
+                            return Double.valueOf(o1.getUserDate()).compareTo(Double.valueOf(o2.getUserDate()));
+                        }
+                    });
+
+                break;
+            }
+            case 4: { //amount - descending
+                if (!filteredList.isEmpty())
+                    Collections.sort(filteredList, new Comparator<TransactionItem>() {
+                        @Override
+                        public int compare(TransactionItem o1, TransactionItem o2) {
+                            return Double.valueOf(o2.getAmount()).compareTo(Double.valueOf(o1.getAmount()));
+                        }
+                    });
+                else
+                    Collections.sort(transactionsList, new Comparator<TransactionItem>() {
+                        @Override
+                        public int compare(TransactionItem o1, TransactionItem o2) {
+                            return Double.valueOf(o2.getAmount()).compareTo(Double.valueOf(o1.getAmount()));
+                        }
+                    });
+                break;
+            }
+            case 5: { //amount - ascending
+                if (!filteredList.isEmpty())
+                    Collections.sort(filteredList, new Comparator<TransactionItem>() {
+                        @Override
+                        public int compare(TransactionItem o1, TransactionItem o2) {
+                            return Double.valueOf(o1.getAmount()).compareTo(Double.valueOf(o2.getAmount()));
+                        }
+                    });
+                else
+                    Collections.sort(transactionsList, new Comparator<TransactionItem>() {
+                        @Override
+                        public int compare(TransactionItem o1, TransactionItem o2) {
+                            return Double.valueOf(o1.getAmount()).compareTo(Double.valueOf(o2.getAmount()));
+                        }
+                    });
+                break;
+            }
+        }
+
+        if (date != 6)
+            showResults();
+    }
+
+    public void filterByDate(int date) {
+        for (TransactionItem item : transactionsList) {
+            DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
+            if (dateTimeHandler.getDayOfYear() == date && !filteredList.contains(item))
+                filteredList.add(item);
+            else
+                filteredList.remove(item);
+        }
+        showResults();
+    }
+
+    private void showResults() {
+        if (filteredList.isEmpty())
+            if (sort > 0)
+                transactionsAdapter.submitList(transactionsList);
+            else
+                Toast.makeText(this, "No results", Toast.LENGTH_SHORT).show();
+        else
+            transactionsAdapter.submitList(filteredList);
     }
 }

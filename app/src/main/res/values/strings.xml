@@ -276,8 +276,8 @@
     <string name="detailed_acc_soon">Detailed account reports coming soon</string>
     <string name="transactions">Transactions</string>
     <string name="transactions_help">
-        Tap to edit transactions. Swipe to delete them. Wallet balance will be automatically updated when deleting any transaction.\n\n
-        Note: When deleting a transaction between Wallet and bank accounts, you should update the account balance manually.
+        Tap to edit an item. Swipe to delete them. Wallet balance will automatically update when you delete a transaction.
+        \n\nNote: In case of deleting a transaction between Wallet and a bank account, you should update the account balance manually.
     </string>
     <string name="budget_na">Budget not\navailable</string>
     <string-array name="date_list">

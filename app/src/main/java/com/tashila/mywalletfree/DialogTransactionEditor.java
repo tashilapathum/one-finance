@@ -37,9 +37,9 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
     private Context context;
     private BottomSheetDialog dialog;
     private static DialogTransactionEditor instance;
-    private String date;
     private SharedPreferences sharedPref;
     private String language;
+    private String dateInMillis;
 
 
     @NonNull
@@ -62,7 +62,6 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
         etDate = tilDate.getEditText();
 
         fillDetails();
-        date = etDate.getText().toString();
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,12 +119,8 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
         etAmount.setText(bundle.getString("amount"));
         etDescription.setText(bundle.getString("description"));
         String date = bundle.getString("date");
-        if (date == null || date.equals("null"))
-            tilDate.setVisibility(View.GONE);
-        else {
-            etDate.setText(date);
-            etDate.setFocusable(false);
-        }
+        etDate.setText(date);
+        etDate.setFocusable(false);
     }
 
     private void save() {
@@ -134,23 +129,16 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
             String oldAmountStr = transactionItem.getAmount();
             String newAmountStr = etAmount.getText().toString();
             String description = etDescription.getText().toString();
-            transactionItem.setAmount(df.format(Double.parseDouble(newAmountStr)));
-            transactionItem.setDescription(description);
+            if (!transactionItem.getAmount().equals(df.format(Double.parseDouble(newAmountStr))))
+                transactionItem.setAmount(df.format(Double.parseDouble(newAmountStr)));
+            if (!transactionItem.getDescription().equals(description))
+                transactionItem.setDescription(description);
 
-            //date info
-            try {
-                LocalDate localDate;
-                DateTimeFormatter dateFormatter;
-                dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-                DateTimeFormatter timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
-                DateTimeFormatter databaseFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                localDate = LocalDate.parse(date, dateFormatter);
-                String databaseDate = databaseFormatter.format(localDate);
-                transactionItem.setUserDate(date + " " + timeFormatter.format(LocalDateTime.now()));
-                transactionItem.setDatabaseDate(databaseDate);
-            }
-            catch (Exception e) {
-                Toast.makeText(context, "Failed to update the date", Toast.LENGTH_SHORT).show();
+            if (dateInMillis != null) {
+                if (new DateTimeHandler(transactionItem.getUserDate()).getDayOfYear() != new DateTimeHandler(dateInMillis).getDayOfYear())
+                    transactionItem.setUserDate(dateInMillis);
+                else
+                    transactionItem.setUserDate(String.valueOf(System.currentTimeMillis()));
             }
 
             //update balance
@@ -191,8 +179,8 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
         datePicker.show(getActivity().getSupportFragmentManager(), "date picker dialog");
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDate(String date, String dateInMillis) {
         etDate.setText(date);
+        this.dateInMillis = dateInMillis;
     }
 }

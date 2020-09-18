@@ -40,30 +40,30 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     @Override
     public void onDateSet(DatePicker datePicker, int day, int month, int year) {
         month = month + 1;
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+        String date = formatter.format(LocalDate.of(day, month, year));
+        LocalDateTime dateTime = LocalDateTime.of(day, month, year, LocalDateTime.now().getHour(), LocalDateTime.now().getHour());
+        ZonedDateTime zdt = dateTime.atZone(ZoneId.systemDefault());
+        String dateInMillis = String.valueOf(zdt.toInstant().toEpochMilli());
         String fromContext = null;
         Bundle bundle = this.getArguments();
         if (bundle != null)
             fromContext = bundle.getString("pickDate", "fromWalletFragment");
 
         if (fromContext.equals("fromWalletFragment")) {
-            LocalDateTime dateTime = LocalDateTime.of(day, month, year,
-                    LocalDateTime.now().getHour(), LocalDateTime.now().getHour());
-            ZonedDateTime zdt = dateTime.atZone(ZoneId.systemDefault());
-            String preDate = String.valueOf(zdt.toInstant().toEpochMilli());
-            sharedPref.edit().putString("preDate", preDate).apply();
+            sharedPref.edit().putString("preDate", dateInMillis).apply();
             WalletFragment.getInstance().continueLongClickProcess();
         }
 
-        if (fromContext.equals("fromCartFragment")) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-            String date = formatter.format(LocalDate.of(day, month, year));
+        if (fromContext.equals("fromBillsFragment"))
             DialogNewBill.getInstance().setDate(date);
-        }
 
-        if (fromContext.equals("fromTransactionEditor")) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-            String date = formatter.format(LocalDate.of(day, month, year));
-            DialogTransactionEditor.getInstance().setDate(date);
+        if (fromContext.equals("fromTransactionEditor"))
+            DialogTransactionEditor.getInstance().setDate(date, dateInMillis);
+
+        if (fromContext.equals("fromTransactionFilter")) {
+            DateTimeHandler dateTimeHandler = new DateTimeHandler(dateInMillis);
+            ((TransactionHistory) getActivity()).filterByDate(dateTimeHandler.getDayOfYear());
         }
     }
 }
