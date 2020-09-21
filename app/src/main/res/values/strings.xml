@@ -280,6 +280,11 @@
         \n\nNote: In case of deleting a transaction between Wallet and a bank account, you should update the account balance manually.
     </string>
     <string name="budget_na">Budget not\navailable</string>
+    <string name="bd_highest">Highest:&#160;</string>
+    <string name="bd_lowest">Lowest:&#160;</string>
+    <string name="bd_average">Average:&#160;</string>
+    <string name="expense">Expense</string>
+    <string name="income">Income</string>
     <string-array name="date_list">
         <item>Date</item>
         <item>Anytime (Default)</item>

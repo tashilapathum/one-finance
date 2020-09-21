@@ -24,5 +24,4 @@ public abstract class AccountsDatabase extends RoomDatabase {
         }
         return instance;
     }
-
 }

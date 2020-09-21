@@ -23,6 +23,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -238,11 +239,13 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
                 String amount = transactionItem.getAmount();
                 String description = transactionItem.getDescription();
                 String date = new DateTimeHandler(transactionItem.getUserDate()).getTimestamp().split(" ")[0];
+                String prefix = transactionItem.getPrefix();
 
                 Bundle bundle = new Bundle();
                 bundle.putString("amount", amount);
                 bundle.putString("description", description);
                 bundle.putString("date", date);
+                bundle.putString("prefix", prefix);
 
                 DialogTransactionEditor transactionEditor = new DialogTransactionEditor(TransactionHistory.this, transactionItem);
                 transactionEditor.setArguments(bundle);

@@ -23,15 +23,21 @@
         android:alpha="0.7"
         android:text="N/A"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:fontFamily="sans-serif-condensed-medium" />
+        android:fontFamily="sans-serif-condensed-medium"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?android:attr/selectableItemBackground"/>
 
-    <androidx.appcompat.widget.AppCompatImageButton
+
+    <ImageButton
         android:id="@+id/switchAcc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:src="@drawable/ic_switch_account"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
         android:textAllCaps="false"
+        android:padding="8dp"
         android:contentDescription="switch account" />
 
     <LinearLayout

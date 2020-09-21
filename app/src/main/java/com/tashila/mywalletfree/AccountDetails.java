@@ -2,30 +2,44 @@ package com.tashila.mywalletfree;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class AccountDetails extends AppCompatActivity {
-    private TextView tvAccName;
-    private TextView tvBalance;
-    private TextView tvInterest;
-    private TextView tvAccNumber;
-    private TextView tvExDetails;
-    private TextView tvCreatedDate;
-    private TextView tvLastUpdated;
-    SharedPreferences sharedPref;
-    int accountNo;
+    private SharedPreferences sharedPref;
+    private String currency;
+    private AccountsViewModel accountsViewModel;
+    private Account account;
+    public static final String TAG = "AccountDetails";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
+        accountsViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
+                .getInstance(getApplication())).get(AccountsViewModel.class);
+        account = getSelectedAccount();
+        currency = sharedPref.getString("currency", "");
 
         //language
         String language = sharedPref.getString("language", "english");
@@ -44,57 +58,13 @@ public class AccountDetails extends AppCompatActivity {
             setContentView(R.layout.activity_account_details);
             View layout = findViewById(R.id.rootLayout);
             layout.setBackground(ContextCompat.getDrawable(this, R.drawable.background_dark));
-        }
-        else {
+        } else {
             setTheme(R.style.AppTheme);
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_account_details);
         }
 
-        tvAccName = findViewById(R.id.adAccName);
-        tvBalance = findViewById(R.id.adBalance);
-        tvInterest = findViewById(R.id.adInterest);
-        tvAccNumber = findViewById(R.id.adAccNumber);
-        tvExDetails = findViewById(R.id.adExDetails);
-        tvCreatedDate = findViewById(R.id.adCreatedDate);
-        tvLastUpdated = findViewById(R.id.adLastUpdated);
-
-        accountNo = sharedPref.getInt("manageAccNo", 1);
-        setDetail(tvAccName, "accountName");
-        setDetail(tvInterest, "annualInterestStr");
-        setDetail(tvAccNumber, "accountNumber");
-        setDetail(tvExDetails, "additionalInfo");
-        setDetail(tvCreatedDate, "createdDate");
-
-        ////set last updated////
-        String activities = sharedPref.getString("activities" + accountNo, "N/A");
-        String[] activitiesArr = activities.split("###");
-        String lastUpdated = activitiesArr[activitiesArr.length - 1]; //last timestamp
-        tvLastUpdated.setText(lastUpdated);
-
-        ////set balances////
-        //get balance
-        Double currentBalance = Double.parseDouble(sharedPref.getString("accountBalance" + accountNo, null));
-        //for first time
-        if (!sharedPref.contains("highestBalance" + accountNo))
-            sharedPref.edit().putString("highestBalance" + accountNo, String.valueOf(currentBalance)).apply();
-        if (!sharedPref.contains("lowestBalance" + accountNo))
-            sharedPref.edit().putString("lowestBalance" + accountNo, String.valueOf(currentBalance)).apply();
-        double highestBalance = Double.parseDouble(sharedPref.getString("highestBalance" + accountNo, null));
-        double lowestBalance = Double.parseDouble(sharedPref.getString("lowestBalance" + accountNo, null));
-        //compare and update highest and lowest
-        if (currentBalance > highestBalance)
-            sharedPref.edit().putString("highestBalance" + accountNo, String.valueOf(currentBalance)).apply();
-        if (currentBalance < lowestBalance)
-            sharedPref.edit().putString("lowestBalance" + accountNo, String.valueOf(currentBalance)).apply();
-        //set updated values
-        String highest = sharedPref.getString("highestBalance" + accountNo, "N/A");
-        String lowest = sharedPref.getString("lowestBalance" + accountNo, "N/A");
-        String balances =
-                getString(R.string.current) + currentBalance + "\n"
-                        + getString(R.string.highest) + highest + "\n"
-                        + getString(R.string.lowest) + lowest;
-        tvBalance.setText(balances);
+        setData();
     }
 
     @Override //so the language change works with dark mode
@@ -121,15 +91,79 @@ public class AccountDetails extends AppCompatActivity {
         sharedPref.edit().putBoolean("exit", false).apply();
     }
 
-    public void setDetail(TextView view, String stringKey) {
-        String detail = sharedPref.getString(stringKey + accountNo, null);
-        //^determines which account from here
-        view.setText(detail);
+    private void setData() {
+        TextView tvAccName = findViewById(R.id.adAccName);
+        TextView tvBalance = findViewById(R.id.adBalance);
+        TextView tvBalHighest = findViewById(R.id.highestBal);
+        TextView tvBalLowest = findViewById(R.id.lowestBal);
+        TextView tvBalAverage = findViewById(R.id.averageBal);
+        TextView tvInterest = findViewById(R.id.adInterest);
+        TextView tvAccNumber = findViewById(R.id.adAccNumber);
+        TextView tvExDetails = findViewById(R.id.adExDetails);
+        TextView tvCreatedDate = findViewById(R.id.adCreatedDate);
+        TextView tvLastUpdated = findViewById(R.id.adLastUpdated);
+
+        tvAccName.setText(account.getAccName());
+        tvBalance.setText(currency + account.getAccBalance());
+        List<Double> balanceList = account.getBalanceHistory();
+        double highest = 0;
+        double lowest = 0;
+        double total = 0;
+        DecimalFormat df = new DecimalFormat("#.00");
+        Log.i(TAG, "balanceList: "+balanceList.size());
+        for (int i = 0; i < balanceList.size(); i++) {
+            if (balanceList.get(i) > highest)
+                highest = balanceList.get(i);
+            if (balanceList.get(i) < lowest)
+                lowest = balanceList.get(i);
+            total = total + balanceList.get(i);
+        }
+        double average = total / balanceList.size();
+        tvBalHighest.append(currency + df.format(highest));
+        tvBalLowest.append(currency + df.format(lowest));
+        tvBalAverage.append(currency + df.format(average));
+        //if (account.getBalanceHistory().size() < 1)
+        createBalanceChart();
+        tvInterest.setText(account.getInterestRate());
+        tvAccNumber.setText(account.getAccNumber());
+        tvExDetails.setText(account.getMoreDetails());
+        String createdDate = account.getActivities().get(0).split("###")[1];
+        String lastUpdated = account.getActivities().get(account.getActivities().size() - 1).split("###")[1];
+        tvCreatedDate.setText(createdDate);
+        tvLastUpdated.setText(lastUpdated);
     }
 
     public void goBack(View view) {
         dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
         dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
+    }
+
+    private void createBalanceChart() {
+        LineChart lineChart = findViewById(R.id.AccBalanceChart);
+        List<Entry> values = new ArrayList<>();
+        List<Double> balanceList = account.getBalanceHistory();
+        for (int x = 0; x < balanceList.size(); x++) {
+            Entry entry = new Entry((float) x, balanceList.get(x).floatValue());
+            values.add(entry);
+        }
+        LineDataSet dataSet = new LineDataSet(values, getResources().getString(R.string.balance));
+        dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+        List<ILineDataSet> dataSetList = new ArrayList<>();
+        dataSetList.add(dataSet);
+        LineData data = new LineData(dataSetList);
+        lineChart.animateXY(1000, 1000, Easing.EaseInCubic);
+        lineChart.setData(data);
+        lineChart.invalidate();
+    }
+
+    private Account getSelectedAccount() {
+        Account account = null;
+        List<Account> accountList = accountsViewModel.getAllAccounts();
+        for (int i = 0; i < accountList.size(); i++) {
+            if (accountList.get(i).isSelected())
+                account = accountList.get(i);
+        }
+        return account;
     }
 
 }

@@ -118,6 +118,12 @@ public class BankFragment extends Fragment {
                 showInstructions(view.findViewById(R.id.withdraw));
             }
         });
+        tvAccountName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), AccountDetails.class));
+            }
+        });
 
         String theme = sharedPref.getString("theme", "light");
         if (theme.equalsIgnoreCase("dark"))
@@ -185,7 +191,6 @@ public class BankFragment extends Fragment {
             if (accountList.get(i).isSelected())
                 selectedAccount = accountList.get(i);
         }
-
         accountName = selectedAccount.getAccName();
         accountBalance = selectedAccount.getAccBalance();
 
@@ -239,7 +244,13 @@ public class BankFragment extends Fragment {
             final String newBalanceStr = df.format(newBalance);
             tvAccountBalance.setText(newBalanceStr); //update balance on screen
             etAmount.setText("");
+            //balances
             selectedAccount.setAccBalance(newBalanceStr);
+            List<Double> balanceHistory = selectedAccount.getBalanceHistory();
+            balanceHistory.add(newBalance);
+            Log.i(TAG, "balanceHistorySize"+balanceHistory.size());
+            selectedAccount.setBalanceHistory(balanceHistory);
+            //activities
             List<String> activities = selectedAccount.getActivities();
             activities.add(activity);
             selectedAccount.setActivities(activities);

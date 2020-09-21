@@ -226,7 +226,7 @@ public class NewAccount extends AppCompatActivity {
         account.setAccName(accountName);
         account.setAccBalance(accountBalance);
         account.setBalanceHistory(balanceHistory);
-        account.setMultiInterest(isMultiInterest);
+        account.setMultiInterest(false);
         account.setInterestRate(interestRate);
         account.setAccNumber(accountNumber);
         account.setMoreDetails(additionalInfo);

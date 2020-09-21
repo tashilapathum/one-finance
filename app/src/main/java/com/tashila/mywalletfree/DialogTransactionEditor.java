@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.threeten.bp.LocalDate;
@@ -40,6 +42,9 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
     private SharedPreferences sharedPref;
     private String language;
     private String dateInMillis;
+    private RadioGroup radioGroup;
+    private MaterialRadioButton rbExpense;
+    private MaterialRadioButton rbIncome;
 
 
     @NonNull
@@ -60,6 +65,9 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
         etAmount = tilAmount.getEditText();
         etDescription = tilDescription.getEditText();
         etDate = tilDate.getEditText();
+        radioGroup = view.findViewById(R.id.radioGroup);
+        rbExpense = view.findViewById(R.id.expense);
+        rbIncome = view.findViewById(R.id.income);
 
         fillDetails();
 
@@ -121,6 +129,9 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
         String date = bundle.getString("date");
         etDate.setText(date);
         etDate.setFocusable(false);
+        String prefix = bundle.getString("prefix");
+        if (prefix.equals("+"))
+            rbIncome.setChecked(true);
     }
 
     private void save() {
