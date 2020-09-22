@@ -191,7 +191,7 @@ public class NewAccount extends AppCompatActivity {
         }
         //save
         Account account = new Account(accountName, accountBalance, balanceHistory, interestRate,
-                isMultiInterest, 0, accountNumber, additionalInfo, activities, true);
+                false, 0, accountNumber, additionalInfo, activities, true);
 
         accountsViewModel.insert(account);
         this.account = account;
