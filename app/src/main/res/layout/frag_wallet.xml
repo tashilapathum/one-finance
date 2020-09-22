@@ -25,7 +25,11 @@
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/balance"
                 android:textAllCaps="true"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:shadowRadius="2"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowColor="@color/colorShadow"/>
 
             <TextView
                 android:id="@+id/currency"
@@ -34,6 +38,10 @@
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/textView"
                 tools:text="$"
+                android:shadowRadius="2"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowColor="@color/colorShadow"
                 android:textColor="@android:color/holo_green_dark"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
@@ -47,6 +55,10 @@
                 android:textColor="@android:color/holo_green_dark"
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/_0_00"
+                android:shadowRadius="2"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowColor="@color/colorShadow"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
             <ImageButton
@@ -131,7 +143,7 @@
             android:paddingVertical="12dp"
             android:text="@string/transfer"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            app:cornerRadius="48dp" />
+            app:cornerRadius="48dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnEarned"
