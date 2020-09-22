@@ -23,24 +23,4 @@ public class Converters {
 
         return myStrings;
     }
-
-    @TypeConverter
-    public String fromDoubleArray(List<Double> values) {
-        String string = "";
-        for(double d : values)
-            string += (d + ",,,");
-
-        return string;
-    }
-
-    @TypeConverter
-    public List<Double> toDoubleArray(String concatenatedStrings) {
-        List<Double> doubleList = new ArrayList<>();
-        String[] doubleStrings = concatenatedStrings.split(",,,");
-        for (int i=0; i<doubleList.size(); i++) {
-            doubleList.add(Double.parseDouble(doubleStrings[i]));
-        }
-
-        return doubleList;
-    }
 }

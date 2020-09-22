@@ -96,6 +96,8 @@ public class AccountsAdapter extends ListAdapter<Account, AccountsAdapter.Accoun
         });
         if (currentAccount.isSelected())
             holder.tvInUse.setVisibility(View.VISIBLE);
+        else
+            holder.tvInUse.setVisibility(View.GONE);
     }
 
     private void delete(final Account account, final int position) {
@@ -156,13 +158,13 @@ public class AccountsAdapter extends ListAdapter<Account, AccountsAdapter.Accoun
             imSelect = itemView.findViewById(R.id.select);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-                    View hiddenPart = view.findViewById(R.id.accActions);
+                public void onClick(View v) {
+                    View hiddenPart = v.findViewById(R.id.accActions);
                     if (hiddenPart.getVisibility() == View.GONE)
                         hiddenPart.setVisibility(View.VISIBLE);
                     else
                         hiddenPart.setVisibility(View.GONE);
-
+                    //notifyItemChanged(getAdapterPosition());
                 }
             });
         }
