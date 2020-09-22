@@ -19,6 +19,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -105,24 +106,24 @@ public class AccountDetails extends AppCompatActivity {
 
         tvAccName.setText(account.getAccName());
         tvBalance.setText(currency + account.getAccBalance());
-        List<Double> balanceList = account.getBalanceHistory();
+        List<String> balanceList = account.getBalanceHistory();
         double highest = 0;
-        double lowest = 0;
+        double lowest = Double.parseDouble(balanceList.get(0));
         double total = 0;
         DecimalFormat df = new DecimalFormat("#.00");
         Log.i(TAG, "balanceList: "+balanceList.size());
         for (int i = 0; i < balanceList.size(); i++) {
-            if (balanceList.get(i) > highest)
-                highest = balanceList.get(i);
-            if (balanceList.get(i) < lowest)
-                lowest = balanceList.get(i);
-            total = total + balanceList.get(i);
+            double currentItem = Double.parseDouble(balanceList.get(i));
+            if (currentItem > highest)
+                highest = currentItem;
+            if (currentItem < lowest)
+                lowest = currentItem;
+            total = total + currentItem;
         }
         double average = total / balanceList.size();
         tvBalHighest.append(currency + df.format(highest));
         tvBalLowest.append(currency + df.format(lowest));
         tvBalAverage.append(currency + df.format(average));
-        //if (account.getBalanceHistory().size() < 1)
         createBalanceChart();
         tvInterest.setText(account.getInterestRate());
         tvAccNumber.setText(account.getAccNumber());
@@ -141,17 +142,23 @@ public class AccountDetails extends AppCompatActivity {
     private void createBalanceChart() {
         LineChart lineChart = findViewById(R.id.AccBalanceChart);
         List<Entry> values = new ArrayList<>();
-        List<Double> balanceList = account.getBalanceHistory();
+        List<String> balanceList = account.getBalanceHistory();
         for (int x = 0; x < balanceList.size(); x++) {
-            Entry entry = new Entry((float) x, balanceList.get(x).floatValue());
+            Entry entry = new Entry((float) x, Float.parseFloat(balanceList.get(x)));
             values.add(entry);
         }
         LineDataSet dataSet = new LineDataSet(values, getResources().getString(R.string.balance));
         dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+        dataSet.setDrawValues(false);
         List<ILineDataSet> dataSetList = new ArrayList<>();
         dataSetList.add(dataSet);
         LineData data = new LineData(dataSetList);
-        lineChart.animateXY(1000, 1000, Easing.EaseInCubic);
+        lineChart.animateY(1000, Easing.EaseInSine);
+        lineChart.getDescription().setEnabled(false);
+        lineChart.getLegend().setEnabled(false);
+        lineChart.getXAxis().setEnabled(false);
+        lineChart.getAxisLeft().setTextColor(getResources().getColor(R.color.colorDivider));
+        lineChart.getAxisRight().setTextColor(getResources().getColor(R.color.colorDivider));
         lineChart.setData(data);
         lineChart.invalidate();
     }

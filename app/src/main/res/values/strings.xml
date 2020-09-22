@@ -69,7 +69,7 @@
     <string name="pro_feature">Pro feature</string>
     <string name="pro" translatable="false">Pro</string>
     <string name="entered_incorrectly">You\'ve entered data incorrectly</string>
-    <string name="thank_you">Thank you for downloading My Wallet! Don\'t forget to rate the app, leave your feedback or request features on Google Play reviews.</string>
+    <string name="thank_you">Thank you for downloading My Wallet! \nDon\'t forget to rate the app, leave your feedback or request features on Google Play reviews.</string>
     <string name="rate_app">Rate app!</string>
     <string name="contact_the_developer_problems">Contact the developer if you encounter ANY problem with the app:</string>
     <string name="budget_left">Budget left:&#160;</string>

@@ -246,8 +246,8 @@ public class BankFragment extends Fragment {
             etAmount.setText("");
             //balances
             selectedAccount.setAccBalance(newBalanceStr);
-            List<Double> balanceHistory = selectedAccount.getBalanceHistory();
-            balanceHistory.add(newBalance);
+            List<String> balanceHistory = selectedAccount.getBalanceHistory();
+            balanceHistory.add(newBalanceStr);
             Log.i(TAG, "balanceHistorySize"+balanceHistory.size());
             selectedAccount.setBalanceHistory(balanceHistory);
             //activities

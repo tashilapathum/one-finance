@@ -12,9 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeDark"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".About"></activity>
         <activity
             android:name=".AccountManager"
-            android:label="Account Manager"/>
+            android:label="Account Manager" />
         <activity android:name=".UpgradeToPro" />
         <activity android:name=".AccountDetails" />
         <activity android:name=".NewAccount" />

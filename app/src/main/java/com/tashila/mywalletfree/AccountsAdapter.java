@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 public class AccountsAdapter extends ListAdapter<Account, AccountsAdapter.AccountHolder> {
     private Context context;
     private String theme;
@@ -60,7 +62,7 @@ public class AccountsAdapter extends ListAdapter<Account, AccountsAdapter.Accoun
         holder.tvAccountName.setText(currentAccount.getAccName());
         holder.tvBalance.setText(currency + currentAccount.getAccBalance());
         if (currentAccount.isSelected()) {
-            holder.imDelete.setAlpha(0.5f);
+            holder.imDelete.setAlpha(0.2f);
             holder.imDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -78,6 +80,18 @@ public class AccountsAdapter extends ListAdapter<Account, AccountsAdapter.Accoun
             @Override
             public void onClick(View view) {
                 edit(currentAccount);
+            }
+        });
+        holder.imInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                info(currentAccount);
+            }
+        });
+        holder.imSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                select(currentAccount);
             }
         });
         if (currentAccount.isSelected())
@@ -106,12 +120,30 @@ public class AccountsAdapter extends ListAdapter<Account, AccountsAdapter.Accoun
         context.startActivity(intent);
     }
 
+    private void info(Account account) {
+        context.startActivity(new Intent(context, AccountDetails.class));
+    }
+
+    private void select(Account account) {
+        account.setSelected(true);
+        accountsViewModel.update(account);
+        List<Account> allAccounts = accountsViewModel.getAllAccounts();
+        for (int i = 0; i < allAccounts.size(); i++) {
+            if (allAccounts.get(i).getId() != account.getId()) {
+                allAccounts.get(i).setSelected(false);
+                accountsViewModel.update(allAccounts.get(i));
+            }
+        }
+    }
+
     class AccountHolder extends RecyclerView.ViewHolder {
         private TextView tvAccountName;
         private TextView tvBalance;
         private TextView tvInUse;
         private ImageButton imDelete;
         private ImageButton imEdit;
+        private ImageButton imInfo;
+        private ImageButton imSelect;
 
         public AccountHolder(@NonNull View itemView) {
             super(itemView);
@@ -120,20 +152,19 @@ public class AccountsAdapter extends ListAdapter<Account, AccountsAdapter.Accoun
             tvInUse = itemView.findViewById(R.id.inUse);
             imDelete = itemView.findViewById(R.id.delete);
             imEdit = itemView.findViewById(R.id.edit);
+            imInfo = itemView.findViewById(R.id.info);
+            imSelect = itemView.findViewById(R.id.select);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, R.string.detailed_acc_soon, Toast.LENGTH_SHORT).show();
+                    View hiddenPart = view.findViewById(R.id.accActions);
+                    if (hiddenPart.getVisibility() == View.GONE)
+                        hiddenPart.setVisibility(View.VISIBLE);
+                    else
+                        hiddenPart.setVisibility(View.GONE);
+
                 }
             });
-
-            if (theme.equalsIgnoreCase("dark"))
-                invertDrawables(imDelete, imEdit);
-        }
-
-        private void invertDrawables(ImageButton... imageButtons) {
-            for (ImageButton imageButton : imageButtons)
-                new DrawableHandler(context).invertDrawable(imageButton);
         }
     }
 }

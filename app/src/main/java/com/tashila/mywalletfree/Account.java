@@ -14,7 +14,7 @@ public class Account implements Serializable {
 
     private String accName;
     private String accBalance;
-    private List<Double> balanceHistory;
+    private List<String> balanceHistory;
     private String interestRate;
     private boolean isMultiInterest;
     private int interestLastCalcMonth;
@@ -23,7 +23,7 @@ public class Account implements Serializable {
     private List<String> activities;
     private boolean isSelected;
 
-    public Account(String accName, String accBalance, List<Double> balanceHistory, String interestRate,
+    public Account(String accName, String accBalance, List<String> balanceHistory, String interestRate,
                    boolean isMultiInterest, int interestLastCalcMonth, String accNumber, String moreDetails, List<String> activities,
                    boolean isSelected) {
         this.accName = accName;
@@ -74,7 +74,7 @@ public class Account implements Serializable {
         return activities;
     }
 
-    public List<Double> getBalanceHistory() {
+    public List<String> getBalanceHistory() {
         return balanceHistory;
     }
 
@@ -94,7 +94,7 @@ public class Account implements Serializable {
         this.accBalance = accBalance;
     }
 
-    public void setBalanceHistory(List<Double> balanceHistory) {
+    public void setBalanceHistory(List<String> balanceHistory) {
         this.balanceHistory = balanceHistory;
     }
 

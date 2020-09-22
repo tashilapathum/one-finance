@@ -153,8 +153,8 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
                 break;
             }
             case R.id.nav_about: {
-                DialogAbout dialogAbout = new DialogAbout();
-                dialogAbout.show(getSupportFragmentManager(), "about dialog");
+                Intent intent = new Intent(this, About.class);
+                startActivity(intent);
                 break;
             }
             case R.id.nav_exit: {

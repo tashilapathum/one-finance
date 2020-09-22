@@ -161,8 +161,8 @@ public class NewAccount extends AppCompatActivity {
         String accountName = etAccountName.getText().toString();
         //balance
         String accountBalance = etCurrentBalance.getText().toString();
-        List<Double> balanceHistory = new ArrayList<>();
-        balanceHistory.add(Double.parseDouble(accountBalance));
+        List<String> balanceHistory = new ArrayList<>();
+        balanceHistory.add(accountBalance);
         //interest
         boolean isMultiInterest = false;
         String interestRate = etAnnualInterest.getText().toString();
@@ -203,8 +203,8 @@ public class NewAccount extends AppCompatActivity {
         String accountName = etAccountName.getText().toString();
         //balance
         String accountBalance = etCurrentBalance.getText().toString();
-        List<Double> balanceHistory = account.getBalanceHistory();
-        balanceHistory.add(Double.parseDouble(accountBalance));
+        List<String> balanceHistory = account.getBalanceHistory();
+        balanceHistory.add(accountBalance);
         //interest
         boolean isMultiInterest = false;
         String interestRate = etAnnualInterest.getText().toString();

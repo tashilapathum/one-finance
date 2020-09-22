@@ -7,9 +7,9 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
+    android:animateLayoutChanges="true"
     android:clickable="true"
     android:focusable="true"
-    android:animateLayoutChanges="true"
     app:cardElevation="8dp">
 
     <RelativeLayout
@@ -23,7 +23,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_toStartOf="@id/edit"
             android:ellipsize="end"
             android:maxLines="1"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
@@ -35,42 +34,69 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/accountName"
             android:layout_alignParentStart="true"
-            android:layout_toStartOf="@id/edit"
             tools:text="$250.00" />
 
         <TextView
             android:id="@+id/inUse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/in_use"
             android:layout_below="@id/balance"
-            android:textStyle="italic"
+            android:text="@string/in_use"
             android:textColor="@color/colorAccent"
+            android:textStyle="italic"
             android:visibility="gone"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
-        <ImageButton
-            android:id="@+id/edit"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/accActions"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginHorizontal="4dp"
-            android:layout_toStartOf="@id/delete"
-            android:background="?android:selectableItemBackgroundBorderless"
-            android:contentDescription="edit account"
-            android:padding="8dp"
-            android:src="@drawable/ic_edit" />
+            android:layout_below="@id/inUse"
+            android:gravity="end"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            tools:visibility="visible">
 
-        <ImageButton
-            android:id="@+id/delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginHorizontal="4dp"
-            android:background="?android:selectableItemBackgroundBorderless"
-            android:contentDescription="delete account"
-            android:padding="8dp"
-            android:src="@drawable/ic_delete" />
+            <ImageButton
+                android:id="@+id/delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:contentDescription="delete account"
+                android:padding="8dp"
+                android:src="@drawable/ic_delete" />
+
+            <ImageButton
+                android:id="@+id/edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:contentDescription="edit account"
+                android:padding="8dp"
+                android:src="@drawable/ic_edit" />
+
+            <ImageButton
+                android:id="@+id/info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_marginHorizontal="4dp"
+                android:src="@drawable/ic_about"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:contentDescription="info" />
+
+            <ImageButton
+                android:id="@+id/select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:contentDescription="select account"
+                android:padding="8dp"
+                android:src="@drawable/ic_select" />
+
+        </LinearLayout>
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>

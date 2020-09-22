@@ -333,8 +333,8 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
                 break;
             }
             case R.id.nav_about: {
-                DialogAbout dialogAbout = new DialogAbout();
-                dialogAbout.show(getSupportFragmentManager(), "about dialog");
+                Intent intent = new Intent(this, About.class);
+                startActivity(intent);
                 break;
             }
             case R.id.nav_exit: {
