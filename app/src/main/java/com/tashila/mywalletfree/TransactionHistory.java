@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -24,6 +25,13 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -221,8 +229,24 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         recyclerView = findViewById(R.id.THRecyclerView);
         recyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
-
         recyclerView.setLayoutManager(mLayoutManager);
+
+        //animation
+        AnimationSet set = new AnimationSet(true);
+        //fade in
+        Animation fadeIn = new AlphaAnimation(0.0f, 1.0f);
+        fadeIn.setDuration(400);
+        fadeIn.setFillAfter(true);
+        set.addAnimation(fadeIn);
+        //slide up
+        Animation slideUp = new TranslateAnimation(0,0, Resources.getSystem().getDisplayMetrics().heightPixels, 0);
+        slideUp.setInterpolator(new DecelerateInterpolator(4.f));
+        slideUp.setDuration(400);
+        set.addAnimation(slideUp);
+        //controller
+        LayoutAnimationController controller = new LayoutAnimationController(set, 0.2f);
+
+        recyclerView.setLayoutAnimation(controller);
         recyclerView.setAdapter(transactionsAdapter);
 
         transactionsViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(TransactionsViewModel.class);

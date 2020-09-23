@@ -125,8 +125,6 @@ public class BankFragment extends Fragment {
             }
         });
 
-        String theme = sharedPref.getString("theme", "light");
-
         haveAccounts = sharedPref.getBoolean("haveAccounts", false);
         if (haveAccounts) {
             loadDetails();
