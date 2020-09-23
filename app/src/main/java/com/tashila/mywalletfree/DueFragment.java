@@ -26,7 +26,6 @@ public class DueFragment extends Fragment {
     private SharedPreferences sharedPref;
     private String theme;
     private int itemCount;
-    private RelativeLayout bills_instructions;
 
 
     @Nullable
@@ -50,23 +49,11 @@ public class DueFragment extends Fragment {
                 toggleInsVisibility(bills.size());
             }
         });
-        showInstructions();
         return view;
     }
 
-    private void showInstructions() {
-        bills_instructions = view.findViewById(R.id.bills_instructions);
-        if (theme.equalsIgnoreCase("dark")) {
-            ImageView im1 = bills_instructions.findViewById(R.id.paid);
-            ImageView im2 = bills_instructions.findViewById(R.id.unpaid);
-            ImageView im3 = bills_instructions.findViewById(R.id.add);
-            new DrawableHandler(getActivity()).invertDrawable(im1);
-            new DrawableHandler(getActivity()).invertDrawable(im2);
-            new DrawableHandler(getActivity()).invertDrawable(im3);
-        }
-    }
-
     private void toggleInsVisibility(int itemCount) {
+        RelativeLayout bills_instructions = view.findViewById(R.id.bills_instructions);
         if (itemCount > 0)
             bills_instructions.setVisibility(View.GONE);
         else

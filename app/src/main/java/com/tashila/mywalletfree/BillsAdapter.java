@@ -174,9 +174,6 @@ public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
                     toggleVisibility();
                 }
             });
-
-            if (theme.equalsIgnoreCase("dark"))
-                invertDrawables(imMarkAsPaid, imDelete, imEdit, imMarkUnpaid);
         }
 
         private void toggleVisibility() {
@@ -184,11 +181,6 @@ public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
                 invisible_part.setVisibility(View.VISIBLE);
             else
                 invisible_part.setVisibility(View.GONE);
-        }
-
-        private void invertDrawables(ImageButton... imageButtons) {
-            for (ImageButton imageButton : imageButtons)
-                new DrawableHandler(context).invertDrawable(imageButton);
         }
     }
 }

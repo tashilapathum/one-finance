@@ -126,8 +126,6 @@ public class BankFragment extends Fragment {
         });
 
         String theme = sharedPref.getString("theme", "light");
-        if (theme.equalsIgnoreCase("dark"))
-            new DrawableHandler(getActivity()).invertDrawable(view.findViewById(R.id.switchAcc));
 
         haveAccounts = sharedPref.getBoolean("haveAccounts", false);
         if (haveAccounts) {

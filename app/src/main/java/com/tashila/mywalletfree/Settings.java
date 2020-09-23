@@ -64,7 +64,6 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
             layout.setBackground(ContextCompat.getDrawable(this, R.drawable.background_dark));
             toolbar = findViewById(R.id.toolbar);
             toolbar.setBackground(getDrawable(R.color.colorToolbarDark));
-            invertDrawables();
         }
         else {
             setTheme(R.style.AppTheme);
@@ -278,18 +277,5 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 }).show();
-    }
-
-    private void invertDrawables() {
-        DrawableHandler drawableHandler = new DrawableHandler(this);
-        drawableHandler.invertDrawable(findViewById(R.id.image1));
-        drawableHandler.invertDrawable(findViewById(R.id.image2));
-        drawableHandler.invertDrawable(findViewById(R.id.image3));
-        drawableHandler.invertDrawable(findViewById(R.id.image4));
-        drawableHandler.invertDrawable(findViewById(R.id.image5));
-        drawableHandler.invertDrawable(findViewById(R.id.image6));
-        drawableHandler.invertDrawable(findViewById(R.id.image7));
-        drawableHandler.invertDrawable(findViewById(R.id.image8));
-        drawableHandler.invertDrawable(findViewById(R.id.image9));
     }
 }

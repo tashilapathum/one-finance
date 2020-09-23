@@ -161,8 +161,6 @@ public class WalletFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        if (theme.equalsIgnoreCase("dark"))
-            new DrawableHandler(getActivity()).invertDrawable(imEditQuickList);
 
         loadQuickList();
         return v;

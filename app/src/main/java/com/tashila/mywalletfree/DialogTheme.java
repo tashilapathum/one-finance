@@ -2,6 +2,7 @@ package com.tashila.mywalletfree;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,6 +60,6 @@ public class DialogTheme extends DialogFragment {
         String theme = btn.getText().toString();
         if (theme.equals("අඳුරු")) theme = "dark";
         sharedPref.edit().putString("theme", theme).apply();
-        Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.restart_for_changes), Toast.LENGTH_LONG).show();
+        startActivity(new Intent(getActivity(), MainActivity.class));
     }
 }

@@ -66,15 +66,10 @@ public class NewAccount extends AppCompatActivity {
 
         //theme
         String theme = sharedPref.getString("theme", "light");
-        if (theme.equalsIgnoreCase("dark")) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_new_account);
-            new DrawableHandler(this).invertDrawable(findViewById(R.id.multiInterests));
-        } else {
+        if (!theme.equalsIgnoreCase("dark"))
             setTheme(R.style.AppTheme);
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_new_account);
-        }
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_new_account);
 
         ImageButton multiInterests = findViewById(R.id.multiInterests);
         multiInterests.setOnClickListener(new View.OnClickListener() {

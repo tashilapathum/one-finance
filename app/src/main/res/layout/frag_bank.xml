@@ -12,6 +12,10 @@
         android:layout_height="wrap_content"
         android:text="@string/main_account"
         android:textAllCaps="true"
+        android:shadowRadius="2"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowColor="@color/colorShadow"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:fontFamily="sans-serif-condensed-medium" />
 
@@ -26,7 +30,11 @@
         android:fontFamily="sans-serif-condensed-medium"
         android:clickable="true"
         android:focusable="true"
-        android:background="?android:attr/selectableItemBackground"/>
+        android:background="?android:attr/selectableItemBackground"
+        android:shadowRadius="2"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowColor="@color/colorShadow"/>
 
 
     <ImageButton
@@ -54,7 +62,11 @@
             android:text="@string/main_balance"
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:fontFamily="sans-serif-condensed-medium" />
+            android:fontFamily="sans-serif-condensed-medium"
+            android:shadowRadius="2"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowColor="@color/colorShadow" />
 
         <TextView
             android:id="@+id/currency"
@@ -63,7 +75,11 @@
             tools:text="$"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textColor="@android:color/holo_green_dark"
-            android:fontFamily="sans-serif-condensed-medium" />
+            android:fontFamily="sans-serif-condensed-medium"
+            android:shadowRadius="2"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowColor="@color/colorShadow"/>
 
         <TextView
             android:id="@+id/balance"
@@ -72,7 +88,11 @@
             android:text="@string/_0_00"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textColor="@android:color/holo_green_dark"
-            android:fontFamily="sans-serif-condensed-medium" />
+            android:fontFamily="sans-serif-condensed-medium"
+            android:shadowRadius="2"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowColor="@color/colorShadow" />
     </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout

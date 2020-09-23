@@ -11,10 +11,10 @@
     <color name="colorQuickList">#42A5F5</color>
     <color name="colorQuickListDark">#020E8D</color>
     <color name="colorBackground">#DEDEFB</color>
-    <color name="colorToolbarDark">#2C2C2E</color>
+    <color name="colorToolbarDark">#242427</color>
     <color name="colorCustomButton">#BFBCBC</color>
     <color name="colorCustomButtonLight">#DCD9D9</color>
-    <color name="colorShadow">#009688</color>
+    <color name="colorShadow">#00897B</color>
     <color name="colorOverdue">#FF7043</color>
     <color name="colorCartFAB">#81C784</color>
     <color name="colorBillsFAB">#FFB74D</color>

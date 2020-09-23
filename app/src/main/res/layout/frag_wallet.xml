@@ -27,8 +27,8 @@
                 android:textAllCaps="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:shadowRadius="2"
-                android:shadowDx="2"
-                android:shadowDy="2"
+                android:shadowDx="1"
+                android:shadowDy="1"
                 android:shadowColor="@color/colorShadow"/>
 
             <TextView
@@ -39,8 +39,8 @@
                 android:layout_toEndOf="@id/textView"
                 tools:text="$"
                 android:shadowRadius="2"
-                android:shadowDx="2"
-                android:shadowDy="2"
+                android:shadowDx="1"
+                android:shadowDy="1"
                 android:shadowColor="@color/colorShadow"
                 android:textColor="@android:color/holo_green_dark"
                 android:fontFamily="sans-serif-condensed-medium"
@@ -56,8 +56,8 @@
                 android:fontFamily="sans-serif-condensed-medium"
                 android:text="@string/_0_00"
                 android:shadowRadius="2"
-                android:shadowDx="2"
-                android:shadowDy="2"
+                android:shadowDx="1"
+                android:shadowDy="1"
                 android:shadowColor="@color/colorShadow"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
