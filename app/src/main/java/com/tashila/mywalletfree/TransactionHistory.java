@@ -235,7 +235,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         AnimationSet set = new AnimationSet(true);
         //fade in
         Animation fadeIn = new AlphaAnimation(0.0f, 1.0f);
-        fadeIn.setDuration(400);
+        fadeIn.setDuration(600);
         fadeIn.setFillAfter(true);
         set.addAnimation(fadeIn);
         //slide up
@@ -244,7 +244,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         slideUp.setDuration(400);
         set.addAnimation(slideUp);
         //controller
-        LayoutAnimationController controller = new LayoutAnimationController(set, 0.2f);
+        LayoutAnimationController controller = new LayoutAnimationController(set, 0.1f);
 
         recyclerView.setLayoutAnimation(controller);
         recyclerView.setAdapter(transactionsAdapter);
