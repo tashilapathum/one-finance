@@ -102,7 +102,12 @@
         android:layout_below="@id/ll1"
         android:paddingTop="24dp"
         android:hint="@string/amount"
-        app:errorEnabled="true">
+        app:errorEnabled="true"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxCornerRadiusBottomEnd="16dp"
+        app:boxCornerRadiusBottomStart="16dp"
+        app:boxCornerRadiusTopEnd="16dp"
+        app:boxCornerRadiusTopStart="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
