@@ -240,7 +240,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         set.addAnimation(fadeIn);
         //slide up
         Animation slideUp = new TranslateAnimation(0,0, Resources.getSystem().getDisplayMetrics().heightPixels, 0);
-        slideUp.setInterpolator(new DecelerateInterpolator(4.f));
+        slideUp.setInterpolator(new DecelerateInterpolator(7.f));
         slideUp.setDuration(400);
         set.addAnimation(slideUp);
         //controller

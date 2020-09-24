@@ -283,8 +283,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             };
 
     private void navigateScreens(Fragment selectedFragment, String fragmentTag, int itemId) {
-        getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
-                .replace(R.id.fragment_container, selectedFragment, fragmentTag).commit();
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                .replace(R.id.fragment_container, selectedFragment, fragmentTag)
+                .commit();
         switch (itemId) {
             case R.id.nav_wallet: {
                 bottomNav.getMenu().getItem(0).setChecked(true);
