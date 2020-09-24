@@ -123,7 +123,9 @@ public class AccountsAdapter extends ListAdapter<Account, AccountsAdapter.Accoun
     }
 
     private void info(Account account) {
-        context.startActivity(new Intent(context, AccountDetails.class));
+        Intent intent = new Intent(context, AccountDetails.class);
+        intent.putExtra("neededAccount", account);
+        context.startActivity(intent);
     }
 
     private void select(Account account) {
@@ -164,7 +166,7 @@ public class AccountsAdapter extends ListAdapter<Account, AccountsAdapter.Accoun
                         hiddenPart.setVisibility(View.VISIBLE);
                     else
                         hiddenPart.setVisibility(View.GONE);
-                    //notifyItemChanged(getAdapterPosition());
+                    notifyItemChanged(getAdapterPosition());
                 }
             });
         }

@@ -121,7 +121,9 @@ public class BankFragment extends Fragment {
         tvAccountName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AccountDetails.class));
+                Intent intent = new Intent(getActivity(), AccountDetails.class);
+                intent.putExtra("neededAccount", selectedAccount);
+                startActivity(intent);
             }
         });
 

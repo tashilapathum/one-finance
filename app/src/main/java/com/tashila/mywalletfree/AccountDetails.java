@@ -33,13 +33,15 @@ public class AccountDetails extends AppCompatActivity {
     private Account account;
     public static final String TAG = "AccountDetails";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
         accountsViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(getApplication())).get(AccountsViewModel.class);
-        account = getSelectedAccount();
+
+        account = (Account) getIntent().getSerializableExtra("neededAccount");
+        if (account == null)
+            account = getSelectedAccount();
         currency = sharedPref.getString("currency", "");
 
         //language
@@ -111,7 +113,7 @@ public class AccountDetails extends AppCompatActivity {
         double lowest = Double.parseDouble(balanceList.get(0));
         double total = 0;
         DecimalFormat df = new DecimalFormat("#.00");
-        Log.i(TAG, "balanceList: "+balanceList.size());
+        Log.i(TAG, "balanceList: " + balanceList.size());
         for (int i = 0; i < balanceList.size(); i++) {
             double currentItem = Double.parseDouble(balanceList.get(i));
             if (currentItem > highest)

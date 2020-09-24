@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="@string/main_account"
         android:textAllCaps="true"
-        android:shadowRadius="2"
+        android:shadowRadius="3"
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowColor="@color/colorShadow"
@@ -31,7 +31,7 @@
         android:clickable="true"
         android:focusable="true"
         android:background="?android:attr/selectableItemBackground"
-        android:shadowRadius="2"
+        android:shadowRadius="3"
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowColor="@color/colorShadow"/>
@@ -63,7 +63,7 @@
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:fontFamily="sans-serif-condensed-medium"
-            android:shadowRadius="2"
+            android:shadowRadius="3"
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowColor="@color/colorShadow" />
@@ -76,7 +76,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textColor="@android:color/holo_green_dark"
             android:fontFamily="sans-serif-condensed-medium"
-            android:shadowRadius="2"
+            android:shadowRadius="3"
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowColor="@color/colorShadow"/>

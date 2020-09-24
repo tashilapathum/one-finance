@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#001685</color>
+    <color name="colorPrimary">#311B92</color>
     <color name="colorPrimaryDark">#018786</color>
     <color name="colorDivider">#04908F</color>
     <color name="colorAccent">#42A5F5</color>
@@ -14,7 +14,8 @@
     <color name="colorToolbarDark">#242427</color>
     <color name="colorCustomButton">#BFBCBC</color>
     <color name="colorCustomButtonLight">#DCD9D9</color>
-    <color name="colorShadow">#00897B</color>
+    <color name="colorShadow">#4DB6AC</color>
+    <color name="colorShadowDark">#29292C</color>
     <color name="colorOverdue">#FF7043</color>
     <color name="colorCartFAB">#81C784</color>
     <color name="colorBillsFAB">#FFB74D</color>
