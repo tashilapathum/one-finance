@@ -16,13 +16,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/edit_transaction"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:layout_marginBottom="16dp"/>
 
         <RadioGroup
+            android:layout_marginTop="6dp"
             android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/expense"

@@ -17,21 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.LayoutAnimationController;
-import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -50,7 +40,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.ConcurrentModificationException;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class TransactionHistory extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
@@ -230,23 +219,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         recyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
-
-        //animation
-        AnimationSet set = new AnimationSet(true);
-        //fade in
-        Animation fadeIn = new AlphaAnimation(0.0f, 1.0f);
-        fadeIn.setDuration(600);
-        fadeIn.setFillAfter(true);
-        set.addAnimation(fadeIn);
-        //slide up
-        Animation slideUp = new TranslateAnimation(0,0, Resources.getSystem().getDisplayMetrics().heightPixels, 0);
-        slideUp.setInterpolator(new DecelerateInterpolator(7.f));
-        slideUp.setDuration(400);
-        set.addAnimation(slideUp);
-        //controller
-        LayoutAnimationController controller = new LayoutAnimationController(set, 0.1f);
-
-        recyclerView.setLayoutAnimation(controller);
+        recyclerView.setLayoutAnimation(new AnimationHandler().getSlideUpController());
         recyclerView.setAdapter(transactionsAdapter);
 
         transactionsViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(TransactionsViewModel.class);
@@ -260,19 +233,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
         transactionsAdapter.setOnTransactionClickListener(new TransactionsAdapter.OnTransactionClickListener() {
             @Override
             public void OnTransactionClick(TransactionItem transactionItem) {
-                String amount = transactionItem.getAmount();
-                String description = transactionItem.getDescription();
-                String date = new DateTimeHandler(transactionItem.getUserDate()).getTimestamp().split(" ")[0];
-                String prefix = transactionItem.getPrefix();
-
-                Bundle bundle = new Bundle();
-                bundle.putString("amount", amount);
-                bundle.putString("description", description);
-                bundle.putString("date", date);
-                bundle.putString("prefix", prefix);
-
                 DialogTransactionEditor transactionEditor = new DialogTransactionEditor(TransactionHistory.this, transactionItem);
-                transactionEditor.setArguments(bundle);
                 transactionEditor.show(getSupportFragmentManager(), "transaction editor dialog");
             }
         });

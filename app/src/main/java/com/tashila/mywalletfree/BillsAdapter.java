@@ -30,8 +30,6 @@ public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
     private Context context;
     private SharedPreferences sharedPref;
     private String currency;
-    private String theme;
-    private String language;
 
 
     public BillsAdapter(Context context) {
@@ -40,8 +38,6 @@ public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
         AndroidThreeTen.init(context);
         sharedPref = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
         currency = sharedPref.getString("currency", "");
-        theme = sharedPref.getString("theme", "light");
-        language = sharedPref.getString("language", "english");
     }
 
     private static final DiffUtil.ItemCallback<Bill> DIFF_CALLBACK = new DiffUtil.ItemCallback<Bill>() {
@@ -109,6 +105,7 @@ public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
         }
 
         //show and hide "overdue"
+        //TODO: convert this to millis method
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
         int today = LocalDate.now().getDayOfYear();
         int dueDay;
@@ -124,7 +121,6 @@ public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
         } catch (Exception e) { //because the user might change the localization
             e.printStackTrace();
         }
-        //comment
 
         //renew monthly payments
         if (currentBill.isMonthly() && currentBill.getLastPaidMonth() < LocalDate.now().getMonthValue())
@@ -184,5 +180,3 @@ public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
         }
     }
 }
-
-//TODO: renew monthly payments

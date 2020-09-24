@@ -245,7 +245,7 @@
     <string name="exit">Exit</string>
     <string name="uncheck_to_edit">Uncheck item to edit</string>
     <string name="date">Date</string>
-    <string name="remove_transaction_note">Note: If you want to remove the transaction, swipe it left or right.</string>
+    <string name="remove_transaction_note">Note: If you want to remove the transaction, swipe it to a side.</string>
     <string name="edit_transaction">Edit transaction</string>
     <string name="new_balance">New balance</string>
     <string name="edit_balance">Edit balance</string>

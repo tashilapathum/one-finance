@@ -40,7 +40,6 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
     private BottomSheetDialog dialog;
     private static DialogTransactionEditor instance;
     private SharedPreferences sharedPref;
-    private String language;
     private String dateInMillis;
     private RadioGroup radioGroup;
     private MaterialRadioButton rbExpense;
@@ -53,7 +52,6 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
         instance = this;
         sharedPref = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
         view = getActivity().getLayoutInflater().inflate(R.layout.dialog_edit_transaction, null);
-        language = sharedPref.getString("language", "english");
         dialog = new BottomSheetDialog(getActivity());
         dialog.setContentView(view);
 
@@ -123,13 +121,12 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
     }
 
     private void fillDetails() {
-        Bundle bundle = this.getArguments();
-        etAmount.setText(bundle.getString("amount"));
-        etDescription.setText(bundle.getString("description"));
-        String date = bundle.getString("date");
+        etAmount.setText(transactionItem.getAmount());
+        etDescription.setText(transactionItem.getDescription());
+        String date = new DateTimeHandler(transactionItem.getUserDate()).getTimestamp();
         etDate.setText(date);
         etDate.setFocusable(false);
-        String prefix = bundle.getString("prefix");
+        String prefix = transactionItem.getPrefix();
         if (prefix.equals("+"))
             rbIncome.setChecked(true);
     }
