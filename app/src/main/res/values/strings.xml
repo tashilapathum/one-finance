@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">My Wallet</string>
-    <string name="version" translatable="false">Version 0.2.7 (Beta)</string>
+    <string name="version" translatable="false">Version 0.2.8 (Beta)</string>
     <string name="recent_transactions">Transactions</string>
     <string name="reports">Reports</string>
     <string name="settings">Settings</string>
@@ -255,14 +255,6 @@
     <string name="updated_acc_details">Updated account details</string>
     <string name="accounts">Accounts</string>
     <string name="edit_delete_or_view_details_of_your_accounts">Edit, delete or view details of your accounts</string>
-    <string name="what_s_new_in_version" translatable="false">What\'s new in version 0.2.7 (Beta)</string>
-    <string name="whats_new_descr" translatable="false">
-        \n - Moved \"Bank\" section to an efficient database\n
-        - Moved account manager to settings\n
-        - UI changes\n
-        - Translation updates\n
-        \nThank you for testing My Wallet! This app is still in beta stage so please let the developer if there are any bugs, Try clearing app data in case of constant crashes to get the app working again.
-    </string>
     <string name="thanks_review">Thank you for your review!</string>
     <string name="delete_acc_confirm">Are you sure you want to delete this account?</string>
     <string name="manage_acc">Manage Accounts</string>
@@ -308,4 +300,13 @@
         <item>Amount - high to low</item>
         <item>Amount - low to high</item>
     </string-array>
+
+    <string name="what_s_new_in_version" translatable="false">What\'s new in version 0.2.8 (Beta)</string>
+    <string name="whats_new_descr" translatable="false">
+        \n - Added account details section\n
+        - Added filters for Recent Transactions\n
+        - UI updates\n
+        - Performance improvements\n
+        \nThank you for testing My Wallet! This app is still in beta stage so please let the developer if there are any bugs, Try clearing app data in case of constant crashes to get the app working again.
+    </string>
 </resources>

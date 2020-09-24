@@ -379,9 +379,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 }
 
-
-
-
+//TODO: Update what's new
 
 
 
