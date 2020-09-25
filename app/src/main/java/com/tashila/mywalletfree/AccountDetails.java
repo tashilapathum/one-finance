@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -189,6 +190,13 @@ public class AccountDetails extends AppCompatActivity {
                 account = accountList.get(i);
         }
         return account;
+    }
+
+    public void editAccount(View view) {
+        Intent intent = new Intent(this, NewAccount.class);
+        intent.putExtra("isNewAccount", false);
+        intent.putExtra("updatingAccount", account);
+        startActivity(intent);
     }
 
 }
