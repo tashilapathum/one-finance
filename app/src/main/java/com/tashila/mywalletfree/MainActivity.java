@@ -20,10 +20,8 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -34,6 +32,7 @@ import com.google.android.play.core.review.ReviewManagerFactory;
 import com.google.android.play.core.tasks.OnCompleteListener;
 import com.google.android.play.core.tasks.OnFailureListener;
 import com.google.android.play.core.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import java.util.Calendar;
@@ -44,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     SharedPreferences sharedPref;
     public static final String TAG = "MainActivity";
     BottomNavigationView bottomNav;
+    private FirebaseAnalytics firebaseAnalytics;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         /*----------------------------------------------------------------------------------------*/
         AndroidThreeTen.init(this);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         //bottom navigation
         bottomNav = findViewById(R.id.bottom_navigation);
@@ -115,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if (homeScreen.equalsIgnoreCase("bank"))
             navigateScreens(new BankFragment(), "BankFragment", R.id.nav_bank);
         else if (homeScreen.equalsIgnoreCase("cart"))
-            navigateScreens(new CartFragment(), "CartFragment", R.id.nav_loans);
+            navigateScreens(new CartFragment(), "CartFragment", R.id.nav_cart);
         else if (homeScreen.equalsIgnoreCase("bills"))
             navigateScreens(new BillsFragment(), "BillsFragment", R.id.nav_bills);
             //when starting the app normally
@@ -170,43 +172,52 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //nav drawer
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Bundle bundle = new Bundle();
         switch (item.getItemId()) {
             case R.id.nav_home: {
+                bundle.putString("feature", "home");
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 break;
             }
             case R.id.nav_recent_trans: {
+                bundle.putString("feature", "transactions");
                 Intent intent = new Intent(this, TransactionHistory.class);
                 startActivity(intent);
                 break;
             }
             case R.id.nav_reports: {
+                bundle.putString("feature", "reports");
                 Intent intent = new Intent(this, Reports.class);
                 startActivity(intent);
                 break;
             }
             case R.id.nav_settings: {
+                bundle.putString("feature", "settings");
                 Intent intent = new Intent(this, Settings.class);
                 startActivity(intent);
                 break;
             }
             case R.id.nav_get_pro: {
+                bundle.putString("feature", "get_pro");
                 Intent intent = new Intent(this, UpgradeToPro.class);
                 startActivity(intent);
                 break;
             }
             case R.id.nav_about: {
+                bundle.putString("feature", "about");
                 Intent intent = new Intent(this, About.class);
                 startActivity(intent);
                 break;
             }
             case R.id.nav_exit: {
+                bundle.putString("feature", "exit");
                 sharedPref.edit().putBoolean("exit", true).apply();
                 finishAndRemoveTask();
                 break;
             }
         }
+        firebaseAnalytics.logEvent("used_feature", bundle);
         return true;
     }
 
@@ -265,7 +276,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             fragmentTag = "BankFragment";
                             break;
                         }
-                        case R.id.nav_loans: {
+                        case R.id.nav_cart: {
                             selectedFragment = new CartFragment();
                             fragmentTag = "CartFragment";
                             break;
@@ -287,24 +298,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                 .replace(R.id.fragment_container, selectedFragment, fragmentTag)
                 .commit();
+        Bundle bundle = new Bundle();
         switch (itemId) {
             case R.id.nav_wallet: {
                 bottomNav.getMenu().getItem(0).setChecked(true);
+                bundle.putString("feature", "Wallet");
                 break;
             }
             case R.id.nav_bank: {
                 bottomNav.getMenu().getItem(1).setChecked(true);
+                bundle.putString("feature", "Bank");
                 break;
             }
-            case R.id.nav_loans: {
+            case R.id.nav_cart: {
                 bottomNav.getMenu().getItem(2).setChecked(true);
+                bundle.putString("feature", "Cart");
                 break;
             }
             case R.id.nav_bills: {
                 bottomNav.getMenu().getItem(3).setChecked(true);
+                bundle.putString("feature", "Bills");
                 break;
             }
         }
+        firebaseAnalytics.logEvent("used_feature", bundle);
     }
 
     public void rateApp(View view) {
@@ -380,7 +397,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 }
 
 //TODO: Update what's new
-
+//TODO: Add analytics for fragments and stuff
 
 
 

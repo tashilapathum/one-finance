@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:background="?android:attr/windowBackground"
             android:layout_alignParentBottom="true"
-            app:menu="@menu/bottom_navigation"/>
+            app:menu="@menu/bottom_navigation" />
 
     </RelativeLayout>
 
@@ -70,7 +70,9 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu"
-        style="@style/Widget.Design.NavigationView"/>
+        style="@style/Widget.Design.NavigationView"
+        app:itemTextAppearance="@style/RobotoTextViewStyle"
+        android:theme="@style/NavigationItemRipple"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
 

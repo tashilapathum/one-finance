@@ -12,7 +12,7 @@
         android:title="@string/bank"/>
 
     <item
-        android:id="@+id/nav_loans"
+        android:id="@+id/nav_cart"
         android:icon="@drawable/ic_cart"
         android:title="@string/cart"/>
 
