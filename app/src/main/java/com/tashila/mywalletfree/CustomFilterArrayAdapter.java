@@ -9,8 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class CustomArrayAdapter extends ArrayAdapter<String> {
-    public CustomArrayAdapter(Context context, int textViewResourceId, String[] objects) {
+public class CustomFilterArrayAdapter extends ArrayAdapter<String> {
+    public CustomFilterArrayAdapter(Context context, int textViewResourceId, String[] objects) {
         super(context, textViewResourceId, objects);
     }
 

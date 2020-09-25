@@ -1,236 +1,256 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/ll1"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="5dp"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="@string/balance"
-                android:textAllCaps="true"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:shadowRadius="3"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowColor="@color/colorShadow"/>
-
-            <TextView
-                android:id="@+id/currency"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@id/textView"
-                tools:text="$"
-                android:shadowRadius="3"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowColor="@color/colorShadow"
-                android:textColor="@android:color/holo_green_dark"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
-
-            <TextView
-                android:id="@+id/balance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@id/currency"
-                android:textColor="@android:color/holo_green_dark"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="@string/_0_00"
-                android:shadowRadius="3"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowColor="@color/colorShadow"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
-
-            <ImageButton
-                android:id="@+id/warning"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginHorizontal="8dp"
-                android:layout_toEndOf="@id/balance"
-                android:background="?android:selectableItemBackgroundBorderless"
-                android:contentDescription="negative balance warning"
-                android:src="@drawable/ic_warning"
-                android:visibility="gone"
-                tools:visibility="visible" />
-
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnUpdate"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:textAlignment="textEnd"
-                android:background="?android:selectableItemBackgroundBorderless"
-                android:fontFamily="sans-serif-condensed"
-                android:text="@string/update_balance"
-                android:textAllCaps="false"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editAmnt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ll1"
-        android:paddingTop="16dp"
-        app:errorEnabled="true"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:boxCornerRadiusBottomEnd="16dp"
-        app:boxCornerRadiusBottomStart="16dp"
-        app:boxCornerRadiusTopEnd="16dp"
-        app:boxCornerRadiusTopStart="16dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:fontFamily="sans-serif-condensed"
-            android:hint="@string/amount"
-            android:importantForAutofill="no"
-            android:inputType="numberDecimal" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editDescr"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editAmnt"
-        android:layout_marginTop="8dp"
-        app:errorEnabled="true"
-        app:boxCornerRadiusBottomEnd="16dp"
-        app:boxCornerRadiusBottomStart="16dp"
-        app:boxCornerRadiusTopEnd="16dp"
-        app:boxCornerRadiusTopStart="16dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:fontFamily="sans-serif-condensed"
-            android:hint="@string/description"
-            android:importantForAutofill="no"
-            android:inputType="textCapSentences" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <LinearLayout
-        android:id="@+id/ll2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editDescr"
-        android:gravity="end"
-        android:orientation="horizontal">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnTransfer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="4dp"
-            android:fontFamily="sans-serif-condensed"
-            android:paddingVertical="12dp"
-            android:text="@string/transfer"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            app:cornerRadius="48dp"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnEarned"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="2dp"
-            android:fontFamily="sans-serif-condensed"
-            android:paddingVertical="12dp"
-            android:text="@string/earned"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            app:cornerRadius="48dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSpent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="4dp"
-            android:fontFamily="sans-serif-condensed"
-            android:paddingVertical="12dp"
-            android:text="@string/spent"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            app:cornerRadius="48dp" />
-
-    </LinearLayout>
-
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/ll2"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp">
+        android:padding="16dp">
 
         <LinearLayout
-            android:id="@+id/childLinear"
+            android:id="@+id/ll1"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            android:padding="8dp">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:padding="8dp"
-                    android:text="@string/quick_list"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                    android:textStyle="italic" />
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="5dp"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:shadowColor="@color/colorShadow"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="3"
+                    android:text="@string/balance"
+                    android:textAllCaps="true"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+                <TextView
+                    android:id="@+id/currency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/textView"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:shadowColor="@color/colorShadow"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="3"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textColor="@android:color/holo_green_dark"
+                    tools:text="$" />
+
+                <TextView
+                    android:id="@+id/balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/currency"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:shadowColor="@color/colorShadow"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="3"
+                    android:text="@string/_0_00"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textColor="@android:color/holo_green_dark" />
 
                 <ImageButton
-                    android:id="@+id/editQuickList"
+                    android:id="@+id/warning"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_toEndOf="@id/balance"
+                    android:background="?android:selectableItemBackgroundBorderless"
+                    android:contentDescription="negative balance warning"
+                    android:src="@drawable/ic_warning"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnUpdate"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
                     android:background="?android:selectableItemBackgroundBorderless"
-                    android:contentDescription="edit quick list"
-                    android:padding="4dp"
-                    android:src="@drawable/ic_edit" />
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/update_balance"
+                    android:textAlignment="textEnd"
+                    android:textAllCaps="false"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
             </RelativeLayout>
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editAmnt"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll1"
+            android:paddingTop="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:fontFamily="sans-serif-condensed"
+                android:hint="@string/amount"
+                android:importantForAutofill="no"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editDescr"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editAmnt"
+            android:layout_marginTop="8dp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:errorEnabled="true"
+            android:hint="@string/description"
+            >
+
+            <!--<com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:fontFamily="sans-serif-condensed"
+                android:hint="@string/description"
+                android:importantForAutofill="no"
+                android:inputType="textCapSentences" />-->
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/aetDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:completionThreshold="1"
+                android:fontFamily="sans-serif-condensed"
+                android:importantForAutofill="no"
+                android:inputType="textCapSentences"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:paddingVertical="16dp"
+                android:paddingHorizontal="11dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/ll2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editDescr"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnTransfer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:fontFamily="sans-serif-condensed"
+                android:paddingVertical="12dp"
+                android:text="@string/transfer"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                app:cornerRadius="48dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEarned"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="2dp"
+                android:fontFamily="sans-serif-condensed"
+                android:paddingVertical="12dp"
+                android:text="@string/earned"
+                android:textAllCaps="false"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                app:cornerRadius="48dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSpent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:fontFamily="sans-serif-condensed"
+                android:paddingVertical="12dp"
+                android:text="@string/spent"
+                android:textAllCaps="false"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                app:cornerRadius="48dp" />
 
         </LinearLayout>
-    </ScrollView>
 
-    <TextView
-        android:id="@+id/snackbarHere"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/scrollView2"
-        android:text="sn" />
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/ll2"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp">
+
+            <LinearLayout
+                android:id="@+id/childLinear"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:padding="8dp"
+                        android:text="@string/quick_list"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:textStyle="italic" />
+
+                    <ImageButton
+                        android:id="@+id/editQuickList"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="?android:selectableItemBackgroundBorderless"
+                        android:contentDescription="edit quick list"
+                        android:padding="4dp"
+                        android:src="@drawable/ic_edit" />
+                </RelativeLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/snackbarHere"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/scrollView2" />
 
 
-</RelativeLayout>
+    </RelativeLayout>
+
+</ScrollView>

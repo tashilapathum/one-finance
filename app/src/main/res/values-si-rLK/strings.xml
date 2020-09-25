@@ -44,7 +44,7 @@
     <string name="currency">මුදල් වර්ගය</string>
     <string name="set_your_country_s_currency">රටේ භාවිත වන මුදල් වර්ගය (Rs / රු)</string>
     <string name="budget">මාසික පෙර ගිණුම (බජට්)</string>
-    <string name="edit_your_monthly_budget_weekly_and_daily_budgets_will_be_calculated_based_on_this">සතිපතා හා දිනපතා පෙර ගිණුම් මෙයට අනුව ගණනය කෙරේ.</string>
+    <string name="edit_your_monthly_budget_weekly_and_daily_budgets_will_be_calculated_based_on_this">සතිපතා හා දිනපතා පෙර ගිණුම් මෙයට අනුව ගණනය කෙරේ</string>
     <string name="restart_for_changes">වෙනස්කම් අන්තර්ගත කිරීමට ඇප් එක නැවත විවෘත කරන්න</string>
     <string name="example_quick_item_text">ක්ෂණික ලැයිස්තුවට අයිතම එකතු කිරීමට මෙතන ටච් කරන්න</string>
     <string name="spend_more_than_have">ශේෂයට වඩා වැඩි ගණනක් වියදම් කළ නොහැකියි!</string>

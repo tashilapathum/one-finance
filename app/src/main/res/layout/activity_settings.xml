@@ -238,6 +238,52 @@
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
                 android:paddingStart="8dp"
+                android:onClick="suggestions"
+                android:paddingVertical="16dp">
+
+            <ImageView
+                android:id="@+id/image10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_suggestions"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_margin="8dp"
+                android:paddingEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/setting10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/image10"
+                android:layout_toStartOf="@id/suggestCheck"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Suggestions"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <TextView
+                android:id="@+id/description10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setting10"
+                android:layout_toEndOf="@id/image10"
+                android:layout_toStartOf="@id/suggestCheck"
+                android:text="Show suggestions from the Quick list when typing the description" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/suggestCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:paddingStart="8dp"
                 android:onClick="exitConfirm"
                 android:paddingVertical="16dp">
 
@@ -267,6 +313,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/setting8"
                     android:layout_toEndOf="@id/image8"
+                    android:layout_toStartOf="@id/exitCheck"
                     android:text="@string/show_confirm_dialog_when_trying_to_exit_the_app" />
 
                 <com.google.android.material.checkbox.MaterialCheckBox

@@ -39,6 +39,7 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
     private DrawerLayout drawer;
     String timeString;
     private MaterialCheckBox exitCheckBox;
+    private MaterialCheckBox suggestCheckBox;
     private FirebaseAnalytics firebaseAnalytics;
 
     @Override
@@ -99,6 +100,20 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
         });
         boolean confirmExitEnabled = sharedPref.getBoolean("exitConfirmation", false);
         if (confirmExitEnabled) exitCheckBox.setChecked(true);
+
+        //suggestions setting
+        suggestCheckBox = findViewById(R.id.suggestCheck);
+        suggestCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked())
+                    sharedPref.edit().putBoolean("showSuggestions", true).apply();
+                else
+                    sharedPref.edit().putBoolean("showSuggestions", false).apply();
+            }
+        });
+        boolean suggestEnabled = sharedPref.getBoolean("showSuggestions", false);
+        if (suggestEnabled) suggestCheckBox.setChecked(true);
     }
 
     @Override //so the language change works with dark mode
@@ -217,6 +232,16 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
         firebaseAnalytics.logEvent("used_setting", bundle);
         DialogBudget dialogBudget = new DialogBudget();
         dialogBudget.show(getSupportFragmentManager(), "budget dialog");
+    }
+
+    public void suggestions(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putString("setting", "suggestions_checkbox");
+        firebaseAnalytics.logEvent("used_setting", bundle);
+        if (!suggestCheckBox.isChecked())
+            suggestCheckBox.setChecked(true);
+        else
+            suggestCheckBox.setChecked(false);
     }
 
     public void exitConfirm(View view) {

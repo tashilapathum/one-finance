@@ -294,7 +294,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
 
         //date
         String[] dateList = getResources().getStringArray(R.array.date_list);
-        CustomArrayAdapter dateAdapter = new CustomArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, dateList);
+        CustomFilterArrayAdapter dateAdapter = new CustomFilterArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, dateList);
         dateSpinner.setAdapter(dateAdapter);
         dateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -318,7 +318,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
 
         //type
         String[] typeList = getResources().getStringArray(R.array.type_list);
-        CustomArrayAdapter typeAdapter = new CustomArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, typeList);
+        CustomFilterArrayAdapter typeAdapter = new CustomFilterArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, typeList);
         typeSpinner.setAdapter(typeAdapter);
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -342,7 +342,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
 
         //sort
         String[] sortList = getResources().getStringArray(R.array.sort_list);
-        CustomArrayAdapter sortAdapter = new CustomArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sortList);
+        CustomFilterArrayAdapter sortAdapter = new CustomFilterArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sortList);
         sortSpinner.setAdapter(sortAdapter);
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

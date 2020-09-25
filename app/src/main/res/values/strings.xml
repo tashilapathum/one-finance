@@ -45,7 +45,7 @@
     <string name="currency">Currency</string>
     <string name="set_your_country_s_currency">Set your country\'s currency</string>
     <string name="budget">Monthly Budget</string>
-    <string name="edit_your_monthly_budget_weekly_and_daily_budgets_will_be_calculated_based_on_this">Weekly and daily budgets will be calculated based on this.</string>
+    <string name="edit_your_monthly_budget_weekly_and_daily_budgets_will_be_calculated_based_on_this">Weekly and daily budgets will be calculated based on this</string>
     <string name="restart_for_changes">Restart the app to apply changes</string>
     <string name="example_quick_item_text">Tap here to add items to the quick list</string>
     <string name="spend_more_than_have">You can\'t spend more than you have!</string>

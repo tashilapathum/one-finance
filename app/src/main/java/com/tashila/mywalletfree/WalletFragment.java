@@ -20,6 +20,7 @@ import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
@@ -28,6 +29,7 @@ import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.FormatStyle;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -204,6 +206,7 @@ public class WalletFragment extends Fragment {
             reloadFragment();
             sharedPref.edit().putBoolean("quickItemsChanged", false).apply();
         }
+        setupAutocomplete();
     }
 
     public static WalletFragment getInstance() {
@@ -339,7 +342,7 @@ public class WalletFragment extends Fragment {
         }
     }
 
-    void continueLongClickProcess() {
+    void continueLongClickProcess() { //after returning from dialog
         handleData(viewId);
         sharedPref.edit().putInt("walletViewID", viewId).apply();
     }
@@ -563,5 +566,46 @@ public class WalletFragment extends Fragment {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.detach(walletFrag).attach(walletFrag).commit();
     }
+
+    private void setupAutocomplete() {
+        boolean isEnabled = sharedPref.getBoolean("showSuggestions", false);
+        if (isEnabled) {
+            MaterialAutoCompleteTextView aetDescription = v.findViewById(R.id.aetDescription);
+            List<QuickItem> quickItems = quickListViewModel.getQuickItemsList();
+            List<String> templates = new ArrayList<>();
+            for (int i = 0; i < quickItems.size(); i++)
+                templates.add(quickItems.get(i).getItemName());
+            CustomAutocompleteArrayAdapter arrayAdapter = new CustomAutocompleteArrayAdapter(
+                    getActivity(), android.R.layout.simple_list_item_1, templates);
+            aetDescription.setAdapter(arrayAdapter);
+        }
+    }
+
+   /* private void setupAutocomplete() {
+        boolean isEnabled = sharedPref.getBoolean("autocompleteEnabled", false);
+        if (!isEnabled) {
+            MaterialAutoCompleteTextView aetDescription = v.findViewById(R.id.aetDescription);
+            MaterialAutoCompleteTextView aetAmount = v.findViewById(R.id.aetAmount);
+            final List<QuickItem> quickItems = quickListViewModel.getQuickItemsList();
+            List<String> templates = new ArrayList<>();
+            for (int i = 0; i < quickItems.size(); i++)
+                templates.add(quickItems.get(i).getItemName());
+            CustomAutocompleteArrayAdapter arrayAdapter = new CustomAutocompleteArrayAdapter(
+                    getActivity(), android.R.layout.simple_list_item_2, android.R.id.text1, templates) {
+                @NonNull
+                @Override
+                public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                    View view = super.getView(position, convertView, parent);
+                    TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+                    TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+                    text1.setText(quickItems.get(position).getItemName());
+                    text2.setText(currency + quickItems.get(position).getItemPrice());
+                    return view;
+                }
+            };
+            aetDescription.setAdapter(arrayAdapter);
+            aetAmount.setAdapter(arrayAdapter);
+        }
+    }*/
 }
 
