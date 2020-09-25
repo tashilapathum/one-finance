@@ -287,8 +287,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             break;
                         }
                     }
-                    navigateScreens(selectedFragment, fragmentTag, item.getItemId());
                     rateApp(); //to make counts when navigating screens
+                    navigateScreens(selectedFragment, fragmentTag, item.getItemId());
                     return true;
                 }
             };
@@ -324,21 +324,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         firebaseAnalytics.logEvent("used_feature", bundle);
     }
 
-    public void rateApp(View view) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.tashila.mywalletfree"));
-        startActivity(intent);
-    }
-
-    public void moreApps(View view) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/developer?id=Tashila+Pathum"));
-        startActivity(intent);
-    }
-
     private void rateApp() {
         boolean alreadyRated = sharedPref.getBoolean("alreadyRated", false);
         int actionCount = sharedPref.getInt("actionCount", 0);
         sharedPref.edit().putInt("actionCount", actionCount + 1).apply();
-        if (!alreadyRated & actionCount >= 15) {
+        if (!alreadyRated & actionCount >= 14) {
             final ReviewManager reviewManager = ReviewManagerFactory.create(this);
             Task<ReviewInfo> request = reviewManager.requestReviewFlow();
             request.addOnCompleteListener(new OnCompleteListener<ReviewInfo>() {
@@ -350,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         flow.addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                sharedPref.edit().putInt("actionCount", 0).apply();
+                                sharedPref.edit().putBoolean("alreadyRated", true).apply();
                             }
                         });
                     }
@@ -397,7 +387,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 }
 
 //TODO: Update what's new
-//TODO: Add analytics for fragments and stuff
 
 
 

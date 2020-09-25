@@ -166,7 +166,7 @@ public class AccountsAdapter extends ListAdapter<Account, AccountsAdapter.Accoun
                         hiddenPart.setVisibility(View.VISIBLE);
                     else
                         hiddenPart.setVisibility(View.GONE);
-                    notifyItemChanged(getAdapterPosition());
+                    //notifyItemChanged(getAdapterPosition());
                 }
             });
         }

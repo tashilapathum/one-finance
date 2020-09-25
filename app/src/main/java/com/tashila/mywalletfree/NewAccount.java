@@ -160,11 +160,14 @@ public class NewAccount extends AppCompatActivity {
         balanceHistory.add(accountBalance);
         //interest
         boolean isMultiInterest = false;
-        String interestRate = etAnnualInterest.getText().toString();
+        String interestRate;
         if (sharedPref.getBoolean("addedMultiInterests", true)) {
             interestRate = sharedPref.getString("multiInterests", null);
             isMultiInterest = true;
-        }
+            sharedPref.edit().putBoolean("addedMultiInterests", false).apply();
+        } else
+            interestRate = etAnnualInterest.getText().toString();
+
         String accountNumber = etAccountNumber.getText().toString();
         String additionalInfo = etAdditional.getText().toString();
         //created account activity
@@ -186,7 +189,7 @@ public class NewAccount extends AppCompatActivity {
         }
         //save
         Account account = new Account(accountName, accountBalance, balanceHistory, interestRate,
-                false, 0, accountNumber, additionalInfo, activities, true);
+                isMultiInterest, 0, accountNumber, additionalInfo, activities, true);
 
         accountsViewModel.insert(account);
         this.account = account;
@@ -202,11 +205,14 @@ public class NewAccount extends AppCompatActivity {
         balanceHistory.add(accountBalance);
         //interest
         boolean isMultiInterest = false;
-        String interestRate = etAnnualInterest.getText().toString();
+        String interestRate;
         if (sharedPref.getString("multiInterests", null) != null) {
             interestRate = sharedPref.getString("multiInterests", null);
             isMultiInterest = true;
-        }
+            sharedPref.edit().putBoolean("addedMultiInterests", false).apply();
+        } else
+            interestRate = etAnnualInterest.getText().toString();
+
         String accountNumber = etAccountNumber.getText().toString();
         String additionalInfo = etAdditional.getText().toString();
 
@@ -221,7 +227,7 @@ public class NewAccount extends AppCompatActivity {
         account.setAccName(accountName);
         account.setAccBalance(accountBalance);
         account.setBalanceHistory(balanceHistory);
-        account.setMultiInterest(false);
+        account.setMultiInterest(isMultiInterest);
         account.setInterestRate(interestRate);
         account.setAccNumber(accountNumber);
         account.setMoreDetails(additionalInfo);
@@ -241,10 +247,9 @@ public class NewAccount extends AppCompatActivity {
             @SuppressLint("ClickableViewAccessibility")
             @Override
             public void onDismiss(DialogInterface dialog) {
-                if (sharedPref.getBoolean("addedMultiInterests", false)) {
+                if (sharedPref.getBoolean("addedMultiInterests", false))
                     setAsMultiple();
-                    sharedPref.edit().putBoolean("addedMultiInterests", true).apply();
-                } else {
+                else {
                     etAnnualInterest.setText(null);
                     etAnnualInterest.setClickable(true);
                     etAnnualInterest.setFocusable(true);

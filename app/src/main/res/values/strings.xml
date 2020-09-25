@@ -303,10 +303,12 @@
 
     <string name="what_s_new_in_version" translatable="false">What\'s new in version 0.2.8 (Beta)</string>
     <string name="whats_new_descr" translatable="false">
-        \n - Added account details section\n
-        - Added filters for Recent Transactions\n
-        - UI updates\n
+        \n - [Added] Account details section\n
+        - [Added] Filters for recent transactions\n
+        - [Added] Option to add multiple interests for accounts\n
+        - [Fixed] Crash in Wallet screen\n
+        - UI updates
         - Performance improvements\n
-        \nThank you for testing My Wallet! This app is still in beta stage so please let the developer if there are any bugs, Try clearing app data in case of constant crashes to get the app working again.
+        \nThank you for testing My Wallet! This app is still in beta stage so please let the developer if there are any bugs. Try clearing app data in case of constant crashes to get the app working again.
     </string>
 </resources>

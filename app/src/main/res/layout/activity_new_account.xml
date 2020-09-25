@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -47,7 +47,7 @@
                         android:textColor="@color/colorAccent" />
 
                 </RelativeLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -103,7 +103,7 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         app:helperText="@string/interest_description">
 
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/annual_interest"
@@ -117,9 +117,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:padding="8dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="4dp"
                         android:contentDescription="@string/add_multiple_interests"
                         android:src="@drawable/ic_add"
-                        android:visibility="gone"/>
+                        android:background="?android:attr/selectableItemBackground"/>
 
                 </RelativeLayout>
 

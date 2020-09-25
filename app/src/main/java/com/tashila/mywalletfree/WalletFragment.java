@@ -252,12 +252,19 @@ public class WalletFragment extends Fragment {
     }
 
     private boolean validateDescr() {
-        if (etDescr.getText().toString().isEmpty()) {
+        String text = etDescr.getText().toString();
+        if (text.isEmpty()) {
             tilDescr.setError(getString(R.string.required));
             return false;
         } else {
-            tilDescr.setError(null);
-            return true;
+            if (text.contains("~~~") || text.contains(",,,")) {
+                tilDescr.setError("~~~ and ,,, are not allowed");
+                return false;
+            }
+            else {
+                tilDescr.setError(null);
+                return true;
+            }
         }
     }
 

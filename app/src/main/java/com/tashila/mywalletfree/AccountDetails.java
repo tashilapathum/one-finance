@@ -127,7 +127,21 @@ public class AccountDetails extends AppCompatActivity {
         tvBalLowest.append(currency + df.format(lowest));
         tvBalAverage.append(currency + df.format(average));
         createBalanceChart();
-        tvInterest.setText(account.getInterestRate());
+        if (account.isMultiInterest()) {
+            String formattedInterests = "";
+            String[] interests = account.getInterestRate().split("~~~");
+            for (int i = 0; i < interests.length; i++) {
+                String interest = currency + interests[i].split("~")[0]
+                        + " - "
+                        + currency + interests[i].split("~")[1]
+                        + " -> "
+                        + interests[i].split("~")[2]
+                        + "\n";
+                formattedInterests = formattedInterests + interest;
+            }
+            tvInterest.setText(formattedInterests);
+        } else
+            tvInterest.setText(account.getInterestRate());
         tvAccNumber.setText(account.getAccNumber());
         tvExDetails.setText(account.getMoreDetails());
         String createdDate = account.getActivities().get(0).split("###")[1];
@@ -152,6 +166,8 @@ public class AccountDetails extends AppCompatActivity {
         LineDataSet dataSet = new LineDataSet(values, getResources().getString(R.string.balance));
         dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         dataSet.setDrawValues(false);
+        dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        dataSet.setColor(getResources().getColor(R.color.colorAccent));
         List<ILineDataSet> dataSetList = new ArrayList<>();
         dataSetList.add(dataSet);
         LineData data = new LineData(dataSetList);
