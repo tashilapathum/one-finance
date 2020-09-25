@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -29,6 +30,8 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
@@ -83,6 +86,7 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
         /*----------------------------------------------------------------------------------------*/
         AndroidThreeTen.init(this);
 
+        showTopMsg();
         createReports();
     }
 
@@ -99,6 +103,21 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
     protected void onDestroy() {
         super.onDestroy();
         sharedPref.edit().putBoolean("exit", false).apply();
+    }
+
+    private void showTopMsg() {
+        MaterialButton btnGotIt = findViewById(R.id.gotIt);
+        if (!sharedPref.getBoolean("detailedReportsGotIt", false)) {
+            final CardView cardView = findViewById(R.id.gotItCard);
+            cardView.setVisibility(View.VISIBLE);
+            btnGotIt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cardView.setVisibility(View.GONE);
+                    sharedPref.edit().putBoolean("detailedReportsGotIt", true).apply();
+                }
+            });
+        }
     }
 
     private void createReports() {

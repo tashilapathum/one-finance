@@ -274,6 +274,8 @@
     <string name="bd_average">Average:</string>
     <string name="expense">Expense</string>
     <string name="income">Income</string>
+    <string name="acc_details">Account details</string>
+    <string name="acc_details_descr">Wrong balance? View account details? Tap the account name to show details or to update the account.</string>
     <string-array name="date_list">
         <item>Date</item>
         <item>Anytime (Default)</item>

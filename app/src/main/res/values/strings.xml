@@ -306,9 +306,12 @@
         \n - [Added] Account details section\n
         - [Added] Filters for recent transactions\n
         - [Added] Option to add multiple interests for accounts\n
+        - [Added] Autocomplete when typing transaction details\n
         - [Fixed] Crash in Wallet screen\n
-        - UI updates
+        - UI updates\n
         - Performance improvements\n
         \nThank you for testing My Wallet! This app is still in beta stage so please let the developer if there are any bugs. Try clearing app data in case of constant crashes to get the app working again.
     </string>
+    <string name="acc_details">Account details</string>
+    <string name="acc_details_descr">Wrong balance? View account details? Tap the account name to show details or to update the account.</string>
 </resources>

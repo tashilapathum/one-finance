@@ -134,7 +134,6 @@ public class BankFragment extends Fragment {
             calculateInterests();
         }
 
-        showInstructions(view.findViewById(R.id.switchAcc));
         return view;
     }
 
@@ -167,6 +166,14 @@ public class BankFragment extends Fragment {
                     .setCancelable(false)
                     .create()
                     .show();
+        }
+        else {
+            int bankOpenCount = sharedPref.getInt("bankOpenCount", 0);
+            if (bankOpenCount > 2)
+                showInstructions(tvAccountName);
+            if (bankOpenCount > 3)
+                showInstructions(btnSwitch);
+            sharedPref.edit().putInt("bankOpenCount", bankOpenCount + 1).apply();
         }
     }
 
@@ -307,11 +314,10 @@ public class BankFragment extends Fragment {
 
     private void showInstructions(View v) {
         int viewId = v.getId();
-        boolean haveNoAccounts = sharedPref.getBoolean("haveNoAccounts", true);
         switch (viewId) {
             case R.id.withdraw: {
                 boolean alreadyShown = sharedPref.getBoolean("insWithdrawnWhere", false);
-                if (!alreadyShown & !haveNoAccounts) {
+                if (!alreadyShown & haveAccounts) {
                     new BubbleShowCaseBuilder(getActivity())
                             .title(getString(R.string.withdrawn_money))
                             .description(getString(R.string.withdrawn_money_des))
@@ -323,13 +329,25 @@ public class BankFragment extends Fragment {
             }
             case R.id.switchAcc: {
                 boolean alreadyShown = sharedPref.getBoolean("insSwitchAcc", false);
-                if (!alreadyShown & !haveNoAccounts) {
+                if (!alreadyShown & haveAccounts) {
                     new BubbleShowCaseBuilder(getActivity())
                             .title(getString(R.string.switch_acc))
                             .description(getString(R.string.acc_switch_des))
                             .targetView(v)
                             .show();
                     sharedPref.edit().putBoolean("insSwitchAcc", true).apply();
+                }
+                break;
+            }
+            case R.id.accountName: {
+                boolean alreadyShown = sharedPref.getBoolean("insAccName", false);
+                if (!alreadyShown & haveAccounts) {
+                    new BubbleShowCaseBuilder(getActivity())
+                            .title(getString(R.string.acc_details))
+                            .description(getString(R.string.acc_details_descr))
+                            .targetView(v)
+                            .show();
+                    sharedPref.edit().putBoolean("insAccName", true).apply();
                 }
                 break;
             }
