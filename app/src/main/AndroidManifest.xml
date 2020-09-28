@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeDark"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".About"></activity>
+        <activity android:name=".Insights"></activity>
+        <activity android:name=".About" />
         <activity
             android:name=".AccountManager"
             android:label="Account Manager" />
@@ -32,7 +33,8 @@
         <activity
             android:name=".Settings"
             android:label="@string/settings" />
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -31,7 +31,6 @@ public class BillsFragment extends Fragment {
     public static final String TAG = "BillsFragment";
     View view;
     private static BillsFragment instance;
-    private ViewPagerAdapter viewPagerAdapter;
     private BillsViewModel billsViewModel;
 
 
@@ -47,7 +46,7 @@ public class BillsFragment extends Fragment {
         DueFragment dueFragment = new DueFragment();
         PaidFragment paidFragment = new PaidFragment();
 
-        viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), 0);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), 0);
         viewPagerAdapter.addFragment(dueFragment, getActivity().getResources().getString(R.string.due));
         viewPagerAdapter.addFragment(paidFragment, getActivity().getResources().getString(R.string.paid));
         viewPager.setAdapter(viewPagerAdapter);
