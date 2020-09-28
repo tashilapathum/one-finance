@@ -53,4 +53,16 @@
     <style name="NavigationItemRipple">
         <item name="android:colorControlHighlight">@color/colorAccent</item>
     </style>
+
+    <style name="ReportsSubtitleTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="ReportsItemTitleTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
+    </style>
+
 </resources>

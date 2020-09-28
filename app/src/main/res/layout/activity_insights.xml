@@ -4,40 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context="com.tashila.mywalletfree.Insights">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Generated insights based on your usage of the app"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif-light"
-        android:textStyle="italic"
-        android:layout_marginBottom="16dp"/>
+        android:text="Generated insights based on your all time usage of the app"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textStyle="italic" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="You have spent the most on"
-            style="@style/InsightsInfoTextViewStyle"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Bottle of water"
-            android:layout_marginHorizontal="4dp"
-            style="@style/InsightsDataTextViewStyle"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=", which is a total of"
-            style="@style/InsightsInfoTextViewStyle"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="$21"
-            android:layout_marginHorizontal="4dp"
-            style="@style/InsightsDataTextViewStyle"/>
+    <TextView
+        style="@style/InsightsInfoTextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You have spent the most on" />
+
+    <TextView
+        style="@style/InsightsDataTextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="4dp"
+        tools:text="Bottle of water" />
+
+    <TextView
+        style="@style/InsightsInfoTextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=", which is a total of" />
+
+    <TextView
+        style="@style/InsightsDataTextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="4dp"
+        tools:text="$21" />
 
 </LinearLayout>
