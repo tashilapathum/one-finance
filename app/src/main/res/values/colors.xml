@@ -21,4 +21,5 @@
     <color name="colorBillsFAB">#FFB74D</color>
     <color name="colorRed">#D32F2F</color>
     <color name="colorBlue">#1E88E5</color>
+    <color name="colorRipple">#82B1FF</color>
 </resources>

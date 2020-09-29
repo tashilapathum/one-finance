@@ -269,45 +269,47 @@
         සටහන: බැංකුව හා පසුම්බිය අතර ගනුදෙනු ඉවත් කළ විට බැංකු ගිණුමේ ශේෂය ඔබ විසින් නිවැරැදි කළ යුතු ය.
     </string>
     <string name="budget_na">බජට් අගය\nනොමැත</string>
-    <string name="bd_highest">Highest:</string>
-    <string name="bd_lowest">Lowest:</string>
-    <string name="bd_average">Average:</string>
-    <string name="expense">Expense</string>
-    <string name="income">Income</string>
-    <string name="acc_details">Account details</string>
-    <string name="acc_details_descr">Wrong balance? View account details? Tap the account name to show details or to update the account.</string>
+    <string name="bd_highest">වැඩිම:</string>
+    <string name="bd_lowest">අඩුම:</string>
+    <string name="bd_average">මධ්‍ය:</string>
+    <string name="expense">වියදම්</string>
+    <string name="income">ආදායම්</string>
+    <string name="acc_details">ගිණුම් විස්තර</string>
+    <string name="acc_details_descr">ශේෂය වැරදියිද? ගිණුම් විස්තර බැලීමට අවශ්‍යද? ඒ සඳහා ගිණුමේ නම ටච් කරන්න</string>
+    <string name="suggestions">වචන සහය</string>
+    <string name="show_suggestions_from_the_quick_list_when_typing_the_description">ගනුදෙනුවේ විස්තරය ඇතුලත් කරන විට ක්ෂණික ලැයිස්තුවෙන් අයිතම කෙලින්ම ඇතුලත් කළ හැකි ආකාරයට පෙන්වීම්</string>
+    <string-array name="date_list">
+        <item>දිනය</item>
+        <item>ඕනෑම දිනයක්</item>
+        <item>අද</item>
+        <item>ඊයේ</item>
+        <item>මෙම සතිය</item>
+        <item>පසුගිය සතිය</item>
+        <item>දිනයක් තෝරන්න…</item>
+    </string-array>
+    <string-array name="type_list">
+        <item>වර්ගය</item>
+        <item>සියල්ල</item>
+        <item>ආදායම්</item>
+        <item>වියදම්</item>
+    </string-array>
+    <string-array name="sort_list">
+        <item>පිළිවෙල</item>
+        <item>එකතු කළ අනුපිළිවෙල</item>
+        <item>දිනය - අවරෝහණ</item>
+        <item>දිනය - ආරෝහණ</item>
+        <item>අගය - අවරෝහණ</item>
+        <item>අගය - ආරෝහණ</item>
+    </string-array>
     <string name="daily">Daily</string>
     <string name="weekly">Weekly</string>
     <string name="buy_the_pro_version_to_see_more_into_the_history">Buy the Pro version to see more into the history</string>
     <string name="re_today">Today (</string>
     <string name="re_yesterday">Yesterday (</string>
     <string name="cash_flow">Cash flow</string>
-    <string name="r_expenses">Expenses:</string>
-    <string name="r_daily_budget">Daily budget:</string>
-    <string name="r_budget_left">Budget left:</string>
-    <string name="r_highest_expense_of_the_day">Highest expense of the day:</string>
-    <string name="r_item">Item:</string>
-    <string-array name="date_list">
-        <item>Date</item>
-        <item>Anytime (Default)</item>
-        <item>Today</item>
-        <item>Yesterday</item>
-        <item>This week</item>
-        <item>Last week</item>
-        <item>Pick a date…</item>
-    </string-array>
-    <string-array name="type_list">
-        <item>Type</item>
-        <item>All (Default)</item>
-        <item>Incomes</item>
-        <item>Expenses</item>
-    </string-array>
-    <string-array name="sort_list">
-        <item>Sort by…</item>
-        <item>Added order (Default)</item>
-        <item>Date - Descending</item>
-        <item>Date - Ascending</item>
-        <item>Amount - high to low</item>
-        <item>Amount - low to high</item>
-    </string-array>
+    <string name="r_expenses">Expenses:&#160;</string>
+    <string name="r_daily_budget">Daily budget:&#160;</string>
+    <string name="r_budget_left">Budget left:&#160;</string>
+    <string name="r_highest_expense_of_the_day">Highest expense of the day:&#160;</string>
+    <string name="r_item">Item:&#160;</string>
 </resources>

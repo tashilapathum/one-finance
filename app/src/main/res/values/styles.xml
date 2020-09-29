@@ -53,7 +53,7 @@
     </style>
 
     <style name="NavigationItemRipple">
-        <item name="android:colorControlHighlight">@color/colorAccent</item>
+        <item name="android:colorControlHighlight">@color/colorRipple</item>
     </style>
 
     <style name="ReportsSubtitleTextViewStyle" parent="android:Widget.TextView">

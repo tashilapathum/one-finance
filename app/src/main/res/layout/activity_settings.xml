@@ -259,7 +259,7 @@
                 android:layout_toStartOf="@id/suggestCheck"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Suggestions"
+                android:text="@string/suggestions"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
             <TextView
@@ -269,7 +269,7 @@
                 android:layout_below="@+id/setting10"
                 android:layout_toEndOf="@id/image10"
                 android:layout_toStartOf="@id/suggestCheck"
-                android:text="Show suggestions from the Quick list when typing the description" />
+                android:text="@string/show_suggestions_from_the_quick_list_when_typing_the_description" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/suggestCheck"

@@ -315,7 +315,9 @@
     <string name="acc_details">Account details</string>
     <string name="acc_details_descr">Wrong balance? View account details? Tap the account name to show details or to update the account.</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="suggestions">Suggestions</string>
+    <string name="show_suggestions_from_the_quick_list_when_typing_the_description">Show suggestions from the Quick list when typing the description</string>
     <string name="daily">Daily</string>
     <string name="weekly">Weekly</string>
     <string name="buy_the_pro_version_to_see_more_into_the_history">Buy the Pro version to see more into the history</string>
