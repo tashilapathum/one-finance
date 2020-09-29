@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif-light"
-        android:text="Generated insights based on your all time usage of the app"
+        android:text="Information generated based on your all time usage of the app..."
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textStyle="italic" />
 

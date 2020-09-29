@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="16dp"
+    app:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,17 +15,18 @@
         android:padding="8dp">
 
         <TextView
+            android:id="@+id/date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed-medium"
-            android:text="Today (28/09/2020)"
+            tools:text="Today (28/09/2020)"
             android:textAlignment="textEnd"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cash flow"
+            android:text="@string/cash_flow"
             style="@style/ReportsSubtitleTextViewStyle"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,17 +36,19 @@
                 style="@style/ReportsItemTitleTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Income: " />
+                android:text="@string/r_income" />
             <TextView
+                android:id="@+id/income"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="$120.00" />
             <TextView
+                android:id="@+id/incomeDiff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="(-50)"
                 android:layout_marginStart="8dp"
-                android:textColor="@android:color/holo_red_light"/>
+                tools:textColor="@android:color/holo_red_light"/>
         </LinearLayout>
 
         <LinearLayout
@@ -53,23 +59,25 @@
                 style="@style/ReportsItemTitleTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Expenses: " />
+                android:text="@string/r_expenses" />
             <TextView
+                android:id="@+id/expenses"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="$43.00" />
             <TextView
+                android:id="@+id/expensesDiff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="(-25)"
                 android:layout_marginStart="8dp"
-                android:textColor="@android:color/holo_green_dark"/>
+                tools:textColor="@android:color/holo_green_dark"/>
         </LinearLayout>
 
         <com.github.mikephil.charting.charts.HorizontalBarChart
             android:id="@+id/chartInEx"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="100dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -85,9 +93,10 @@
                 style="@style/ReportsItemTitleTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Daily budget: " />
+                android:text="@string/r_daily_budget" />
 
             <TextView
+                android:id="@+id/budget"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="$120.00" />
@@ -101,16 +110,13 @@
                 style="@style/ReportsItemTitleTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Budget left: " />
+                android:text="@string/r_budget_left" />
             <TextView
+                android:id="@+id/budgetLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="$43.00" />
         </LinearLayout>
-        <com.github.mikephil.charting.charts.HorizontalBarChart
-            android:id="@+id/chartBudget"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -120,8 +126,9 @@
                 style="@style/ReportsItemTitleTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Highest expense: " />
+                android:text="@string/r_highest_expense_of_the_day" />
             <TextView
+                android:id="@+id/highestExpense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="$7.25" />
@@ -134,12 +141,17 @@
                 style="@style/ReportsItemTitleTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Item: " />
+                android:text="@string/r_item" />
             <TextView
+                android:id="@+id/highestItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Pizza" />
         </LinearLayout>
+        <com.github.mikephil.charting.charts.HorizontalBarChart
+            android:id="@+id/chartBudget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

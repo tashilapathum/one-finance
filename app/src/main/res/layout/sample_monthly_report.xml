@@ -14,12 +14,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Today (28/09/2020)"
             android:fontFamily="sans-serif-condensed-medium"
-            android:text="This week (Week 33)"
             android:textAlignment="textEnd"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-        <!--Cash flow-->
 
         <TextView
             style="@style/ReportsSubtitleTextViewStyle"
@@ -80,8 +78,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <!--Budget-->
-
         <TextView
             style="@style/ReportsSubtitleTextViewStyle"
             android:layout_width="wrap_content"
@@ -97,7 +93,7 @@
                 style="@style/ReportsItemTitleTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Weekly budget: " />
+                android:text="Monthly budget: " />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -131,7 +127,7 @@
                 style="@style/ReportsItemTitleTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Highest expense of the week: " />
+                android:text="Highest expense of the month: " />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -168,7 +164,53 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
             android:text="Daily data" />
+
+        <TextView
+            style="@style/ReportsItemTitleTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Average of..." />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Income: "
+                android:textAppearance="@style/TextAppearance.AppCompat" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="$34.73" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Expenses: "
+                android:textAppearance="@style/TextAppearance.AppCompat" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="$12.55" />
+        </LinearLayout>
 
         <TextView
             style="@style/ReportsItemTitleTextViewStyle"
@@ -213,11 +255,6 @@
                 android:layout_height="wrap_content"
                 tools:text="Saturday" />
         </LinearLayout>
-
-        <com.github.mikephil.charting.charts.HorizontalBarChart
-            android:id="@+id/chartDaily"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

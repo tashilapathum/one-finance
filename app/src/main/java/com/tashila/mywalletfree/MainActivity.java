@@ -161,10 +161,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (!alreadyDid) startActivity(intent);
         else {
             //what's new
-            if (!sharedPref.getBoolean("whatsNewShown", false)) {
+            if (!sharedPref.getBoolean("whatsNewShownV0.2.8", false)) {
                 DialogWhatsNew dialogWhatsNew = new DialogWhatsNew();
                 dialogWhatsNew.show(getSupportFragmentManager(), "whats new dialog");
-                sharedPref.edit().putBoolean("whatsNewShown", true).apply();
+                sharedPref.edit().putBoolean("whatsNewShownV0.2.8", true).apply();
             }
         }
     }
@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             case R.id.nav_reports: {
                 bundle.putString("feature", "reports");
-                Intent intent = new Intent(this, Reports.class);
+                Intent intent = new Intent(this, ReportsNEW.class);
                 startActivity(intent);
                 break;
             }
@@ -386,7 +386,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 }
 
-//TODO: Update what's new
+//TODO: Update what's new (and what's new dialog shared preference key)
 
 
 

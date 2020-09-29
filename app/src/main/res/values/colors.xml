@@ -19,4 +19,6 @@
     <color name="colorOverdue">#FF7043</color>
     <color name="colorCartFAB">#81C784</color>
     <color name="colorBillsFAB">#FFB74D</color>
+    <color name="colorRed">#D32F2F</color>
+    <color name="colorBlue">#1E88E5</color>
 </resources>

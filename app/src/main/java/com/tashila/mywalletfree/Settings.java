@@ -328,7 +328,6 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
         new AlertDialog.Builder(this)
                 .setTitle(R.string.pro_feature)
                 .setMessage(R.string.buy_pro_for_this)
-                .setIcon(android.R.drawable.ic_dialog_info)
                 .setPositiveButton(R.string.buy, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -336,10 +335,7 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
                         startActivity(intent);
                     }
                 })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                }).show();
+                .setNegativeButton(R.string.cancel, null)
+                .show();
     }
 }

@@ -12,6 +12,7 @@
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@color/colorStatusBarLightMode</item>
         <item name="drawerArrowStyle">@style/DrawerHamburgerStyle</item>
+        <item name="android:shadowColor">@color/colorShadow</item>
     </style>
 
     <style name="AppThemeDark" parent="Theme.MaterialComponents.DayNight">
@@ -25,6 +26,7 @@
         <item name="android:statusBarColor">@color/colorStatusBarDarkMode</item>
         <item name="android:navigationBarColor">@color/colorStatusBarDarkMode</item>
         <item name="drawerArrowStyle">@style/DrawerHamburgerStyle</item>
+        <item name="android:shadowColor">@color/colorShadowDark</item>
     </style>
 
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
@@ -58,6 +60,7 @@
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
         <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
 
     <style name="ReportsItemTitleTextViewStyle" parent="android:Widget.TextView">

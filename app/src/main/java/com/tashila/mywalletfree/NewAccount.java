@@ -161,7 +161,7 @@ public class NewAccount extends AppCompatActivity {
         //interest
         boolean isMultiInterest = false;
         String interestRate;
-        if (sharedPref.getBoolean("addedMultiInterests", true)) {
+        if (sharedPref.getBoolean("addedMultiInterests", false)) {
             interestRate = sharedPref.getString("multiInterests", null);
             isMultiInterest = true;
             sharedPref.edit().putBoolean("addedMultiInterests", false).apply();

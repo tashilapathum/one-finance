@@ -59,6 +59,10 @@ public class TransactionItem {
         return amount;
     }
 
+    public double getAmountValue() {
+        return Double.parseDouble(amount);
+    }
+
     public String getDescription() {
         return description;
     }
