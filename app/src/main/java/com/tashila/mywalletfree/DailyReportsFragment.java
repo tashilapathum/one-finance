@@ -46,6 +46,7 @@ public class DailyReportsFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new DailyReportsAdapter();
+        recyclerView.setLayoutAnimation(new AnimationHandler().getSlideUpController());
         recyclerView.setAdapter(adapter);
         calculateDailyReport(day);
         calculateDailyReport(day);

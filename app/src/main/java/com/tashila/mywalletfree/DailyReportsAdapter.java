@@ -94,11 +94,11 @@ public class DailyReportsAdapter extends ListAdapter<DailyReportsFragment.DailyR
         List<BarEntry> expenses = new ArrayList<>();
         incomes.add(new BarEntry(1f, Float.parseFloat(dailyReport.getIncome().replace(currency, ""))));
         expenses.add(new BarEntry(2f, Float.parseFloat(dailyReport.getExpenses().replace(currency, ""))));
-        BarDataSet incomesSet = new BarDataSet(incomes, "Income");
-        incomesSet.setColors(ColorTemplate.MATERIAL_COLORS);
         BarDataSet expensesSet = new BarDataSet(expenses, "Expenses");
-        expensesSet.setColors(ColorTemplate.COLORFUL_COLORS);
-        BarData data = new BarData(incomesSet, expensesSet);
+        expensesSet.setColor(context.getResources().getColor(R.color.colorRed));
+        BarDataSet incomesSet = new BarDataSet(incomes, "Income");
+        incomesSet.setColor(context.getResources().getColor(R.color.colorBlue));
+        BarData data = new BarData(expensesSet, incomesSet);
         holder.chartInEx.setData(data);
         holder.chartInEx.getAxisLeft().setDrawGridLines(false);
         holder.chartInEx.getAxisRight().setDrawGridLines(false);
@@ -111,6 +111,10 @@ public class DailyReportsAdapter extends ListAdapter<DailyReportsFragment.DailyR
         holder.chartInEx.animateY(250, Easing.EaseInOutSine);
         holder.chartInEx.getDescription().setEnabled(false);
         holder.chartInEx.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        holder.chartInEx.getLegend().setTextColor(R.color.colorDivider);
+        holder.chartInEx.getAxisLeft().setTextColor(R.color.colorDivider);
+        holder.chartInEx.getAxisRight().setTextColor(R.color.colorDivider);
+        holder.chartInEx.getBarData().setDrawValues(false);
         holder.chartInEx.invalidate();
     }
 
