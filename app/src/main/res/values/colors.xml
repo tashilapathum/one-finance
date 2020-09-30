@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#018786</color>
     <color name="colorDivider">#04908F</color>
     <color name="colorAccent">#42A5F5</color>
+    <color name="colorAccentLight">#76C2FF</color>
     <color name="colorLinks">#0000ff</color>
     <color name="colorStatusBarDarkMode">#242427</color>
     <color name="colorStatusBarLightMode">#3D0F74</color>
@@ -19,7 +20,7 @@
     <color name="colorOverdue">#FF7043</color>
     <color name="colorCartFAB">#81C784</color>
     <color name="colorBillsFAB">#FFB74D</color>
-    <color name="colorRed">#D32F2F</color>
-    <color name="colorBlue">#1E88E5</color>
+    <color name="colorRed">#FF0000</color>
+    <color name="colorBlue">#0000FF</color>
     <color name="colorRipple">#82B1FF</color>
 </resources>

@@ -65,13 +65,13 @@ public class DailyReportsAdapter extends ListAdapter<DailyReportsFragment.DailyR
 
         //Strings
         holder.tvDate.setText(dailyReport.getDate());
-        holder.tvIncome.setText(dailyReport.getIncome());
-        holder.tvExpenses.setText(dailyReport.getExpenses());
+        holder.tvIncome.setText(new Amount(context, dailyReport.getIncome()).getAmountString());
+        holder.tvExpenses.setText(new Amount(context, dailyReport.getExpenses()).getAmountString());
         holder.tvBudget.setText(dailyReport.getBudget());
         holder.tvBudgetLeft.setText(dailyReport.getBudgetLeft());
         if (dailyReport.getBudgetLeft().contains("-"))
             holder.tvBudgetLeft.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
-        holder.tvHighestExpense.setText(dailyReport.getHighestExpense());
+        holder.tvHighestExpense.setText(new Amount(context, dailyReport.getHighestExpense()).getAmountString());
         holder.tvHighestItem.setText(dailyReport.getHighestItem());
         if (!dailyReport.getIncomeDiff().equals("(+.00)")) {
             holder.tvIncomeDiff.setVisibility(View.VISIBLE);
@@ -144,6 +144,7 @@ public class DailyReportsAdapter extends ListAdapter<DailyReportsFragment.DailyR
             usedBudget = 100;
         budgetUsed.add(new BarEntry(1f, (float) usedBudget));
         BarDataSet budgetSet = new BarDataSet(budgetUsed, "Budget used");
+        budgetSet.setColor(context.getResources().getColor(R.color.colorAccent));
         BarData data = new BarData(budgetSet);
         chartView.setData(data);
         chartView.getAxisLeft().setDrawGridLines(false);
@@ -169,7 +170,7 @@ public class DailyReportsAdapter extends ListAdapter<DailyReportsFragment.DailyR
         chartView.getAxisLeft().setAxisMaximum(100);
         chartView.getAxisLeft().setLabelCount(5, true);
         Amount amount = new Amount(context, usedBudget);
-        chartView.getDescription().setText(amount.getAmountString() + context.getString(R.string.budget_used));
+        chartView.getDescription().setText(amount.getAmountStringWithoutCurrency() + context.getString(R.string.budget_used));
         chartView.getDescription().setTextColor(context.getResources().getColor(R.color.colorDivider));
         chartView.invalidate();
     }

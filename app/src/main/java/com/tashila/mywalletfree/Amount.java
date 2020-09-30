@@ -34,17 +34,33 @@ public class Amount {
     }
 
     public String getAmountString() {
-        if (value == 0)
-            return "0.00";
-        else
-            return df.format(value);
+        if (valueString != null) {
+            if (valueString.equals(".00"))
+                return currency + "0.00";
+            else
+                return currency + df.format(Double.parseDouble(valueString));
+        }
+        else {
+            if (value != 0)
+                return currency + df.format(value);
+            else
+                return null;
+        }
     }
 
-    public String getAmountWithCurrency() {
-        if (value == 0)
-            return currency + "0.00";
-        else
-            return currency + df.format(value);
+    public String getAmountStringWithoutCurrency() {
+        if (valueString != null) {
+            if (valueString.equals(".00"))
+                return "0.00";
+            else
+                return df.format(Double.parseDouble(valueString));
+        }
+        else {
+            if (value != 0)
+                return df.format(value);
+            else
+                return null;
+        }
     }
 
     public double getAmountValue() {
