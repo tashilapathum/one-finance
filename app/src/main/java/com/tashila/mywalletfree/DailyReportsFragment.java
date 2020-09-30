@@ -21,6 +21,8 @@ import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.YearMonth;
+import org.threeten.bp.format.DateTimeFormatter;
+import org.threeten.bp.format.FormatStyle;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -73,7 +75,8 @@ public class DailyReportsFragment extends Fragment {
         List<TransactionItem> transactionsList = transactionsViewModel.getTransactionsList();
         String date;
 
-        date = LocalDate.ofYearDay(LocalDate.now().getYear(), day).toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
+        date = formatter.format(LocalDate.ofYearDay(LocalDate.now().getYear(), day));
         if (day == LocalDate.now().getDayOfYear())
             date = getString(R.string.re_today) + date + ")";
         if (day == LocalDate.now().getDayOfYear() - 1)
@@ -130,6 +133,7 @@ public class DailyReportsFragment extends Fragment {
         String expensesDiffStr = null;
         if (!df.format(incomeDiff).contains("-"))
             expensesDiffStr = "+" + df.format(expensesDiff);
+
         DailyReport dailyReport = new DailyReport(date,
                 currency + df.format(income),
                 currency + df.format(expenses),

@@ -151,7 +151,8 @@
         <com.github.mikephil.charting.charts.HorizontalBarChart
             android:id="@+id/chartBudget"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="8dp"/>
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

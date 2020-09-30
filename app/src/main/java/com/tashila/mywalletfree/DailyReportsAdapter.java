@@ -21,12 +21,16 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 
 public class DailyReportsAdapter extends ListAdapter<DailyReportsFragment.DailyReport, DailyReportsAdapter.ReportHolder> {
     private SharedPreferences sharedPref;
+    private Context context;
+    private String currency;
+    private String theme;
 
     protected DailyReportsAdapter() {
         super(DIFF_CALLBACK);
@@ -54,9 +58,10 @@ public class DailyReportsAdapter extends ListAdapter<DailyReportsFragment.DailyR
     @Override
     public void onBindViewHolder(@NonNull ReportHolder holder, int position) {
         DailyReportsFragment.DailyReport dailyReport = getItem(position);
-        Context context = holder.itemView.getContext();
+        context = holder.itemView.getContext();
         sharedPref = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
-        String currency = sharedPref.getString("currency", "");
+        currency = sharedPref.getString("currency", "");
+        theme = sharedPref.getString("theme", "light");
 
         //Strings
         holder.tvDate.setText(dailyReport.getDate());
@@ -90,6 +95,13 @@ public class DailyReportsAdapter extends ListAdapter<DailyReportsFragment.DailyR
         }
 
         //charts
+        if (!dailyReport.getIncome().equals(".00") || !dailyReport.getExpenses().equals(".00"))
+            drawIncomeExpenseChart(holder.chartInEx, dailyReport);
+        if (new Amount(context, dailyReport.getBudget()).getAmountValue() != 0)
+            drawBudgetChart(holder.chartBudget, dailyReport);
+    }
+
+    private void drawIncomeExpenseChart(HorizontalBarChart chartView, DailyReportsFragment.DailyReport dailyReport) {
         List<BarEntry> incomes = new ArrayList<>();
         List<BarEntry> expenses = new ArrayList<>();
         incomes.add(new BarEntry(1f, Float.parseFloat(dailyReport.getIncome().replace(currency, ""))));
@@ -99,23 +111,67 @@ public class DailyReportsAdapter extends ListAdapter<DailyReportsFragment.DailyR
         BarDataSet incomesSet = new BarDataSet(incomes, "Income");
         incomesSet.setColor(context.getResources().getColor(R.color.colorBlue));
         BarData data = new BarData(expensesSet, incomesSet);
-        holder.chartInEx.setData(data);
-        holder.chartInEx.getAxisLeft().setDrawGridLines(false);
-        holder.chartInEx.getAxisRight().setDrawGridLines(false);
-        holder.chartInEx.getXAxis().setDrawGridLines(false);
-        holder.chartInEx.getAxisLeft().setDrawAxisLine(false);
-        holder.chartInEx.getAxisRight().setDrawAxisLine(false);
-        holder.chartInEx.getXAxis().setDrawAxisLine(false);
-        holder.chartInEx.getAxisRight().setDrawLabels(false);
-        holder.chartInEx.getXAxis().setDrawLabels(false);
-        holder.chartInEx.animateY(250, Easing.EaseInOutSine);
-        holder.chartInEx.getDescription().setEnabled(false);
-        holder.chartInEx.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        holder.chartInEx.getLegend().setTextColor(R.color.colorDivider);
-        holder.chartInEx.getAxisLeft().setTextColor(R.color.colorDivider);
-        holder.chartInEx.getAxisRight().setTextColor(R.color.colorDivider);
-        holder.chartInEx.getBarData().setDrawValues(false);
-        holder.chartInEx.invalidate();
+        chartView.setData(data);
+        chartView.getAxisLeft().setDrawGridLines(false);
+        chartView.getAxisRight().setDrawGridLines(false);
+        chartView.getXAxis().setDrawGridLines(false);
+        chartView.getAxisLeft().setDrawAxisLine(false);
+        chartView.getAxisRight().setDrawAxisLine(false);
+        chartView.getXAxis().setDrawAxisLine(false);
+        chartView.getAxisRight().setDrawLabels(false);
+        chartView.getXAxis().setDrawLabels(false);
+        chartView.animateY(250, Easing.EaseInOutSine);
+        chartView.getDescription().setEnabled(false);
+        chartView.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        chartView.getLegend().setTextColor(context.getResources().getColor(R.color.colorDivider));
+        chartView.getAxisLeft().setTextColor(context.getResources().getColor(R.color.colorDivider));
+        chartView.getAxisRight().setTextColor(context.getResources().getColor(R.color.colorDivider));
+        chartView.getBarData().setDrawValues(false);
+        chartView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        if (theme.equalsIgnoreCase("dark"))
+            chartView.getRenderer().getPaintRender().setShadowLayer(4, 3, -2, context.getResources().getColor(R.color.colorShadowDark));
+        else
+            chartView.getRenderer().getPaintRender().setShadowLayer(4, 3, -2, context.getResources().getColor(R.color.colorShadow));
+        chartView.invalidate();
+    }
+
+    private void drawBudgetChart(HorizontalBarChart chartView, DailyReportsFragment.DailyReport dailyReport) {
+        List<BarEntry> budgetUsed = new ArrayList<>();
+        double budget = Double.parseDouble(dailyReport.getBudget().replace(currency, ""));
+        double expenses = Double.parseDouble(dailyReport.getExpenses().replace(currency, ""));
+        double usedBudget = (expenses / budget) * 100;
+        if (expenses > budget)
+            usedBudget = 100;
+        budgetUsed.add(new BarEntry(1f, (float) usedBudget));
+        BarDataSet budgetSet = new BarDataSet(budgetUsed, "Budget used");
+        BarData data = new BarData(budgetSet);
+        chartView.setData(data);
+        chartView.getAxisLeft().setDrawGridLines(false);
+        chartView.getAxisLeft().setDrawAxisLine(false);
+        chartView.getAxisRight().setDrawGridLines(false);
+        chartView.getAxisRight().setDrawAxisLine(false);
+        chartView.getAxisRight().setDrawLabels(false);
+        chartView.getXAxis().setDrawGridLines(false);
+        chartView.getXAxis().setDrawAxisLine(false);
+        chartView.getXAxis().setDrawLabels(false);
+        chartView.animateY(250, Easing.EaseInOutSine);
+        chartView.getLegend().setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        chartView.getLegend().setTextColor(context.getResources().getColor(R.color.colorDivider));
+        chartView.getAxisLeft().setTextColor(context.getResources().getColor(R.color.colorDivider));
+        chartView.getAxisRight().setTextColor(context.getResources().getColor(R.color.colorDivider));
+        chartView.getBarData().setDrawValues(false);
+        chartView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        if (theme.equalsIgnoreCase("dark"))
+            chartView.getRenderer().getPaintRender().setShadowLayer(4, 3, -2, context.getResources().getColor(R.color.colorShadowDark));
+        else
+            chartView.getRenderer().getPaintRender().setShadowLayer(4, 3, -2, context.getResources().getColor(R.color.colorShadow));
+        chartView.getAxisLeft().setAxisMinimum(0);
+        chartView.getAxisLeft().setAxisMaximum(100);
+        chartView.getAxisLeft().setLabelCount(5, true);
+        Amount amount = new Amount(context, usedBudget);
+        chartView.getDescription().setText(amount.getAmountString() + context.getString(R.string.budget_used));
+        chartView.getDescription().setTextColor(context.getResources().getColor(R.color.colorDivider));
+        chartView.invalidate();
     }
 
     class ReportHolder extends RecyclerView.ViewHolder {

@@ -169,6 +169,7 @@ public class AccountDetails extends AppCompatActivity {
         dataSet.setDrawValues(false);
         dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         dataSet.setColor(getResources().getColor(R.color.colorAccent));
+        dataSet.setDrawFilled(true);
         List<ILineDataSet> dataSetList = new ArrayList<>();
         dataSetList.add(dataSet);
         LineData data = new LineData(dataSetList);

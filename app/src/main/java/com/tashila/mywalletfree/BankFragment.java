@@ -45,6 +45,8 @@ public class BankFragment extends Fragment {
     private TextView tvAccountName;
     private TextView tvCurrency;
     private TextView tvAccountBalance;
+    private TextView tv1;
+    private TextView tv2;
     private String accountName;
     private String currency;
     private String accountBalance;
@@ -83,12 +85,15 @@ public class BankFragment extends Fragment {
         tvAccountName = view.findViewById(R.id.accountName);
         tvCurrency = view.findViewById(R.id.currency);
         tvAccountBalance = view.findViewById(R.id.balance);
+        tv1 = view.findViewById(R.id.tv1);
+        tv2 = view.findViewById(R.id.tv2);
         btnDeposit = view.findViewById(R.id.deposit);
         btnWithdraw = view.findViewById(R.id.withdraw);
         btnSwitch = view.findViewById(R.id.switchAcc);
         tilAmount = view.findViewById(R.id.editAmount);
         etAmount = tilAmount.getEditText();
         currency = sharedPref.getString("currency", null);
+        setShadows(tv1, tv2, tvAccountName, tvAccountBalance, tvCurrency);
         String language = sharedPref.getString("language", "english");
         if (language.equalsIgnoreCase("සිංහල")) sinhala = true;
 
@@ -503,6 +508,16 @@ public class BankFragment extends Fragment {
                     }
                 }
             }
+        }
+    }
+
+    private void setShadows(TextView... views) {
+        String theme = sharedPref.getString("theme", "light");
+        for (TextView view : views) {
+            if (theme.equalsIgnoreCase("dark"))
+                view.setShadowLayer(3, 1, 1, R.color.colorShadowDark);
+            else
+                view.setShadowLayer(3, 1, 1, R.color.colorShadow);
         }
     }
 }

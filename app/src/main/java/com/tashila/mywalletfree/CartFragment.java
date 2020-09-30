@@ -78,6 +78,7 @@ public class CartFragment extends Fragment {
         recyclerView = view.findViewById(R.id.cart_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutAnimation(new AnimationHandler().getSlideUpController());
         cartAdapter = new CartAdapter();
         recyclerView.setAdapter(cartAdapter);
 
