@@ -226,7 +226,8 @@
                         android:padding="8dp"
                         android:text="@string/quick_list"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                        android:textStyle="italic" />
+                        android:fontFamily="@font/open_sans_light"
+                        android:textStyle="italic"/>
 
                     <ImageButton
                         android:id="@+id/editQuickList"

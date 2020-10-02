@@ -44,7 +44,7 @@ public class Amount {
             if (value != 0)
                 return currency + df.format(value);
             else
-                return null;
+                return currency +"0.00";
         }
     }
 
@@ -59,7 +59,7 @@ public class Amount {
             if (value != 0)
                 return df.format(value);
             else
-                return null;
+                return "0.00";
         }
     }
 

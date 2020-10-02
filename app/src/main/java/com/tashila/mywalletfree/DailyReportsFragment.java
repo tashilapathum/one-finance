@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DailyReportsFragment extends Fragment {
+    public static final String TAG = "DailyReportsFragment";
     private SharedPreferences sharedPref;
     private String currency;
     private RecyclerView recyclerView;
@@ -111,7 +113,7 @@ public class DailyReportsFragment extends Fragment {
             if (transactionDate == day - 1) {
                 if (currentTransaction.getPrefix().equals("+"))
                     incomeOLD = incomeOLD + Double.parseDouble(currentTransaction.getAmount());
-                else
+                if (currentTransaction.getPrefix().equals("-"))
                     expensesOLD = expensesOLD + Double.parseDouble(currentTransaction.getAmount());
             }
         }
@@ -135,11 +137,11 @@ public class DailyReportsFragment extends Fragment {
             expensesDiffStr = "+" + df.format(expensesDiff);
 
         DailyReport dailyReport = new DailyReport(date,
-                currency + df.format(income),
-                currency + df.format(expenses),
-                currency + df.format(budget),
-                currency + df.format(budgetLeft),
-                currency + df.format(highestExpense), highestItem,
+                new Amount(getActivity(), income).getAmountString(),
+                new Amount(getActivity(), expenses).getAmountString(),
+                new Amount(getActivity(), budget).getAmountString(),
+                new Amount(getActivity(), budgetLeft).getAmountString(),
+                new Amount(getActivity(), highestExpense).getAmountString(), highestItem,
                 "(" + incomeDiffStr + ")",
                 "(" + expensesDiffStr + ")");
 
@@ -149,7 +151,7 @@ public class DailyReportsFragment extends Fragment {
         adapter.notifyItemInserted(adapter.getItemCount() + 1);
     }
 
-    class DailyReport {
+    static class DailyReport {
         private String date;
         private String income;
         private String expenses;

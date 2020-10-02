@@ -313,4 +313,5 @@
     <string name="r_highest_expense_of_the_day">Highest expense of the day:&#160;</string>
     <string name="r_item">Item:&#160;</string>
     <string name="budget_used">% used</string>
+    <string name="budget_usage">Budget usage</string>
 </resources>
