@@ -9,480 +9,487 @@
     android:fitsSystemWindows="true"
     tools:context=".Settings">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentTop="true"
+            android:background="@color/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary"
-                android:elevation="4dp"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:onClick="editQuickList"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:paddingVertical="16dp">
-
-                <ImageView
-                    android:id="@+id/image1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_quick_list"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_margin="8dp"
-                    android:paddingEnd="8dp"/>
-
-                <TextView
-                    android:id="@+id/setting1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/image1"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@string/settings_quick_list"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                <TextView
-                    android:id="@+id/description1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/setting1"
-                    android:layout_toEndOf="@id/image1"
-                    android:text="@string/edit_quick_list_items" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:onClick="selectLanguage"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:paddingVertical="16dp">
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/image2"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_language"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_margin="8dp"
-                    android:paddingEnd="8dp"/>
-
-                <TextView
-                    android:id="@+id/setting2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/image2"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@string/language"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                <TextView
-                    android:id="@+id/description2"
-                    android:layout_width="wrap_content"
-                    android:layout_toEndOf="@id/image2"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/setting2"
-                    android:text="@string/set_your_preferred_language" />
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:onClick="selectCurrency"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:paddingVertical="16dp">
-
-                <ImageView
-                    android:id="@+id/image3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_currency"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_margin="8dp"
-                    android:paddingEnd="8dp"/>
-
-                <TextView
-                    android:id="@+id/setting3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/image3"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@string/currency"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                <TextView
-                    android:id="@+id/description3"
-                    android:layout_width="wrap_content"
-                    android:layout_toEndOf="@id/image3"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/setting3"
-                    android:text="@string/set_your_country_s_currency" />
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:onClick="editBudget"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:paddingVertical="16dp">
-
-                <ImageView
-                    android:id="@+id/image4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_budget"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_margin="8dp"
-                    android:paddingEnd="8dp"/>
-
-                <TextView
-                    android:id="@+id/setting4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/image4"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@string/budget"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                <TextView
-                    android:id="@+id/description4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/setting4"
-                    android:layout_toEndOf="@id/image4"
-                    android:text="@string/edit_your_monthly_budget_weekly_and_daily_budgets_will_be_calculated_based_on_this" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:onClick="manageAccounts"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:paddingVertical="16dp">
-
-                <ImageView
-                    android:id="@+id/image9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_accounts"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_margin="8dp"
-                    android:paddingEnd="8dp"/>
-
-                <TextView
-                    android:id="@+id/setting9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/image9"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@string/accounts"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                <TextView
-                    android:id="@+id/description9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/setting9"
-                    android:layout_toEndOf="@id/image9"
-                    android:text="@string/edit_delete_or_view_details_of_your_accounts" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:paddingStart="8dp"
-                android:onClick="suggestions"
-                android:paddingVertical="16dp">
-
-            <ImageView
-                android:id="@+id/image10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_suggestions"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"
-                android:layout_margin="8dp"
-                android:paddingEnd="8dp"/>
-
-            <TextView
-                android:id="@+id/setting10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/image10"
-                android:layout_toStartOf="@id/suggestCheck"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@string/suggestions"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-            <TextView
-                android:id="@+id/description10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/setting10"
-                android:layout_toEndOf="@id/image10"
-                android:layout_toStartOf="@id/suggestCheck"
-                android:text="@string/show_suggestions_from_the_quick_list_when_typing_the_description" />
-
-            <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/suggestCheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:paddingStart="8dp"
-                android:onClick="exitConfirm"
-                android:paddingVertical="16dp">
-
-                <ImageView
-                    android:id="@+id/image8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_exit_confirm"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_margin="8dp"
-                    android:paddingEnd="8dp"/>
-
-                <TextView
-                    android:id="@+id/setting8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/image8"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@string/exit_confirmation"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                <TextView
-                    android:id="@+id/description8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/setting8"
-                    android:layout_toEndOf="@id/image8"
-                    android:layout_toStartOf="@id/exitCheck"
-                    android:text="@string/show_confirm_dialog_when_trying_to_exit_the_app" />
-
-                <com.google.android.material.checkbox.MaterialCheckBox
-                    android:id="@+id/exitCheck"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"/>
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:onClick="editNotifyTime"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:paddingVertical="16dp">
-
-                <ImageView
-                    android:id="@+id/image5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_reminder"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_margin="8dp"
-                    android:paddingEnd="8dp"/>
-
-                <TextView
-                    android:id="@+id/setting5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/image5"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@string/notification_time"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                <TextView
-                    android:id="@+id/description5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/setting5"
-                    android:layout_toEndOf="@id/image5"
-                    android:layout_toStartOf="@id/description5"
-                    android:text="@string/change_the_time_you_receive_the_daily_reminder" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="editQuickList"
+                    android:paddingVertical="16dp"
                     android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:text="@string/pro"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textStyle="bold|italic" />
+                    android:paddingEnd="8dp">
 
-            </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/image1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_quick_list" />
 
+                    <TextView
+                        android:id="@+id/setting1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/settings_quick_list"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:onClick="setTheme"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:paddingVertical="16dp">
+                    <TextView
+                        android:id="@+id/description1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting1"
+                        android:layout_toEndOf="@id/image1"
+                        android:text="@string/edit_quick_list_items" />
 
-                <ImageView
-                    android:id="@+id/image6"
-                    android:layout_width="wrap_content"
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_theme"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_margin="8dp"
-                    android:paddingEnd="8dp"/>
-
-                <TextView
-                    android:id="@+id/setting6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/image6"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@string/theme"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                <TextView
-                    android:id="@+id/description6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/image6"
-                    android:layout_toStartOf="@id/description6"
-                    android:layout_below="@+id/setting6"
-                    android:text="@string/choose_between_dark_and_light_themes" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="selectLanguage"
+                    android:paddingVertical="16dp"
                     android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:text="@string/pro"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textStyle="bold|italic" />
+                    android:paddingEnd="8dp">
 
-            </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/image2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_language" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:onClick="chooseHome"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:paddingVertical="16dp">
+                    <TextView
+                        android:id="@+id/setting2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image2"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/language"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
-                <ImageView
-                    android:id="@+id/image7"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/description2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting2"
+                        android:layout_toEndOf="@id/image2"
+                        android:text="@string/set_your_preferred_language" />
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_home"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_margin="8dp"
-                    android:paddingEnd="8dp"/>
-
-                <TextView
-                    android:id="@+id/setting7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/image7"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@string/home_screen"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                <TextView
-                    android:id="@+id/description7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/image7"
-                    android:layout_toStartOf="@id/pro3"
-                    android:layout_below="@+id/setting7"
-                    android:text="@string/change_the_screen_which_shows_up_when_starting_the_app" />
-
-                <TextView
-                    android:id="@+id/pro3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="selectCurrency"
+                    android:paddingVertical="16dp"
                     android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:text="@string/pro"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textStyle="bold|italic" />
+                    android:paddingEnd="8dp">
 
-            </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/image3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_currency" />
 
-        </LinearLayout>
-    </ScrollView>
+                    <TextView
+                        android:id="@+id/setting3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image3"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/currency"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/description3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting3"
+                        android:layout_toEndOf="@id/image3"
+                        android:text="@string/set_your_country_s_currency" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="editBudget"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp">
+
+                    <ImageView
+                        android:id="@+id/image4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_budget" />
+
+                    <TextView
+                        android:id="@+id/setting4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image4"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/budget"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/description4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting4"
+                        android:layout_toEndOf="@id/image4"
+                        android:text="@string/edit_your_monthly_budget_weekly_and_daily_budgets_will_be_calculated_based_on_this" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="manageAccounts"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp">
+
+                    <ImageView
+                        android:id="@+id/image9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_accounts" />
+
+                    <TextView
+                        android:id="@+id/setting9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image9"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/accounts"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/description9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting9"
+                        android:layout_toEndOf="@id/image9"
+                        android:text="@string/edit_delete_or_view_details_of_your_accounts" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:onClick="suggestions"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="8dp">
+
+                    <ImageView
+                        android:id="@+id/image10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_suggestions" />
+
+                    <TextView
+                        android:id="@+id/setting10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@id/suggestCheck"
+                        android:layout_toEndOf="@id/image10"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/suggestions"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/description10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting10"
+                        android:layout_toStartOf="@id/suggestCheck"
+                        android:layout_toEndOf="@id/image10"
+                        android:text="@string/show_suggestions_from_the_quick_list_when_typing_the_description" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/suggestCheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:onClick="exitConfirm"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="8dp">
+
+                    <ImageView
+                        android:id="@+id/image8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_exit_confirm" />
+
+                    <TextView
+                        android:id="@+id/setting8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image8"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/exit_confirmation"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/description8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting8"
+                        android:layout_toStartOf="@id/exitCheck"
+                        android:layout_toEndOf="@id/image8"
+                        android:text="@string/show_confirm_dialog_when_trying_to_exit_the_app" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/exitCheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:onClick="editNotifyTime"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp">
+
+                    <ImageView
+                        android:id="@+id/image5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_reminder" />
+
+                    <TextView
+                        android:id="@+id/setting5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image5"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/notification_time"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/description5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting5"
+                        android:layout_toStartOf="@id/description5"
+                        android:layout_toEndOf="@id/image5"
+                        android:text="@string/change_the_time_you_receive_the_daily_reminder" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:text="@string/pro"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textStyle="bold|italic" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:onClick="setTheme"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp">
+
+                    <ImageView
+                        android:id="@+id/image6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_theme" />
+
+                    <TextView
+                        android:id="@+id/setting6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image6"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/theme"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/description6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting6"
+                        android:layout_toStartOf="@id/description6"
+                        android:layout_toEndOf="@id/image6"
+                        android:text="@string/choose_between_dark_and_light_themes" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:text="@string/pro"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textStyle="bold|italic" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:onClick="chooseHome"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp">
+
+                    <ImageView
+                        android:id="@+id/image7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_home" />
+
+                    <TextView
+                        android:id="@+id/setting7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image7"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/home_screen"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/description7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting7"
+                        android:layout_toStartOf="@id/pro3"
+                        android:layout_toEndOf="@id/image7"
+                        android:text="@string/change_the_screen_which_shows_up_when_starting_the_app" />
+
+                    <TextView
+                        android:id="@+id/pro3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:text="@string/pro"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textStyle="bold|italic" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"

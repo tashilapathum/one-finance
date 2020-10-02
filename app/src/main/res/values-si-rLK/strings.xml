@@ -314,4 +314,9 @@
     <string name="r_item">Item:&#160;</string>
     <string name="budget_used">% used</string>
     <string name="budget_usage">Budget usage</string>
+    <string name="re_this_week">This week (</string>
+    <string name="re_last_week">Last week (</string>
+    <string name="week">\"Week \"</string>
+    <string name="r_highest_expense_of_the_week">Highest expense of the week:</string>
+    <string name="re_weekly_budget">Weekly budget</string>
 </resources>

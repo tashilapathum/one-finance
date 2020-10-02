@@ -483,6 +483,7 @@ public class WalletFragment extends Fragment {
                 button.setAllCaps(false);
                 button.setTypeface(Typeface.DEFAULT);
                 button.setPadding(4, 4, 4, 4);
+                button.setCornerRadius(16);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -516,6 +517,7 @@ public class WalletFragment extends Fragment {
             button.setAllCaps(false);
             button.setTypeface(Typeface.DEFAULT);
             button.setPadding(4, 4, 4, 4);
+            button.setCornerRadius(16);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

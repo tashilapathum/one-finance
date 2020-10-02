@@ -46,4 +46,8 @@ public class DateTimeHandler {
         return localDateTime;
     }
 
+    int getDayOfWeek() {
+        return localDateTime.getDayOfWeek().getValue();
+    }
+
 }
