@@ -20,6 +20,11 @@ import android.view.ViewGroup;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
+import org.threeten.bp.format.FormatStyle;
+import org.threeten.bp.format.TextStyle;
+import org.threeten.bp.temporal.IsoFields;
+import org.threeten.bp.temporal.TemporalAdjusters;
 import org.threeten.bp.temporal.WeekFields;
 
 import java.text.DecimalFormat;
@@ -76,13 +81,24 @@ public class WeeklyReportsFragment extends Fragment {
         TransactionsViewModel transactionsViewModel = new ViewModelProvider(getActivity(),
                 ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(TransactionsViewModel.class);
         List<TransactionItem> transactionsList = transactionsViewModel.getTransactionsList();
-        String weekNo;
+        String weekTitle;
 
-        weekNo = getString(R.string.week) + week;
+        //card title
+        weekTitle = getString(R.string.week) + week
+                + " ("
+                + LocalDate.now().with(IsoFields.WEEK_OF_WEEK_BASED_YEAR, week)
+                .with(TemporalAdjusters.previousOrSame(weekFields.getFirstDayOfWeek()))
+                .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
+                + " - "
+                + LocalDate.now().plusDays(5).with(IsoFields.WEEK_OF_WEEK_BASED_YEAR, week)
+                .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
+                + ")";
         if (week == LocalDate.now().get(weekFields.weekOfWeekBasedYear()))
-            weekNo = getString(R.string.re_this_week) + weekNo + ")";
-        if (week == LocalDate.now().get(weekFields.weekOfWeekBasedYear()) - 1)
-            weekNo = getString(R.string.re_last_week) + weekNo + ")";
+            weekTitle = getString(R.string.re_this_week) + weekTitle.replace((getString(R.string.week) + week), "");
+        if (week == LocalDate.now().minusWeeks(1).get(weekFields.weekOfWeekBasedYear()))
+            weekTitle = getString(R.string.re_last_week) + weekTitle.replace((getString(R.string.week) + week), "");
+
+        //daily data
         double income = 0;
         double expenses = 0;
         double highestExpense = 0;
@@ -96,7 +112,7 @@ public class WeeklyReportsFragment extends Fragment {
         for (int i = 0; i < transactionsList.size(); i++) {
             TransactionItem currentTransaction = transactionsList.get(i);
             DateTimeHandler dateTimeHandler = new DateTimeHandler(currentTransaction.getUserDate());
-            int transactionWeek = dateTimeHandler.getWeek();
+            int transactionWeek = dateTimeHandler.getWeekOfYear();
             int transactionDay = dateTimeHandler.getDayOfWeek();
             if (transactionWeek == week) {
                 if (currentTransaction.getPrefix().equals("+"))
@@ -113,10 +129,9 @@ public class WeeklyReportsFragment extends Fragment {
                     if (d == transactionDay) {
                         double dailyTotal = Double.parseDouble(dailyIncomes.get(d)) + currentTransaction.getAmountValue();
                         if (currentTransaction.getPrefix().equals("+")) {
-                            dailyIncomes.add(d, ""+dailyTotal);
-                        }
-                        else {
-                            dailyExpenses.add(d, ""+dailyTotal);
+                            dailyIncomes.add(d, "" + dailyTotal);
+                        } else {
+                            dailyExpenses.add(d, "" + dailyTotal);
                         }
                     }
                 }
@@ -128,8 +143,8 @@ public class WeeklyReportsFragment extends Fragment {
         for (int i = 0; i < transactionsList.size(); i++) {
             TransactionItem currentTransaction = transactionsList.get(i);
             DateTimeHandler dateTimeHandler = new DateTimeHandler(currentTransaction.getUserDate());
-            int transactionDate = dateTimeHandler.getDayOfYear();
-            if (transactionDate == week - 1) {
+            int transactionWeek = dateTimeHandler.getWeekOfYear();
+            if (transactionWeek == week - 1) {
                 if (currentTransaction.getPrefix().equals("+"))
                     incomeOLD = incomeOLD + Double.parseDouble(currentTransaction.getAmount());
                 if (currentTransaction.getPrefix().equals("-"))
@@ -139,6 +154,7 @@ public class WeeklyReportsFragment extends Fragment {
         double incomeDiff = income - incomeOLD;
         double expensesDiff = expenses - expensesOLD;
 
+        //budget
         String monthlyBudgetStr = sharedPref.getString("monthlyBudget", "N/A");
         DecimalFormat df = new DecimalFormat("#.00");
         double monthlyBudget = 0;
@@ -155,7 +171,36 @@ public class WeeklyReportsFragment extends Fragment {
         if (!df.format(incomeDiff).contains("-"))
             expensesDiffStr = "+" + df.format(expensesDiff);
 
-        WeeklyReport weeklyReport = new WeeklyReport(weekNo,
+        //find most income and most expense day
+        int mostIncomeIndex = -1;
+        int mostExpenseIndex = -1;
+        for (int i = 0; i < 7; i++) {
+            int tempMostIncome = 0;
+            if (Double.parseDouble(dailyIncomes.get(i)) > tempMostIncome)
+                mostIncomeIndex = i;
+
+            int tempMostExpense = 0;
+            if (Double.parseDouble(dailyExpenses.get(i)) > tempMostExpense)
+                mostExpenseIndex = i;
+        }
+
+        String mostIncomeDay = null;
+        String mostExpenseDay = null;
+        if (mostIncomeIndex != -1) {
+            mostIncomeDay = LocalDate.now().with(TemporalAdjusters.previousOrSame(weekFields.getFirstDayOfWeek()))
+                    .plusDays(mostIncomeIndex).getDayOfWeek().getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault());
+        }
+        if (mostExpenseIndex != -1) {
+            mostExpenseDay = LocalDate.now().with(TemporalAdjusters.previousOrSame(weekFields.getFirstDayOfWeek()))
+                    .plusDays(mostExpenseIndex).getDayOfWeek().getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault());
+        }
+        //capitalize
+        if (mostIncomeDay != null)
+            mostIncomeDay = mostIncomeDay.substring(0,1).toUpperCase() + mostIncomeDay.substring(1).toLowerCase();
+        if (mostExpenseDay != null)
+            mostExpenseDay = mostExpenseDay.substring(0,1).toUpperCase() + mostExpenseDay.substring(1).toLowerCase();
+
+        WeeklyReport weeklyReport = new WeeklyReport(weekTitle,
                 new Amount(getActivity(), income).getAmountString(),
                 new Amount(getActivity(), expenses).getAmountString(),
                 new Amount(getActivity(), budget).getAmountString(),
@@ -163,7 +208,8 @@ public class WeeklyReportsFragment extends Fragment {
                 new Amount(getActivity(), highestExpense).getAmountString(), highestItem,
                 "(" + incomeDiffStr + ")",
                 "(" + expensesDiffStr + ")",
-                dailyIncomes, dailyExpenses);
+                dailyIncomes, dailyExpenses,
+                mostIncomeDay, mostExpenseDay);
 
         this.week = week - 1; //to load next cards
         weeklyReportList.add(weeklyReport);
@@ -183,10 +229,12 @@ public class WeeklyReportsFragment extends Fragment {
         private String expensesDiff;
         private List<String> dailyIncomes;
         private List<String> dailyExpenses;
+        private String mostIncomeDay;
+        private String mostExpenseDay;
 
         public WeeklyReport(String week, String income, String expenses, String budget, String budgetLeft,
                             String highestExpense, String highestItem, String incomeDiff, String expensesDiff,
-                            List<String> dailyIncomes, List<String> dailyExpenses) {
+                            List<String> dailyIncomes, List<String> dailyExpenses, String mostIncomeDay, String mostExpenseDay) {
             this.income = income;
             this.expenses = expenses;
             this.budget = budget;
@@ -198,6 +246,8 @@ public class WeeklyReportsFragment extends Fragment {
             this.week = week;
             this.dailyIncomes = dailyIncomes;
             this.dailyExpenses = dailyExpenses;
+            this.mostIncomeDay = mostIncomeDay;
+            this.mostExpenseDay = mostExpenseDay;
         }
 
         public String getWeek() {
@@ -242,6 +292,14 @@ public class WeeklyReportsFragment extends Fragment {
 
         public List<String> getDailyExpenses() {
             return dailyExpenses;
+        }
+
+        public String getMostIncomeDay() {
+            return mostIncomeDay;
+        }
+
+        public String getMostExpenseDay() {
+            return mostExpenseDay;
         }
     }
 

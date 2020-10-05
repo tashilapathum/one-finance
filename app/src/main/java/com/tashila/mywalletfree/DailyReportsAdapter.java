@@ -124,7 +124,7 @@ public class DailyReportsAdapter extends ListAdapter<DailyReportsFragment.DailyR
         chartView.getXAxis().setDrawAxisLine(false);
         chartView.getAxisRight().setDrawLabels(false);
         chartView.getXAxis().setDrawLabels(false);
-        chartView.animateY(250, Easing.EaseInOutSine);
+        chartView.animateY(1000, Easing.EaseOutCirc);
         chartView.getDescription().setEnabled(false);
         chartView.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         chartView.getLegend().setTextColor(context.getResources().getColor(R.color.colorDivider));
@@ -160,7 +160,7 @@ public class DailyReportsAdapter extends ListAdapter<DailyReportsFragment.DailyR
         chartView.getXAxis().setDrawGridLines(false);
         chartView.getXAxis().setDrawAxisLine(false);
         chartView.getXAxis().setDrawLabels(false);
-        chartView.animateY(250, Easing.EaseInOutSine);
+        chartView.animateY(1000, Easing.EaseOutCirc);
         chartView.getLegend().setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         chartView.getLegend().setTextColor(context.getResources().getColor(R.color.colorDivider));
         chartView.getAxisLeft().setTextColor(context.getResources().getColor(R.color.colorDivider));

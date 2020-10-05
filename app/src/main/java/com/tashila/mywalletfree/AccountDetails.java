@@ -173,7 +173,7 @@ public class AccountDetails extends AppCompatActivity {
         List<ILineDataSet> dataSetList = new ArrayList<>();
         dataSetList.add(dataSet);
         LineData data = new LineData(dataSetList);
-        lineChart.animateY(1000, Easing.EaseInSine);
+        lineChart.animateY(1000, Easing.EaseOutCirc);
         lineChart.getDescription().setEnabled(false);
         lineChart.getLegend().setEnabled(false);
         lineChart.getXAxis().setEnabled(false);

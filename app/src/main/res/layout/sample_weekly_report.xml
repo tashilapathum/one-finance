@@ -184,6 +184,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat" />
 
             <TextView
+                android:id="@+id/mostIncome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Monday" />
@@ -203,13 +204,14 @@
                 android:textAppearance="@style/TextAppearance.AppCompat" />
 
             <TextView
+                android:id="@+id/mostExpense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Saturday" />
         </LinearLayout>
 
         <com.github.mikephil.charting.charts.BarChart
-            android:layout_marginVertical="8dp"
+            android:layout_marginVertical="12dp"
             android:id="@+id/chartDaily"
             android:layout_width="match_parent"
             android:layout_height="150dp" />

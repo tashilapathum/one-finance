@@ -402,7 +402,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             case 4: { //this week
                 for (TransactionItem item : transactionsList) {
                     DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
-                    if (dateTimeHandler.getWeek() == dateTimeHandler.getWeek(LocalDateTime.now())
+                    if (dateTimeHandler.getWeekOfYear() == dateTimeHandler.getWeekOfYear(LocalDateTime.now())
                             && !filteredList.contains(item))
                         filteredList.add(item);
                     else
@@ -413,7 +413,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             case 5: { //last week
                 for (TransactionItem item : transactionsList) {
                     DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
-                    if (dateTimeHandler.getWeek() == dateTimeHandler.getWeek(LocalDateTime.now().minusDays(7))
+                    if (dateTimeHandler.getWeekOfYear() == dateTimeHandler.getWeekOfYear(LocalDateTime.now().minusDays(7))
                             && !filteredList.contains(item))
                         filteredList.add(item);
                     else

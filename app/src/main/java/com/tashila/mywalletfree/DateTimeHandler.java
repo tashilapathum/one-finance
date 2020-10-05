@@ -32,12 +32,12 @@ public class DateTimeHandler {
         return localDateTime.getDayOfYear();
     }
 
-    int getWeek() {
+    int getWeekOfYear() {
         TemporalField weekOfYear = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
         return localDateTime.get(weekOfYear);
     }
 
-    int getWeek(LocalDateTime localDateTime) {
+    int getWeekOfYear(LocalDateTime localDateTime) {
         TemporalField weekOfYear = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
         return localDateTime.get(weekOfYear);
     }

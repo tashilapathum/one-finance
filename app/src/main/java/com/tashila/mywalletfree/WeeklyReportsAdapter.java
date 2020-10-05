@@ -2,6 +2,7 @@ package com.tashila.mywalletfree;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.WeeklyReport, WeeklyReportsAdapter.ReportHolder> {
+    public static final String TAG = "WeeklyReportsAdapter";
     private SharedPreferences sharedPref;
     private Context context;
     private String currency;
@@ -103,6 +105,10 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
                 holder.tvExpensesDiff.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
         } else
             holder.tvExpensesDiff.setVisibility(View.GONE);
+        if (weeklyReport.getMostIncomeDay() != null)
+            holder.tvMostIncome.setText(weeklyReport.getMostIncomeDay());
+        if (weeklyReport.getMostExpenseDay() != null)
+            holder.tvMostExpense.setText(weeklyReport.getMostExpenseDay());
 
         //charts
         if (weeklyReport.getIncome() != null || weeklyReport.getExpenses() != null)
@@ -132,7 +138,7 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
         chartView.getXAxis().setDrawGridLines(false);
         chartView.getXAxis().setDrawAxisLine(false);
         chartView.getXAxis().setDrawLabels(false);
-        chartView.animateY(300, Easing.EaseInBack);
+        chartView.animateY(1000, Easing.EaseOutCirc);
         chartView.getLegend().setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
         chartView.getLegend().setTextColor(context.getResources().getColor(R.color.colorDivider));
         chartView.getAxisLeft().setTextColor(context.getResources().getColor(R.color.colorDivider));
@@ -171,7 +177,7 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
         chartView.getXAxis().setDrawAxisLine(false);
         chartView.getAxisRight().setDrawLabels(false);
         chartView.getXAxis().setDrawLabels(false);
-        chartView.animateY(300, Easing.EaseInBack);
+        chartView.animateY(1000, Easing.EaseOutCirc);
         chartView.getDescription().setEnabled(false);
         chartView.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         chartView.getLegend().setTextColor(context.getResources().getColor(R.color.colorDivider));
@@ -197,17 +203,16 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
             }));
         BarDataSet dailyDetailsSet = new BarDataSet(dailyDetails, "");
         String[] labels = {"Incomes", "Expenses"};
+        //add x axis labels (days of week)
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
         int firstDay = weekFields.getFirstDayOfWeek().getValue();
-        final List<String> xLabels = new ArrayList<>(7);
-        int dayCount = 1;
-        boolean done = false;
-        do {
-            xLabels.add(LocalDate.now().with(DayOfWeek.of(firstDay)).getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()));
-            dayCount++;
-            if (dayCount == 8) dayCount = 1;
-            for (int y = 0; y < )
-        } while (dayCount <= 7);
+        Log.i(TAG, "first day: " + firstDay);
+        final List<String> xLabels = new ArrayList<>();
+        for (int y = 0; y < 7; y++)
+            xLabels.add(LocalDate.now().with(DayOfWeek.of(y + 1)).getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()));
+        if (firstDay == 7)
+            xLabels.add(0, LocalDate.now().with(DayOfWeek.of(firstDay)).getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()));
+
         dailyDetailsSet.setColors(
                 context.getResources().getColor(android.R.color.holo_green_light),
                 context.getResources().getColor(android.R.color.holo_orange_dark));
@@ -217,7 +222,7 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
         chartView.getXAxis().setValueFormatter(new IndexAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return xLabels.get((int)value);
+                return xLabels.get((int) value);
             }
         });
         chartView.getXAxis().setTextColor(context.getResources().getColor(R.color.colorDivider));
@@ -228,7 +233,7 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
         chartView.getAxisRight().setDrawAxisLine(false);
         chartView.getXAxis().setDrawAxisLine(false);
         chartView.getAxisRight().setDrawLabels(false);
-        chartView.animateX(300, Easing.EaseInBack);
+        chartView.animateY(1000, Easing.EaseOutCirc);
         chartView.getDescription().setEnabled(false);
         chartView.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         chartView.getLegend().setTextColor(context.getResources().getColor(R.color.colorDivider));
@@ -256,6 +261,8 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
         private TextView tvExpensesDiff;
         private HorizontalBarChart chartInEx;
         private HorizontalBarChart chartBudget;
+        private TextView tvMostIncome;
+        private TextView tvMostExpense;
         private BarChart chartDaily;
 
         public ReportHolder(@NonNull View itemView) {
@@ -271,6 +278,8 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
             tvExpensesDiff = itemView.findViewById(R.id.expensesDiff);
             chartInEx = itemView.findViewById(R.id.chartInEx);
             chartBudget = itemView.findViewById(R.id.chartBudget);
+            tvMostIncome = itemView.findViewById(R.id.mostIncome);
+            tvMostExpense = itemView.findViewById(R.id.mostExpense);
             chartDaily = itemView.findViewById(R.id.chartDaily);
         }
     }
