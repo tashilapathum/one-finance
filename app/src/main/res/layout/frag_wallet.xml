@@ -226,7 +226,7 @@
                         android:padding="8dp"
                         android:text="@string/quick_list"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                        android:fontFamily="@font/open_sans_light"
+                        android:fontFamily="@font/open_sans_regular"
                         android:textStyle="italic"/>
 
                     <ImageButton
