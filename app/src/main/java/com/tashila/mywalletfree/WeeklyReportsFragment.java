@@ -211,7 +211,9 @@ public class WeeklyReportsFragment extends Fragment {
                 dailyIncomes, dailyExpenses,
                 mostIncomeDay, mostExpenseDay);
 
-        this.week = week - 1; //to load next cards
+        //to load next cards
+        if (week == 1) this.week = 52;
+        else this.week = week - 1;
         weeklyReportList.add(weeklyReport);
         adapter.submitList(weeklyReportList);
         adapter.notifyItemInserted(adapter.getItemCount() + 1);

@@ -162,13 +162,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Daily data" />
+            android:text="@string/daily_data" />
 
         <TextView
             style="@style/ReportsItemTitleTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="The day with highest..." />
+            android:text="@string/the_day_with_highest" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -180,7 +180,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:fontFamily="sans-serif-condensed"
-                android:text="Income: "
+                android:text="@string/r_income"
                 android:textAppearance="@style/TextAppearance.AppCompat" />
 
             <TextView
@@ -200,7 +200,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:fontFamily="sans-serif-condensed"
-                android:text="Expenses: "
+                android:text="@string/r_expenses"
                 android:textAppearance="@style/TextAppearance.AppCompat" />
 
             <TextView

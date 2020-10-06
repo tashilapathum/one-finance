@@ -99,7 +99,6 @@ public class ReportsNEW extends AppCompatActivity implements NavigationView.OnNa
         viewPagerAdapter.addFragment(monthlyReportsFragment, getString(R.string.monthly));
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
-
     }
 
     @Override

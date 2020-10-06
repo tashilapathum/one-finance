@@ -144,7 +144,15 @@ public class DailyReportsFragment extends Fragment {
                 "(" + incomeDiffStr + ")",
                 "(" + expensesDiffStr + ")");
 
-        this.day = day - 1; //to load next cards
+        //to load next cards
+        if (day == 1)
+            if (LocalDate.now().minusYears(1).isLeapYear())
+                this.day = 366;
+            else
+                this.day = 365;
+        else
+            this.day = day - 1;
+
         dailyReportList.add(dailyReport);
         adapter.submitList(dailyReportList);
         adapter.notifyItemInserted(adapter.getItemCount() + 1);

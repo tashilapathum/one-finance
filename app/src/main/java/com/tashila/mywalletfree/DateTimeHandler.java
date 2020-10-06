@@ -50,4 +50,15 @@ public class DateTimeHandler {
         return localDateTime.getDayOfWeek().getValue();
     }
 
+    int getMonthValue() {
+        return localDateTime.getMonthValue();
+    }
+
+    int getYear() {
+        return localDateTime.getYear();
+    }
+
+    int getDayOfMonth(){
+        return localDateTime.getDayOfMonth();
+    }
 }
