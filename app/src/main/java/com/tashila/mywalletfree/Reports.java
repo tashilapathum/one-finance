@@ -297,8 +297,7 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
             pieChart.getLegend().setEnabled(false);
             pieChart.setDrawEntryLabels(false);
             pieChart.getDescription().setEnabled(false);
-            pieChart.getDescription().setTextColor(R.attr.colorAccent);
-            pieChart.animateY(1000, Easing.EaseInOutCubic);
+            pieChart.animateY(1000, Easing.EaseOutCirc);
 
             //set data
             ArrayList<PieEntry> yValues = new ArrayList<>();
@@ -306,7 +305,7 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
             if (fBudgetLeft >= 0) yValues.add(new PieEntry(fBudgetLeftPercent, "Budget Left"));
             else yValues.add(new PieEntry(0f, "Budget Left"));
             PieDataSet dataSet = new PieDataSet(yValues, "Budget");
-            dataSet.setColors(ColorTemplate.LIBERTY_COLORS);
+            dataSet.setColors(getResources().getColor(R.color.colorBackground), getResources().getColor(android.R.color.white));
             dataSet.setDrawValues(false);
             PieData data = new PieData(dataSet);
             pieChart.setData(data);

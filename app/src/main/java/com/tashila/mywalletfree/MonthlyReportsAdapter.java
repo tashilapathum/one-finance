@@ -106,8 +106,12 @@ public class MonthlyReportsAdapter extends ListAdapter<MonthlyReportsFragment.Mo
         holder.tvAverageExpense.setText(monthlyReport.getAverageExpenses());
         if (monthlyReport.getMostIncomeDay() != null)
             holder.tvMostIncome.setText(monthlyReport.getMostIncomeDay());
+        else
+            holder.tvMostIncome.setText(null);
         if (monthlyReport.getMostExpenseDay() != null)
             holder.tvMostExpense.setText(monthlyReport.getMostExpenseDay());
+        else
+            holder.tvMostExpense.setText(null);
 
         //charts
         if (monthlyReport.getIncome() != null || monthlyReport.getExpenses() != null)
@@ -203,7 +207,7 @@ public class MonthlyReportsAdapter extends ListAdapter<MonthlyReportsFragment.Mo
         incomesDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         incomesDataSet.setDrawValues(false);
         incomesDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        incomesDataSet.setColor(context.getResources().getColor(R.color.colorBlue));
+        incomesDataSet.setColor(context.getResources().getColor(R.color.colorLightBlue));
 
         List<Entry> dailyExpenses = new ArrayList<>();
         List<String> dailyExpensesList = monthlyReport.getExpensesOfMonth();
@@ -215,7 +219,7 @@ public class MonthlyReportsAdapter extends ListAdapter<MonthlyReportsFragment.Mo
         expensesDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         expensesDataSet.setDrawValues(false);
         expensesDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        expensesDataSet.setColor(context.getResources().getColor(R.color.colorRed));
+        expensesDataSet.setColor(context.getResources().getColor(R.color.colorLightRed));
 
         List<ILineDataSet> dataSetList = new ArrayList<>();
         dataSetList.add(incomesDataSet);
@@ -224,13 +228,13 @@ public class MonthlyReportsAdapter extends ListAdapter<MonthlyReportsFragment.Mo
         chartView.animateY(1000, Easing.EaseOutCirc);
         chartView.getDescription().setEnabled(false);
         chartView.getXAxis().setEnabled(false);
-        chartView.getXAxis().setAxisLineColor(context.getResources().getColor(R.color.colorDivider));
-        chartView.getAxisLeft().setAxisLineColor(context.getResources().getColor(R.color.colorDivider));
+        chartView.getXAxis().setAxisLineColor(context.getResources().getColor(R.color.colorDividerLight));
+        chartView.getAxisLeft().setAxisLineColor(context.getResources().getColor(R.color.colorDividerLight));
         chartView.getAxisLeft().setTextColor(context.getResources().getColor(R.color.colorDivider));
-        chartView.getAxisLeft().setGridColor(context.getResources().getColor(R.color.colorDivider));
+        chartView.getAxisLeft().setGridColor(context.getResources().getColor(R.color.colorDividerLight));
         chartView.getAxisRight().setTextColor(context.getResources().getColor(R.color.colorDivider));
-        chartView.getAxisRight().setAxisLineColor(context.getResources().getColor(R.color.colorDivider));
-        chartView.getAxisRight().setGridColor(context.getResources().getColor(R.color.colorDivider));
+        chartView.getAxisRight().setAxisLineColor(context.getResources().getColor(R.color.colorDividerLight));
+        chartView.getAxisRight().setGridColor(context.getResources().getColor(R.color.colorDividerLight));
         chartView.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         chartView.getLegend().setTextColor(context.getResources().getColor(R.color.colorDivider));
         chartView.setData(data);

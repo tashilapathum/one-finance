@@ -37,6 +37,9 @@ public class MonthlyReportsFragment extends Fragment {
     private MonthlyReportsAdapter adapter;
     private List<MonthlyReport> monthlyReportList;
     private int month;
+    private int monthCount;
+    private int year;
+    private int yearCount;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,6 +47,9 @@ public class MonthlyReportsFragment extends Fragment {
         AndroidThreeTen.init(getActivity());
         monthlyReportList = new ArrayList<>();
         month = LocalDate.now().getMonthValue();
+        monthCount = 0;
+        year = LocalDate.now().getYear();
+        yearCount = 0;
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -51,14 +57,14 @@ public class MonthlyReportsFragment extends Fragment {
         adapter = new MonthlyReportsAdapter();
         recyclerView.setLayoutAnimation(new AnimationHandler().getSlideUpController());
         recyclerView.setAdapter(adapter);
-        calculateMonthlyReport(month);
+        calculateMonthlyReport(month, year);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (!recyclerView.canScrollVertically(1))
                     if (sharedPref.getBoolean("MyWalletPro", false))
-                        calculateMonthlyReport(month);
+                        calculateMonthlyReport(month, year);
                     else
                         purchaseProForThis();
             }
@@ -66,7 +72,7 @@ public class MonthlyReportsFragment extends Fragment {
         return view;
     }
 
-    private void calculateMonthlyReport(int month) {
+    private void calculateMonthlyReport(int month, int year) {
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         currency = sharedPref.getString("currency", "");
         TransactionsViewModel transactionsViewModel = new ViewModelProvider(getActivity(),
@@ -86,7 +92,8 @@ public class MonthlyReportsFragment extends Fragment {
             TransactionItem currentTransaction = transactionsList.get(i);
             DateTimeHandler dateTimeHandler = new DateTimeHandler(currentTransaction.getUserDate());
             int transactionMonth = dateTimeHandler.getMonthValue();
-            if (transactionMonth == month) {
+            int transactionYear = dateTimeHandler.getYear();
+            if (transactionMonth == month && transactionYear == year) {
                 if (currentTransaction.getPrefix().equals("+"))
                     income = income + Double.parseDouble(currentTransaction.getAmount());
                 else {
@@ -112,7 +119,9 @@ public class MonthlyReportsFragment extends Fragment {
             TransactionItem currentTransaction = transactionsList.get(i);
             DateTimeHandler dateTimeHandler = new DateTimeHandler(currentTransaction.getUserDate());
             int transactionMonth = dateTimeHandler.getMonthValue();
-            if (transactionMonth == Month.of(month - 1).getValue()) {
+            int transactionYear = dateTimeHandler.getYear();
+            if (transactionMonth == LocalDate.now().minusMonths(monthCount + 1 /*to get prev month*/).getMonthValue()
+                    && transactionYear == year) {
                 if (currentTransaction.getPrefix().equals("+"))
                     incomeOLD = incomeOLD + Double.parseDouble(currentTransaction.getAmount());
                 if (currentTransaction.getPrefix().equals("-"))
@@ -142,21 +151,23 @@ public class MonthlyReportsFragment extends Fragment {
         double tempMostExpense = 0;
         for (int i = 0; i < transactionsOfMonth.size(); i++) {
             TransactionItem currentTransaction = transactionsOfMonth.get(i);
-            if (currentTransaction.getPrefix().equals("+") && currentTransaction.getAmountValue() > tempMostIncome) {
-                mostIncomeTransaction = currentTransaction;
-                tempMostIncome = currentTransaction.getAmountValue();
-            }
+            if (new DateTimeHandler(currentTransaction.getUserDate()).getYear() == year) {
+                if (currentTransaction.getPrefix().equals("+") && currentTransaction.getAmountValue() > tempMostIncome) {
+                    mostIncomeTransaction = currentTransaction;
+                    tempMostIncome = currentTransaction.getAmountValue();
+                }
 
-            if (currentTransaction.getPrefix().equals("-") && currentTransaction.getAmountValue() > tempMostExpense) {
-                mostExpenseTransaction = currentTransaction;
-                tempMostExpense = currentTransaction.getAmountValue();
+                if (currentTransaction.getPrefix().equals("-") && currentTransaction.getAmountValue() > tempMostExpense) {
+                    mostExpenseTransaction = currentTransaction;
+                    tempMostExpense = currentTransaction.getAmountValue();
+                }
             }
         }
         String mostIncomeDay = null;
         String mostExpenseDay = null;
         if (mostIncomeTransaction != null) {
             DateTimeHandler dateTimeHandler = new DateTimeHandler(mostIncomeTransaction.getUserDate());
-            mostIncomeDay = ""+dateTimeHandler.getDayOfMonth();
+            mostIncomeDay = "" + dateTimeHandler.getDayOfMonth();
             String lastDigit = mostIncomeDay.substring(mostIncomeDay.length() - 1);
             switch (lastDigit) {
                 case "1": {
@@ -171,15 +182,16 @@ public class MonthlyReportsFragment extends Fragment {
                     mostIncomeDay = mostIncomeDay + getString(R.string.rd);
                     break;
                 }
-                default: mostIncomeDay = mostIncomeDay + getString(R.string.th);
+                default:
+                    mostIncomeDay = mostIncomeDay + getString(R.string.th);
             }
             mostIncomeDay = mostIncomeDay
                     + " (" + currency + mostIncomeTransaction.getAmount()
                     + " - " + mostIncomeTransaction.getDescription() + ")";
         }
-        if (mostExpenseTransaction != null){
+        if (mostExpenseTransaction != null) {
             DateTimeHandler dateTimeHandler = new DateTimeHandler(mostExpenseTransaction.getUserDate());
-            mostExpenseDay = ""+dateTimeHandler.getDayOfMonth();
+            mostExpenseDay = "" + dateTimeHandler.getDayOfMonth();
             String lastDigit = mostExpenseDay.substring(mostExpenseDay.length() - 1);
             switch (lastDigit) {
                 case "1": {
@@ -194,7 +206,8 @@ public class MonthlyReportsFragment extends Fragment {
                     mostExpenseDay = mostExpenseDay + getString(R.string.rd);
                     break;
                 }
-                default: mostExpenseDay = mostExpenseDay + getString(R.string.th);
+                default:
+                    mostExpenseDay = mostExpenseDay + getString(R.string.th);
             }
             mostExpenseDay = mostExpenseDay
                     + " (" + currency + mostExpenseTransaction.getAmount()
@@ -226,8 +239,10 @@ public class MonthlyReportsFragment extends Fragment {
                 incomesOfMonth, expensesOfMonth);
 
         //to load next cards
-        if (month == 1) this.month = 12;
-        else this.month = month - 1;
+        monthCount++;
+        this.month = LocalDate.now().minusMonths(monthCount).getMonthValue();
+        if (monthCount % 12 == 0) yearCount++;
+        this.year = LocalDate.now().minusYears(yearCount).getYear();
 
         monthlyReportList.add(monthlyReport);
         adapter.submitList(monthlyReportList);

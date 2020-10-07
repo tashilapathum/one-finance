@@ -41,6 +41,8 @@ public class WeeklyReportsFragment extends Fragment {
     private WeeklyReportsAdapter adapter;
     private List<WeeklyReport> weeklyReportList;
     private int week;
+    private int weekCount;
+    private int yearCount;
     private WeekFields weekFields;
 
 
@@ -51,6 +53,8 @@ public class WeeklyReportsFragment extends Fragment {
         weeklyReportList = new ArrayList<>();
         weekFields = WeekFields.of(Locale.getDefault());
         week = LocalDate.now().get(weekFields.weekOfWeekBasedYear());
+        weekCount = 0;
+        yearCount = 0;
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -86,11 +90,17 @@ public class WeeklyReportsFragment extends Fragment {
         //card title
         weekTitle = getString(R.string.week) + week
                 + " ("
-                + LocalDate.now().with(IsoFields.WEEK_OF_WEEK_BASED_YEAR, week)
+                + LocalDate.now()
+                .minusYears(yearCount)
+                .with(IsoFields.WEEK_OF_WEEK_BASED_YEAR, week)
                 .with(TemporalAdjusters.previousOrSame(weekFields.getFirstDayOfWeek()))
                 .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
                 + " - "
-                + LocalDate.now().plusDays(5).with(IsoFields.WEEK_OF_WEEK_BASED_YEAR, week)
+                + LocalDate.now()
+                .minusYears(yearCount)
+                .with(IsoFields.WEEK_OF_WEEK_BASED_YEAR, week)
+                .with(TemporalAdjusters.previousOrSame(weekFields.getFirstDayOfWeek()))
+                .plusDays(6)
                 .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
                 + ")";
         if (week == LocalDate.now().get(weekFields.weekOfWeekBasedYear()))
@@ -212,8 +222,11 @@ public class WeeklyReportsFragment extends Fragment {
                 mostIncomeDay, mostExpenseDay);
 
         //to load next cards
-        if (week == 1) this.week = 52;
-        else this.week = week - 1;
+        weekCount++;
+        if (this.week == 1) yearCount++;
+        this.week = LocalDate.now()
+                .minusWeeks(weekCount)
+                .get(weekFields.weekOfWeekBasedYear());
         weeklyReportList.add(weeklyReport);
         adapter.submitList(weeklyReportList);
         adapter.notifyItemInserted(adapter.getItemCount() + 1);

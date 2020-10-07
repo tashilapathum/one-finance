@@ -1,7 +1,5 @@
 package com.tashila.mywalletfree;
 
-import android.content.Context;
-
 import org.threeten.bp.Instant;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.ZoneId;
@@ -22,10 +20,6 @@ public class DateTimeHandler {
     String getTimestamp() {
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
         return formatter.format(localDateTime);
-    }
-
-    String getMillis(String timestamp) {
-        return null;
     }
 
     int getDayOfYear() {

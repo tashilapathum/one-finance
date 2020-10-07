@@ -107,8 +107,12 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
             holder.tvExpensesDiff.setVisibility(View.GONE);
         if (weeklyReport.getMostIncomeDay() != null)
             holder.tvMostIncome.setText(weeklyReport.getMostIncomeDay());
+        else
+            holder.tvMostIncome.setText(null);
         if (weeklyReport.getMostExpenseDay() != null)
             holder.tvMostExpense.setText(weeklyReport.getMostExpenseDay());
+        else
+            holder.tvMostExpense.setText(null);
 
         //charts
         if (weeklyReport.getIncome() != null || weeklyReport.getExpenses() != null)
