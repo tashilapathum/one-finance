@@ -99,6 +99,12 @@ public class MonthlyReportsFragment extends Fragment {
                 transactionsOfMonth.add(currentTransaction);
             }
         }
+
+        //averages
+        int monthLength = LocalDate.of(LocalDate.now().getYear(), month, 1).lengthOfMonth();
+        double averageIncome = income / monthLength;
+        double averageExpenses = expenses / monthLength;
+
         //to calculate differences
         double incomeOLD = 0;
         double expensesOLD = 0;
@@ -132,23 +138,79 @@ public class MonthlyReportsFragment extends Fragment {
         //find most income and most expense day
         TransactionItem mostIncomeTransaction = null;
         TransactionItem mostExpenseTransaction = null;
+        double tempMostIncome = 0;
+        double tempMostExpense = 0;
         for (int i = 0; i < transactionsOfMonth.size(); i++) {
             TransactionItem currentTransaction = transactionsOfMonth.get(i);
-            int tempMostIncome = 0;
-            if (Double.parseDouble(currentTransaction.getAmount()) > tempMostIncome)
+            if (currentTransaction.getPrefix().equals("+") && currentTransaction.getAmountValue() > tempMostIncome) {
                 mostIncomeTransaction = currentTransaction;
+                tempMostIncome = currentTransaction.getAmountValue();
+            }
 
-            int tempMostExpense = 0;
-            if (Double.parseDouble(currentTransaction.getAmount()) > tempMostExpense)
+            if (currentTransaction.getPrefix().equals("-") && currentTransaction.getAmountValue() > tempMostExpense) {
                 mostExpenseTransaction = currentTransaction;
+                tempMostExpense = currentTransaction.getAmountValue();
+            }
+        }
+        String mostIncomeDay = null;
+        String mostExpenseDay = null;
+        if (mostIncomeTransaction != null) {
+            DateTimeHandler dateTimeHandler = new DateTimeHandler(mostIncomeTransaction.getUserDate());
+            mostIncomeDay = ""+dateTimeHandler.getDayOfMonth();
+            String lastDigit = mostIncomeDay.substring(mostIncomeDay.length() - 1);
+            switch (lastDigit) {
+                case "1": {
+                    mostIncomeDay = mostIncomeDay + getString(R.string.st);
+                    break;
+                }
+                case "2": {
+                    mostIncomeDay = mostIncomeDay + getString(R.string.nd);
+                    break;
+                }
+                case "3": {
+                    mostIncomeDay = mostIncomeDay + getString(R.string.rd);
+                    break;
+                }
+                default: mostIncomeDay = mostIncomeDay + getString(R.string.th);
+            }
+            mostIncomeDay = mostIncomeDay
+                    + " (" + currency + mostIncomeTransaction.getAmount()
+                    + " - " + mostIncomeTransaction.getDescription() + ")";
+        }
+        if (mostExpenseTransaction != null){
+            DateTimeHandler dateTimeHandler = new DateTimeHandler(mostExpenseTransaction.getUserDate());
+            mostExpenseDay = ""+dateTimeHandler.getDayOfMonth();
+            String lastDigit = mostExpenseDay.substring(mostExpenseDay.length() - 1);
+            switch (lastDigit) {
+                case "1": {
+                    mostExpenseDay = mostExpenseDay + getString(R.string.st);
+                    break;
+                }
+                case "2": {
+                    mostExpenseDay = mostExpenseDay + getString(R.string.nd);
+                    break;
+                }
+                case "3": {
+                    mostExpenseDay = mostExpenseDay + getString(R.string.rd);
+                    break;
+                }
+                default: mostExpenseDay = mostExpenseDay + getString(R.string.th);
+            }
+            mostExpenseDay = mostExpenseDay
+                    + " (" + currency + mostExpenseTransaction.getAmount()
+                    + " - " + mostExpenseTransaction.getDescription() + ")";
         }
 
-        int mostIncomeDay = 0;
-        int mostExpenseDay = 0;
-        if (mostIncomeTransaction != null)
-            mostIncomeDay = new DateTimeHandler(mostIncomeTransaction.getUserDate()).getDayOfMonth();
-        if (mostExpenseTransaction != null)
-            mostExpenseDay = new DateTimeHandler(mostExpenseTransaction.getUserDate()).getDayOfMonth();
+        //for daily data chart
+        List<String> incomesOfMonth = new ArrayList<>();
+        List<String> expensesOfMonth = new ArrayList<>();
+        for (int i = 0; i < transactionsOfMonth.size(); i++) {
+            TransactionItem currentTransaction = transactionsOfMonth.get(i);
+            if (currentTransaction.getPrefix().equals("+"))
+                incomesOfMonth.add(currentTransaction.getAmount());
+            else
+                expensesOfMonth.add(currentTransaction.getAmount());
+        }
 
         MonthlyReport monthlyReport = new MonthlyReport(monthTitle,
                 new Amount(getActivity(), income).getAmountString(),
@@ -158,7 +220,10 @@ public class MonthlyReportsFragment extends Fragment {
                 new Amount(getActivity(), highestExpense).getAmountString(), highestItem,
                 "(" + incomeDiffStr + ")",
                 "(" + expensesDiffStr + ")",
-                mostIncomeDay, mostExpenseDay);
+                new Amount(getActivity(), averageIncome).getAmountString(),
+                new Amount(getActivity(), averageExpenses).getAmountString(),
+                mostIncomeDay, mostExpenseDay,
+                incomesOfMonth, expensesOfMonth);
 
         //to load next cards
         if (month == 1) this.month = 12;
@@ -179,12 +244,17 @@ public class MonthlyReportsFragment extends Fragment {
         private String highestItem;
         private String incomeDiff;
         private String expensesDiff;
-        private int mostIncomeDay;
-        private int mostExpenseDay;
+        private String averageIncome;
+        private String averageExpenses;
+        private String mostIncomeDay;
+        private String mostExpenseDay;
+        private List<String> incomesOfMonth;
+        private List<String> expensesOfMonth;
 
         public MonthlyReport(String month, String income, String expenses, String budget, String budgetLeft,
-                            String highestExpense, String highestItem, String incomeDiff, String expensesDiff,
-                             int mostIncomeDay, int mostExpenseDay) {
+                             String highestExpense, String highestItem, String incomeDiff, String expensesDiff,
+                             String averageIncome, String averageExpenses, String mostIncomeDay, String mostExpenseDay,
+                             List<String> incomesOfMonth, List<String> expensesOfMonth) {
             this.income = income;
             this.expenses = expenses;
             this.budget = budget;
@@ -194,8 +264,12 @@ public class MonthlyReportsFragment extends Fragment {
             this.incomeDiff = incomeDiff;
             this.expensesDiff = expensesDiff;
             this.month = month;
+            this.averageIncome = averageIncome;
+            this.averageExpenses = averageExpenses;
             this.mostIncomeDay = mostIncomeDay;
             this.mostExpenseDay = mostExpenseDay;
+            this.incomesOfMonth = incomesOfMonth;
+            this.expensesOfMonth = expensesOfMonth;
         }
 
         public String getMonth() {
@@ -234,12 +308,28 @@ public class MonthlyReportsFragment extends Fragment {
             return expensesDiff;
         }
 
-        public int getMostIncomeDay() {
+        public String getMostIncomeDay() {
             return mostIncomeDay;
         }
 
-        public int getMostExpenseDay() {
+        public String getMostExpenseDay() {
             return mostExpenseDay;
+        }
+
+        public String getAverageIncome() {
+            return averageIncome;
+        }
+
+        public String getAverageExpenses() {
+            return averageExpenses;
+        }
+
+        public List<String> getIncomesOfMonth() {
+            return incomesOfMonth;
+        }
+
+        public List<String> getExpensesOfMonth() {
+            return expensesOfMonth;
         }
     }
 

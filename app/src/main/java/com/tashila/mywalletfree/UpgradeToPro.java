@@ -136,8 +136,14 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
     }
 
     private void continueBuyOrRestore() {
-        if (isNetworkAvailable())
-            billingClient.launchBillingFlow(this, flowParams);
+        if (isNetworkAvailable()) {
+            try {
+                billingClient.launchBillingFlow(this, flowParams);
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT).show();
+            }
+        }
         else {
             new AlertDialog.Builder(UpgradeToPro.this)
                     .setTitle(R.string.connec_failed)

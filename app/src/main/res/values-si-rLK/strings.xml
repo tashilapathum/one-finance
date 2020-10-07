@@ -324,4 +324,9 @@
     <string name="daily_data">Daily data</string>
     <string name="the_day_with_highest">The day with highest...</string>
     <string name="average_of">Average of...</string>
+    <string name="expenses">Expenses</string>
+    <string name="st">st</string>
+    <string name="nd">nd</string>
+    <string name="rd">rd</string>
+    <string name="th">th</string>
 </resources>
