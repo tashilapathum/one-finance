@@ -568,3 +568,5 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             transactionsAdapter.submitList(filteredList);
     }
 }
+
+//TODO: add multiple filter (use ELSE to fix duplicate items!!)

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,7 +34,6 @@ import java.util.Locale;
 
 public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.WeeklyReport, WeeklyReportsAdapter.ReportHolder> {
     public static final String TAG = "WeeklyReportsAdapter";
-    private SharedPreferences sharedPref;
     private Context context;
     private String currency;
     private String theme;
@@ -65,7 +65,7 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
     public void onBindViewHolder(@NonNull ReportHolder holder, int position) {
         WeeklyReportsFragment.WeeklyReport weeklyReport = getItem(position);
         context = holder.itemView.getContext();
-        sharedPref = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
         currency = sharedPref.getString("currency", "");
         theme = sharedPref.getString("theme", "light");
 
@@ -119,6 +119,8 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
             drawIncomeExpenseChart(holder.chartInEx, weeklyReport);
         if (new Amount(context, weeklyReport.getBudget()).getAmountValue() != 0)
             drawBudgetChart(holder.chartBudget, weeklyReport);
+        if (weeklyReport.getWeek().contains(context.getString(R.string.r_this_week)))
+            holder.daily_data_layout.setVisibility(View.GONE);
         drawDailyDetailsChart(holder.chartDaily, weeklyReport);
     }
 
@@ -206,16 +208,21 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
                     Float.parseFloat(weeklyReport.getDailyExpenses().get(i))
             }));
         BarDataSet dailyDetailsSet = new BarDataSet(dailyDetails, "");
-        String[] labels = {"Incomes", "Expenses"};
+        String[] labels = {context.getString(R.string.incomes), context.getString(R.string.expenses)};
         //add x axis labels (days of week)
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
         int firstDay = weekFields.getFirstDayOfWeek().getValue();
         Log.i(TAG, "first day: " + firstDay);
         final List<String> xLabels = new ArrayList<>();
-        for (int y = 0; y < 7; y++)
-            xLabels.add(LocalDate.now().with(DayOfWeek.of(y + 1)).getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()));
-        if (firstDay == 7)
-            xLabels.add(0, LocalDate.now().with(DayOfWeek.of(firstDay)).getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()));
+        for (int x = 0; x < 7; x++)
+            xLabels.add("DAY");
+        if (firstDay == 7) {
+            xLabels.add(0, LocalDate.now().with(DayOfWeek.of(7)).getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()));
+            for (int z = 1; z < 7; z++)
+                xLabels.add(z, LocalDate.now().with(DayOfWeek.of(z)).getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()));
+        } else
+            for (int y = 0; y < 7; y++)
+                xLabels.add(LocalDate.now().with(DayOfWeek.of(y)).getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()));
 
         dailyDetailsSet.setColors(
                 context.getResources().getColor(android.R.color.holo_green_light),
@@ -268,6 +275,7 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
         private TextView tvMostIncome;
         private TextView tvMostExpense;
         private BarChart chartDaily;
+        private LinearLayout daily_data_layout;
 
         public ReportHolder(@NonNull View itemView) {
             super(itemView);
@@ -285,6 +293,7 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
             tvMostIncome = itemView.findViewById(R.id.mostIncome);
             tvMostExpense = itemView.findViewById(R.id.mostExpense);
             chartDaily = itemView.findViewById(R.id.chartDaily);
+            daily_data_layout = itemView.findViewById(R.id.daily_data_layout);
         }
     }
 }

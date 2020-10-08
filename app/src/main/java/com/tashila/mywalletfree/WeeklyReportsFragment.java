@@ -43,6 +43,7 @@ public class WeeklyReportsFragment extends Fragment {
     private int week;
     private int weekCount;
     private int yearCount;
+    private int year;
     private WeekFields weekFields;
 
 
@@ -53,6 +54,7 @@ public class WeeklyReportsFragment extends Fragment {
         weeklyReportList = new ArrayList<>();
         weekFields = WeekFields.of(Locale.getDefault());
         week = LocalDate.now().get(weekFields.weekOfWeekBasedYear());
+        year = LocalDate.now().getYear();
         weekCount = 0;
         yearCount = 0;
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -62,16 +64,16 @@ public class WeeklyReportsFragment extends Fragment {
         adapter = new WeeklyReportsAdapter();
         recyclerView.setLayoutAnimation(new AnimationHandler().getSlideUpController());
         recyclerView.setAdapter(adapter);
-        calculateWeeklyReport(week);
-        calculateWeeklyReport(week);
-        calculateWeeklyReport(week);
+        calculateWeeklyReport(week, year);
+        calculateWeeklyReport(week, year);
+        calculateWeeklyReport(week, year);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (!recyclerView.canScrollVertically(1))
                     if (sharedPref.getBoolean("MyWalletPro", false))
-                        calculateWeeklyReport(week);
+                        calculateWeeklyReport(week, year);
                     else
                         purchaseProForThis();
             }
@@ -79,7 +81,7 @@ public class WeeklyReportsFragment extends Fragment {
         return view;
     }
 
-    private void calculateWeeklyReport(int week) {
+    private void calculateWeeklyReport(int week, int year) {
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         currency = sharedPref.getString("currency", "");
         TransactionsViewModel transactionsViewModel = new ViewModelProvider(getActivity(),
@@ -103,9 +105,9 @@ public class WeeklyReportsFragment extends Fragment {
                 .plusDays(6)
                 .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
                 + ")";
-        if (week == LocalDate.now().get(weekFields.weekOfWeekBasedYear()))
+        if (week == LocalDate.now().get(weekFields.weekOfWeekBasedYear()) && year == LocalDate.now().getYear())
             weekTitle = getString(R.string.re_this_week) + weekTitle.replace((getString(R.string.week) + week), "");
-        if (week == LocalDate.now().minusWeeks(1).get(weekFields.weekOfWeekBasedYear()))
+        if (week == LocalDate.now().minusWeeks(1).get(weekFields.weekOfWeekBasedYear()) && year == LocalDate.now().getYear())
             weekTitle = getString(R.string.re_last_week) + weekTitle.replace((getString(R.string.week) + week), "");
 
         //daily data
@@ -122,9 +124,10 @@ public class WeeklyReportsFragment extends Fragment {
         for (int i = 0; i < transactionsList.size(); i++) {
             TransactionItem currentTransaction = transactionsList.get(i);
             DateTimeHandler dateTimeHandler = new DateTimeHandler(currentTransaction.getUserDate());
+            int transactionYear = dateTimeHandler.getYear();
             int transactionWeek = dateTimeHandler.getWeekOfYear();
             int transactionDay = dateTimeHandler.getDayOfWeek();
-            if (transactionWeek == week) {
+            if (transactionWeek == week && transactionYear == year) {
                 if (currentTransaction.getPrefix().equals("+"))
                     income = income + Double.parseDouble(currentTransaction.getAmount());
                 else {
@@ -136,11 +139,12 @@ public class WeeklyReportsFragment extends Fragment {
                 }
 
                 for (int d = 0; d < 7; d++) {
-                    if (d == transactionDay) {
-                        double dailyTotal = Double.parseDouble(dailyIncomes.get(d)) + currentTransaction.getAmountValue();
+                    if (d + 1 == transactionDay) {
                         if (currentTransaction.getPrefix().equals("+")) {
+                            double dailyTotal = Double.parseDouble(dailyIncomes.get(d)) + currentTransaction.getAmountValue();
                             dailyIncomes.add(d, "" + dailyTotal);
                         } else {
+                            double dailyTotal = Double.parseDouble(dailyExpenses.get(d)) + currentTransaction.getAmountValue();
                             dailyExpenses.add(d, "" + dailyTotal);
                         }
                     }
@@ -153,8 +157,9 @@ public class WeeklyReportsFragment extends Fragment {
         for (int i = 0; i < transactionsList.size(); i++) {
             TransactionItem currentTransaction = transactionsList.get(i);
             DateTimeHandler dateTimeHandler = new DateTimeHandler(currentTransaction.getUserDate());
+            int transactionYear = dateTimeHandler.getYear();
             int transactionWeek = dateTimeHandler.getWeekOfYear();
-            if (transactionWeek == week - 1) {
+            if (transactionWeek == week - 1 && transactionYear == year) {
                 if (currentTransaction.getPrefix().equals("+"))
                     incomeOLD = incomeOLD + Double.parseDouble(currentTransaction.getAmount());
                 if (currentTransaction.getPrefix().equals("-"))
@@ -184,14 +189,18 @@ public class WeeklyReportsFragment extends Fragment {
         //find most income and most expense day
         int mostIncomeIndex = -1;
         int mostExpenseIndex = -1;
+        double tempMostIncome = 0;
+        double tempMostExpense = 0;
         for (int i = 0; i < 7; i++) {
-            int tempMostIncome = 0;
-            if (Double.parseDouble(dailyIncomes.get(i)) > tempMostIncome)
+            if (Double.parseDouble(dailyIncomes.get(i)) > tempMostIncome) {
                 mostIncomeIndex = i;
+                tempMostIncome = Double.parseDouble(dailyIncomes.get(i));
+            }
 
-            int tempMostExpense = 0;
-            if (Double.parseDouble(dailyExpenses.get(i)) > tempMostExpense)
+            if (Double.parseDouble(dailyExpenses.get(i)) > tempMostExpense) {
                 mostExpenseIndex = i;
+                tempMostExpense = Double.parseDouble(dailyExpenses.get(i));
+            }
         }
 
         String mostIncomeDay = null;
@@ -219,12 +228,17 @@ public class WeeklyReportsFragment extends Fragment {
                 "(" + incomeDiffStr + ")",
                 "(" + expensesDiffStr + ")",
                 dailyIncomes, dailyExpenses,
-                mostIncomeDay, mostExpenseDay);
+                mostIncomeDay + " (" + new Amount(getActivity(), tempMostIncome).getAmountString() + ")",
+                mostExpenseDay + " (" + new Amount(getActivity(), tempMostExpense).getAmountString() + ")");
 
         //to load next cards
         weekCount++;
-        if (this.week == 1) yearCount++;
+        if (this.week == 1) {
+            yearCount++;
+            this.year = this.year - yearCount;
+        }
         this.week = LocalDate.now()
+                .minusYears(yearCount)
                 .minusWeeks(weekCount)
                 .get(weekFields.weekOfWeekBasedYear());
         weeklyReportList.add(weeklyReport);

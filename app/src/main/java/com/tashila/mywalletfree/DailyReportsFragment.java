@@ -37,6 +37,7 @@ public class DailyReportsFragment extends Fragment {
     private DailyReportsAdapter adapter;
     private List<DailyReport> dailyReportList;
     private int day;
+    private int dayCount;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class DailyReportsFragment extends Fragment {
         AndroidThreeTen.init(getActivity());
         dailyReportList = new ArrayList<>();
         day = LocalDate.now().getDayOfYear();
+        dayCount = 0;
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -109,7 +111,7 @@ public class DailyReportsFragment extends Fragment {
             TransactionItem currentTransaction = transactionsList.get(i);
             DateTimeHandler dateTimeHandler = new DateTimeHandler(currentTransaction.getUserDate());
             int transactionDate = dateTimeHandler.getDayOfYear();
-            if (transactionDate == day - 1) {
+            if (transactionDate == LocalDate.now().minusDays(dayCount + 1).getDayOfYear()) {
                 if (currentTransaction.getPrefix().equals("+"))
                     incomeOLD = incomeOLD + Double.parseDouble(currentTransaction.getAmount());
                 if (currentTransaction.getPrefix().equals("-"))
@@ -145,13 +147,8 @@ public class DailyReportsFragment extends Fragment {
                 "(" + expensesDiffStr + ")");
 
         //to load next cards
-        if (day == 1)
-            if (LocalDate.now().minusYears(1).isLeapYear())
-                this.day = 366;
-            else
-                this.day = 365;
-        else
-            this.day = day - 1;
+        dayCount++;
+        this.day = LocalDate.now().minusDays(dayCount).getDayOfYear();
 
         dailyReportList.add(dailyReport);
         adapter.submitList(dailyReportList);
