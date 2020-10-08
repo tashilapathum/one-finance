@@ -222,7 +222,7 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
                 xLabels.add(z, LocalDate.now().with(DayOfWeek.of(z)).getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()));
         } else
             for (int y = 0; y < 7; y++)
-                xLabels.add(LocalDate.now().with(DayOfWeek.of(y)).getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()));
+                xLabels.add(LocalDate.now().with(DayOfWeek.of(y+1)).getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()));
 
         dailyDetailsSet.setColors(
                 context.getResources().getColor(android.R.color.holo_green_light),

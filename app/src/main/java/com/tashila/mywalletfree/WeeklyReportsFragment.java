@@ -114,7 +114,7 @@ public class WeeklyReportsFragment extends Fragment {
         double income = 0;
         double expenses = 0;
         double highestExpense = 0;
-        String highestItem = null;
+        String highestItem = "";
         List<String> dailyIncomes = new ArrayList<>(7);
         List<String> dailyExpenses = new ArrayList<>(7);
         for (int x = 0; x < 7; x++) {
@@ -138,7 +138,7 @@ public class WeeklyReportsFragment extends Fragment {
                     expenses = expenses + Double.parseDouble(currentTransaction.getAmount());
                 }
 
-                for (int d = 0; d < 7; d++) {
+                for (int d = 0; d <= 7; d++) {
                     if (d + 1 == transactionDay) {
                         if (currentTransaction.getPrefix().equals("+")) {
                             double dailyTotal = Double.parseDouble(dailyIncomes.get(d)) + currentTransaction.getAmountValue();
