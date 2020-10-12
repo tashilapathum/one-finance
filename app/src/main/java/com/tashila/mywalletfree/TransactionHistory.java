@@ -301,8 +301,8 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
                     try {
-                        typeSpinner.setSelection(0);
-                        sortSpinner.setSelection(0);
+                        /*typeSpinner.setSelection(0);
+                        sortSpinner.setSelection(0);*/
                         filter();
                     } catch (ConcurrentModificationException e) {
                         Toast.makeText(TransactionHistory.this, "Error", Toast.LENGTH_SHORT).show();
@@ -325,8 +325,8 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
                     try {
-                        dateSpinner.setSelection(0);
-                        sortSpinner.setSelection(0);
+                        /*dateSpinner.setSelection(0);
+                        sortSpinner.setSelection(0);*/
                         filter();
                     } catch (ConcurrentModificationException e) {
                         Toast.makeText(TransactionHistory.this, "Error", Toast.LENGTH_SHORT).show();
@@ -349,8 +349,8 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
                     try {
-                        dateSpinner.setSelection(0);
-                        typeSpinner.setSelection(0);
+                        /*dateSpinner.setSelection(0);
+                        typeSpinner.setSelection(0);*/
                         filter();
                     } catch (ConcurrentModificationException e) {
                         Toast.makeText(TransactionHistory.this, "Error", Toast.LENGTH_SHORT).show();
@@ -545,6 +545,9 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
 
         if (date != 6)
             showResults();
+    }
+
+    private void containsItem(TransactionItem item) {
     }
 
     public void filterByDate(int date) {

@@ -56,7 +56,11 @@ public class DialogBudget extends DialogFragment {
 
     private void saveBudget() {
         String monthlyBudget = editBudget.getText().toString();
-        sharedPref.edit().putString("monthlyBudget", monthlyBudget).apply();
+        if (!monthlyBudget.isEmpty())
+            sharedPref.edit().putString("monthlyBudget", monthlyBudget).apply();
+        else
+            sharedPref.edit().putString("monthlyBudget", "0.00").apply();
+
         Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT).show();
     }
 }

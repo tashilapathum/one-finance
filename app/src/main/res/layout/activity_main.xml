@@ -28,7 +28,7 @@
                 android:text="M y   W a l l e t"
                 android:fontFamily="@font/quicksand_medium"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorAccentLight"
                 android:gravity="center"
                 android:layout_marginEnd="72dp"
                 android:shadowRadius="3"
