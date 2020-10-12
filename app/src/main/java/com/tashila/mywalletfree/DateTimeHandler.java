@@ -1,5 +1,7 @@
 package com.tashila.mywalletfree;
 
+import android.util.Log;
+
 import org.threeten.bp.Instant;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.ZoneId;
@@ -11,6 +13,7 @@ import org.threeten.bp.temporal.WeekFields;
 import java.util.Locale;
 
 public class DateTimeHandler {
+    public static final String TAG = "DateTimeHandler";
     private LocalDateTime localDateTime;
 
     public DateTimeHandler(String millis) {

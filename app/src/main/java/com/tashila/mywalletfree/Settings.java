@@ -159,7 +159,7 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
             }
             case R.id.nav_reports: {
                 bundle.putString("feature", "reports");
-                Intent intent = new Intent(this, Reports.class);
+                Intent intent = new Intent(this, ReportsOverviewFragment.class);
                 startActivity(intent);
                 break;
             }

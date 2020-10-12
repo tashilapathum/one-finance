@@ -25,10 +25,10 @@
         <activity android:name=".NewAccount" />
         <activity android:name=".InitialSetup" />
         <activity
-            android:name=".Reports"
+            android:name=".ReportsOverviewFragment"
             android:label="@string/reports" />
         <activity
-            android:name=".ReportsNEW"
+            android:name=".Reports"
             android:label="@string/reports" />
         <activity
             android:name=".EditQuickList"

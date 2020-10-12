@@ -120,15 +120,6 @@
             android:hint="@string/description"
             >
 
-            <!--<com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:fontFamily="sans-serif-condensed"
-                android:hint="@string/description"
-                android:importantForAutofill="no"
-                android:inputType="textCapSentences" />-->
-
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/aetDescription"
                 android:layout_width="match_parent"

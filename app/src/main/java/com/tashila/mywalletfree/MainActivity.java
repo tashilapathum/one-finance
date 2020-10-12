@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             case R.id.nav_reports: {
                 bundle.putString("feature", "reports");
-                Intent intent = new Intent(this, ReportsNEW.class);
+                Intent intent = new Intent(this, Reports.class);
                 startActivity(intent);
                 break;
             }

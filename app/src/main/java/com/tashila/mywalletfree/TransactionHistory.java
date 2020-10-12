@@ -151,7 +151,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
                 break;
             }
             case R.id.nav_reports: {
-                Intent intent = new Intent(this, Reports.class);
+                Intent intent = new Intent(this, ReportsOverviewFragment.class);
                 startActivity(intent);
                 break;
             }

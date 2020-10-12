@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -138,23 +139,46 @@ public class WeeklyReportsFragment extends Fragment {
                     expenses = expenses + Double.parseDouble(currentTransaction.getAmount());
                 }
 
-                for (int d = 0; d <= 7; d++) {
+                for (int d = 0; d < 7; d++) {
                     if (d + 1 == transactionDay) {
-                        if (currentTransaction.getPrefix().equals("+")) {
-                            double dailyTotal = Double.parseDouble(dailyIncomes.get(d)) + currentTransaction.getAmountValue();
-                            dailyIncomes.add(d, "" + dailyTotal);
-                        } else {
-                            double dailyTotal = Double.parseDouble(dailyExpenses.get(d)) + currentTransaction.getAmountValue();
-                            dailyExpenses.add(d, "" + dailyTotal);
+                        if (weekFields.getFirstDayOfWeek().getValue() == 7) { //for countries with sunday as start of week
+                            if (transactionDay == 7) { //sunday
+                                if (currentTransaction.getPrefix().equals("+")) {
+                                    double dailyTotal = Double.parseDouble(dailyIncomes.get(0)) + currentTransaction.getAmountValue();
+                                    dailyIncomes.add(0, "" + dailyTotal);
+                                } else {
+                                    double dailyTotal = Double.parseDouble(dailyExpenses.get(0)) + currentTransaction.getAmountValue();
+                                    dailyExpenses.add(0, "" + dailyTotal);
+                                }
+                            } else {
+                                if (currentTransaction.getPrefix().equals("+")) {
+                                    double dailyTotal = Double.parseDouble(dailyIncomes.get(d + 1)) + currentTransaction.getAmountValue();
+                                    dailyIncomes.add(d + 1, "" + dailyTotal);
+                                } else {
+                                    double dailyTotal = Double.parseDouble(dailyExpenses.get(d + 1)) + currentTransaction.getAmountValue();
+                                    dailyExpenses.add(d + 1, "" + dailyTotal);
+                                }
+                            }
+
+                        } else { //for other countries
+                            if (currentTransaction.getPrefix().equals("+")) {
+                                double dailyTotal = Double.parseDouble(dailyIncomes.get(d)) + currentTransaction.getAmountValue();
+                                dailyIncomes.add(d, "" + dailyTotal);
+                            } else {
+                                double dailyTotal = Double.parseDouble(dailyExpenses.get(d)) + currentTransaction.getAmountValue();
+                                dailyExpenses.add(d, "" + dailyTotal);
+                            }
                         }
                     }
                 }
             }
         }
+
         //to calculate differences
         double incomeOLD = 0;
         double expensesOLD = 0;
-        for (int i = 0; i < transactionsList.size(); i++) {
+        for (
+                int i = 0; i < transactionsList.size(); i++) {
             TransactionItem currentTransaction = transactionsList.get(i);
             DateTimeHandler dateTimeHandler = new DateTimeHandler(currentTransaction.getUserDate());
             int transactionYear = dateTimeHandler.getYear();
@@ -166,6 +190,7 @@ public class WeeklyReportsFragment extends Fragment {
                     expensesOLD = expensesOLD + Double.parseDouble(currentTransaction.getAmount());
             }
         }
+
         double incomeDiff = income - incomeOLD;
         double expensesDiff = expenses - expensesOLD;
 
@@ -176,14 +201,19 @@ public class WeeklyReportsFragment extends Fragment {
         if (monthlyBudgetStr != null && !monthlyBudgetStr.equals("N/A")) {
             monthlyBudget = Double.parseDouble(monthlyBudgetStr);
         }
+
         double budget = monthlyBudget / 4;
         double budgetLeft = budget - expenses;
         //to show (+) for positive values
         String incomeDiffStr = null;
-        if (!df.format(incomeDiff).contains("-"))
+        if (!df.format(incomeDiff).
+
+                contains("-"))
             incomeDiffStr = "+" + df.format(incomeDiff);
         String expensesDiffStr = null;
-        if (!df.format(incomeDiff).contains("-"))
+        if (!df.format(incomeDiff).
+
+                contains("-"))
             expensesDiffStr = "+" + df.format(expensesDiff);
 
         //find most income and most expense day
@@ -215,9 +245,17 @@ public class WeeklyReportsFragment extends Fragment {
         }
         //capitalize
         if (mostIncomeDay != null)
-            mostIncomeDay = mostIncomeDay.substring(0,1).toUpperCase() + mostIncomeDay.substring(1).toLowerCase();
+            mostIncomeDay = mostIncomeDay.substring(0, 1).
+
+                    toUpperCase() + mostIncomeDay.substring(1).
+
+                    toLowerCase();
         if (mostExpenseDay != null)
-            mostExpenseDay = mostExpenseDay.substring(0,1).toUpperCase() + mostExpenseDay.substring(1).toLowerCase();
+            mostExpenseDay = mostExpenseDay.substring(0, 1).
+
+                    toUpperCase() + mostExpenseDay.substring(1).
+
+                    toLowerCase();
 
         WeeklyReport weeklyReport = new WeeklyReport(weekTitle,
                 new Amount(getActivity(), income).getAmountString(),
@@ -330,6 +368,7 @@ public class WeeklyReportsFragment extends Fragment {
         public String getMostExpenseDay() {
             return mostExpenseDay;
         }
+
     }
 
     public void purchaseProForThis() {
