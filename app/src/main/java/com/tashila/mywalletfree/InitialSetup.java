@@ -98,6 +98,8 @@ public class InitialSetup extends AppCompatActivity {
         EditText addBalance = tilAddBalance.getEditText();
         if (!addBalance.getText().toString().isEmpty())
             sharedPref.edit().putString("balance", addBalance.getText().toString()).apply();
+        else
+            sharedPref.edit().putString("balance", "0.00").apply();
 
         //budget
         TextInputLayout tilAddBudget = findViewById(R.id.addBudget);
@@ -106,6 +108,9 @@ public class InitialSetup extends AppCompatActivity {
             String monthlyBudget = editBudget.getText().toString();
             sharedPref.edit().putString("monthlyBudget", monthlyBudget).apply();
         }
+        else
+            sharedPref.edit().putString("monthlyBudget", "0.00").apply();
+
 
         //next
         Intent intent = new Intent(this, MainActivity.class);

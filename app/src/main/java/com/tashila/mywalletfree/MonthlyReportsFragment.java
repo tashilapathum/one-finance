@@ -169,22 +169,26 @@ public class MonthlyReportsFragment extends Fragment {
             DateTimeHandler dateTimeHandler = new DateTimeHandler(mostIncomeTransaction.getUserDate());
             mostIncomeDay = "" + dateTimeHandler.getDayOfMonth();
             String lastDigit = mostIncomeDay.substring(mostIncomeDay.length() - 1);
-            switch (lastDigit) {
-                case "1": {
-                    mostIncomeDay = mostIncomeDay + getString(R.string.st);
-                    break;
+            if (dateTimeHandler.getDayOfMonth() != 11 && dateTimeHandler.getDayOfMonth() != 12 && dateTimeHandler.getDayOfMonth() != 13) {
+                switch (lastDigit) {
+                    case "1": {
+                        mostIncomeDay = mostIncomeDay + getString(R.string.st);
+                        break;
+                    }
+                    case "2": {
+                        mostIncomeDay = mostIncomeDay + getString(R.string.nd);
+                        break;
+                    }
+                    case "3": {
+                        mostIncomeDay = mostIncomeDay + getString(R.string.rd);
+                        break;
+                    }
+                    default:
+                        mostIncomeDay = mostIncomeDay + getString(R.string.th);
                 }
-                case "2": {
-                    mostIncomeDay = mostIncomeDay + getString(R.string.nd);
-                    break;
-                }
-                case "3": {
-                    mostIncomeDay = mostIncomeDay + getString(R.string.rd);
-                    break;
-                }
-                default:
-                    mostIncomeDay = mostIncomeDay + getString(R.string.th);
             }
+            else
+                mostIncomeDay = mostIncomeDay + getString(R.string.th);
             mostIncomeDay = mostIncomeDay
                     + " (" + currency + mostIncomeTransaction.getAmount()
                     + " - " + mostIncomeTransaction.getDescription() + ")";
@@ -193,22 +197,26 @@ public class MonthlyReportsFragment extends Fragment {
             DateTimeHandler dateTimeHandler = new DateTimeHandler(mostExpenseTransaction.getUserDate());
             mostExpenseDay = "" + dateTimeHandler.getDayOfMonth();
             String lastDigit = mostExpenseDay.substring(mostExpenseDay.length() - 1);
-            switch (lastDigit) {
-                case "1": {
-                    mostExpenseDay = mostExpenseDay + getString(R.string.st);
-                    break;
+            if (dateTimeHandler.getDayOfMonth() != 11 && dateTimeHandler.getDayOfMonth() != 12 && dateTimeHandler.getDayOfMonth() != 13) {
+                switch (lastDigit) {
+                    case "1": {
+                        mostExpenseDay = mostExpenseDay + getString(R.string.st);
+                        break;
+                    }
+                    case "2": {
+                        mostExpenseDay = mostExpenseDay + getString(R.string.nd);
+                        break;
+                    }
+                    case "3": {
+                        mostExpenseDay = mostExpenseDay + getString(R.string.rd);
+                        break;
+                    }
+                    default:
+                        mostExpenseDay = mostExpenseDay + getString(R.string.th);
                 }
-                case "2": {
-                    mostExpenseDay = mostExpenseDay + getString(R.string.nd);
-                    break;
-                }
-                case "3": {
-                    mostExpenseDay = mostExpenseDay + getString(R.string.rd);
-                    break;
-                }
-                default:
-                    mostExpenseDay = mostExpenseDay + getString(R.string.th);
             }
+            else
+                mostExpenseDay = mostExpenseDay + getString(R.string.th);
             mostExpenseDay = mostExpenseDay
                     + " (" + currency + mostExpenseTransaction.getAmount()
                     + " - " + mostExpenseTransaction.getDescription() + ")";
