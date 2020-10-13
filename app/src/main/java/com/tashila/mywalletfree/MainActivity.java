@@ -33,7 +33,6 @@ import com.google.android.play.core.tasks.OnCompleteListener;
 import com.google.android.play.core.tasks.OnFailureListener;
 import com.google.android.play.core.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -99,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         /*----------------------------------------------------------------------------------------*/
-        AndroidThreeTen.init(this);
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         //bottom navigation

@@ -17,13 +17,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jakewharton.threetenabp.AndroidThreeTen;
-
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.Month;
-import org.threeten.bp.format.TextStyle;
-
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -44,7 +41,6 @@ public class MonthlyReportsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_monthly_reports, container, false);
-        AndroidThreeTen.init(getActivity());
         monthlyReportList = new ArrayList<>();
         month = LocalDate.now().getMonthValue();
         monthCount = 0;
@@ -80,7 +76,7 @@ public class MonthlyReportsFragment extends Fragment {
         List<TransactionItem> transactionsList = transactionsViewModel.getTransactionsList();
 
         //card title
-        String monthTitle = Month.of(month).getDisplayName(TextStyle.FULL_STANDALONE, Locale.getDefault());
+        String monthTitle = Month.of(month).getDisplayName(TextStyle.FULL, Locale.getDefault());
 
         //daily data
         double income = 0;

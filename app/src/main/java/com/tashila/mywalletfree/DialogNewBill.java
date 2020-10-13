@@ -13,16 +13,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.jakewharton.threetenabp.AndroidThreeTen;
-
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.format.DateTimeFormatter;
-import org.threeten.bp.format.FormatStyle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 public class DialogNewBill extends DialogFragment {
     private View view;
@@ -47,7 +45,6 @@ public class DialogNewBill extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AndroidThreeTen.init(getActivity());
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
         instance = this;

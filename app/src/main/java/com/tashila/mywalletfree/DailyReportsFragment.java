@@ -17,14 +17,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jakewharton.threetenabp.AndroidThreeTen;
-
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.YearMonth;
-import org.threeten.bp.format.DateTimeFormatter;
-import org.threeten.bp.format.FormatStyle;
-
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +39,6 @@ public class DailyReportsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_daily_reports, container, false);
-        AndroidThreeTen.init(getActivity());
         dailyReportList = new ArrayList<>();
         day = LocalDate.now().getDayOfYear();
         dayCount = 0;

@@ -9,7 +9,6 @@ import android.widget.EditText;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,7 +25,6 @@ public class DialogNewCartItem extends BottomSheetDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AndroidThreeTen.init(getActivity());
         view = getActivity().getLayoutInflater().inflate(R.layout.dialog_cart_item, null);
         etItemName = view.findViewById(R.id.itemName);
         etItemPrice = view.findViewById(R.id.itemPrice);

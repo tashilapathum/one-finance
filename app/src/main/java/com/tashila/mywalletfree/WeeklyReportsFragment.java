@@ -18,17 +18,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jakewharton.threetenabp.AndroidThreeTen;
-
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.format.DateTimeFormatter;
-import org.threeten.bp.format.FormatStyle;
-import org.threeten.bp.format.TextStyle;
-import org.threeten.bp.temporal.IsoFields;
-import org.threeten.bp.temporal.TemporalAdjusters;
-import org.threeten.bp.temporal.WeekFields;
-
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.time.format.TextStyle;
+import java.time.temporal.IsoFields;
+import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -51,7 +48,6 @@ public class WeeklyReportsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_weekly_reports, container, false);
-        AndroidThreeTen.init(getActivity());
         weeklyReportList = new ArrayList<>();
         weekFields = WeekFields.of(Locale.getDefault());
         week = LocalDate.now().get(weekFields.weekOfWeekBasedYear());
@@ -386,3 +382,6 @@ public class WeeklyReportsFragment extends Fragment {
                 .show();
     }
 }
+
+//TODO: fix daily data thing
+//TODO: update Pro features sinhala translations

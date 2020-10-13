@@ -12,18 +12,16 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jakewharton.threetenabp.AndroidThreeTen;
-
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.LocalDateTime;
-import org.threeten.bp.ZoneId;
-import org.threeten.bp.format.DateTimeFormatter;
-import org.threeten.bp.format.FormatStyle;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
     public static final String TAG = "BillsAdapter";
@@ -35,7 +33,6 @@ public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
     public BillsAdapter(Context context) {
         super(DIFF_CALLBACK);
         this.context = context;
-        AndroidThreeTen.init(context);
         sharedPref = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
         currency = sharedPref.getString("currency", "");
     }

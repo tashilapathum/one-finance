@@ -15,9 +15,6 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.jakewharton.threetenabp.AndroidThreeTen;
-
-import org.threeten.bp.YearMonth;
 
 import java.util.Locale;
 
@@ -32,7 +29,6 @@ public class InitialSetup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_setup);
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
-        AndroidThreeTen.init(this);
         radioGroup = findViewById(R.id.radioGroup);
         RadioButton rb1 = findViewById(R.id.otEnglish);
         RadioButton rb2 = findViewById(R.id.otSinhala);

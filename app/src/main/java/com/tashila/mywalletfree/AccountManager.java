@@ -18,7 +18,6 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import java.util.List;
 import java.util.Locale;

@@ -24,7 +24,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
-import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
         if (theme.equalsIgnoreCase("dark")) {
             setTheme(R.style.AppThemeDark);
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_reports_new);
+            setContentView(R.layout.activity_reports);
             View layout = findViewById(R.id.drawer_layout);
             layout.setBackground(ContextCompat.getDrawable(this, R.drawable.background_dark));
             toolbar = findViewById(R.id.toolbar);
@@ -53,7 +52,7 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
         } else {
             setTheme(R.style.AppTheme);
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_reports_new);
+            setContentView(R.layout.activity_reports);
             toolbar = findViewById(R.id.toolbar);
         }
 
@@ -67,7 +66,6 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         /*----------------------------------------------------------------------------------------*/
-        AndroidThreeTen.init(this);
 
         ViewPager viewPager = findViewById(R.id.reports_view_pager);
         TabLayout tabLayout = findViewById(R.id.reports_tab_layout);

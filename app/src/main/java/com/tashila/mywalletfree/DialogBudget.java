@@ -12,10 +12,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.jakewharton.threetenabp.AndroidThreeTen;
-
-import org.threeten.bp.YearMonth;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -28,7 +24,6 @@ public class DialogBudget extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AndroidThreeTen.init(getActivity());
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();

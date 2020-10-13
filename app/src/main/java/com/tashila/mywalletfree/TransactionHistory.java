@@ -31,10 +31,9 @@ import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.LocalDateTime;
-
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -301,8 +300,8 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
                     try {
-                        /*typeSpinner.setSelection(0);
-                        sortSpinner.setSelection(0);*/
+                        typeSpinner.setSelection(0);
+                        sortSpinner.setSelection(0);
                         filter();
                     } catch (ConcurrentModificationException e) {
                         Toast.makeText(TransactionHistory.this, "Error", Toast.LENGTH_SHORT).show();
@@ -325,8 +324,8 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
                     try {
-                        /*dateSpinner.setSelection(0);
-                        sortSpinner.setSelection(0);*/
+                        dateSpinner.setSelection(0);
+                        sortSpinner.setSelection(0);
                         filter();
                     } catch (ConcurrentModificationException e) {
                         Toast.makeText(TransactionHistory.this, "Error", Toast.LENGTH_SHORT).show();
@@ -349,8 +348,8 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
                     try {
-                        /*dateSpinner.setSelection(0);
-                        typeSpinner.setSelection(0);*/
+                        dateSpinner.setSelection(0);
+                        typeSpinner.setSelection(0);
                         filter();
                     } catch (ConcurrentModificationException e) {
                         Toast.makeText(TransactionHistory.this, "Error", Toast.LENGTH_SHORT).show();
@@ -380,8 +379,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             case 2: { //today
                 for (TransactionItem item : transactionsList) {
                     DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
-                    if (dateTimeHandler.getDayOfYear() == LocalDate.now().getDayOfYear()
-                            && !filteredList.contains(item))
+                    if (dateTimeHandler.getDayOfYear() == LocalDate.now().getDayOfYear() && !containsItem(item))
                         filteredList.add(item);
                     else
                         filteredList.remove(item);
@@ -391,8 +389,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             case 3: { //yesterday
                 for (TransactionItem item : transactionsList) {
                     DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
-                    if (dateTimeHandler.getDayOfYear() == LocalDate.now().minusDays(1).getDayOfYear()
-                            && !filteredList.contains(item))
+                    if (dateTimeHandler.getDayOfYear() == LocalDate.now().minusDays(1).getDayOfYear() && !containsItem(item))
                         filteredList.add(item);
                     else
                         filteredList.remove(item);
@@ -402,8 +399,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             case 4: { //this week
                 for (TransactionItem item : transactionsList) {
                     DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
-                    if (dateTimeHandler.getWeekOfYear() == dateTimeHandler.getWeekOfYear(LocalDateTime.now())
-                            && !filteredList.contains(item))
+                    if (dateTimeHandler.getWeekOfYear() == dateTimeHandler.getWeekOfYear(LocalDateTime.now()) && !containsItem(item))
                         filteredList.add(item);
                     else
                         filteredList.remove(item);
@@ -413,8 +409,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             case 5: { //last week
                 for (TransactionItem item : transactionsList) {
                     DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
-                    if (dateTimeHandler.getWeekOfYear() == dateTimeHandler.getWeekOfYear(LocalDateTime.now().minusDays(7))
-                            && !filteredList.contains(item))
+                    if (dateTimeHandler.getWeekOfYear() == dateTimeHandler.getWeekOfYear(LocalDateTime.now().minusDays(7)) && !containsItem(item))
                         filteredList.add(item);
                     else
                         filteredList.remove(item);
@@ -438,8 +433,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             }
             case 2: { //incomes
                 for (TransactionItem item : transactionsList) {
-                    if (item.getPrefix().equals("+")
-                            && !filteredList.contains(item))
+                    if (item.getPrefix().equals("+") && !containsItem(item))
                         filteredList.add(item);
                     else
                         filteredList.remove(item);
@@ -448,8 +442,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             }
             case 3: { //expenses
                 for (TransactionItem item : transactionsList) {
-                    if (item.getPrefix().equals("-")
-                            && !filteredList.contains(item))
+                    if (item.getPrefix().equals("-") && !containsItem(item))
                         filteredList.add(item);
                     else
                         filteredList.remove(item);
@@ -547,7 +540,8 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
             showResults();
     }
 
-    private void containsItem(TransactionItem item) {
+    private boolean containsItem(TransactionItem item) {
+        return filteredList.stream().anyMatch(o -> o.getId() == item.getId());
     }
 
     public void filterByDate(int date) {
