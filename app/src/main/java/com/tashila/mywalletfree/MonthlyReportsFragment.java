@@ -37,14 +37,26 @@ public class MonthlyReportsFragment extends Fragment {
     private int monthCount;
     private int year;
     private int yearCount;
+    private int pickedYear;
+    private int pickedMonth;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_monthly_reports, container, false);
+        sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         monthlyReportList = new ArrayList<>();
-        month = LocalDate.now().getMonthValue();
+        pickedMonth = sharedPref.getInt("reports_month", 0);
+        if (pickedMonth != 0)
+            month = pickedMonth;
+        else
+            month = LocalDate.now().getMonthValue();
         monthCount = 0;
-        year = LocalDate.now().getYear();
+        pickedYear = sharedPref.getInt("reports_year", 0);
+        if (pickedYear != 0)
+            year = pickedYear;
+        else
+            year = LocalDate.now().getYear();
         yearCount = 0;
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -53,6 +65,7 @@ public class MonthlyReportsFragment extends Fragment {
         adapter = new MonthlyReportsAdapter();
         recyclerView.setLayoutAnimation(new AnimationHandler().getSlideUpController());
         recyclerView.setAdapter(adapter);
+        calculateMonthlyReport(month, year);
         calculateMonthlyReport(month, year);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -69,7 +82,6 @@ public class MonthlyReportsFragment extends Fragment {
     }
 
     private void calculateMonthlyReport(int month, int year) {
-        sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         currency = sharedPref.getString("currency", "");
         TransactionsViewModel transactionsViewModel = new ViewModelProvider(getActivity(),
                 ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(TransactionsViewModel.class);
@@ -182,8 +194,7 @@ public class MonthlyReportsFragment extends Fragment {
                     default:
                         mostIncomeDay = mostIncomeDay + getString(R.string.th);
                 }
-            }
-            else
+            } else
                 mostIncomeDay = mostIncomeDay + getString(R.string.th);
             mostIncomeDay = mostIncomeDay
                     + " (" + currency + mostIncomeTransaction.getAmount()
@@ -210,8 +221,7 @@ public class MonthlyReportsFragment extends Fragment {
                     default:
                         mostExpenseDay = mostExpenseDay + getString(R.string.th);
                 }
-            }
-            else
+            } else
                 mostExpenseDay = mostExpenseDay + getString(R.string.th);
             mostExpenseDay = mostExpenseDay
                     + " (" + currency + mostExpenseTransaction.getAmount()
@@ -244,7 +254,10 @@ public class MonthlyReportsFragment extends Fragment {
 
         //to load next cards
         monthCount++;
-        this.month = LocalDate.now().minusMonths(monthCount).getMonthValue();
+        if (pickedMonth != 0)
+            this.month = Month.of(pickedMonth).minus(monthCount).getValue();
+        else
+            this.month = LocalDate.now().minusMonths(monthCount).getMonthValue();
         if (monthCount % 12 == 0) yearCount++;
         this.year = LocalDate.now().minusYears(yearCount).getYear();
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/pickDate"
+        app:showAsAction="always"
+        android:contentDescription="pick a date, week or month"
+        android:icon="@drawable/ic_pick_date"
+        android:title="@string/pick_a_day" />
+
+</menu>

@@ -35,6 +35,41 @@
             </com.google.android.material.tabs.TabLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/filtersCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:cardCornerRadius="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp">
+
+                <TextView
+                    android:id="@+id/showingData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Showing data from: "
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textStyle="italic"
+                    android:layout_centerVertical="true"/>
+
+                <ImageButton
+                    android:id="@+id/clearFilter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_remove"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="clear picked date"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/reports_view_pager"
             android:layout_width="match_parent"
@@ -52,6 +87,6 @@
         app:menu="@menu/drawer_menu"
         style="@style/Widget.Design.NavigationView"
         app:itemTextAppearance="@style/DrawerTextStyle"
-        android:theme="@style/NavigationItemRipple"/>
+        android:theme="@style/NavigationItemRipple" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

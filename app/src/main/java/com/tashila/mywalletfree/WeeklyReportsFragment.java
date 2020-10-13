@@ -43,15 +43,26 @@ public class WeeklyReportsFragment extends Fragment {
     private int yearCount;
     private int year;
     private WeekFields weekFields;
+    private int pickedWeek;
+    private int pickedYear;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_weekly_reports, container, false);
+        sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         weeklyReportList = new ArrayList<>();
         weekFields = WeekFields.of(Locale.getDefault());
-        week = LocalDate.now().get(weekFields.weekOfWeekBasedYear());
-        year = LocalDate.now().getYear();
+        pickedWeek = sharedPref.getInt("reports_week", 0);
+        if (pickedWeek != 0)
+            week = pickedWeek;
+        else
+            week = LocalDate.now().get(weekFields.weekOfWeekBasedYear());
+        pickedYear = sharedPref.getInt("reports_year", 0);
+        if (pickedYear != 0)
+            year = pickedYear;
+        else
+            year = LocalDate.now().getYear();
         weekCount = 0;
         yearCount = 0;
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -79,7 +90,6 @@ public class WeeklyReportsFragment extends Fragment {
     }
 
     private void calculateWeeklyReport(int week, int year) {
-        sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         currency = sharedPref.getString("currency", "");
         TransactionsViewModel transactionsViewModel = new ViewModelProvider(getActivity(),
                 ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(TransactionsViewModel.class);
@@ -271,10 +281,12 @@ public class WeeklyReportsFragment extends Fragment {
             yearCount++;
             this.year = this.year - yearCount;
         }
-        this.week = LocalDate.now()
-                .minusYears(yearCount)
-                .minusWeeks(weekCount)
-                .get(weekFields.weekOfWeekBasedYear());
+        if (pickedWeek != 0)
+            this.week = LocalDate.now().with(IsoFields.WEEK_OF_WEEK_BASED_YEAR, pickedWeek).minusWeeks(weekCount)
+                    .get(weekFields.weekOfWeekBasedYear());
+        else
+            this.week = LocalDate.now().minusYears(yearCount).minusWeeks(weekCount)
+                    .get(weekFields.weekOfWeekBasedYear());
         weeklyReportList.add(weeklyReport);
         adapter.submitList(weeklyReportList);
         adapter.notifyItemInserted(adapter.getItemCount() + 1);

@@ -35,12 +35,20 @@ public class DailyReportsFragment extends Fragment {
     private List<DailyReport> dailyReportList;
     private int day;
     private int dayCount;
+    private int pickedDay;
+    private int pickedYear;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_daily_reports, container, false);
+        sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         dailyReportList = new ArrayList<>();
-        day = LocalDate.now().getDayOfYear();
+        pickedDay = sharedPref.getInt("reports_day", 0);
+        pickedYear = sharedPref.getInt("reports_year", 0);
+        if (pickedDay != 0)
+            day = pickedDay;
+        else
+            day = LocalDate.now().getDayOfYear();
         dayCount = 0;
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -67,7 +75,6 @@ public class DailyReportsFragment extends Fragment {
     }
 
     private void calculateDailyReport(int day) {
-        sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         currency = sharedPref.getString("currency", "");
         TransactionsViewModel transactionsViewModel = new ViewModelProvider(getActivity(),
                 ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(TransactionsViewModel.class);
@@ -144,7 +151,10 @@ public class DailyReportsFragment extends Fragment {
 
         //to load next cards
         dayCount++;
-        this.day = LocalDate.now().minusDays(dayCount).getDayOfYear();
+        if (pickedDay != 0)
+            this.day = LocalDate.ofYearDay(pickedYear, pickedDay).minusDays(dayCount).getDayOfYear();
+        else
+            this.day = LocalDate.now().minusDays(dayCount).getDayOfYear();
 
         dailyReportList.add(dailyReport);
         adapter.submitList(dailyReportList);

@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+    public static final String TAG = "DatePickerFragment";
     Calendar c = Calendar.getInstance();
     int year = c.get(Calendar.YEAR);
     int month = c.get(Calendar.MONTH);
@@ -34,13 +35,15 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     }
 
     @Override
-    public void onDateSet(DatePicker datePicker, int day, int month, int year) {
+    public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
         month = month + 1;
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-        String date = formatter.format(LocalDate.of(day, month, year));
-        LocalDateTime dateTime = LocalDateTime.of(day, month, year, LocalDateTime.now().getHour(), LocalDateTime.now().getHour());
+        String date = formatter.format(LocalDate.of(year, month, dayOfMonth));
+        LocalDateTime dateTime = LocalDateTime.of(year, month, dayOfMonth, LocalDateTime.now().getHour(), LocalDateTime.now().getHour());
         ZonedDateTime zdt = dateTime.atZone(ZoneId.systemDefault());
         String dateInMillis = String.valueOf(zdt.toInstant().toEpochMilli());
+        int week = new DateTimeHandler(dateInMillis).getWeekOfYear();
+        int dayOfYear = new DateTimeHandler(dateInMillis).getDayOfYear();
         String fromContext = null;
         Bundle bundle = this.getArguments();
         if (bundle != null)
@@ -60,6 +63,10 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         if (fromContext.equals("fromTransactionFilter")) {
             DateTimeHandler dateTimeHandler = new DateTimeHandler(dateInMillis);
             ((TransactionHistory) getActivity()).filterByDate(dateTimeHandler.getDayOfYear());
+        }
+
+        if (fromContext.equals("fromReports")) {
+            ((Reports) getActivity()).applyFilter(year, month, week, dayOfYear, dayOfMonth);
         }
     }
 }

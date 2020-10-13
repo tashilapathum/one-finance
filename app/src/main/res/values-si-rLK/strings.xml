@@ -332,4 +332,5 @@
     <string name="incomes">Incomes</string>
     <string name="overview">Overview</string>
     <string name="re_budget">Budget</string>
+    <string name="pick_a_day">Pick a day</string>
 </resources>

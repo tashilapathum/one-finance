@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,11 +19,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -33,6 +37,9 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
     SharedPreferences sharedPref;
     private DrawerLayout drawer;
     public static final String TAG = "Reports";
+    private ViewPager viewPager;
+    private ViewPagerAdapter viewPagerAdapter;
+
 
     @SuppressLint("WrongConstant")
     @Override
@@ -40,6 +47,7 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
         /*------------------------------Essential for every activity------------------------------*/
         Toolbar toolbar;
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
+
         String theme = sharedPref.getString("theme", "light");
         if (theme.equalsIgnoreCase("dark")) {
             setTheme(R.style.AppThemeDark);
@@ -67,7 +75,7 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
         toggle.syncState();
         /*----------------------------------------------------------------------------------------*/
 
-        ViewPager viewPager = findViewById(R.id.reports_view_pager);
+        viewPager = findViewById(R.id.reports_view_pager);
         TabLayout tabLayout = findViewById(R.id.reports_tab_layout);
 
         DailyReportsFragment dailyReportsFragment = new DailyReportsFragment();
@@ -75,7 +83,7 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
         MonthlyReportsFragment monthlyReportsFragment = new MonthlyReportsFragment();
         ReportsOverviewFragment reportsOverviewFragment = new ReportsOverviewFragment();
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), 0);
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), 0);
         viewPagerAdapter.addFragment(dailyReportsFragment, getString(R.string.daily));
         viewPagerAdapter.addFragment(weeklyReportsFragment, getString(R.string.weekly));
         viewPagerAdapter.addFragment(monthlyReportsFragment, getString(R.string.monthly));
@@ -85,11 +93,29 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.reports_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.pickDate)
+            pickDate();
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-        if (sharedPref.getBoolean("exit", false)) {
+        if (sharedPref.getBoolean("exit", false))
             finishAndRemoveTask();
-        }
+
+        //reset picked date
+        sharedPref.edit().putInt("reports_year", 0).apply();
+        sharedPref.edit().putInt("reports_month", 0).apply();
+        sharedPref.edit().putInt("reports_week", 0).apply();
+        sharedPref.edit().putInt("reports_day", 0).apply();
     }
 
     @Override
@@ -159,13 +185,39 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
         }
     }
 
-    private void setData(TextView textView, double value) {
-        String currency = sharedPref.getString("currency", "");
-        DecimalFormat df = new DecimalFormat("#.00");
-        if (value == 0)
-            textView.append(currency + "0.00");
-        else
-            textView.append(currency + df.format(value));
+    private void pickDate() {
+        DialogFragment datePicker = new DatePickerFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("pickDate", "fromReports");
+        datePicker.setArguments(bundle);
+        datePicker.show(getSupportFragmentManager(), "reports date picker");
+
+        //date is saved to sharedPref from DatePickerFragment
+    }
+
+    public void applyFilter(int year, int month, int week, int dayOfYear, int dayOfMonth) {
+        sharedPref.edit().putInt("reports_year", year).apply();
+        sharedPref.edit().putInt("reports_month", month).apply();
+        sharedPref.edit().putInt("reports_week", week).apply();
+        sharedPref.edit().putInt("reports_day", dayOfYear).apply();
+        viewPagerAdapter.notifyDataSetChanged();
+
+        MaterialCardView filtersCard = findViewById(R.id.filtersCard);
+        filtersCard.setVisibility(View.VISIBLE);
+        TextView tvShowingData = findViewById(R.id.showingData);
+        tvShowingData.setText("Showing data from: " + " Year "+year +" | Month "+month +" | Week "+week +" | Day "+dayOfMonth);
+        ImageButton ibClearFilter = findViewById(R.id.clearFilter);
+        ibClearFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filtersCard.setVisibility(View.GONE);
+                sharedPref.edit().putInt("reports_year", 0).apply();
+                sharedPref.edit().putInt("reports_month", 0).apply();
+                sharedPref.edit().putInt("reports_week", 0).apply();
+                sharedPref.edit().putInt("reports_day", 0).apply();
+                viewPagerAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -197,6 +249,11 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
         @Override
         public CharSequence getPageTitle(int position) {
             return fragmentTitlesList.get(position);
+        }
+
+        @Override
+        public int getItemPosition(@NonNull Object object) {
+            return POSITION_NONE;
         }
     }
 }
