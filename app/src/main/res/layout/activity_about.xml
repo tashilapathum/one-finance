@@ -58,6 +58,7 @@
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textStyle="bold"
+            android:fontFamily="@font/quicksand_medium"
             android:textColor="?android:attr/colorForeground"/>
 
         <TextView

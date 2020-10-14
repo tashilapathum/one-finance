@@ -47,8 +47,10 @@ public class DailyReportsFragment extends Fragment {
         pickedYear = sharedPref.getInt("reports_year", 0);
         if (pickedDay != 0)
             day = pickedDay;
-        else
+        else {
             day = LocalDate.now().getDayOfYear();
+            pickedYear = LocalDate.now().getYear();
+        }
         dayCount = 0;
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -82,7 +84,7 @@ public class DailyReportsFragment extends Fragment {
         String date;
 
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
-        date = formatter.format(LocalDate.ofYearDay(LocalDate.now().getYear(), day));
+        date = formatter.format(LocalDate.ofYearDay(pickedYear, day));
         if (day == LocalDate.now().getDayOfYear())
             date = getString(R.string.re_today) + date + ")";
         if (day == LocalDate.now().getDayOfYear() - 1)

@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.time.format.TextStyle;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.IsoFields;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.WeekFields;
@@ -65,6 +66,9 @@ public class WeeklyReportsFragment extends Fragment {
             year = LocalDate.now().getYear();
         weekCount = 0;
         yearCount = 0;
+        if (pickedWeek != 0)
+            yearCount = LocalDate.now().getYear() - pickedYear;
+        Log.i(TAG, "yearCount: " + yearCount);
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
