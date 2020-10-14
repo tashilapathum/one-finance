@@ -10,7 +10,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 
 import android.app.AlarmManager;
+
 import androidx.appcompat.app.AlertDialog;
+
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -26,14 +28,14 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.material.checkbox.MaterialCheckBox;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.shreyaspatil.material.navigationview.MaterialNavigationView;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class Settings extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, TimePickerDialog.OnTimeSetListener {
+public class Settings extends AppCompatActivity implements MaterialNavigationView.OnNavigationItemSelectedListener, TimePickerDialog.OnTimeSetListener {
     public static final String TAG = "Settings";
     SharedPreferences sharedPref;
     private DrawerLayout drawer;
@@ -41,6 +43,8 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
     private MaterialCheckBox exitCheckBox;
     private MaterialCheckBox suggestCheckBox;
     private FirebaseAnalytics firebaseAnalytics;
+    private MaterialNavigationView navigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +71,7 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
             layout.setBackground(ContextCompat.getDrawable(this, R.drawable.background_dark));
             toolbar = findViewById(R.id.toolbar);
             toolbar.setBackground(getDrawable(R.color.colorToolbarDark));
-        }
-        else {
+        } else {
             setTheme(R.style.AppTheme);
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_settings);
@@ -77,7 +80,7 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
 
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView =findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -129,6 +132,7 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
     @Override
     protected void onResume() {
         super.onResume();
+        navigationView.setCheckedItem(R.id.nav_settings);
         if (sharedPref.getBoolean("exit", false)) {
             finishAndRemoveTask();
         }
@@ -196,8 +200,7 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -263,8 +266,7 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
         if (sharedPref.getBoolean("MyWalletPro", false)) {
             DialogFragment timePicker = new TimePickerFrag();
             timePicker.show(getSupportFragmentManager(), "time picker");
-        }
-        else purchaseProForThis();
+        } else purchaseProForThis();
     }
 
     @Override
@@ -301,8 +303,7 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
         if (sharedPref.getBoolean("MyWalletPro", false)) {
             DialogTheme dialogTheme = new DialogTheme();
             dialogTheme.show(getSupportFragmentManager(), "theme dialog");
-        }
-        else purchaseProForThis();
+        } else purchaseProForThis();
     }
 
     public void chooseHome(View view) {
@@ -312,8 +313,7 @@ public class Settings extends AppCompatActivity implements NavigationView.OnNavi
         if (sharedPref.getBoolean("MyWalletPro", false)) {
             DialogChooseHome dialogChooseHome = new DialogChooseHome();
             dialogChooseHome.show(getSupportFragmentManager(), "choose home dialog");
-        }
-        else purchaseProForThis();
+        } else purchaseProForThis();
     }
 
     public void manageAccounts(View view) {

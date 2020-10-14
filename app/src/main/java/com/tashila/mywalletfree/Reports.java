@@ -26,19 +26,20 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.shreyaspatil.material.navigationview.MaterialNavigationView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Reports extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Reports extends AppCompatActivity implements MaterialNavigationView.OnNavigationItemSelectedListener {
     SharedPreferences sharedPref;
     private DrawerLayout drawer;
     public static final String TAG = "Reports";
     private ViewPager viewPager;
     private ViewPagerAdapter viewPagerAdapter;
+    private MaterialNavigationView navigationView;
 
 
     @SuppressLint("WrongConstant")
@@ -66,7 +67,7 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
 
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -108,6 +109,7 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
     @Override
     protected void onResume() {
         super.onResume();
+        navigationView.setCheckedItem(R.id.nav_reports);
         if (sharedPref.getBoolean("exit", false))
             finishAndRemoveTask();
 
@@ -205,7 +207,7 @@ public class Reports extends AppCompatActivity implements NavigationView.OnNavig
         MaterialCardView filtersCard = findViewById(R.id.filtersCard);
         filtersCard.setVisibility(View.VISIBLE);
         TextView tvShowingData = findViewById(R.id.showingData);
-        tvShowingData.setText("Showing data from: " + " Year "+year +" | Month "+month +" | Week "+week +" | Day "+dayOfMonth);
+        tvShowingData.setText("Showing data from: " + " Year " + year + " | Month " + month + " | Week " + week + " | Day " + dayOfMonth);
         ImageButton ibClearFilter = findViewById(R.id.clearFilter);
         ibClearFilter.setOnClickListener(new View.OnClickListener() {
             @Override

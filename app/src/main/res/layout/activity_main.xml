@@ -7,7 +7,8 @@
     tools:context=".MainActivity"
     android:id="@+id/drawer_layout"
     android:fitsSystemWindows="true"
-    android:background="@drawable/background">
+    android:background="@drawable/background"
+    tools:openDrawer="start">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,16 +63,15 @@
 
     </RelativeLayout>
 
-    <com.google.android.material.navigation.NavigationView
+    <com.shreyaspatil.material.navigationview.MaterialNavigationView
         android:id="@+id/nav_view"
         android:layout_width="256dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu"
-        style="@style/Widget.Design.NavigationView"
-        app:itemTextAppearance="@style/DrawerTextStyle"
-        android:theme="@style/NavigationItemRipple"/>
+        app:itemStyle="rounded_right"
+        app:itemTextAppearance="@style/DrawerTextStyle"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
 

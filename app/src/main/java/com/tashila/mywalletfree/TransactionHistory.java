@@ -28,8 +28,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.shreyaspatil.material.navigationview.MaterialNavigationView;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -40,7 +40,7 @@ import java.util.Comparator;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
-public class TransactionHistory extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class TransactionHistory extends AppCompatActivity implements MaterialNavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     public static final String TAG = "TransactionHistory";
     SharedPreferences sharedPref;
@@ -58,6 +58,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
     private int sort;
     List<TransactionItem> transactionsList;
     List<TransactionItem> filteredList;
+    private MaterialNavigationView navigationView;
 
 
     @Override
@@ -83,7 +84,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
 
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -150,7 +151,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
                 break;
             }
             case R.id.nav_reports: {
-                Intent intent = new Intent(this, ReportsOverviewFragment.class);
+                Intent intent = new Intent(this, Reports.class);
                 startActivity(intent);
                 break;
             }
@@ -190,6 +191,7 @@ public class TransactionHistory extends AppCompatActivity implements NavigationV
     @Override
     protected void onResume() {
         super.onResume();
+        navigationView.setCheckedItem(R.id.nav_recent_trans);
         if (sharedPref.getBoolean("exit", false))
             finishAndRemoveTask();
     }

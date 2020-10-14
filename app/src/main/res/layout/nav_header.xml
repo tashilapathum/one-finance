@@ -8,22 +8,13 @@
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat">
 
-    <com.sdsmdg.harjot.materialshadows.MaterialShadowViewWrapper
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:shadowAlpha="0.7"
-        app:shadowOffsetX="3"
-        app:shadowOffsetY="3">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="-4dp"
-            android:layout_marginBottom="6dp"
-            android:contentDescription="my wallet icon"
-            android:elevation="8dp"
-            android:src="@mipmap/ic_launcher_foreground" />
-    </com.sdsmdg.harjot.materialshadows.MaterialShadowViewWrapper>
+        android:layout_marginStart="-4dp"
+        android:layout_marginBottom="6dp"
+        android:contentDescription="my wallet icon"
+        android:src="@mipmap/ic_launcher_foreground" />
 
     <TextView
         android:layout_width="wrap_content"

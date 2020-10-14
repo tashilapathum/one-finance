@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <group
-        android:id="@+id/top_group">
+        android:id="@+id/top_group"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
@@ -23,7 +24,8 @@
     </group>
 
     <group
-        android:id="@+id/bottom_group">
+        android:id="@+id/bottom_group"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_get_pro"
             android:icon="@drawable/ic_get_pro"
