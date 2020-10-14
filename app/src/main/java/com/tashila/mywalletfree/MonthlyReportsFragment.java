@@ -58,6 +58,8 @@ public class MonthlyReportsFragment extends Fragment {
         else
             year = LocalDate.now().getYear();
         yearCount = 0;
+        if (pickedYear != 0)
+            yearCount = year - pickedYear;
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
@@ -116,7 +118,7 @@ public class MonthlyReportsFragment extends Fragment {
         }
 
         //averages
-        int monthLength = LocalDate.of(LocalDate.now().getYear(), month, 1).lengthOfMonth();
+        int monthLength = LocalDate.of(LocalDate.ofYearDay(year, LocalDate.now().getDayOfYear()).getYear(), month, 1).lengthOfMonth();
         double averageIncome = income / monthLength;
         double averageExpenses = expenses / monthLength;
 
