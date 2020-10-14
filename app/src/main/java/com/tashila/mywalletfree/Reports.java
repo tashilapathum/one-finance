@@ -140,38 +140,75 @@ public class Reports extends AppCompatActivity implements MaterialNavigationView
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_home: {
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_home)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                }
                 break;
             }
             case R.id.nav_recent_trans: {
-                Intent intent = new Intent(this, TransactionHistory.class);
-                startActivity(intent);
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_recent_trans)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, TransactionHistory.class);
+                    startActivity(intent);
+                }
                 break;
             }
             case R.id.nav_reports: {
-                Intent intent = new Intent(this, Reports.class);
-                startActivity(intent);
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_reports)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, Reports.class);
+                    startActivity(intent);
+                }
+                break;
+            }
+            case R.id.nav_accounts: {
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_accounts)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, AccountManager.class);
+                    startActivity(intent);
+                }
                 break;
             }
             case R.id.nav_settings: {
-                Intent intent = new Intent(this, Settings.class);
-                startActivity(intent);
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_settings)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, Settings.class);
+                    startActivity(intent);
+                }
                 break;
             }
             case R.id.nav_get_pro: {
-                Intent intent = new Intent(this, UpgradeToPro.class);
-                startActivity(intent);
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_get_pro)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, UpgradeToPro.class);
+                    startActivity(intent);
+                }
                 break;
             }
             case R.id.nav_about: {
-                Intent intent = new Intent(this, About.class);
-                startActivity(intent);
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_about)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, About.class);
+                    startActivity(intent);
+                }
                 break;
             }
             case R.id.nav_exit: {
-                sharedPref.edit().putBoolean("exit", true).apply();
-                finishAndRemoveTask();
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_exit)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    sharedPref.edit().putBoolean("exit", true).apply();
+                    finishAndRemoveTask();
+                }
                 break;
             }
         }

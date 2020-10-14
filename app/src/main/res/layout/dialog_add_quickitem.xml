@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/item_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -26,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/etItem"
         android:hint="@string/price"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText

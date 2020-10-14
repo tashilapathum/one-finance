@@ -1,9 +1,13 @@
 package com.tashila.mywalletfree;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,26 +19,33 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.shreyaspatil.material.navigationview.MaterialNavigationView;
 
 import java.util.List;
 import java.util.Locale;
 
-public class AccountManager extends AppCompatActivity {
+public class AccountManager extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private SharedPreferences sharedPref;
+    private DrawerLayout drawer;
+    private MaterialNavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
+        /*------------------------------Essential for every activity------------------------------*/
         Toolbar toolbar;
+        sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
 
         String theme = sharedPref.getString("theme", "light");
         if (theme.equalsIgnoreCase("dark")) {
+            setTheme(R.style.AppThemeDark);
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_account_manager);
-            View layout = findViewById(R.id.rootLayout);
+            View layout = findViewById(R.id.drawer_layout);
             layout.setBackground(ContextCompat.getDrawable(this, R.drawable.background_dark));
             toolbar = findViewById(R.id.toolbar);
             toolbar.setBackground(getDrawable(R.color.colorToolbarDark));
@@ -45,17 +56,16 @@ public class AccountManager extends AppCompatActivity {
             toolbar = findViewById(R.id.toolbar);
         }
 
-        //toolbar
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
-                dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
-            }
-        });
+        drawer = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_open);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        /*----------------------------------------------------------------------------------------*/
 
         //Button button;
         FloatingActionButton actionButton = findViewById(R.id.actionButton);
@@ -80,6 +90,7 @@ public class AccountManager extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        navigationView.setCheckedItem(R.id.nav_accounts);
         if (sharedPref.getBoolean("exit", false)) {
             finishAndRemoveTask();
         }
@@ -122,5 +133,93 @@ public class AccountManager extends AppCompatActivity {
                     .create()
                     .show();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_home: {
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_home)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                }
+                break;
+            }
+            case R.id.nav_recent_trans: {
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_recent_trans)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, TransactionHistory.class);
+                    startActivity(intent);
+                }
+                break;
+            }
+            case R.id.nav_reports: {
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_reports)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, Reports.class);
+                    startActivity(intent);
+                }
+                break;
+            }
+            case R.id.nav_accounts: {
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_accounts)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, AccountManager.class);
+                    startActivity(intent);
+                }
+                break;
+            }
+            case R.id.nav_settings: {
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_settings)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, Settings.class);
+                    startActivity(intent);
+                }
+                break;
+            }
+            case R.id.nav_get_pro: {
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_get_pro)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, UpgradeToPro.class);
+                    startActivity(intent);
+                }
+                break;
+            }
+            case R.id.nav_about: {
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_about)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, About.class);
+                    startActivity(intent);
+                }
+                break;
+            }
+            case R.id.nav_exit: {
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_exit)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    sharedPref.edit().putBoolean("exit", true).apply();
+                    finishAndRemoveTask();
+                }
+                break;
+            }
+        }
+        return true;
     }
 }

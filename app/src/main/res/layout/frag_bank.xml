@@ -87,7 +87,8 @@
         app:boxCornerRadiusBottomEnd="16dp"
         app:boxCornerRadiusBottomStart="16dp"
         app:boxCornerRadiusTopEnd="16dp"
-        app:boxCornerRadiusTopStart="16dp">
+        app:boxCornerRadiusTopStart="16dp"
+        app:startIconDrawable="@drawable/ic_amount">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"

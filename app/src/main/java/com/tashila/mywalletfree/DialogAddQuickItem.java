@@ -99,9 +99,9 @@ public class DialogAddQuickItem extends DialogFragment {
         item = etItem.getText().toString();
         price = etPrice.getText().toString();
         DecimalFormat df = new DecimalFormat("#.00");
-        price = df.format(Double.parseDouble(price));
-        if (validateItem() && validatePrice()) {
+        if (validateItem() & validatePrice()) {
             dialog.dismiss();
+            price = df.format(Double.parseDouble(price));
             QuickItem quickItem = new QuickItem(item, price);
             if (bundle == null)
                 ((EditQuickList) getActivity()).addItemNEW(quickItem);

@@ -93,7 +93,8 @@
             app:boxCornerRadiusBottomStart="16dp"
             app:boxCornerRadiusTopEnd="16dp"
             app:boxCornerRadiusTopStart="16dp"
-            app:errorEnabled="true">
+            app:errorEnabled="true"
+            app:startIconDrawable="@drawable/ic_amount">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -118,7 +119,7 @@
             app:boxCornerRadiusTopStart="16dp"
             app:errorEnabled="true"
             android:hint="@string/description"
-            >
+            app:startIconDrawable="@drawable/ic_description">
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/aetDescription"
@@ -207,7 +208,8 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    tools:ignore="UselessParent">
 
                     <TextView
                         android:id="@+id/textView2"

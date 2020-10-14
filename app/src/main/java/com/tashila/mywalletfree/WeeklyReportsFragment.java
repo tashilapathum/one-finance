@@ -216,14 +216,10 @@ public class WeeklyReportsFragment extends Fragment {
         double budgetLeft = budget - expenses;
         //to show (+) for positive values
         String incomeDiffStr = null;
-        if (!df.format(incomeDiff).
-
-                contains("-"))
+        if (!df.format(incomeDiff).contains("-"))
             incomeDiffStr = "+" + df.format(incomeDiff);
         String expensesDiffStr = null;
-        if (!df.format(incomeDiff).
-
-                contains("-"))
+        if (!df.format(incomeDiff).contains("-"))
             expensesDiffStr = "+" + df.format(expensesDiff);
 
         //find most income and most expense day
