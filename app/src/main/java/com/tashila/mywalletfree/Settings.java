@@ -344,12 +344,9 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
         } else purchaseProForThis();
     }
 
-    public void manageAccounts(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putString("setting", "manage_acc");
-        firebaseAnalytics.logEvent("used_setting", bundle);
-        Intent intent = new Intent(this, AccountManager.class);
-        startActivity(intent);
+    public void walletContent(View view) {
+        DialogWalletContent dialogWalletContent = new DialogWalletContent();
+        dialogWalletContent.show(getSupportFragmentManager(), "wallet content dialog");
     }
 
     public void purchaseProForThis() {

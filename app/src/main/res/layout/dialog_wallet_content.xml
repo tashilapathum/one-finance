@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/quickList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
+        android:text="@string/quick_list"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/todayReport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
+        android:text="Today's report"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/thisWeekReport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
+        android:text="This week's report"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/thisMonthReport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
+        android:text="This month's report"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+</LinearLayout>

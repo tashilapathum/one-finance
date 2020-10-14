@@ -470,6 +470,58 @@
 
                 </RelativeLayout>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:onClick="walletContent"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp">
+
+                    <ImageView
+                        android:id="@+id/image11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_content" />
+
+                    <TextView
+                        android:id="@+id/setting11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image11"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/wallet_page_content"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/description11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting11"
+                        android:layout_toStartOf="@id/pro4"
+                        android:layout_toEndOf="@id/image11"
+                        android:text="@string/show_the_quick_list_or_today_s_this_week_s_this_month_s_report_on_wallet_screen" />
+
+                    <TextView
+                        android:id="@+id/pro4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:text="@string/pro"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textStyle="bold|italic" />
+
+                </RelativeLayout>
+
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>

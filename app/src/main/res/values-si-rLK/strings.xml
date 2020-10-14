@@ -333,4 +333,6 @@
     <string name="overview">Overview</string>
     <string name="re_budget">Budget</string>
     <string name="pick_a_day">Pick a day</string>
+    <string name="wallet_page_content">Wallet page content</string>
+    <string name="show_the_quick_list_or_today_s_this_week_s_this_month_s_report_on_wallet_screen">Show the quick list or today\'s/this week\'s/this month\'s report on Wallet screen</string>
 </resources>

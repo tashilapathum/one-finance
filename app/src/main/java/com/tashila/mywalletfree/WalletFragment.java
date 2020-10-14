@@ -66,6 +66,10 @@ public class WalletFragment extends Fragment {
     private QuickListViewModel quickListViewModel;
     private String date;
     private boolean isBankRelated;
+    private final String QUICK_LIST = "QUICK_LIST";
+    private final String TODAY_REPORT = "TODAY_REPORT";
+    private final String THIS_WEEK_REPORT = "THIS_WEEK_REPORT";
+    private final String THIS_MONTH_REPORT = "THIS_MONTH_REPORT";
 
     @Nullable
     @Override
@@ -164,8 +168,41 @@ public class WalletFragment extends Fragment {
             }
         });
 
-        loadQuickList();
+        loadContent();
         return v;
+    }
+
+    private void loadContent() {
+        boolean hasCustomized = sharedPref.getBoolean("walletContentCustomized", false);
+        if (hasCustomized) {
+            String contentStr = sharedPref.getString("walletContent", null);
+            String[] content = contentStr.split("~~~");
+            for (String item : content) {
+                switch (item) {
+                    case QUICK_LIST: {
+                        loadQuickList();
+                        break;
+                    }
+                    case TODAY_REPORT: {
+                        loadContentItem(TODAY_REPORT);
+                        break;
+                    }
+                    case THIS_WEEK_REPORT: {
+                        loadContentItem(THIS_WEEK_REPORT);
+                        break;
+                    }
+                    case THIS_MONTH_REPORT: {
+                        loadContentItem(THIS_MONTH_REPORT);
+                        break;
+                    }
+                }
+            }
+        } else
+            loadQuickList(); //default
+    }
+
+    private void loadContentItem(String item) {
+
     }
 
     public void onStart() {
@@ -263,8 +300,7 @@ public class WalletFragment extends Fragment {
             if (text.contains("~~~") || text.contains(",,,")) {
                 tilDescr.setError("~~~ and ,,, are not allowed");
                 return false;
-            }
-            else {
+            } else {
                 tilDescr.setError(null);
                 return true;
             }
@@ -359,8 +395,7 @@ public class WalletFragment extends Fragment {
         if (longClicked && (viewId == R.id.btnSpent || viewId == R.id.btnEarned)) {
             date = sharedPref.getString("preDate", null);
             sharedPref.edit().putBoolean("longClicked", false).apply();
-        }
-        else
+        } else
             date = String.valueOf(System.currentTimeMillis());
 
         //amount

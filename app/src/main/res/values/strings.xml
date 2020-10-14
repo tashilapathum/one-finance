@@ -66,7 +66,7 @@
     <string name="notification_time">Reminder time</string>
     <string name="change_the_time_you_receive_the_daily_reminder">Change the time you receive the daily reminder</string>
     <string name="theme">Theme</string>
-    <string name="choose_between_dark_and_light_themes">Choose between dark and light themes</string>
+    <string name="choose_between_dark_and_light_themes">Switch between dark and light themes</string>
     <string name="pro_feature">Pro feature</string>
     <string name="pro" translatable="false">Pro</string>
     <string name="entered_incorrectly">You\'ve entered data incorrectly</string>
@@ -159,7 +159,7 @@
     <string name="cleared">Cleared</string>
     <string name="select_theme">Select theme</string>
     <string name="home_screen">Home screen</string>
-    <string name="change_the_screen_which_shows_up_when_starting_the_app">Change the screen which shows up when starting the app</string>
+    <string name="change_the_screen_which_shows_up_when_starting_the_app">Pick Wallet, Bank, Shopping cart or Bills as the starting page</string>
     <string name="current">Current:&#160;</string>
     <string name="highest">Highest:&#160;</string>
     <string name="lowest">Lowest:&#160;</string>
@@ -349,4 +349,6 @@
     <string name="overview">Overview</string>
     <string name="re_budget">Budget</string>
     <string name="pick_a_day">Pick a day</string>
+    <string name="wallet_page_content">Wallet page content</string>
+    <string name="show_the_quick_list_or_today_s_this_week_s_this_month_s_report_on_wallet_screen">Show the quick list or today\'s/this week\'s/this month\'s report on Wallet screen</string>
 </resources>
