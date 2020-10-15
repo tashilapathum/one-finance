@@ -59,7 +59,8 @@ public class DialogWalletContent extends DialogFragment {
                 walletContent = walletContent + checkBox.getId() + "~";
         }
         sharedPref.edit().putString("walletContent", walletContent).apply();
-        sharedPref.edit().putBoolean("walletContentCustomized", true).apply();
+        sharedPref.edit().putBoolean("walletContentCustomized", true).apply(); //does not change later
+        sharedPref.edit().putBoolean("walletContentChanged", true).apply(); //to refresh, changes later
         Log.i(TAG, "walletContent string: " + walletContent);
     }
 

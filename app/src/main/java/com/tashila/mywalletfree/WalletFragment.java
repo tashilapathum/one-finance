@@ -267,9 +267,11 @@ public class WalletFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (sharedPref.getBoolean("quickItemsChanged", false)) {
+        if (sharedPref.getBoolean("quickItemsChanged", false)
+                || sharedPref.getBoolean("walletContentChanged", false)) {
             reloadFragment();
             sharedPref.edit().putBoolean("quickItemsChanged", false).apply();
+            sharedPref.edit().putBoolean("walletContentChanged", false).apply();
         }
         setupAutocomplete();
     }
@@ -481,38 +483,52 @@ public class WalletFragment extends Fragment {
         tvBalance.setText(balance);
         tvCurrency.setText(currency);
 
+        boolean isUndoEnabled = sharedPref.getBoolean("undoActionEnabled", true);
         BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottom_navigation);
         Snackbar snackbar = Snackbar.make(bottomNav, R.string.updated, Snackbar.LENGTH_SHORT);
         snackbar.setAnchorView(bottomNav);
-        snackbar.setAction(R.string.undo, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                double numBalance = Double.parseDouble(balance);
-                double numAmount = Double.parseDouble(amount);
 
-                if (prefix.equals("+"))
-                    numBalance = numBalance - numAmount;
-                if (prefix.equals("-"))
-                    numBalance = numBalance + numAmount;
-                DecimalFormat df = new DecimalFormat("#.00");
-                String strBalance = df.format(numBalance);
-                tvBalance.setText(strBalance);
-                sharedPref.edit().putString("balance", strBalance).apply();
-            }
-        });
-        snackbar.addCallback(new Snackbar.Callback() {
-            @Override
-            public void onDismissed(Snackbar transientBottomBar, int event) {
-                if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                    TransactionItem transactionItem =
-                            new TransactionItem(balance, prefix, amount, description, userDate, null, isBankRelated);
-                    transactionsViewModel.insert(transactionItem);
-                    if (viewId == R.id.btnTransfer && !longClicked)
-                        doBankStuff(null);
-                    sharedPref.edit().putBoolean("longClicked", false).apply();
+        if (isUndoEnabled) {
+            snackbar.setAction(R.string.undo, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    double numBalance = Double.parseDouble(balance);
+                    double numAmount = Double.parseDouble(amount);
+
+                    if (prefix.equals("+"))
+                        numBalance = numBalance - numAmount;
+                    if (prefix.equals("-"))
+                        numBalance = numBalance + numAmount;
+                    DecimalFormat df = new DecimalFormat("#.00");
+                    String strBalance = df.format(numBalance);
+                    tvBalance.setText(strBalance);
+                    sharedPref.edit().putString("balance", strBalance).apply();
                 }
-            }
-        });
+            });
+            snackbar.addCallback(new Snackbar.Callback() {
+                @Override
+                public void onDismissed(Snackbar transientBottomBar, int event) {
+                    if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                        TransactionItem transactionItem =
+                                new TransactionItem(balance, prefix, amount, description, userDate, null, isBankRelated);
+                        transactionsViewModel.insert(transactionItem);
+                        if (viewId == R.id.btnTransfer && !longClicked)
+                            doBankStuff(null);
+                        sharedPref.edit().putBoolean("longClicked", false).apply();
+                        //reloadFragment();
+                    }
+                }
+            });
+        }
+        else {
+            TransactionItem transactionItem =
+                    new TransactionItem(balance, prefix, amount, description, userDate, null, isBankRelated);
+            transactionsViewModel.insert(transactionItem);
+            if (viewId == R.id.btnTransfer && !longClicked)
+                doBankStuff(null);
+            sharedPref.edit().putBoolean("longClicked", false).apply();
+            //reloadFragment();
+        }
         snackbar.show();
     }
 

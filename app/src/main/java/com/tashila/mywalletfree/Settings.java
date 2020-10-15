@@ -42,6 +42,7 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
     String timeString;
     private MaterialCheckBox exitCheckBox;
     private MaterialCheckBox suggestCheckBox;
+    private MaterialCheckBox undoCheckBox;
     private FirebaseAnalytics firebaseAnalytics;
     private MaterialNavigationView navigationView;
 
@@ -117,6 +118,20 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
         });
         boolean suggestEnabled = sharedPref.getBoolean("showSuggestions", false);
         if (suggestEnabled) suggestCheckBox.setChecked(true);
+
+        //undo action setting
+        undoCheckBox = findViewById(R.id.undoCheck);
+        undoCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked())
+                    sharedPref.edit().putBoolean("undoActionEnabled", true).apply();
+                else
+                    sharedPref.edit().putBoolean("undoActionEnabled", false).apply();
+            }
+        });
+        boolean undoActionEnabled = sharedPref.getBoolean("undoActionEnabled", true);
+        if (undoActionEnabled) undoCheckBox.setChecked(true);
     }
 
     @Override //so the language change works with dark mode
@@ -347,6 +362,16 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
     public void walletContent(View view) {
         DialogWalletContent dialogWalletContent = new DialogWalletContent();
         dialogWalletContent.show(getSupportFragmentManager(), "wallet content dialog");
+    }
+
+    public void undoAction(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putString("setting", "undo_action_checkbox");
+        firebaseAnalytics.logEvent("used_setting", bundle);
+        if (!undoCheckBox.isChecked())
+            undoCheckBox.setChecked(true);
+        else
+            undoCheckBox.setChecked(false);
     }
 
     public void purchaseProForThis() {

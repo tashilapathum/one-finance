@@ -265,51 +265,73 @@ public class BankFragment extends Fragment {
             selectedAccount.setActivities(activities);
             loadActivities();
 
+            boolean isUndoEnabled = sharedPref.getBoolean("undoActionEnabled", true);
             BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottom_navigation);
             snackbar = Snackbar.make(bottomNav, R.string.updated, Snackbar.LENGTH_LONG);
             snackbar.setAnchorView(bottomNav);
             final boolean finalIsDepositId = isDepositId;
             final boolean finalIsWithdrawId = isWithdrawId;
-            snackbar.setAction(R.string.undo, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //update screen
-                    double undoBalance = 0;
-                    undoBalance = Double.parseDouble(selectedAccount.getAccBalance());
-                    if (finalIsDepositId) undoBalance = undoBalance - inputAmount;
-                    if (finalIsWithdrawId) undoBalance = undoBalance + inputAmount;
-                    tvAccountBalance.setText(String.valueOf(undoBalance));
-                    //update wallet
-                    double walletBalance = Double.parseDouble(sharedPref.getString("balance", null));
-                    double newWalletBalance = walletBalance - inputAmount;
-                    sharedPref.edit().putString("balance", String.valueOf(newWalletBalance)).apply();
-                    reloadFragment();
-                }
-            });
-            final String transactionDescription;
-            if (sinhala)
-                transactionDescription = accountName + " ගිණුමෙන් ආපසු ගත්";
-            else
-                transactionDescription = "Withdrawal from " + accountName;
-            snackbar.addCallback(new Snackbar.Callback() {
-                @Override
-                public void onDismissed(Snackbar transientBottomBar, int event) {
-                    super.onDismissed(transientBottomBar, event);
-                    if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                        accountsViewModel.update(selectedAccount); //update for real
-                        //add transaction
-                        if (finalIsWithdrawId) {
-                            TransactionItem transaction = new TransactionItem(
-                                    sharedPref.getString("balance", "0"), "+",
-                                    df.format(inputAmount), transactionDescription,
-                                    String.valueOf(System.currentTimeMillis()), null, true);
-                            transactionsViewModel.insert(transaction);
-                        }
-                        if (BankFragment.this.isVisible())
-                            loadActivities();
+            if (isUndoEnabled) {
+                snackbar.setAction(R.string.undo, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //update screen
+                        double undoBalance = 0;
+                        undoBalance = Double.parseDouble(selectedAccount.getAccBalance());
+                        if (finalIsDepositId) undoBalance = undoBalance - inputAmount;
+                        if (finalIsWithdrawId) undoBalance = undoBalance + inputAmount;
+                        tvAccountBalance.setText(String.valueOf(undoBalance));
+                        //update wallet
+                        double walletBalance = Double.parseDouble(sharedPref.getString("balance", null));
+                        double newWalletBalance = walletBalance - inputAmount;
+                        sharedPref.edit().putString("balance", String.valueOf(newWalletBalance)).apply();
+                        reloadFragment();
                     }
+                });
+                final String transactionDescription;
+                if (sinhala)
+                    transactionDescription = accountName + " ගිණුමෙන් ආපසු ගත්";
+                else
+                    transactionDescription = "Withdrawal from " + accountName;
+                snackbar.addCallback(new Snackbar.Callback() {
+                    @Override
+                    public void onDismissed(Snackbar transientBottomBar, int event) {
+                        super.onDismissed(transientBottomBar, event);
+                        if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
+                            accountsViewModel.update(selectedAccount); //update for real
+                            //add transaction
+                            if (finalIsWithdrawId) {
+                                TransactionItem transaction = new TransactionItem(
+                                        sharedPref.getString("balance", "0"), "+",
+                                        df.format(inputAmount), transactionDescription,
+                                        String.valueOf(System.currentTimeMillis()), null, true);
+                                transactionsViewModel.insert(transaction);
+                            }
+                            if (BankFragment.this.isVisible())
+                                loadActivities();
+                        }
+                    }
+                });
+            }
+            else {
+                final String transactionDescription;
+                if (sinhala)
+                    transactionDescription = accountName + " ගිණුමෙන් ආපසු ගත්";
+                else
+                    transactionDescription = "Withdrawal from " + accountName;
+
+                accountsViewModel.update(selectedAccount); //update for real
+                //add transaction
+                if (finalIsWithdrawId) {
+                    TransactionItem transaction = new TransactionItem(
+                            sharedPref.getString("balance", "0"), "+",
+                            df.format(inputAmount), transactionDescription,
+                            String.valueOf(System.currentTimeMillis()), null, true);
+                    transactionsViewModel.insert(transaction);
                 }
-            });
+                if (BankFragment.this.isVisible())
+                    loadActivities();
+            }
             snackbar.show();
 
         } else
