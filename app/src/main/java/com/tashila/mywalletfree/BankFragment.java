@@ -226,7 +226,8 @@ public class BankFragment extends Fragment {
         boolean isWithdrawId = false;
         if (v.getId() == btnDeposit.getId()) isDepositId = true;
         if (v.getId() == btnWithdraw.getId()) isWithdrawId = true;
-        if ((inputAmount <= currentBalance) || isDepositId) {
+        boolean negativeEnabled = sharedPref.getBoolean("negativeEnabled", false);
+        if ((inputAmount <= currentBalance) || isDepositId || negativeEnabled) {
             //calculate
             if (isDepositId) {
                 newBalance = currentBalance + inputAmount;

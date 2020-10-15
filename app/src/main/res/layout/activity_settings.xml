@@ -568,6 +568,52 @@
 
                 </RelativeLayout>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:onClick="negativeBalance"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="8dp">
+
+                    <ImageView
+                        android:id="@+id/image13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_negative" />
+
+                    <TextView
+                        android:id="@+id/setting13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image13"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/allow_negative_balance"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/description13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting13"
+                        android:layout_toStartOf="@id/negativeCheck"
+                        android:layout_toEndOf="@id/image13"
+                        android:text="@string/when_enabled_you_can_spend_money_even_when_you_have_a_negative_balance_in_the_wallet_or_the_bank" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/negativeCheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"/>
+
+                </RelativeLayout>
+
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>

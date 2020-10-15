@@ -432,7 +432,8 @@ public class WalletFragment extends Fragment {
         double doubAmount = Double.valueOf(etAmount.getText().toString());
         String amount = df.format(doubAmount);
 
-        if ((viewId == R.id.btnSpent || viewId == R.id.btnTransfer) && doubAmount > oldBalance)
+        boolean negativeEnabled = sharedPref.getBoolean("negativeEnabled", false);
+        if ((viewId == R.id.btnSpent || viewId == R.id.btnTransfer) && doubAmount > oldBalance && !negativeEnabled)
             Toast.makeText(context, getActivity().getResources().getString(R.string.spend_more_than_have), Toast.LENGTH_LONG).show();
         else {
             //description

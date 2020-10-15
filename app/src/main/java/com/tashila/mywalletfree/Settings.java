@@ -43,6 +43,7 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
     private MaterialCheckBox exitCheckBox;
     private MaterialCheckBox suggestCheckBox;
     private MaterialCheckBox undoCheckBox;
+    private MaterialCheckBox negativeCheckBox;
     private FirebaseAnalytics firebaseAnalytics;
     private MaterialNavigationView navigationView;
 
@@ -132,6 +133,20 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
         });
         boolean undoActionEnabled = sharedPref.getBoolean("undoActionEnabled", true);
         if (undoActionEnabled) undoCheckBox.setChecked(true);
+
+        //negative setting
+        negativeCheckBox = findViewById(R.id.negativeCheck);
+        negativeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked())
+                    sharedPref.edit().putBoolean("negativeEnabled", true).apply();
+                else
+                    sharedPref.edit().putBoolean("negativeEnabled", false).apply();
+            }
+        });
+        boolean negativeEnabled = sharedPref.getBoolean("negativeEnabled", false);
+        if (negativeEnabled) negativeCheckBox.setChecked(true);
     }
 
     @Override //so the language change works with dark mode
@@ -372,6 +387,16 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
             undoCheckBox.setChecked(true);
         else
             undoCheckBox.setChecked(false);
+    }
+
+    public void negativeBalance(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putString("setting", "negative_enabled_checkbox");
+        firebaseAnalytics.logEvent("used_setting", bundle);
+        if (!negativeCheckBox.isChecked())
+            negativeCheckBox.setChecked(true);
+        else
+            negativeCheckBox.setChecked(false);
     }
 
     public void purchaseProForThis() {

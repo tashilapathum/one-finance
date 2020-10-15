@@ -340,4 +340,6 @@
     <string name="advanced">Advanced</string>
     <string name="undo_action">Undo action</string>
     <string name="when_enabled_transactions_aren_t_saved_until_the_undo_button_is_gone">When enabled, transactions aren\'t saved until the undo button is gone</string>
+    <string name="allow_negative_balance">Allow negative balance</string>
+    <string name="when_enabled_you_can_spend_money_even_when_you_have_a_negative_balance_in_the_wallet_or_the_bank">When enabled, you can spend money even when you have a negative balance in the Wallet or the Bank</string>
 </resources>

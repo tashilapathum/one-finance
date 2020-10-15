@@ -350,10 +350,12 @@
     <string name="re_budget">Budget</string>
     <string name="pick_a_day">Pick a day</string>
     <string name="wallet_page_content">Wallet page content</string>
-    <string name="show_the_quick_list_or_today_s_this_week_s_this_month_s_report_on_wallet_screen">Show the quick list or today\'s/this week\'s/this month\'s report on Wallet screen</string>
+    <string name="show_the_quick_list_or_today_s_this_week_s_this_month_s_report_on_wallet_screen">Show quick list/today\'s/this week\'s/this month\'s report on Wallet screen</string>
     <string name="general">General</string>
     <string name="customization">Customization</string>
     <string name="advanced">Advanced</string>
     <string name="undo_action">Undo action</string>
     <string name="when_enabled_transactions_aren_t_saved_until_the_undo_button_is_gone">When enabled, transactions aren\'t saved until the undo button goes away</string>
+    <string name="allow_negative_balance">Allow negative balance</string>
+    <string name="when_enabled_you_can_spend_money_even_when_you_have_a_negative_balance_in_the_wallet_or_the_bank">When enabled, you can spend money even when you have a negative balance in the Wallet or the Bank</string>
 </resources>
