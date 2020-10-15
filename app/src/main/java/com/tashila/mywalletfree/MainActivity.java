@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
             sharedPref.edit().putBoolean("isNotificationSet", true).apply();
         }
 
-        if (getPackageName().contains("debug"))
+        if (getPackageName().contains("debug")) //TODO: change here!
             sharedPref.edit().putBoolean("MyWalletPro", true).apply();
     }
 

@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,18 +25,50 @@ public class DialogWalletContent extends DialogFragment {
     private MaterialCheckBox cbThisMonth;
     private MaterialCheckBox cbToday;
     private MaterialCheckBox cbThisWeek;
+    private int selectedContentCount;
+    private View view;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_wallet_content, null);
+        view = getActivity().getLayoutInflater().inflate(R.layout.dialog_wallet_content, null);
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         walletContent = sharedPref.getString("walletContent", null);
+        selectedContentCount = 0;
 
         cbQuickList = view.findViewById(R.id.quickList);
         cbToday = view.findViewById(R.id.todayReport);
         cbThisWeek = view.findViewById(R.id.thisWeekReport);
         cbThisMonth = view.findViewById(R.id.thisMonthReport);
+
+        //first time only
+        if (!sharedPref.getBoolean("walletContentCustomized", false))
+            cbQuickList.setChecked(true);
+
+        cbQuickList.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //handleSelection(buttonView, isChecked);
+            }
+        });
+        cbToday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //handleSelection(buttonView, isChecked);
+            }
+        });
+        cbThisWeek.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //handleSelection(buttonView, isChecked);
+            }
+        });
+        cbThisMonth.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //handleSelection(buttonView, isChecked);
+            }
+        });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Select content")
@@ -60,8 +94,7 @@ public class DialogWalletContent extends DialogFragment {
         }
         sharedPref.edit().putString("walletContent", walletContent).apply();
         sharedPref.edit().putBoolean("walletContentCustomized", true).apply(); //does not change later
-        sharedPref.edit().putBoolean("walletContentChanged", true).apply(); //to refresh, changes later
-        Log.i(TAG, "walletContent string: " + walletContent);
+        sharedPref.edit().putBoolean("walletContentChanged", true).apply(); //to refresh | changes later
     }
 
     private void loadSavedData() {
@@ -70,18 +103,47 @@ public class DialogWalletContent extends DialogFragment {
             int[] checkBoxIds = new int[checkBoxIdsStrings.length];
             for (int i = 0; i < checkBoxIdsStrings.length; i++)
                 checkBoxIds[i] = Integer.parseInt(checkBoxIdsStrings[i]);
-            for (int checkBoxId : checkBoxIds) {
-                Log.i(TAG, "chID: "+checkBoxId);
+            for (int checkBoxId : checkBoxIds)
                 toggleMatchingCheckBox(checkBoxId, cbQuickList, cbToday, cbThisWeek, cbThisMonth);
-            }
         }
     }
 
     private void toggleMatchingCheckBox(int checkBoxId, MaterialCheckBox... checkBoxes) {
-        for (MaterialCheckBox checkBox : checkBoxes) {
-            Log.i(TAG, "liveID: " + checkBox.getId() + "passedID: " + checkBoxId);
+        for (MaterialCheckBox checkBox : checkBoxes)
             if (checkBoxId == checkBox.getId())
                 checkBox.setChecked(true);
+    }
+
+    private void handleSelection(CompoundButton checkBox, boolean isChecked) {
+        if (isChecked) selectedContentCount++;
+        else selectedContentCount--;
+
+        boolean isMyWalletPro = sharedPref.getBoolean("MyWalletPro", false);
+        if (isMyWalletPro && selectedContentCount > 1)
+            disableOthers(checkBox.getId(), cbToday, cbQuickList, cbThisWeek, cbThisMonth);
+        else
+            enableOthers(cbToday, cbQuickList, cbThisWeek, cbThisMonth);
+    }
+
+    private void disableOthers(int checkedId, MaterialCheckBox... checkBoxes) {
+        for (MaterialCheckBox checkBox : checkBoxes)
+            if (checkBox.getId() != checkedId) {
+                checkBox.setChecked(false);
+                checkBox.setClickable(false);
+                checkBox.setFocusable(false);
+                checkBox.setAlpha(0.5f);
+            }
+        TextView proNotice = view.findViewById(R.id.proNotice);
+        proNotice.setVisibility(View.VISIBLE);
+    }
+
+    private void enableOthers(MaterialCheckBox... checkBoxes) {
+        for (MaterialCheckBox checkBox : checkBoxes) {
+            checkBox.setClickable(true);
+            checkBox.setFocusable(true);
+            checkBox.setAlpha(1f);
         }
+        TextView proNotice = view.findViewById(R.id.proNotice);
+        proNotice.setVisibility(View.GONE);
     }
 }
