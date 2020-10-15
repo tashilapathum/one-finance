@@ -42,6 +42,11 @@ public class DailyReportsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_daily_reports, container, false);
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
+        Bundle bundle = this.getArguments();
+        boolean isFromWallet = false;
+        if (bundle != null)
+            isFromWallet = bundle.getBoolean("fromWallet");
+
         dailyReportList = new ArrayList<>();
         pickedDay = sharedPref.getInt("reports_day", 0);
         pickedYear = sharedPref.getInt("reports_year", 0);
@@ -52,27 +57,31 @@ public class DailyReportsFragment extends Fragment {
             pickedYear = LocalDate.now().getYear();
         }
         dayCount = 0;
+
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new DailyReportsAdapter();
+        adapter = new DailyReportsAdapter(isFromWallet);
         recyclerView.setLayoutAnimation(new AnimationHandler().getSlideUpController());
         recyclerView.setAdapter(adapter);
-        calculateDailyReport(day);
-        calculateDailyReport(day);
-        calculateDailyReport(day);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (!recyclerView.canScrollVertically(1))
-                    if (sharedPref.getBoolean("MyWalletPro", false))
-                        calculateDailyReport(day);
-                    else
-                        purchaseProForThis();
-            }
-        });
+
+        calculateDailyReport(day); //show only 1 if from wallet
+        if (!isFromWallet) {
+            calculateDailyReport(day);
+            calculateDailyReport(day);
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    if (!recyclerView.canScrollVertically(1))
+                        if (sharedPref.getBoolean("MyWalletPro", false))
+                            calculateDailyReport(day);
+                        else
+                            purchaseProForThis();
+                }
+            });
+        }
         return view;
     }
 

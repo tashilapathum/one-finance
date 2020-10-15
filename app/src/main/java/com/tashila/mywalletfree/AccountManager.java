@@ -39,7 +39,6 @@ public class AccountManager extends AppCompatActivity implements NavigationView.
         /*------------------------------Essential for every activity------------------------------*/
         Toolbar toolbar;
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
-
         String theme = sharedPref.getString("theme", "light");
         if (theme.equalsIgnoreCase("dark")) {
             setTheme(R.style.AppThemeDark);

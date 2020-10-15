@@ -50,8 +50,14 @@ public class WeeklyReportsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_weekly_reports, container, false);
+        View view;
+        view = inflater.inflate(R.layout.fragment_weekly_reports, container, false);
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
+        Bundle bundle = this.getArguments();
+        boolean isFromWallet = false;
+        if (bundle != null)
+            isFromWallet = bundle.getBoolean("fromWallet");
+
         weeklyReportList = new ArrayList<>();
         weekFields = WeekFields.of(Locale.getDefault());
         pickedWeek = sharedPref.getInt("reports_week", 0);
@@ -73,23 +79,25 @@ public class WeeklyReportsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new WeeklyReportsAdapter();
+        adapter = new WeeklyReportsAdapter(isFromWallet);
         recyclerView.setLayoutAnimation(new AnimationHandler().getSlideUpController());
         recyclerView.setAdapter(adapter);
         calculateWeeklyReport(week, year);
-        calculateWeeklyReport(week, year);
-        calculateWeeklyReport(week, year);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (!recyclerView.canScrollVertically(1))
-                    if (sharedPref.getBoolean("MyWalletPro", false))
-                        calculateWeeklyReport(week, year);
-                    else
-                        purchaseProForThis();
-            }
-        });
+        if (!isFromWallet) {
+            calculateWeeklyReport(week, year);
+            calculateWeeklyReport(week, year);
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    if (!recyclerView.canScrollVertically(1))
+                        if (sharedPref.getBoolean("MyWalletPro", false))
+                            calculateWeeklyReport(week, year);
+                        else
+                            purchaseProForThis();
+                }
+            });
+        }
         return view;
     }
 

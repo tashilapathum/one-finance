@@ -66,10 +66,10 @@ public class WalletFragment extends Fragment {
     private QuickListViewModel quickListViewModel;
     private String date;
     private boolean isBankRelated;
-    private final String QUICK_LIST = "QUICK_LIST";
-    private final String TODAY_REPORT = "TODAY_REPORT";
-    private final String THIS_WEEK_REPORT = "THIS_WEEK_REPORT";
-    private final String THIS_MONTH_REPORT = "THIS_MONTH_REPORT";
+    private final int QUICK_LIST = R.id.quickList;
+    private final int TODAY_REPORT = R.id.todayReport;
+    private final int THIS_WEEK_REPORT = R.id.thisWeekReport;
+    private final int THIS_MONTH_REPORT = R.id.thisMonthReport;
 
     @Nullable
     @Override
@@ -176,9 +176,12 @@ public class WalletFragment extends Fragment {
         boolean hasCustomized = sharedPref.getBoolean("walletContentCustomized", false);
         if (hasCustomized) {
             String contentStr = sharedPref.getString("walletContent", null);
-            String[] content = contentStr.split("~~~");
-            for (String item : content) {
-                switch (item) {
+            String[] contentStrings = contentStr.split("~");
+            int[] contentIds = new int[contentStrings.length];
+            for (int i = 0; i < contentStrings.length; i++)
+                contentIds[i] = Integer.parseInt(contentStrings[i]);
+            for (int itemId : contentIds) {
+                switch (itemId) {
                     case QUICK_LIST: {
                         loadQuickList();
                         break;
@@ -201,8 +204,33 @@ public class WalletFragment extends Fragment {
             loadQuickList(); //default
     }
 
-    private void loadContentItem(String item) {
+    private void loadContentItem(int itemId) {
+        Fragment fragment = null;
+        String fragmentTag = null;
+        switch (itemId) {
+            case TODAY_REPORT: {
+                fragment = new DailyReportsFragment();
+                fragmentTag = "TODAY_REPORT";
+                break;
+            }
+            case THIS_WEEK_REPORT: {
+                fragment = new WeeklyReportsFragment();
+                fragmentTag = "THIS_WEEK_REPORT";
+                break;
+            }
+            case THIS_MONTH_REPORT: {
+                fragment = new MonthlyReportsFragment();
+                fragmentTag = "THIS_MONTH_REPORT";
+                break;
+            }
+        }
 
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("fromWallet", true);
+        fragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .add(R.id.content_container, fragment, fragmentTag)
+                .commit();
     }
 
     public void onStart() {
@@ -489,16 +517,17 @@ public class WalletFragment extends Fragment {
     }
 
     private void loadQuickList() {
+        v.findViewById(R.id.quickList_title).setVisibility(View.VISIBLE);
         List<QuickItem> fullQuickList = quickListViewModel.getQuickItemsList();
         if (fullQuickList.size() != 0) {
             for (int i = 0; i < fullQuickList.size(); i++) {
-                LinearLayout layout = v.findViewById(R.id.childLinear);
+                LinearLayout layout = v.findViewById(R.id.content_container);
 
                 //padding
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
                 );
-                params.setMargins(0, 8, 0, 0);
+                params.setMargins(0, 8, 0, 2);
 
                 final MaterialButton button = new MaterialButton(context);
                 button.setTag("listItem" + i);
@@ -526,7 +555,7 @@ public class WalletFragment extends Fragment {
             }
         } else {
             //add "add to quicklist" button
-            LinearLayout layout = v.findViewById(R.id.childLinear);
+            LinearLayout layout = v.findViewById(R.id.content_container);
 
             //padding
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -559,6 +588,18 @@ public class WalletFragment extends Fragment {
             });
             layout.addView(button);
         }
+
+        //empty space below
+        LinearLayout layout = v.findViewById(R.id.content_container);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(0, 8, 0, 0);
+
+        MaterialButton button = new MaterialButton(context);
+        button.setPadding(4, 4, 4, 4);
+        button.setVisibility(View.INVISIBLE);
+        layout.addView(button);
     }
 
     void doBankStuff(Account account) {

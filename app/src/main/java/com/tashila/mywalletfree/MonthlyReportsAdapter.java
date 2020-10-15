@@ -34,9 +34,11 @@ public class MonthlyReportsAdapter extends ListAdapter<MonthlyReportsFragment.Mo
     private Context context;
     private String currency;
     private String theme;
+    private boolean isFromWallet;
 
-    protected MonthlyReportsAdapter() {
+    protected MonthlyReportsAdapter(boolean isFromWallet) {
         super(DIFF_CALLBACK);
+        this.isFromWallet = isFromWallet;
     }
 
     private static final DiffUtil.ItemCallback<MonthlyReportsFragment.MonthlyReport> DIFF_CALLBACK = new DiffUtil.ItemCallback<MonthlyReportsFragment.MonthlyReport>() {
@@ -54,7 +56,11 @@ public class MonthlyReportsAdapter extends ListAdapter<MonthlyReportsFragment.Mo
     @NonNull
     @Override
     public ReportHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_monthly_report, parent, false);
+        View itemView;
+        if (isFromWallet)
+            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_monthly_report_2, parent, false);
+        else
+            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_monthly_report, parent, false);
         return new ReportHolder(itemView);
     }
 

@@ -36,9 +36,11 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
     private Context context;
     private String currency;
     private String theme;
+    private boolean isFromWallet;
 
-    protected WeeklyReportsAdapter() {
+    protected WeeklyReportsAdapter(boolean isFromWallet) {
         super(DIFF_CALLBACK);
+        this.isFromWallet = isFromWallet;
     }
 
     private static final DiffUtil.ItemCallback<WeeklyReportsFragment.WeeklyReport> DIFF_CALLBACK = new DiffUtil.ItemCallback<WeeklyReportsFragment.WeeklyReport>() {
@@ -56,7 +58,11 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
     @NonNull
     @Override
     public ReportHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_weekly_report, parent, false);
+        View itemView;
+        if (isFromWallet)
+            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_weekly_report_2, parent, false);
+        else
+            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_weekly_report, parent, false);
         return new ReportHolder(itemView);
     }
 

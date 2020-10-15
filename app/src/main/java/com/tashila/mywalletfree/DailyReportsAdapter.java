@@ -27,9 +27,11 @@ public class DailyReportsAdapter extends ListAdapter<DailyReportsFragment.DailyR
     private Context context;
     private String currency;
     private String theme;
+    private boolean isFromWallet;
 
-    protected DailyReportsAdapter() {
+    public DailyReportsAdapter(boolean isFromWallet) {
         super(DIFF_CALLBACK);
+        this.isFromWallet = isFromWallet;
     }
 
     private static final DiffUtil.ItemCallback<DailyReportsFragment.DailyReport> DIFF_CALLBACK = new DiffUtil.ItemCallback<DailyReportsFragment.DailyReport>() {
@@ -47,7 +49,11 @@ public class DailyReportsAdapter extends ListAdapter<DailyReportsFragment.DailyR
     @NonNull
     @Override
     public ReportHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_daily_report, parent, false);
+        View itemView;
+        if (isFromWallet)
+            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_daily_report_2, parent, false);
+        else
+            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_daily_report, parent, false);
         return new ReportHolder(itemView);
     }
 
@@ -79,8 +85,7 @@ public class DailyReportsAdapter extends ListAdapter<DailyReportsFragment.DailyR
                 holder.tvIncomeDiff.setTextColor(context.getResources().getColor(android.R.color.holo_green_dark));
             else
                 holder.tvIncomeDiff.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
-        }
-        else
+        } else
             holder.tvIncomeDiff.setVisibility(View.GONE);
         if (!dailyReport.getExpensesDiff().contains("null")
                 && !dailyReport.getExpensesDiff().equals("(+.00)") && !dailyReport.getExpensesDiff().equals("(-.00)")) {
@@ -94,8 +99,7 @@ public class DailyReportsAdapter extends ListAdapter<DailyReportsFragment.DailyR
                 holder.tvExpensesDiff.setTextColor(context.getResources().getColor(android.R.color.holo_green_dark));
             else
                 holder.tvExpensesDiff.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
-        }
-        else
+        } else
             holder.tvExpensesDiff.setVisibility(View.GONE);
 
         //charts

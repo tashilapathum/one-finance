@@ -8,7 +8,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp">
 
         <LinearLayout
             android:id="@+id/ll1"
@@ -192,7 +193,7 @@
         </LinearLayout>
 
         <ScrollView
-            android:id="@+id/scrollView2"
+            android:id="@+id/scrollview2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/ll2"
@@ -200,15 +201,17 @@
             android:layout_marginEnd="8dp">
 
             <LinearLayout
-                android:id="@+id/childLinear"
+                android:id="@+id/content_container"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:orientation="vertical"
-                android:padding="8dp">
+                android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/quickList_title"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     tools:ignore="UselessParent">
 
                     <TextView
@@ -241,7 +244,7 @@
             android:id="@+id/snackbarHere"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/scrollView2" />
+            android:layout_below="@id/scrollview2" />
 
 
     </RelativeLayout>

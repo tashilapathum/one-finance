@@ -45,6 +45,11 @@ public class MonthlyReportsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_monthly_reports, container, false);
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
+        Bundle bundle = this.getArguments();
+        boolean isFromWallet = false;
+        if (bundle != null)
+            isFromWallet = bundle.getBoolean("fromWallet");
+
         monthlyReportList = new ArrayList<>();
         pickedMonth = sharedPref.getInt("reports_month", 0);
         if (pickedMonth != 0)
@@ -64,22 +69,24 @@ public class MonthlyReportsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new MonthlyReportsAdapter();
+        adapter = new MonthlyReportsAdapter(isFromWallet);
         recyclerView.setLayoutAnimation(new AnimationHandler().getSlideUpController());
         recyclerView.setAdapter(adapter);
         calculateMonthlyReport(month, year);
-        calculateMonthlyReport(month, year);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (!recyclerView.canScrollVertically(1))
-                    if (sharedPref.getBoolean("MyWalletPro", false))
-                        calculateMonthlyReport(month, year);
-                    else
-                        purchaseProForThis();
-            }
-        });
+        if (!isFromWallet) {
+            calculateMonthlyReport(month, year);
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    if (!recyclerView.canScrollVertically(1))
+                        if (sharedPref.getBoolean("MyWalletPro", false))
+                            calculateMonthlyReport(month, year);
+                        else
+                            purchaseProForThis();
+                }
+            });
+        }
         return view;
     }
 
