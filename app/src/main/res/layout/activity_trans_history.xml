@@ -7,19 +7,22 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:fitsSystemWindows="true"
-    tools:context=".TransactionHistory">
+    tools:context=".TransactionHistory"
+    android:animateLayoutChanges="true">
 
     <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="0px"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:layout_width="0px"
-        android:layout_height="0px"/>
+        tools:ignore="UselessLeaf" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingBottom="16dp">
+        android:paddingBottom="16dp"
+        android:animateLayoutChanges="true">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -28,26 +31,48 @@
             android:background="@color/colorPrimary"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-            <EditText
-                android:id="@+id/etSearch"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/search"
-                android:layout_marginEnd="8dp"
-                android:background="@android:color/transparent"
-                android:importantForAutofill="no"
-                android:inputType="textCapSentences"
-                android:fontFamily="sans-serif-condensed"/>
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_marginEnd="8dp"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="sans-serif-condensed"
+                    android:hint="@string/search"
+                    android:importantForAutofill="no"
+                    android:inputType="textCapSentences"
+                    android:layout_toStartOf="@id/toggleFilters"
+                    android:layout_alignParentStart="true"/>
+
+                <ImageButton
+                    android:id="@+id/toggleFilters"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_filter"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:paddingHorizontal="16dp"
+                    android:tint="@color/colorDividerLight"
+                    android:contentDescription="show or hide filters"
+                    android:onClick="toggleFilters"/>
+
+            </RelativeLayout>
 
         </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/filtersCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="0dp"
-            app:cardElevation="4dp">
+            app:cardElevation="4dp"
+            android:visibility="gone">
 
             <HorizontalScrollView
                 android:layout_width="wrap_content"
@@ -63,19 +88,19 @@
                         android:id="@+id/date_spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="4dp"/>
+                        android:layout_marginHorizontal="4dp" />
 
                     <Spinner
                         android:id="@+id/type_spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="4dp"/>
+                        android:layout_marginHorizontal="4dp" />
 
                     <Spinner
                         android:id="@+id/sort_spinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="4dp"/>
+                        android:layout_marginHorizontal="4dp" />
 
                 </LinearLayout>
             </HorizontalScrollView>
@@ -85,7 +110,7 @@
             android:id="@+id/THRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"/>
+            android:scrollbars="vertical" />
 
     </LinearLayout>
 
@@ -95,9 +120,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_menu"
         app:itemStyle="rounded_right"
-        app:itemTextAppearance="@style/DrawerTextStyle"/>
+        app:itemTextAppearance="@style/DrawerTextStyle"
+        app:menu="@menu/drawer_menu" />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

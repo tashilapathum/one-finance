@@ -28,6 +28,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
 import com.shreyaspatil.material.navigationview.MaterialNavigationView;
 
@@ -621,7 +622,7 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
         }
 
         //if (date != 6)
-            showResults();
+        showResults();
     }
 
     private boolean containsItem(TransactionItem item) {
@@ -629,7 +630,7 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
     }
 
     private void remove(TransactionItem item) {
-        for (Iterator<TransactionItem> iterator = filteredList.iterator(); iterator.hasNext();) {
+        for (Iterator<TransactionItem> iterator = filteredList.iterator(); iterator.hasNext(); ) {
             TransactionItem nextItem = iterator.next();
             if (nextItem.equals(item))
                 iterator.remove();
@@ -653,6 +654,21 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
                 Toast.makeText(this, "No results", Toast.LENGTH_SHORT).show();
         else
             transactionsAdapter.submitList(filteredList);
-        mLayoutManager.smoothScrollToPosition(recyclerView, null,0);
+        mLayoutManager.smoothScrollToPosition(recyclerView, null, 0);
+    }
+
+    public void toggleFilters(View view) {
+        MaterialCardView filtersCard = findViewById(R.id.filtersCard);
+        if (filtersCard.getVisibility() == View.GONE)
+            filtersCard.setVisibility(View.VISIBLE);
+        else {
+            dateSpinner.setSelection(0);
+            typeSpinner.setSelection(0);
+            sortSpinner.setSelection(0);
+            filtersCard.setVisibility(View.GONE);
+            transactionsList = transactionsViewModel.getTransactionsList();
+            transactionsAdapter.submitList(transactionsList);
+            mLayoutManager.smoothScrollToPosition(recyclerView, null, 0);
+        }
     }
 }
