@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 import java.util.List;
 
 public class TransactionHistory extends AppCompatActivity implements MaterialNavigationView.OnNavigationItemSelectedListener {
@@ -339,11 +340,9 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
                     try {
-                        typeSpinner.setSelection(0);
-                        sortSpinner.setSelection(0);
                         filter();
                     } catch (ConcurrentModificationException e) {
-                        Toast.makeText(TransactionHistory.this, "Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TransactionHistory.this, "Process interrupted", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -363,11 +362,9 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
                     try {
-                        dateSpinner.setSelection(0);
-                        sortSpinner.setSelection(0);
                         filter();
                     } catch (ConcurrentModificationException e) {
-                        Toast.makeText(TransactionHistory.this, "Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TransactionHistory.this, "Process interrupted", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -387,11 +384,9 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0) {
                     try {
-                        dateSpinner.setSelection(0);
-                        typeSpinner.setSelection(0);
                         filter();
                     } catch (ConcurrentModificationException e) {
-                        Toast.makeText(TransactionHistory.this, "Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TransactionHistory.this, "Process interrupted", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -416,75 +411,124 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
                 break;
             }
             case 2: { //today
-                for (TransactionItem item : transactionsList) {
+                List<TransactionItem> checkingList = new ArrayList<>();
+                if (filteredList.isEmpty())
+                    for (int i = 0; i < transactionsList.size(); i++)
+                        checkingList.add(transactionsList.get(i));
+                else
+                    for (int i = 0; i < filteredList.size(); i++)
+                        checkingList.add(filteredList.get(i));
+
+                for (TransactionItem item : checkingList) {
                     DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
                     if (dateTimeHandler.getDayOfYear() == LocalDate.now().getDayOfYear() && !containsItem(item))
                         filteredList.add(item);
-                    else
-                        filteredList.remove(item);
+                    if (dateTimeHandler.getDayOfYear() != LocalDate.now().getDayOfYear() && containsItem(item))
+                        remove(item);
                 }
                 break;
             }
             case 3: { //yesterday
-                for (TransactionItem item : transactionsList) {
+                List<TransactionItem> checkingList = new ArrayList<>();
+                if (filteredList.isEmpty())
+                    for (int i = 0; i < transactionsList.size(); i++)
+                        checkingList.add(transactionsList.get(i));
+                else
+                    for (int i = 0; i < filteredList.size(); i++)
+                        checkingList.add(filteredList.get(i));
+
+                for (TransactionItem item : checkingList) {
                     DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
                     if (dateTimeHandler.getDayOfYear() == LocalDate.now().minusDays(1).getDayOfYear() && !containsItem(item))
                         filteredList.add(item);
-                    else
-                        filteredList.remove(item);
+                    if (dateTimeHandler.getDayOfYear() != LocalDate.now().minusDays(1).getDayOfYear() && containsItem(item))
+                        remove(item);
                 }
                 break;
             }
             case 4: { //this week
-                for (TransactionItem item : transactionsList) {
+                List<TransactionItem> checkingList = new ArrayList<>();
+                if (filteredList.isEmpty())
+                    for (int i = 0; i < transactionsList.size(); i++)
+                        checkingList.add(transactionsList.get(i));
+                else
+                    for (int i = 0; i < filteredList.size(); i++)
+                        checkingList.add(filteredList.get(i));
+
+                for (TransactionItem item : checkingList) {
                     DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
                     if (dateTimeHandler.getWeekOfYear() == dateTimeHandler.getWeekOfYear(LocalDateTime.now()) && !containsItem(item))
                         filteredList.add(item);
-                    else
-                        filteredList.remove(item);
+                    if (dateTimeHandler.getWeekOfYear() != dateTimeHandler.getWeekOfYear(LocalDateTime.now()) && containsItem(item))
+                        remove(item);
                 }
                 break;
             }
             case 5: { //last week
-                for (TransactionItem item : transactionsList) {
+                List<TransactionItem> checkingList = new ArrayList<>();
+                if (filteredList.isEmpty())
+                    for (int i = 0; i < transactionsList.size(); i++)
+                        checkingList.add(transactionsList.get(i));
+                else
+                    for (int i = 0; i < filteredList.size(); i++)
+                        checkingList.add(filteredList.get(i));
+
+                for (TransactionItem item : checkingList) {
                     DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
                     if (dateTimeHandler.getWeekOfYear() == dateTimeHandler.getWeekOfYear(LocalDateTime.now().minusDays(7)) && !containsItem(item))
                         filteredList.add(item);
-                    else
-                        filteredList.remove(item);
+                    if (dateTimeHandler.getWeekOfYear() != dateTimeHandler.getWeekOfYear(LocalDateTime.now().minusDays(7)) && containsItem(item))
+                        remove(item);
                 }
                 break;
             }
-            case 6: { //pick date
+            /*case 6: { //pick date
                 Bundle bundle = new Bundle();
                 bundle.putString("pickDate", "fromTransactionFilter");
                 DialogFragment datePicker = new DatePickerFragment();
                 datePicker.setArguments(bundle);
                 datePicker.show(getSupportFragmentManager(), "date picker dialog");
                 break;
-            }
+            }*/
         }
 
         switch (type) {
             case 1: { //all
-                filteredList.addAll(transactionsList);
+                if (filteredList.isEmpty())
+                    filteredList.addAll(transactionsList);
                 break;
             }
             case 2: { //incomes
-                for (TransactionItem item : transactionsList) {
+                List<TransactionItem> checkingList = new ArrayList<>();
+                if (filteredList.isEmpty())
+                    for (int i = 0; i < transactionsList.size(); i++)
+                        checkingList.add(transactionsList.get(i));
+                else
+                    for (int i = 0; i < filteredList.size(); i++)
+                        checkingList.add(filteredList.get(i));
+
+                for (TransactionItem item : checkingList) {
                     if (item.getPrefix().equals("+") && !containsItem(item))
                         filteredList.add(item);
-                    else
-                        filteredList.remove(item);
+                    if (!item.getPrefix().equals("+") && containsItem(item))
+                        remove(item);
                 }
                 break;
             }
             case 3: { //expenses
-                for (TransactionItem item : transactionsList) {
+                List<TransactionItem> checkingList = new ArrayList<>();
+                if (filteredList.isEmpty())
+                    for (int i = 0; i < transactionsList.size(); i++)
+                        checkingList.add(transactionsList.get(i));
+                else
+                    for (int i = 0; i < filteredList.size(); i++)
+                        checkingList.add(filteredList.get(i));
+
+                for (TransactionItem item : checkingList) {
                     if (item.getPrefix().equals("-") && !containsItem(item))
                         filteredList.add(item);
-                    else
-                        filteredList.remove(item);
+                    if (!item.getPrefix().equals("-") && containsItem(item))
+                        remove(item);
                 }
                 break;
             }
@@ -500,7 +544,8 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
 
         switch (sort) {
             case 1: { //added order
-                filteredList.addAll(transactionsList);
+                if (filteredList.isEmpty())
+                    filteredList.addAll(transactionsList);
                 break;
             }
             case 2: { //date - descending
@@ -575,7 +620,7 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
             }
         }
 
-        if (date != 6)
+        //if (date != 6)
             showResults();
     }
 
@@ -583,13 +628,19 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
         return filteredList.stream().anyMatch(o -> o.getId() == item.getId());
     }
 
+    private void remove(TransactionItem item) {
+        for (Iterator<TransactionItem> iterator = filteredList.iterator(); iterator.hasNext();) {
+            TransactionItem nextItem = iterator.next();
+            if (nextItem.equals(item))
+                iterator.remove();
+        }
+    }
+
     public void filterByDate(int date) {
         for (TransactionItem item : transactionsList) {
             DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
             if (dateTimeHandler.getDayOfYear() == date && !filteredList.contains(item))
                 filteredList.add(item);
-            else
-                filteredList.remove(item);
         }
         showResults();
     }
@@ -602,7 +653,6 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
                 Toast.makeText(this, "No results", Toast.LENGTH_SHORT).show();
         else
             transactionsAdapter.submitList(filteredList);
+        mLayoutManager.smoothScrollToPosition(recyclerView, null,0);
     }
 }
-
-//TODO: add multiple filter (use ELSE to fix duplicate items!!)

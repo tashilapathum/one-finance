@@ -285,7 +285,6 @@
         <item>Yesterday</item>
         <item>This week</item>
         <item>Last week</item>
-        <item>Pick a date…</item>
     </string-array>
     <string-array name="type_list">
         <item>Type</item>

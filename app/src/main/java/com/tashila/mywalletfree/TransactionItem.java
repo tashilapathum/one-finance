@@ -27,6 +27,17 @@ public class TransactionItem {
         this.databaseDate = databaseDate;
     }
 
+    public TransactionItem(TransactionItem transactionItem) {
+        this.id = transactionItem.getId();
+        this.balance = transactionItem.getBalance();
+        this.prefix = transactionItem.getPrefix();
+        this.amount = transactionItem.getAmount();
+        this.description = transactionItem.getDescription();
+        this.userDate = transactionItem.getUserDate();
+        this.databaseDate = transactionItem.getDatabaseDate();
+        this.isBankRelated = transactionItem.isBankRelated();
+    }
+
     public void setId(int id) {
         this.id = id;
     }
