@@ -30,6 +30,7 @@
         android:layout_margin="16dp"
         android:layout_gravity="bottom|end"
         android:backgroundTint="@color/colorBillsFAB"
-        android:src="@drawable/ic_add_bill"/>
+        android:src="@drawable/ic_add_bill"
+        app:borderWidth="0dp"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

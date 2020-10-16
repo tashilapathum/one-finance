@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/walletInput"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/ll1">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editAmnt"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:errorEnabled="true"
+            app:startIconDrawable="@drawable/ic_amount">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:fontFamily="sans-serif-condensed"
+                android:hint="@string/amount"
+                android:importantForAutofill="no"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editDescr"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editAmnt"
+            android:layout_marginTop="8dp"
+            android:hint="@string/description"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:errorEnabled="true"
+            app:startIconDrawable="@drawable/ic_description">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/aetDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:completionThreshold="1"
+                android:ems="10"
+                android:fontFamily="sans-serif-condensed"
+                android:importantForAutofill="no"
+                android:inputType="textCapSentences"
+                android:paddingHorizontal="11dp"
+                android:paddingVertical="16dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/ll2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editDescr"
+            android:clipToPadding="false"
+            android:gravity="end"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnTransfer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:fontFamily="sans-serif-condensed"
+                android:paddingVertical="12dp"
+                android:stateListAnimator="@null"
+                android:text="@string/transfer"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:translationZ="8dp"
+                app:cornerRadius="48dp"
+                app:elevation="8dp"
+                app:icon="@drawable/ic_transfer"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEarned"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="2dp"
+                android:fontFamily="sans-serif-condensed"
+                android:paddingVertical="12dp"
+                android:stateListAnimator="@null"
+                android:text="@string/earned"
+                android:textAllCaps="false"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:translationZ="8dp"
+                app:cornerRadius="48dp"
+                app:elevation="8dp"
+                app:icon="@drawable/ic_plus"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSpent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:fontFamily="sans-serif-condensed"
+                android:paddingVertical="12dp"
+                android:stateListAnimator="@null"
+                android:text="@string/spent"
+                android:textAllCaps="false"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:translationZ="8dp"
+                app:cornerRadius="48dp"
+                app:elevation="8dp"
+                app:icon="@drawable/ic_minus"/>
+
+        </LinearLayout>
+    </RelativeLayout>

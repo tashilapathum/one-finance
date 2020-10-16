@@ -23,7 +23,9 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -46,7 +48,8 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
     private MaterialCheckBox negativeCheckBox;
     private FirebaseAnalytics firebaseAnalytics;
     private MaterialNavigationView navigationView;
-
+    private boolean isMyWalletPro;
+    private ViewGroup viewGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +94,10 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
         toggle.syncState();
         /*----------------------------------------------------------------------------------------*/
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        isMyWalletPro = sharedPref.getBoolean("MyWalletPro", false);
+        viewGroup = (ViewGroup) findViewById(android.R.id.content);
+
+        if (isMyWalletPro) hideProLabels(viewGroup);
 
         //exit confirm setting
         exitCheckBox = findViewById(R.id.exitCheck);
@@ -263,6 +270,18 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
         }
     }
 
+    private void hideProLabels(ViewGroup viewGroup) {
+        int count = viewGroup.getChildCount();
+        for (int i = 0; i < count; i++) {
+            View view = viewGroup.getChildAt(i);
+            if (view instanceof ViewGroup)
+                hideProLabels((ViewGroup) view);
+            else if (view instanceof TextView)
+                if (((TextView) view).getText().equals("Pro"))
+                    view.setVisibility(View.INVISIBLE);
+        }
+    }
+
     public void editQuickList(View view) {
         Bundle bundle = new Bundle();
         bundle.putString("setting", "edit_quick_list");
@@ -321,7 +340,7 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
         Bundle bundle = new Bundle();
         bundle.putString("setting", "edit_notify_time");
         firebaseAnalytics.logEvent("used_setting", bundle);
-        if (sharedPref.getBoolean("MyWalletPro", false)) {
+        if (isMyWalletPro) {
             DialogFragment timePicker = new TimePickerFrag();
             timePicker.show(getSupportFragmentManager(), "time picker");
         } else purchaseProForThis();
@@ -358,7 +377,7 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
         Bundle bundle = new Bundle();
         bundle.putString("setting", "set_theme");
         firebaseAnalytics.logEvent("used_setting", bundle);
-        if (sharedPref.getBoolean("MyWalletPro", false)) {
+        if (isMyWalletPro) {
             DialogTheme dialogTheme = new DialogTheme();
             dialogTheme.show(getSupportFragmentManager(), "theme dialog");
         } else purchaseProForThis();
@@ -368,7 +387,7 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
         Bundle bundle = new Bundle();
         bundle.putString("setting", "set_home");
         firebaseAnalytics.logEvent("used_setting", bundle);
-        if (sharedPref.getBoolean("MyWalletPro", false)) {
+        if (isMyWalletPro) {
             DialogChooseHome dialogChooseHome = new DialogChooseHome();
             dialogChooseHome.show(getSupportFragmentManager(), "choose home dialog");
         } else purchaseProForThis();

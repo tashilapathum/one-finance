@@ -20,7 +20,8 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="16dp"
             android:backgroundTint="@android:color/holo_blue_light"
-            android:src="@drawable/ic_add" />
+            android:src="@drawable/ic_add"
+            app:borderWidth="0dp"/>
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"

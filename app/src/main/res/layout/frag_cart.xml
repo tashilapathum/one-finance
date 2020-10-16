@@ -127,7 +127,8 @@
             android:layout_alignParentEnd="true"
             android:layout_margin="16dp"
             android:backgroundTint="@color/colorCartFAB"
-            android:src="@drawable/ic_add_to_cart" />
+            android:src="@drawable/ic_add_to_cart"
+            app:borderWidth="0dp" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/totalCard"

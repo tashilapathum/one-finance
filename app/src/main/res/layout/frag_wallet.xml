@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -83,170 +83,58 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editAmnt"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ll1"
-            android:paddingTop="16dp"
-            app:boxCornerRadiusBottomEnd="16dp"
-            app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusTopEnd="16dp"
-            app:boxCornerRadiusTopStart="16dp"
-            app:errorEnabled="true"
-            app:startIconDrawable="@drawable/ic_amount">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:fontFamily="sans-serif-condensed"
-                android:hint="@string/amount"
-                android:importantForAutofill="no"
-                android:inputType="numberDecimal" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editDescr"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/editAmnt"
-            android:layout_marginTop="8dp"
-            app:boxCornerRadiusBottomEnd="16dp"
-            app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusTopEnd="16dp"
-            app:boxCornerRadiusTopStart="16dp"
-            app:errorEnabled="true"
-            android:hint="@string/description"
-            app:startIconDrawable="@drawable/ic_description">
-
-            <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:id="@+id/aetDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:completionThreshold="1"
-                android:fontFamily="sans-serif-condensed"
-                android:importantForAutofill="no"
-                android:inputType="textCapSentences"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:paddingVertical="16dp"
-                android:paddingHorizontal="11dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+        <include layout="@layout/wallet_input"/>
 
         <LinearLayout
-            android:id="@+id/ll2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/editDescr"
-            android:gravity="end"
-            android:orientation="horizontal"
-            android:paddingBottom="8dp"
-            android:clipToPadding="false">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnTransfer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="4dp"
-                android:fontFamily="sans-serif-condensed"
-                android:paddingVertical="12dp"
-                android:text="@string/transfer"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                app:cornerRadius="48dp"
-                app:elevation="8dp"
-                android:translationZ="8dp"
-                android:stateListAnimator="@null"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnEarned"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="2dp"
-                android:fontFamily="sans-serif-condensed"
-                android:paddingVertical="12dp"
-                android:text="@string/earned"
-                android:textAllCaps="false"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                app:cornerRadius="48dp"
-                app:elevation="8dp"
-                android:translationZ="8dp"
-                android:stateListAnimator="@null"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSpent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="4dp"
-                android:fontFamily="sans-serif-condensed"
-                android:paddingVertical="12dp"
-                android:text="@string/spent"
-                android:textAllCaps="false"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                app:cornerRadius="48dp"
-                app:elevation="8dp"
-                android:translationZ="8dp"
-                android:stateListAnimator="@null" />
-
-        </LinearLayout>
-
-        <ScrollView
-            android:id="@+id/scrollview2"
+            android:id="@+id/content_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/ll2"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp">
+            android:layout_below="@id/walletInput"
+            android:orientation="vertical"
+            android:paddingHorizontal="4dp">
 
-            <LinearLayout
-                android:id="@+id/content_container"
+            <RelativeLayout
+                android:id="@+id/quickList_title"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                tools:ignore="UselessParent"
+                tools:visibility="visible">
 
-                <RelativeLayout
-                    android:id="@+id/quickList_title"
+                <TextView
+                    android:id="@+id/textView2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:padding="8dp"
+                    android:text="@string/quick_list"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textStyle="italic" />
+
+                <ImageButton
+                    android:id="@+id/editQuickList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="?android:selectableItemBackgroundBorderless"
+                    android:contentDescription="edit quick list"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_edit_list"
                     android:visibility="gone"
-                    tools:visibility="visible"
-                    tools:ignore="UselessParent">
+                    tools:visibility="visible"/>
+            </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:padding="8dp"
-                        android:text="@string/quick_list"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:textStyle="italic"/>
-
-                    <ImageButton
-                        android:id="@+id/editQuickList"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:background="?android:selectableItemBackgroundBorderless"
-                        android:contentDescription="edit quick list"
-                        android:padding="4dp"
-                        android:src="@drawable/ic_edit" />
-                </RelativeLayout>
-
-            </LinearLayout>
-        </ScrollView>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/snackbarHere"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/scrollview2" />
+            android:layout_below="@id/content_container" />
 
 
     </RelativeLayout>
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

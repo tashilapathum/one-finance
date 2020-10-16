@@ -138,8 +138,8 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
             sharedPref.edit().putBoolean("isNotificationSet", true).apply();
         }
 
-        if (getPackageName().contains("debug")) //TODO: change here!
-            sharedPref.edit().putBoolean("MyWalletPro", true).apply();
+        if (getPackageName().contains("debug"))
+            sharedPref.edit().putBoolean("MyWalletPro", true).apply(); //TODO: check here!
     }
 
     @Override //so the language change works with dark mode
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
                 DialogWhatsNew dialogWhatsNew = new DialogWhatsNew();
                 dialogWhatsNew.show(getSupportFragmentManager(), "whats new dialog");
                 sharedPref.edit().putBoolean("whatsNewShownV0.2.8", true).apply();
-            }
+            } //TODO: update this
         }
     }
 

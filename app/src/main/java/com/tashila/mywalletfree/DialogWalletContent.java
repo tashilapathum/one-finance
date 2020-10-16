@@ -5,10 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +25,6 @@ public class DialogWalletContent extends DialogFragment {
     private MaterialCheckBox cbThisMonth;
     private MaterialCheckBox cbToday;
     private MaterialCheckBox cbThisWeek;
-    private int selectedContentCount;
     private View view;
 
     @NonNull
@@ -34,7 +33,6 @@ public class DialogWalletContent extends DialogFragment {
         view = getActivity().getLayoutInflater().inflate(R.layout.dialog_wallet_content, null);
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         walletContent = sharedPref.getString("walletContent", null);
-        selectedContentCount = 0;
 
         cbQuickList = view.findViewById(R.id.quickList);
         cbToday = view.findViewById(R.id.todayReport);
@@ -48,25 +46,25 @@ public class DialogWalletContent extends DialogFragment {
         cbQuickList.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //handleSelection(buttonView, isChecked);
+                handleSelection(buttonView, isChecked);
             }
         });
         cbToday.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //handleSelection(buttonView, isChecked);
+                handleSelection(buttonView, isChecked);
             }
         });
         cbThisWeek.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //handleSelection(buttonView, isChecked);
+                handleSelection(buttonView, isChecked);
             }
         });
         cbThisMonth.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //handleSelection(buttonView, isChecked);
+                handleSelection(buttonView, isChecked);
             }
         });
 
@@ -95,6 +93,8 @@ public class DialogWalletContent extends DialogFragment {
         sharedPref.edit().putString("walletContent", walletContent).apply();
         sharedPref.edit().putBoolean("walletContentCustomized", true).apply(); //does not change later
         sharedPref.edit().putBoolean("walletContentChanged", true).apply(); //to refresh | changes later
+
+        Toast.makeText(getActivity(), R.string.saved, Toast.LENGTH_SHORT).show();
     }
 
     private void loadSavedData() {
@@ -115,14 +115,11 @@ public class DialogWalletContent extends DialogFragment {
     }
 
     private void handleSelection(CompoundButton checkBox, boolean isChecked) {
-        if (isChecked) selectedContentCount++;
-        else selectedContentCount--;
-
         boolean isMyWalletPro = sharedPref.getBoolean("MyWalletPro", false);
-        if (isMyWalletPro && selectedContentCount > 1)
+        if (isChecked && !isMyWalletPro)
             disableOthers(checkBox.getId(), cbToday, cbQuickList, cbThisWeek, cbThisMonth);
         else
-            enableOthers(cbToday, cbQuickList, cbThisWeek, cbThisMonth);
+            enableAll(cbToday, cbQuickList, cbThisWeek, cbThisMonth);
     }
 
     private void disableOthers(int checkedId, MaterialCheckBox... checkBoxes) {
@@ -137,7 +134,7 @@ public class DialogWalletContent extends DialogFragment {
         proNotice.setVisibility(View.VISIBLE);
     }
 
-    private void enableOthers(MaterialCheckBox... checkBoxes) {
+    private void enableAll(MaterialCheckBox... checkBoxes) {
         for (MaterialCheckBox checkBox : checkBoxes) {
             checkBox.setClickable(true);
             checkBox.setFocusable(true);
