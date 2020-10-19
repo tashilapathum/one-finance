@@ -13,12 +13,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputLayout;
@@ -34,7 +36,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.core.view.GravityCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -108,6 +109,30 @@ public class WalletFragment extends Fragment {
         setShadows(txtBalance, tvBalance, tvCurrency);
         df = new DecimalFormat("#.00");
 
+        setMainButtonActions();
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogUpdateBalance dialogUpdateBalance = new DialogUpdateBalance(getActivity());
+                dialogUpdateBalance.show(getActivity().getSupportFragmentManager(), "update balance dialog");
+            }
+        });
+        imEditQuickList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), EditQuickList.class);
+                startActivity(intent);
+            }
+        });
+
+        loadContent();
+        setupButtons();
+        setupInputMode();
+        return v;
+    }
+
+    private void setMainButtonActions() {
         btnEarned.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,25 +182,6 @@ public class WalletFragment extends Fragment {
                 return true;
             }
         });
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogUpdateBalance dialogUpdateBalance = new DialogUpdateBalance(getActivity());
-                dialogUpdateBalance.show(getActivity().getSupportFragmentManager(), "update balance dialog");
-            }
-        });
-        imEditQuickList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), EditQuickList.class);
-                startActivity(intent);
-            }
-        });
-
-        loadContent();
-        setupButtons();
-        setupInputMode();
-        return v;
     }
 
     private void loadContent() {
@@ -383,8 +389,7 @@ public class WalletFragment extends Fragment {
             String[] amountAndDescr = quickItem.replace(currency, "").split("\n");
             String descr = amountAndDescr[0];
             String amount = amountAndDescr[1];
-            etAmount.setText(amount);
-            etDescr.setText(descr);
+            setTexts(amount, descr);
             viewId = R.id.btnSpent; //because they always work as spent
             handleData(viewId);
             etAmount.clearFocus();
@@ -702,7 +707,16 @@ public class WalletFragment extends Fragment {
     private void setupInputMode() {
         String inputMode = sharedPref.getString("inputMode", "classic"); //no need to do anything if classic
         if (inputMode.equals("floating")) {
-
+            v.findViewById(R.id.wallet_input_layout).setVisibility(View.GONE);
+            ExtendedFloatingActionButton fab = v.findViewById(R.id.fabInput);
+            fab.setVisibility(View.VISIBLE);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DialogWalletInput dialogWalletInput = new DialogWalletInput();
+                    dialogWalletInput.show(getActivity().getSupportFragmentManager(), "wallet input dialog");
+                }
+            });
         }
     }
 
@@ -730,6 +744,15 @@ public class WalletFragment extends Fragment {
             btnToBank.setIconPadding(0);
             btnToBank.setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_START);
         }
+    }
+
+    public void setTexts(String amount, String description) {
+        etAmount.setText(amount);
+        etDescr.setText(description);
+    }
+
+    public void clickFromBottomSheet(MaterialButton button) {
+
     }
 
    /* private void setupAutocomplete() {

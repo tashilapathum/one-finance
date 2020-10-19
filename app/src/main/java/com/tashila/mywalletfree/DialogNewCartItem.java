@@ -17,7 +17,6 @@ import androidx.fragment.app.DialogFragment;
 
 public class DialogNewCartItem extends BottomSheetDialogFragment {
     private BottomSheetDialog dialog = null;
-    private View view;
     private EditText etItemName;
     private EditText etItemPrice;
     private EditText etQuantity;
@@ -25,7 +24,7 @@ public class DialogNewCartItem extends BottomSheetDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        view = getActivity().getLayoutInflater().inflate(R.layout.dialog_cart_item, null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_cart_item, null);
         etItemName = view.findViewById(R.id.itemName);
         etItemPrice = view.findViewById(R.id.itemPrice);
         etQuantity = view.findViewById(R.id.quantity);

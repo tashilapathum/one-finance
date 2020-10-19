@@ -10,11 +10,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:icon="@drawable/ic_input"
-        android:text="Add"
+        android:text="@string/add"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:backgroundTint="@color/colorAccent"
+        />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -98,7 +101,7 @@
                 android:id="@+id/content_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/input_mode"
+                android:layout_below="@id/wallet_input_layout"
                 android:orientation="vertical"
                 android:paddingHorizontal="4dp">
 
