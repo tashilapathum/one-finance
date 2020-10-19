@@ -51,7 +51,6 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
     private RecyclerView.LayoutManager mLayoutManager;
     private TransactionsViewModel transactionsViewModel;
     private EditText etSearch;
-    private String currency;
     private Spinner dateSpinner;
     private Spinner typeSpinner;
     private Spinner sortSpinner;
@@ -94,7 +93,7 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         /*----------------------------------------------------------------------------------------*/
-        currency = sharedPref.getString("currency", "");
+        String currency = sharedPref.getString("currency", "");
         loadItems();
         loadFilters();
         etSearch = findViewById(R.id.etSearch);
@@ -662,10 +661,10 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
         if (filtersCard.getVisibility() == View.GONE)
             filtersCard.setVisibility(View.VISIBLE);
         else {
+            filtersCard.setVisibility(View.GONE);
             dateSpinner.setSelection(0);
             typeSpinner.setSelection(0);
             sortSpinner.setSelection(0);
-            filtersCard.setVisibility(View.GONE);
             transactionsList = transactionsViewModel.getTransactionsList();
             transactionsAdapter.submitList(transactionsList);
             mLayoutManager.smoothScrollToPosition(recyclerView, null, 0);

@@ -34,6 +34,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -70,6 +71,9 @@ public class WalletFragment extends Fragment {
     private final int TODAY_REPORT = R.id.todayReport;
     private final int THIS_WEEK_REPORT = R.id.thisWeekReport;
     private final int THIS_MONTH_REPORT = R.id.thisMonthReport;
+    private MaterialButton btnEarned;
+    private MaterialButton btnSpent;
+    private MaterialButton btnToBank;
 
     @Nullable
     @Override
@@ -95,9 +99,9 @@ public class WalletFragment extends Fragment {
         etAmount = tilAmount.getEditText();
         tilDescr = v.findViewById(R.id.editDescr);
         etDescr = tilDescr.getEditText();
-        Button btnEarned = v.findViewById(R.id.btnEarned);
-        Button btnSpent = v.findViewById(R.id.btnSpent);
-        Button btnToBank = v.findViewById(R.id.btnTransfer);
+        btnEarned = v.findViewById(R.id.btnEarned);
+        btnSpent = v.findViewById(R.id.btnSpent);
+        btnToBank = v.findViewById(R.id.btnTransfer);
         Button btnUpdate = v.findViewById(R.id.btnUpdate);
         ImageButton imEditQuickList = v.findViewById(R.id.editQuickList);
         language = sharedPref.getString("language", "english");
@@ -169,6 +173,8 @@ public class WalletFragment extends Fragment {
         });
 
         loadContent();
+        setupButtons();
+        setupInputMode();
         return v;
     }
 
@@ -242,6 +248,14 @@ public class WalletFragment extends Fragment {
         if (sharedPref.contains("balance"))
             tvBalance.setText(balance);
 
+        if (!sharedPref.getBoolean("negativeEnabled", false))
+            showNegativeWarning();
+
+        showEditQLButton();
+    }
+
+    private void showNegativeWarning() {
+        String balance = sharedPref.getString("balance", "0.00");
         ImageButton imWarning = v.findViewById(R.id.warning);
         if (balance.contains("-")) {
             tvBalance.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
@@ -682,6 +696,39 @@ public class WalletFragment extends Fragment {
                 view.setShadowLayer(3, 1, 1, R.color.colorShadowDark);
             else
                 view.setShadowLayer(3, 1, 1, R.color.colorShadow);
+        }
+    }
+
+    private void setupInputMode() {
+        String inputMode = sharedPref.getString("inputMode", "classic"); //no need to do anything if classic
+        if (inputMode.equals("floating")) {
+
+        }
+    }
+
+    private void showEditQLButton() {
+        boolean qlButtonEnabled = sharedPref.getBoolean("qlShortcutEnabled", false);
+        if (qlButtonEnabled)
+            v.findViewById(R.id.editQuickList).setVisibility(View.VISIBLE);
+    }
+
+    private void setupButtons() {
+        String buttonType = sharedPref.getString("buttonType", "labelOnly");
+        if (buttonType.equals("labelOnly")) {
+            btnEarned.setIcon(null);
+            btnSpent.setIcon(null);
+            btnToBank.setIcon(null);
+        }
+        else if (buttonType.equals("iconOnly")) {
+            btnEarned.setText(null);
+            btnEarned.setIconPadding(0);
+            btnEarned.setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_START);
+            btnSpent.setText(null);
+            btnSpent.setIconPadding(0);
+            btnSpent.setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_START);
+            btnToBank.setText(null);
+            btnToBank.setIconPadding(0);
+            btnToBank.setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_START);
         }
     }
 

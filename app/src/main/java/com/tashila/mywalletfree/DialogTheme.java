@@ -20,7 +20,7 @@ import androidx.fragment.app.DialogFragment;
 import static android.content.Context.MODE_PRIVATE;
 
 public class DialogTheme extends DialogFragment {
-    private static final String TAG = "DialogLanguage";
+    private static final String TAG = "DialogTheme";
     private RadioGroup radioGroup;
     private View view1;
     private SharedPreferences sharedPref;
@@ -37,11 +37,7 @@ public class DialogTheme extends DialogFragment {
         builder
                 .setView(view1)
                 .setTitle(R.string.select_theme)
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
+                .setNegativeButton(R.string.cancel, null)
                 .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

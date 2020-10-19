@@ -67,7 +67,7 @@ public class DialogChooseAcc extends DialogFragment {
     }
 
     private void showAccountsList() {
-        String currency = sharedPref.getString("currency", null);
+        String currency = sharedPref.getString("currency", "");
         final boolean calledFromWallet = sharedPref.getBoolean("chooseAccFromWallet", false);
 
         final List<Account> accountsList = accountsViewModel.getAllAccounts();

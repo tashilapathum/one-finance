@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/radioGroup"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="20dp">
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/iconAndLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="@string/icon_and_label"/>
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/iconOnly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="@string/icon_only" />
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/labelOnly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="@string/label_only"
+        android:checked="true"/>
+
+</RadioGroup>

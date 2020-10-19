@@ -41,7 +41,7 @@
         android:textAllCaps="false" />
 
     <LinearLayout
-        android:id="@+id/ll1"
+        android:id="@+id/balance_strip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv1"
@@ -80,7 +80,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll1"
+        android:layout_below="@id/balance_strip"
         android:hint="@string/amount"
         android:paddingTop="24dp"
         app:boxCornerRadiusBottomEnd="16dp"
@@ -98,7 +98,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
-        android:id="@+id/ll2"
+        android:id="@+id/button_strip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editAmount"
@@ -144,7 +144,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll2"
+        android:layout_below="@id/button_strip"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:paddingTop="32dp">

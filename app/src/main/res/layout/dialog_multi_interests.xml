@@ -18,7 +18,7 @@
         android:text="@string/multi_interest_example" />
 
     <LinearLayout
-        android:id="@+id/ll1"
+        android:id="@+id/balance_strip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv2"
@@ -63,10 +63,10 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll2"
+        android:id="@+id/button_strip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll1"
+        android:layout_below="@id/balance_strip"
         android:orientation="horizontal">
 
         <EditText
@@ -111,7 +111,7 @@
         android:id="@+id/ll3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll2"
+        android:layout_below="@id/button_strip"
         android:orientation="horizontal">
 
         <EditText

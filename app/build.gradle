@@ -10,12 +10,13 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 24
-        versionName "0.2.8"
+        versionName "0.2.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
+            versionNameSuffix '-DEBUG'
         }
         release {
             minifyEnabled false

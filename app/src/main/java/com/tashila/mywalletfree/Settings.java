@@ -46,6 +46,7 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
     private MaterialCheckBox suggestCheckBox;
     private MaterialCheckBox undoCheckBox;
     private MaterialCheckBox negativeCheckBox;
+    private MaterialCheckBox qlShortcutCheckBox;
     private FirebaseAnalytics firebaseAnalytics;
     private MaterialNavigationView navigationView;
     private boolean isMyWalletPro;
@@ -154,6 +155,20 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
         });
         boolean negativeEnabled = sharedPref.getBoolean("negativeEnabled", false);
         if (negativeEnabled) negativeCheckBox.setChecked(true);
+
+        //negative setting
+        qlShortcutCheckBox = findViewById(R.id.qlShortcutCheck);
+        qlShortcutCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked())
+                    sharedPref.edit().putBoolean("qlShortcutEnabled", true).apply();
+                else
+                    sharedPref.edit().putBoolean("qlShortcutEnabled", false).apply();
+            }
+        });
+        boolean qlShortcutEnabled = sharedPref.getBoolean("qlShortcutEnabled", false);
+        if (qlShortcutEnabled) qlShortcutCheckBox.setChecked(true);
     }
 
     @Override //so the language change works with dark mode
@@ -398,6 +413,11 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
         dialogWalletContent.show(getSupportFragmentManager(), "wallet content dialog");
     }
 
+    public void inputMode(View view) {
+        DialogInputMode dialogInputMode = new DialogInputMode();
+        dialogInputMode.show(getSupportFragmentManager(), "input mode dialog");
+    }
+
     public void undoAction(View view) {
         Bundle bundle = new Bundle();
         bundle.putString("setting", "undo_action_checkbox");
@@ -416,6 +436,70 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
             negativeCheckBox.setChecked(true);
         else
             negativeCheckBox.setChecked(false);
+    }
+
+    public void restoreDefaults(View view) {
+        /*retain the following data and clear everything else.
+            - balance
+            - MyWalletPro
+            - haveAccounts
+            - alreadyDidInitSetup
+          */
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.confirm)
+                .setMessage(R.string.reset_confirm)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //get needed data
+                        String balance = sharedPref.getString("balance", "0.00");
+                        boolean alreadyInit = sharedPref.getBoolean("alreadyDidInitSetup", false);
+                        boolean hasAccounts = sharedPref.getBoolean("haveAccounts", false);
+                        boolean isPro = sharedPref.getBoolean("MyWalletPro", false);
+
+                        //clear
+                        sharedPref.edit().clear().apply();
+
+                        //restore
+                        sharedPref.edit().putString("balance", balance).apply();
+                        sharedPref.edit().putBoolean("alreadyDidInitSetup", alreadyInit).apply();
+                        sharedPref.edit().putBoolean("haveAccounts", hasAccounts).apply();
+                        sharedPref.edit().putBoolean("MyWalletPro", isPro).apply();
+
+                        Toast.makeText(Settings.this, getString(R.string.completed_success), Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton(R.string.no, null)
+                .show();
+    }
+
+    public void qlShortcut(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putString("setting", "ql_shortcut_checkbox");
+        firebaseAnalytics.logEvent("used_setting", bundle);
+        if (!qlShortcutCheckBox.isChecked())
+            qlShortcutCheckBox.setChecked(true);
+        else
+            qlShortcutCheckBox.setChecked(false);
+    }
+
+    public void notifications(View view) {
+        Intent intent = new Intent();
+        intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+        //for Android 5-7
+        intent.putExtra("app_package", getPackageName());
+        intent.putExtra("app_uid", getApplicationInfo().uid);
+        //for Android 8 and above
+        intent.putExtra("android.provider.extra.APP_PACKAGE", getPackageName());
+        startActivity(intent);
+    }
+
+    public void buttonType(View view) {
+        if (isMyWalletPro) {
+            DialogButtonType dialogButtonType = new DialogButtonType();
+            dialogButtonType.show(getSupportFragmentManager(), "button type dialog");
+        }
+        else purchaseProForThis();
     }
 
     public void purchaseProForThis() {

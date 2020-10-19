@@ -89,89 +89,6 @@
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:onClick="selectLanguage"
-                    android:paddingVertical="16dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp">
-
-                    <ImageView
-                        android:id="@+id/image2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="8dp"
-                        android:paddingEnd="8dp"
-                        android:src="@drawable/ic_language" />
-
-                    <TextView
-                        android:id="@+id/setting2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/image2"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@string/language"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                    <TextView
-                        android:id="@+id/description2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/setting2"
-                        android:layout_toEndOf="@id/image2"
-                        android:text="@string/set_your_preferred_language" />
-                </RelativeLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="selectCurrency"
-                    android:paddingVertical="16dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp">
-
-                    <ImageView
-                        android:id="@+id/image3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="8dp"
-                        android:paddingEnd="8dp"
-                        android:src="@drawable/ic_currency" />
-
-                    <TextView
-                        android:id="@+id/setting3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/image3"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@string/currency"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                    <TextView
-                        android:id="@+id/description3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/setting3"
-                        android:layout_toEndOf="@id/image3"
-                        android:text="@string/set_your_country_s_currency" />
-
-                </RelativeLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
                     android:onClick="editBudget"
                     android:paddingVertical="16dp"
                     android:paddingStart="8dp"
@@ -303,6 +220,87 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="selectCurrency"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp">
+
+                    <ImageView
+                        android:id="@+id/image3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_currency" />
+
+                    <TextView
+                        android:id="@+id/setting3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image3"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/currency"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/description3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting3"
+                        android:layout_toEndOf="@id/image3"
+                        android:text="@string/set_your_country_s_currency" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="selectLanguage"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp">
+
+                    <ImageView
+                        android:id="@+id/image2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_language" />
+
+                    <TextView
+                        android:id="@+id/setting2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image2"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/language"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/description2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting2"
+                        android:layout_toEndOf="@id/image2"
+                        android:text="@string/set_your_preferred_language" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
                     android:onClick="editNotifyTime"
                     android:paddingVertical="16dp"
                     android:paddingStart="8dp"
@@ -348,6 +346,46 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textStyle="bold|italic" />
 
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="notifications"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp">
+
+                    <ImageView
+                        android:id="@+id/image17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_notifications" />
+
+                    <TextView
+                        android:id="@+id/setting17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image17"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/notifications"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/description17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting17"
+                        android:layout_toEndOf="@id/image17"
+                        android:text="Manage notifications sent by the app" />
                 </RelativeLayout>
 
                 <View
@@ -507,6 +545,143 @@
 
                 </RelativeLayout>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:onClick="inputMode"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp">
+
+                    <ImageView
+                        android:id="@+id/image14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_input" />
+
+                    <TextView
+                        android:id="@+id/setting14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image14"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/input_mode"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/description14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting14"
+                        android:layout_toEndOf="@id/image14"
+                        android:text="@string/choose_the_way_to_add_new_transactions" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:onClick="qlShortcut"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="8dp">
+
+                    <ImageView
+                        android:id="@+id/image16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_edit_list" />
+
+                    <TextView
+                        android:id="@+id/setting16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image16"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/quick_list_shortcut"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/description16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting16"
+                        android:layout_toStartOf="@id/qlShortcutCheck"
+                        android:layout_toEndOf="@id/image16"
+                        android:text="@string/show_a_shortcut_on_wallet_page_to_edit_the_quick_list" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/qlShortcutCheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:onClick="buttonType"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp">
+
+                    <ImageView
+                        android:id="@+id/image18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_button_type" />
+
+                    <TextView
+                        android:id="@+id/setting18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image18"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/buttons_appearance"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/description18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting18"
+                        android:layout_toEndOf="@id/image18"
+                        android:text="@string/show_or_hide_labels_icons_in_classic_input_mode"
+                        android:layout_toStartOf="@id/pro4"/>
+
+                    <TextView
+                        android:id="@+id/pro4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:text="@string/pro"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textStyle="bold|italic" />
+
+                </RelativeLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -611,6 +786,45 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:onClick="restoreDefaults"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp">
+
+                    <ImageView
+                        android:id="@+id/image15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_restore" />
+
+                    <TextView
+                        android:id="@+id/setting15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image15"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/restore_default_settings"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/description15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting15"
+                        android:layout_toEndOf="@id/image15"
+                        android:text="@string/this_will_restore_all_settings_to_defaults_including_budget_and_currency_balance_transactions_accounts_and_other_stored_data_won_t_be_affected" />
 
                 </RelativeLayout>
 

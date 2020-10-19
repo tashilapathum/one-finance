@@ -358,4 +358,22 @@
     <string name="allow_negative_balance">Allow negative balance</string>
     <string name="when_enabled_you_can_spend_money_even_when_you_have_a_negative_balance_in_the_wallet_or_the_bank">When enabled, you can spend money even when you have a negative balance in the Wallet or the Bank</string>
     <string name="purchase_the_pro_version_to_add_multiple_items">Purchase the Pro version to add multiple items</string>
+    <string name="input_mode">Input mode</string>
+    <string name="choose_the_way_to_add_new_transactions">Choose the way to add new transactions</string>
+    <string name="classic_quick_method">Classic (Quick method)</string>
+    <string name="floating_action_button">Floating action button</string>
+    <string name="select_input_mode">Select input mode</string>
+    <string name="restore_default_settings">Restore default settings</string>
+    <string name="this_will_restore_all_settings_to_defaults_including_budget_and_currency_balance_transactions_accounts_and_other_stored_data_won_t_be_affected">This will reset all settings to defaults including budget, currency and tips. Balance, transactions, accounts and other stored data won\'t be affected.</string>
+    <string name="reset_confirm">Are you sure you want to reset all settings to defaults?</string>
+    <string name="completed_success">Completed successfully</string>
+    <string name="quick_list_shortcut">Quick list shortcut</string>
+    <string name="show_a_shortcut_on_wallet_page_to_edit_the_quick_list">Show a shortcut on Wallet page to edit the quick list</string>
+    <string name="notifications">Notifications</string>
+    <string name="buttons_appearance">Buttons appearance</string>
+    <string name="show_or_hide_labels_icons_in_classic_input_mode">Show or hide labels/icons in classic input mode</string>
+    <string name="icon_and_label">Icon and label</string>
+    <string name="icon_only">Icon only</string>
+    <string name="label_only">Label only</string>
+    <string name="select_type">Select type</string>
 </resources>

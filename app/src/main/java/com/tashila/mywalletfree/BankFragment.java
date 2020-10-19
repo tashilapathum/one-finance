@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -49,8 +50,8 @@ public class BankFragment extends Fragment {
     private String accountName;
     private String currency;
     private String accountBalance;
-    private Button btnDeposit;
-    private Button btnWithdraw;
+    private MaterialButton btnDeposit;
+    private MaterialButton btnWithdraw;
     private ImageButton btnSwitch;
     private TextInputLayout tilAmount;
     private EditText etAmount;
@@ -137,6 +138,8 @@ public class BankFragment extends Fragment {
             loadActivities();
             calculateInterests();
         }
+
+        setupButtons();
 
         return view;
     }
@@ -540,6 +543,22 @@ public class BankFragment extends Fragment {
                 view.setShadowLayer(3, 1, 1, R.color.colorShadowDark);
             else
                 view.setShadowLayer(3, 1, 1, R.color.colorShadow);
+        }
+    }
+
+    private void setupButtons() {
+        String buttonType = sharedPref.getString("buttonType", "labelOnly");
+        if (buttonType.equals("labelOnly")) {
+            btnDeposit.setIcon(null);
+            btnWithdraw.setIcon(null);
+        }
+        else if (buttonType.equals("iconOnly")) {
+            btnDeposit.setText(null);
+            btnDeposit.setIconPadding(0);
+            btnDeposit.setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_START);
+            btnWithdraw.setText(null);
+            btnWithdraw.setIconPadding(0);
+            btnWithdraw.setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_START);
         }
     }
 }
