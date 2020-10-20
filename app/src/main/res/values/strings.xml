@@ -371,7 +371,7 @@
     <string name="this_week_s_report">This week\'s report</string>
     <string name="this_month_s_report">This month\'s report</string>
 
-    <string name="what_s_new_in_version" translatable="false">What\'s new in version 0.2.8 (Beta)</string>
+    <string name="what_s_new_in_version" translatable="false">What\'s new in version 0.2.9 (Beta)</string>
     <string name="whats_new_descr" translatable="false">
         \n - Added more detailed daily, weekly and monthly reports\n
         - Now you can set daily, weekly and monthly reports to show on Wallet page\n
