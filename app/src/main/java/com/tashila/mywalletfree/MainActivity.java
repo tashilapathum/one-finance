@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         }
 
         if (getPackageName().contains("debug"))
-            sharedPref.edit().putBoolean("MyWalletPro", true).apply(); //TODO: check here!
+            sharedPref.edit().putBoolean("MyWalletPro", false).apply();
     }
 
     @Override //so the language change works with dark mode

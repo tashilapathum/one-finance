@@ -301,17 +301,6 @@
         <item>Amount - low to high</item>
     </string-array>
 
-    <string name="what_s_new_in_version" translatable="false">What\'s new in version 0.2.8 (Beta)</string>
-    <string name="whats_new_descr" translatable="false">
-        \n - [Added] Account details section\n
-        - [Added] Filters for recent transactions\n
-        - [Added] Option to add multiple interests for accounts\n
-        - [Added] Autocomplete when typing transaction details\n
-        - [Fixed] Crash in Wallet screen\n
-        - UI updates\n
-        - Performance improvements\n
-        \nThank you for testing My Wallet! This app is still in beta stage so please let the developer if there are any bugs. Try clearing app data in case of constant crashes to get the app working again.
-    </string>
     <string name="acc_details">Account details</string>
     <string name="acc_details_descr">Wrong balance? View account details? Tap the account name to show details or to update the account.</string>
     <string name="suggestions">Suggestions</string>
@@ -381,4 +370,18 @@
     <string name="today_s_report">Today\'s report</string>
     <string name="this_week_s_report">This week\'s report</string>
     <string name="this_month_s_report">This month\'s report</string>
+
+    <string name="what_s_new_in_version" translatable="false">What\'s new in version 0.2.8 (Beta)</string>
+    <string name="whats_new_descr" translatable="false">
+        \n - Added more detailed daily, weekly and monthly reports\n
+        - Now you can set daily, weekly and monthly reports to show on Wallet page\n
+        - Moved account manager from settings to navigation drawer\n
+        - [Pro] \'Icon only\' and \'Icon + Label\' modes for buttons in the main interface\n
+        - [Pro] Option to show multiple reports on Wallet page\n
+        - Fixed crash in when adding quick list items\n
+        - A lot of UI updates\n
+        - Performance improvements\n
+        \nThank you for testing My Wallet! This app is still in beta stage so please let the developer if there are any bugs. Your feedback is really important for the development of this app. I read every review :)
+    </string>
+
 </resources>

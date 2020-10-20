@@ -34,6 +34,7 @@ public class EditQuickList extends AppCompatActivity {
     boolean MyWalletPro;
     int maxNoOfItems;
     private QuickListViewModel quickListViewModel;
+    private QuickListAdapter quickListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +85,7 @@ public class EditQuickList extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
-        final QuickListAdapter quickListAdapter = new QuickListAdapter(this);
+        quickListAdapter = new QuickListAdapter(this);
         recyclerView.setLayoutAnimation(new AnimationHandler().getSlideUpController());
         recyclerView.setAdapter(quickListAdapter);
         quickListViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
@@ -112,14 +113,13 @@ public class EditQuickList extends AppCompatActivity {
         if (MyWalletPro)
             dialogAddQuickItem.show(getSupportFragmentManager(), "add quick item");
         else {
-            int currentNoOfItems = ((ViewGroup)findViewById(R.id.qlContainer)).getChildCount();
+            int currentNoOfItems = quickListAdapter.getItemCount();
             if (currentNoOfItems < maxNoOfItems)
                 dialogAddQuickItem.show(getSupportFragmentManager(), "add quick item");
             else {
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.pro_feature)
                         .setMessage(R.string.add_more_quick_items)
-                        .setIcon(android.R.drawable.ic_dialog_info)
                         .setPositiveButton(R.string.buy, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

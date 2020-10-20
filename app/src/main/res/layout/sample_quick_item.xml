@@ -20,7 +20,8 @@
             android:layout_centerVertical="true"
             android:src="@drawable/ic_remove"
             android:background="?android:selectableItemBackgroundBorderless"
-            android:contentDescription="remove" />
+            android:contentDescription="remove"
+            android:padding="8dp"/>
 
         <TextView
             android:id="@+id/itemName"

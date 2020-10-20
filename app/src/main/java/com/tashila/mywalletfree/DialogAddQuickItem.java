@@ -109,7 +109,6 @@ public class DialogAddQuickItem extends DialogFragment {
                 quickItem.setId((Integer) bundle.get("itemID"));
                 ((EditQuickList) getActivity()).saveItem(quickItem);
             }
-
         }
     }
 
