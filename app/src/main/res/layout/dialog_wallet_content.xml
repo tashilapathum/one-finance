@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="20dp">
 
@@ -10,11 +10,11 @@
         android:id="@+id/proNotice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/purchase_the_pro_version_to_add_multiple_items"
-        android:paddingBottom="8dp"
         android:paddingHorizontal="6dp"
+        android:paddingBottom="8dp"
+        android:text="@string/purchase_the_pro_version_to_add_multiple_items"
         android:visibility="gone"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/quickList"
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="8dp"
-        android:text="Today's report"
+        android:text="@string/today_s_report"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="8dp"
-        android:text="This week's report"
+        android:text="@string/this_week_s_report"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
@@ -45,7 +45,65 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="8dp"
-        android:text="This month's report"
+        android:text="@string/this_month_s_report"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginHorizontal="6dp"
+            android:layout_marginVertical="16dp"
+            android:background="@color/colorDividerLight" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/firstCard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:padding="8dp"
+                    android:text="First card only" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/allCards"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="All cards" />
+            </RadioGroup>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:paddingHorizontal="8dp"
+                    android:text="@string/pro"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold|italic" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

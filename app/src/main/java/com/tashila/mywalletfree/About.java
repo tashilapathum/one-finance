@@ -52,6 +52,11 @@ public class About extends AppCompatActivity {
         startActivity(new Intent(this, OssLicensesMenuActivity.class));
     }
 
+    public void showChangelog(View view) {
+        DialogWhatsNew dialogWhatsNew = new DialogWhatsNew();
+        dialogWhatsNew.show(getSupportFragmentManager(), "changelog dialog");
+    }
+
     public void onClickBack(View view) {
         finish();
     }

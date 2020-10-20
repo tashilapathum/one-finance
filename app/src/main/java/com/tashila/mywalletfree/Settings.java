@@ -47,10 +47,11 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
     private MaterialCheckBox undoCheckBox;
     private MaterialCheckBox negativeCheckBox;
     private MaterialCheckBox qlShortcutCheckBox;
+    private MaterialCheckBox tapHideCheckBox;
+    private MaterialCheckBox refreshCheckBox;
     private FirebaseAnalytics firebaseAnalytics;
     private MaterialNavigationView navigationView;
     private boolean isMyWalletPro;
-    private ViewGroup viewGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +97,7 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
         /*----------------------------------------------------------------------------------------*/
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         isMyWalletPro = sharedPref.getBoolean("MyWalletPro", false);
-        viewGroup = (ViewGroup) findViewById(android.R.id.content);
+        ViewGroup viewGroup = (ViewGroup) findViewById(android.R.id.content);
 
         if (isMyWalletPro) hideProLabels(viewGroup);
 
@@ -156,7 +157,7 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
         boolean negativeEnabled = sharedPref.getBoolean("negativeEnabled", false);
         if (negativeEnabled) negativeCheckBox.setChecked(true);
 
-        //negative setting
+        //quick list shortcut setting
         qlShortcutCheckBox = findViewById(R.id.qlShortcutCheck);
         qlShortcutCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -169,6 +170,34 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
         });
         boolean qlShortcutEnabled = sharedPref.getBoolean("qlShortcutEnabled", false);
         if (qlShortcutEnabled) qlShortcutCheckBox.setChecked(true);
+
+        //quick list shortcut setting
+        tapHideCheckBox = findViewById(R.id.tapHideCheck);
+        tapHideCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked())
+                    sharedPref.edit().putBoolean("tapToHideEnabled", true).apply();
+                else
+                    sharedPref.edit().putBoolean("tapToHideEnabled", false).apply();
+            }
+        });
+        boolean tapToHideEnabled = sharedPref.getBoolean("tapToHideEnabled", false);
+        if (tapToHideEnabled) tapHideCheckBox.setChecked(true);
+
+        //auto refresh setting
+        refreshCheckBox = findViewById(R.id.refreshCheck);
+        refreshCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked())
+                    sharedPref.edit().putBoolean("autoRefreshEnabled", true).apply();
+                else
+                    sharedPref.edit().putBoolean("autoRefreshEnabled", false).apply();
+            }
+        });
+        boolean autoRefreshEnabled = sharedPref.getBoolean("autoRefreshEnabled", false);
+        if (autoRefreshEnabled) refreshCheckBox.setChecked(true);
     }
 
     @Override //so the language change works with dark mode
@@ -188,6 +217,7 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
         if (sharedPref.getBoolean("exit", false)) {
             finishAndRemoveTask();
         }
+        sharedPref.edit().putBoolean("modifiedSettings", true).apply();
     }
 
     @Override
@@ -467,6 +497,7 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
                         sharedPref.edit().putBoolean("MyWalletPro", isPro).apply();
 
                         Toast.makeText(Settings.this, getString(R.string.completed_success), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Settings.this, MainActivity.class));
                     }
                 })
                 .setNegativeButton(R.string.no, null)
@@ -484,6 +515,10 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
     }
 
     public void notifications(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putString("setting", "notifications_option");
+        firebaseAnalytics.logEvent("used_setting", bundle);
+
         Intent intent = new Intent();
         intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
         //for Android 5-7
@@ -500,6 +535,26 @@ public class Settings extends AppCompatActivity implements MaterialNavigationVie
             dialogButtonType.show(getSupportFragmentManager(), "button type dialog");
         }
         else purchaseProForThis();
+    }
+
+    public void tapToHide(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putString("setting", "tap_hide_checkbox");
+        firebaseAnalytics.logEvent("used_setting", bundle);
+        if (!tapHideCheckBox.isChecked())
+            tapHideCheckBox.setChecked(true);
+        else
+            tapHideCheckBox.setChecked(false);
+    }
+
+    public void autoRefresh(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putString("setting", "auto_refresh_checkbox");
+        firebaseAnalytics.logEvent("used_setting", bundle);
+        if (!refreshCheckBox.isChecked())
+            refreshCheckBox.setChecked(true);
+        else
+            refreshCheckBox.setChecked(false);
     }
 
     public void purchaseProForThis() {

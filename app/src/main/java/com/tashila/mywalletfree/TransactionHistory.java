@@ -646,13 +646,7 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
     }
 
     private void showResults() {
-        if (filteredList.isEmpty())
-            if (sort > 0)
-                transactionsAdapter.submitList(transactionsList);
-            else
-                Toast.makeText(this, "No results", Toast.LENGTH_SHORT).show();
-        else
-            transactionsAdapter.submitList(filteredList);
+        transactionsAdapter.submitList(filteredList);
         mLayoutManager.smoothScrollToPosition(recyclerView, null, 0);
     }
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,7 +74,7 @@ public class WalletFragment extends Fragment {
     private final int THIS_MONTH_REPORT = R.id.thisMonthReport;
     private MaterialButton btnEarned;
     private MaterialButton btnSpent;
-    private MaterialButton btnToBank;
+    private MaterialButton btnTransfer;
 
     @Nullable
     @Override
@@ -102,7 +102,7 @@ public class WalletFragment extends Fragment {
         etDescr = tilDescr.getEditText();
         btnEarned = v.findViewById(R.id.btnEarned);
         btnSpent = v.findViewById(R.id.btnSpent);
-        btnToBank = v.findViewById(R.id.btnTransfer);
+        btnTransfer = v.findViewById(R.id.btnTransfer);
         Button btnUpdate = v.findViewById(R.id.btnUpdate);
         ImageButton imEditQuickList = v.findViewById(R.id.editQuickList);
         language = sharedPref.getString("language", "english");
@@ -163,7 +163,7 @@ public class WalletFragment extends Fragment {
                 return true;
             }
         });
-        btnToBank.setOnClickListener(new View.OnClickListener() {
+        btnTransfer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (sharedPref.getBoolean("haveNoAccounts", false))
@@ -174,7 +174,7 @@ public class WalletFragment extends Fragment {
                 }
             }
         });
-        btnToBank.setOnLongClickListener(new View.OnLongClickListener() {
+        btnTransfer.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 viewId = v.getId();
@@ -266,17 +266,19 @@ public class WalletFragment extends Fragment {
         if (balance.contains("-")) {
             tvBalance.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
             tvCurrency.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
-            imWarning.setVisibility(View.VISIBLE);
-            imWarning.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    new AlertDialog.Builder(getActivity())
-                            .setTitle(R.string.neg_balance)
-                            .setMessage(R.string.update_balance_des)
-                            .setPositiveButton(R.string.ok, null)
-                            .show();
-                }
-            });
+            if (!sharedPref.getBoolean("negativeEnabled", false)) {
+                imWarning.setVisibility(View.VISIBLE);
+                imWarning.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new AlertDialog.Builder(getActivity())
+                                .setTitle(R.string.neg_balance)
+                                .setMessage(R.string.update_balance_des)
+                                .setPositiveButton(R.string.ok, null)
+                                .show();
+                    }
+                });
+            }
         } else {
             imWarning.setVisibility(View.GONE);
             tvBalance.setTextColor(context.getResources().getColor(android.R.color.holo_green_dark));
@@ -287,11 +289,11 @@ public class WalletFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (sharedPref.getBoolean("quickItemsChanged", false)
-                || sharedPref.getBoolean("walletContentChanged", false)) {
+        if (sharedPref.getBoolean("modifiedSettings", false)
+            || sharedPref.getBoolean("quickItemsChanged", false)) {
             reloadFragment();
+            sharedPref.edit().putBoolean("modifiedSettings", false).apply();
             sharedPref.edit().putBoolean("quickItemsChanged", false).apply();
-            sharedPref.edit().putBoolean("walletContentChanged", false).apply();
         }
         setupAutocomplete();
     }
@@ -535,7 +537,9 @@ public class WalletFragment extends Fragment {
                         if (viewId == R.id.btnTransfer && !longClicked)
                             doBankStuff(null);
                         sharedPref.edit().putBoolean("longClicked", false).apply();
-                        //reloadFragment();
+                        if (sharedPref.getBoolean("autoRefreshEnabled", false)
+                                && !sharedPref.getBoolean("tapToHideEnabled", false))
+                            reloadFragment();
                     }
                 }
             });
@@ -547,7 +551,9 @@ public class WalletFragment extends Fragment {
             if (viewId == R.id.btnTransfer && !longClicked)
                 doBankStuff(null);
             sharedPref.edit().putBoolean("longClicked", false).apply();
-            //reloadFragment();
+            if (sharedPref.getBoolean("autoRefreshEnabled", false)
+                    && !sharedPref.getBoolean("tapToHideEnabled", false))
+                reloadFragment();
         }
         snackbar.show();
     }
@@ -714,7 +720,7 @@ public class WalletFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     DialogWalletInput dialogWalletInput = new DialogWalletInput();
-                    dialogWalletInput.show(getActivity().getSupportFragmentManager(), "wallet input dialog");
+                    dialogWalletInput.show(getChildFragmentManager(), "wallet input dialog");
                 }
             });
         }
@@ -731,7 +737,7 @@ public class WalletFragment extends Fragment {
         if (buttonType.equals("labelOnly")) {
             btnEarned.setIcon(null);
             btnSpent.setIcon(null);
-            btnToBank.setIcon(null);
+            btnTransfer.setIcon(null);
         }
         else if (buttonType.equals("iconOnly")) {
             btnEarned.setText(null);
@@ -740,9 +746,9 @@ public class WalletFragment extends Fragment {
             btnSpent.setText(null);
             btnSpent.setIconPadding(0);
             btnSpent.setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_START);
-            btnToBank.setText(null);
-            btnToBank.setIconPadding(0);
-            btnToBank.setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_START);
+            btnTransfer.setText(null);
+            btnTransfer.setIconPadding(0);
+            btnTransfer.setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_START);
         }
     }
 
@@ -751,8 +757,24 @@ public class WalletFragment extends Fragment {
         etDescr.setText(description);
     }
 
-    public void clickFromBottomSheet(MaterialButton button) {
+    public void clickButton(MaterialButton view) {
+        if (view.getId() == R.id.btnTransfer) {
+            if (sharedPref.getBoolean("haveNoAccounts", false))
+                Toast.makeText(getActivity(), R.string.acc_first, Toast.LENGTH_LONG).show();
+            else {
+                onClickThreeButtons(view);
+                showInstructions(view);
+            }
+        }
+        else {
+            onClickThreeButtons(view);
+            showInstructions(view);
+        }
+    }
 
+    public void longClickButton(MaterialButton view) {
+        viewId = view.getId();
+        onLongClickThreeButtons(viewId);
     }
 
    /* private void setupAutocomplete() {

@@ -143,13 +143,23 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/licenses"
             style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:onClick="showLicenses"
             android:paddingVertical="8dp"
             android:text="Open source licenses" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/changelog"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="showChangelog"
+            android:paddingVertical="8dp"
+            android:text="Changelog" />
 
     </LinearLayout>
 </RelativeLayout>

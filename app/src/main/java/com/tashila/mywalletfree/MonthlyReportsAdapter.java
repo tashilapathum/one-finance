@@ -27,6 +27,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MonthlyReportsAdapter extends ListAdapter<MonthlyReportsFragment.MonthlyReport, MonthlyReportsAdapter.ReportHolder> {
@@ -205,6 +206,7 @@ public class MonthlyReportsAdapter extends ListAdapter<MonthlyReportsFragment.Mo
     private void drawDailyChart(LineChart chartView, MonthlyReportsFragment.MonthlyReport monthlyReport) {
         List<Entry> dailyIncomes = new ArrayList<>();
         List<String> dailyIncomesList = monthlyReport.getIncomesOfMonth();
+        Collections.reverse(dailyIncomesList);
         for (int x = 0; x < dailyIncomesList.size(); x++) {
             Entry entry = new Entry((float) x, Float.parseFloat(dailyIncomesList.get(x)));
             dailyIncomes.add(entry);
@@ -212,11 +214,13 @@ public class MonthlyReportsAdapter extends ListAdapter<MonthlyReportsFragment.Mo
         LineDataSet incomesDataSet = new LineDataSet(dailyIncomes, context.getResources().getString(R.string.income));
         incomesDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         incomesDataSet.setDrawValues(false);
+        incomesDataSet.setDrawCircles(false);
         incomesDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         incomesDataSet.setColor(context.getResources().getColor(R.color.colorLightBlue));
 
         List<Entry> dailyExpenses = new ArrayList<>();
         List<String> dailyExpensesList = monthlyReport.getExpensesOfMonth();
+        Collections.reverse(dailyExpensesList);
         for (int x = 0; x < dailyExpensesList.size(); x++) {
             Entry entry = new Entry((float) x, Float.parseFloat(dailyExpensesList.get(x)));
             dailyExpenses.add(entry);
@@ -224,6 +228,7 @@ public class MonthlyReportsAdapter extends ListAdapter<MonthlyReportsFragment.Mo
         LineDataSet expensesDataSet = new LineDataSet(dailyExpenses, context.getResources().getString(R.string.expenses));
         expensesDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         expensesDataSet.setDrawValues(false);
+        expensesDataSet.setDrawCircles(false);
         expensesDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         expensesDataSet.setColor(context.getResources().getColor(R.color.colorLightRed));
 

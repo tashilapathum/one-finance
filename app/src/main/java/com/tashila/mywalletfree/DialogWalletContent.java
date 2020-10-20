@@ -92,7 +92,6 @@ public class DialogWalletContent extends DialogFragment {
         }
         sharedPref.edit().putString("walletContent", walletContent).apply();
         sharedPref.edit().putBoolean("walletContentCustomized", true).apply(); //does not change later
-        sharedPref.edit().putBoolean("walletContentChanged", true).apply(); //to refresh | changes later
 
         Toast.makeText(getActivity(), R.string.saved, Toast.LENGTH_SHORT).show();
     }

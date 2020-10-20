@@ -793,6 +793,98 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?android:attr/selectableItemBackground"
+                    android:onClick="autoRefresh"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="8dp">
+
+                    <ImageView
+                        android:id="@+id/image20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_refresh" />
+
+                    <TextView
+                        android:id="@+id/setting20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image20"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="Auto refresh charts"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/description20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting20"
+                        android:layout_toStartOf="@id/refreshCheck"
+                        android:layout_toEndOf="@id/image20"
+                        android:text="Refresh Wallet page to show updated charts after adding every transaction" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/refreshCheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:onClick="tapToHide"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="8dp">
+
+                    <ImageView
+                        android:id="@+id/image19"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_hide" />
+
+                    <TextView
+                        android:id="@+id/setting19"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image19"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/tap_to_hide_input_sheet"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/description19"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting19"
+                        android:layout_toStartOf="@id/tapHideCheck"
+                        android:layout_toEndOf="@id/image19"
+                        android:text="@string/the_input_sheet_after_adding_a_transaction_when_using_floating_action_button_input_mode" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/tapHideCheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
                     android:onClick="restoreDefaults"
                     android:paddingVertical="16dp"
                     android:paddingStart="8dp"
