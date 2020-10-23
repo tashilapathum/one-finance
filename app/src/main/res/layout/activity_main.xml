@@ -25,16 +25,15 @@
                 android:id="@+id/toolbarTitle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="M y   W a l l e t"
+                android:text="M Y   W A L L E T"
                 android:fontFamily="@font/quicksand_medium"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/colorAccentLight"
                 android:gravity="center"
-                android:layout_marginEnd="72dp"
-                android:shadowRadius="3"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowColor="@color/colorShadowDark"/>
+                android:textAlignment="textStart"
+                android:paddingHorizontal="8dp"
+                android:textStyle="bold"
+                tools:ignore="RtlCompat" />
 
         </com.google.android.material.appbar.MaterialToolbar>
 
