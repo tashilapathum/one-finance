@@ -385,5 +385,6 @@
         \nThank you for testing My Wallet! This app is still in beta stage so please let the developer if there are any bugs. Your feedback is really important for the development of this app. I read every review :)
     </string>
     <string name="check_internet">Please check your internet connection</string>
+    <string name="my_wallet_pro">My Wallet Pro</string>
 
 </resources>

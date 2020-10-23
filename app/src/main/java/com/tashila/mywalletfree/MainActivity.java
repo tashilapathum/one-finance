@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         if (sharedPref.getBoolean("MyWalletPro", false)) {
             View navHeader = navigationView.getHeaderView(0);
             TextView tvAppName = navHeader.findViewById(R.id.appName);
-            tvAppName.setText("My Wallet Pro");
+            tvAppName.setText(R.string.my_wallet_pro);
         }
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         }
 
         if (getPackageName().contains("debug"))
-            sharedPref.edit().putBoolean("MyWalletPro", false).apply();
+            sharedPref.edit().putBoolean("MyWalletPro", true).apply();
     }
 
     @Override //so the language change works with dark mode
