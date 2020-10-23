@@ -37,7 +37,8 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class Settings extends AppCompatActivity implements MaterialNavigationView.OnNavigationItemSelectedListener, TimePickerDialog.OnTimeSetListener {
+public class Settings extends AppCompatActivity
+        implements MaterialNavigationView.OnNavigationItemSelectedListener, TimePickerDialog.OnTimeSetListener {
     public static final String TAG = "Settings";
     SharedPreferences sharedPref;
     private DrawerLayout drawer;

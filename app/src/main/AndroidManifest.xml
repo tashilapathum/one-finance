@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeDark"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Insights"></activity>
+        <activity android:name=".Insights" />
         <activity android:name=".About" />
         <activity
             android:name=".AccountManager"
@@ -24,9 +24,6 @@
         <activity android:name=".AccountDetails" />
         <activity android:name=".NewAccount" />
         <activity android:name=".InitialSetup" />
-        <activity
-            android:name=".ReportsOverviewFragment"
-            android:label="@string/reports" />
         <activity
             android:name=".Reports"
             android:label="@string/reports" />
