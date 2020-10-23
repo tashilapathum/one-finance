@@ -52,13 +52,14 @@
     <string name="coming_soon">Coming soon</string>
     <string name="email"><u><i>tashila.pathum@gmail.com</i></u></string>
     <string name="pro_features">
-        &#160;- Unlimited quick list items\n
+        &#160;- Unlimited quick list items (free limit is 5)\n
         - Dark mode option\n
         - Change notification reminder time\n
-        - Add an unlimited number of bank accounts\n
+        - Add an unlimited number of bank accounts (free limit is 1)\n
         <!-- - Backup all settings and data\n-->
         - Change the default home screen\n
-        - Access unlimited history in reports\n
+        - Access unlimited history in reports (free limits are 4 days, 3 weeks, 2 months)\n
+        - \'Icon only\' and \'Icon + Label\' modes for main buttons\n
         - Support the developer! ❤\n
     </string>
     <string name="pro_features_txt">Pro features:</string>
@@ -383,5 +384,6 @@
         - Performance improvements\n
         \nThank you for testing My Wallet! This app is still in beta stage so please let the developer if there are any bugs. Your feedback is really important for the development of this app. I read every review :)
     </string>
+    <string name="check_internet">Please check your internet connection</string>
 
 </resources>

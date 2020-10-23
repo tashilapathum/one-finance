@@ -70,6 +70,7 @@ public class DailyReportsFragment extends Fragment {
         if (!isFromWallet) {
             calculateDailyReport(day);
             calculateDailyReport(day);
+            calculateDailyReport(day);
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {

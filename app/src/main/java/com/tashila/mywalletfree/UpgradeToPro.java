@@ -106,6 +106,7 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
     protected void onDestroy() {
         super.onDestroy();
         sharedPref.edit().putBoolean("exit", false).apply();
+        sharedPref.edit().putBoolean("fromRestore", false).apply();
     }
 
     @Override //so the language change works with dark mode
@@ -121,17 +122,26 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
     public void goBack(View view) {
         dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
         dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
+        sharedPref.edit().putBoolean("fromRestore", false).apply();
     }
 
 
     /*--------------------------------------- purchase -------------------------------------------*/
 
     private void onClickBuy() {
-        continueBuyOrRestore();
+        TextView price = findViewById(R.id.tvProPrice);
+        if (price.getText().toString().contains("…"))
+            Toast.makeText(this, getString(R.string.check_internet), Toast.LENGTH_SHORT).show();
+        else
+            continueBuyOrRestore();
     }
 
     private void onClickRestore() {
         sharedPref.edit().putBoolean("fromRestore", true).apply();
+        TextView price = findViewById(R.id.tvProPrice);
+        if (price.getText().toString().contains("…"))
+            Toast.makeText(this, getString(R.string.check_internet), Toast.LENGTH_SHORT).show();
+        else
         continueBuyOrRestore();
     }
 
@@ -143,8 +153,7 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
                 e.printStackTrace();
                 Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT).show();
             }
-        }
-        else {
+        } else {
             new AlertDialog.Builder(UpgradeToPro.this)
                     .setTitle(R.string.connec_failed)
                     .setMessage(R.string.must_have_internet)
@@ -181,8 +190,7 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
                 Toast.makeText(this, R.string.p_restored, Toast.LENGTH_LONG).show();
                 sharedPref.edit().putBoolean("fromRestore", false).apply();
             }
-        }
-        else Toast.makeText(this, R.string.p_failed, Toast.LENGTH_SHORT).show();
+        } else Toast.makeText(this, R.string.p_failed, Toast.LENGTH_SHORT).show();
 
 
     }
