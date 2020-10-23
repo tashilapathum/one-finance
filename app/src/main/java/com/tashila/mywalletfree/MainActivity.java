@@ -22,6 +22,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -93,6 +94,11 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        if (sharedPref.getBoolean("MyWalletPro", false)) {
+            View navHeader = navigationView.getHeaderView(0);
+            TextView tvAppName = navHeader.findViewById(R.id.appName);
+            tvAppName.setText("My Wallet Pro");
+        }
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_open);
@@ -139,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         }
 
         if (getPackageName().contains("debug"))
-            sharedPref.edit().putBoolean("MyWalletPro", true).apply();
+            sharedPref.edit().putBoolean("MyWalletPro", false).apply();
     }
 
     @Override //so the language change works with dark mode
