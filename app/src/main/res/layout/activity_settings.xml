@@ -193,6 +193,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/image8"
+                        android:layout_toStartOf="@id/exitCheck"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="@string/exit_confirmation"
@@ -385,7 +386,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/setting17"
                         android:layout_toEndOf="@id/image17"
-                        android:text="Manage notifications sent by the app" />
+                        android:text="@string/manage_notifications_sent_by_the_app" />
                 </RelativeLayout>
 
                 <View
@@ -720,6 +721,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/image12"
+                        android:layout_toStartOf="@id/undoCheck"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="@string/undo_action"
@@ -766,6 +768,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/image13"
+                        android:layout_toStartOf="@id/negativeCheck"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="@string/allow_negative_balance"
@@ -814,7 +817,7 @@
                         android:layout_toEndOf="@id/image20"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="Auto refresh charts"
+                        android:text="@string/auto_refresh_charts"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                     <TextView
@@ -824,7 +827,7 @@
                         android:layout_below="@+id/setting20"
                         android:layout_toStartOf="@id/refreshCheck"
                         android:layout_toEndOf="@id/image20"
-                        android:text="Refresh Wallet page to show updated charts after adding every transaction" />
+                        android:text="@string/refresh_wallet_page_to_show_updated_charts_after_adding_every_transaction" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/refreshCheck"
@@ -858,6 +861,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/image19"
+                        android:layout_toStartOf="@id/tapHideCheck"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="@string/tap_to_hide_input_sheet"

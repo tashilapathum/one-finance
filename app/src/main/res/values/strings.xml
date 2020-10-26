@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">My Wallet</string>
+    <string name="my_wallet_pro" translatable="false">My Wallet Pro</string>
     <string name="version" translatable="false">Version 0.2.9 (Beta)</string>
     <string name="recent_transactions">Transactions</string>
     <string name="reports">Reports</string>
@@ -51,17 +52,6 @@
     <string name="spend_more_than_have">You can\'t spend more than you have!</string>
     <string name="coming_soon">Coming soon</string>
     <string name="email"><u><i>tashila.pathum@gmail.com</i></u></string>
-    <string name="pro_features">
-        &#160;- Unlimited quick list items (free limit is 5)\n
-        - Dark mode option\n
-        - Change notification reminder time\n
-        - Add an unlimited number of bank accounts (free limit is 1)\n
-        <!-- - Backup all settings and data\n-->
-        - Change the default home screen\n
-        - Access unlimited history in reports (free limits are 4 days, 3 weeks, 2 months)\n
-        - \'Icon only\' and \'Icon + Label\' modes for main buttons\n
-        - Support the developer! ❤\n
-    </string>
     <string name="pro_features_txt">Pro features:</string>
     <string name="get_pro_btn">Get Pro</string>
     <string name="notification_time">Reminder time</string>
@@ -372,8 +362,18 @@
     <string name="this_week_s_report">This week\'s report</string>
     <string name="this_month_s_report">This month\'s report</string>
     <string name="check_internet">Please check your internet connection</string>
-    <string name="my_wallet_pro">My Wallet Pro</string>
 
+    <string name="pro_features">
+        &#160;- Unlimited quick list items (free limit is 5)\n
+        - Dark mode option\n
+        - Change notification reminder time\n
+        - Add an unlimited number of bank accounts (free limit is 1)\n
+        <!-- - Backup all settings and data\n-->
+        - Change the default home screen\n
+        - Access unlimited history in reports (free limits are 4 days, 3 weeks, 2 months)\n
+        - \'Icon only\' and \'Icon + Label\' modes for main buttons\n
+        - Support the developer! ❤\n
+    </string>
     <string name="what_s_new_in_version" translatable="false">What\'s new in version 0.2.9 (Beta)</string>
     <string name="whats_new_descr" translatable="false">
         \n - Added more detailed daily, weekly and monthly reports\n
@@ -386,5 +386,8 @@
         - Performance improvements\n
         \nThank you for testing My Wallet! This app is still in beta stage so please let the developer if there are any bugs. Your feedback is really important for the development of this app. I read every review :)
     </string>
+    <string name="auto_refresh_charts">Auto refresh charts</string>
+    <string name="refresh_wallet_page_to_show_updated_charts_after_adding_every_transaction">Refresh Wallet page to show updated charts after adding every transaction</string>
+    <string name="manage_notifications_sent_by_the_app">Manage notifications sent by the app</string>
 
 </resources>

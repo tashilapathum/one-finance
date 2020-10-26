@@ -31,7 +31,6 @@
                 android:textColor="@color/colorAccentLight"
                 android:gravity="center"
                 android:textAlignment="textStart"
-                android:paddingHorizontal="8dp"
                 android:textStyle="bold"
                 tools:ignore="RtlCompat" />
 
