@@ -26,12 +26,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="M Y   W A L L E T"
-                android:fontFamily="@font/quicksand_medium"
+                android:fontFamily="sans-serif-condensed"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/colorAccentLight"
                 android:gravity="center"
                 android:textAlignment="textStart"
-                android:textStyle="bold"
                 tools:ignore="RtlCompat" />
 
         </com.google.android.material.appbar.MaterialToolbar>
