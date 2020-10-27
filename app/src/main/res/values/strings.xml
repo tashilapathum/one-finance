@@ -168,7 +168,7 @@
     <string name="add_acc">Add account</string>
     <string name="p_cancelled">Purchase cancelled</string>
     <string name="p_already">Already purchased</string>
-    <string name="p_restored">Restored successfully!</string>
+    <string name="p_restored">Restored successfully</string>
     <string name="p_failed">Purchase failed</string>
     <string name="connection_problem">Connection problem</string>
     <string name="failed_gplay">Failed to connect to Google Play services</string>
@@ -389,8 +389,6 @@
     <string name="auto_refresh_charts">Auto refresh charts</string>
     <string name="refresh_wallet_page_to_show_updated_charts_after_adding_every_transaction">Refresh Wallet page to show updated charts after adding every transaction</string>
     <string name="manage_notifications_sent_by_the_app">Manage notifications sent by the app</string>
-    <string name="redeem">Redeem</string>
-    <string name="code">Code</string>
     <string name="p_success">Purchase successful</string>
 
 </resources>

@@ -165,7 +165,7 @@
     <string name="add_acc">ගිණුමක් එකතු කරන්න</string>
     <string name="p_cancelled">මිල දී ගැනීම අවලංගු කළා</string>
     <string name="p_already">දැනටමත් මිල දී ගෙන ඇත</string>
-    <string name="p_restored">නැවත සක්‍රීය කිරීම සාර්ථකයි!</string>
+    <string name="p_restored">නැවත සක්‍රීය කිරීම සාර්ථකයි</string>
     <string name="p_failed">මිල දී ගැනීම අසාර්ථකයි</string>
     <string name="connection_problem">අන්තර්ජාල සම්බන්ධතාවයේ ගැටලුවක්</string>
     <string name="failed_gplay">Google Play services සමඟ සම්බන්ධ වීමට නොහැකියි</string>
@@ -372,7 +372,5 @@
         - ප්‍රධාන බොත්තම් වල කුඩා \'පින්තුරය + වචනය\' සහ \'පින්තුරය පමණක්\' ආකාර\n
         - ඇප් එකෙහි ඉදිරි වැඩිදියුණු කටයුතු වලට සහයක් වීම ❤\n
     </string>
-    <string name="redeem">Redeem</string>
-    <string name="code">Code</string>
-    <string name="p_success">Purchase successful</string>
+    <string name="p_success">මිල දී ගැනීම සාර්ථකයි</string>
 </resources>
