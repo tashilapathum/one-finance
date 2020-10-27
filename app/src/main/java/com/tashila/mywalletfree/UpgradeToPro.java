@@ -8,15 +8,18 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +35,8 @@ import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -188,6 +193,17 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
             else {
                 sharedPref.edit().putBoolean("MyWalletPro", true).apply();
                 Toast.makeText(this, R.string.p_restored, Toast.LENGTH_LONG).show();
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.p_restored)
+                        .setMessage(R.string.thank_u_for_pro)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent(UpgradeToPro.this, MainActivity.class));
+                            }
+                        })
+                        .setCancelable(false)
+                        .show();
                 sharedPref.edit().putBoolean("fromRestore", false).apply();
             }
         } else Toast.makeText(this, R.string.p_failed, Toast.LENGTH_SHORT).show();
@@ -207,7 +223,17 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
             billingClient.acknowledgePurchase(params, new AcknowledgePurchaseResponseListener() {
                 @Override
                 public void onAcknowledgePurchaseResponse(@NonNull BillingResult billingResult) {
-                    Toast.makeText(UpgradeToPro.this, R.string.thank_u_for_pro, Toast.LENGTH_LONG).show();
+                    new AlertDialog.Builder(UpgradeToPro.this)
+                            .setTitle(R.string.p_success)
+                            .setMessage(R.string.thank_u_for_pro)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    startActivity(new Intent(UpgradeToPro.this, MainActivity.class));
+                                }
+                            })
+                            .setCancelable(false)
+                            .show();
                 }
             });
         }

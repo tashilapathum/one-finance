@@ -372,4 +372,7 @@
         - ප්‍රධාන බොත්තම් වල කුඩා \'පින්තුරය + වචනය\' සහ \'පින්තුරය පමණක්\' ආකාර\n
         - ඇප් එකෙහි ඉදිරි වැඩිදියුණු කටයුතු වලට සහයක් වීම ❤\n
     </string>
+    <string name="redeem">Redeem</string>
+    <string name="code">Code</string>
+    <string name="p_success">Purchase successful</string>
 </resources>

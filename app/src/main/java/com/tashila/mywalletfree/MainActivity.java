@@ -39,10 +39,10 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements MaterialNavigationView.OnNavigationItemSelectedListener {
-    private DrawerLayout drawer;
-    SharedPreferences sharedPref;
     public static final String TAG = "MainActivity";
-    BottomNavigationView bottomNav;
+    private DrawerLayout drawer;
+    private SharedPreferences sharedPref;
+    private BottomNavigationView bottomNav;
     private FirebaseAnalytics firebaseAnalytics;
     private MaterialNavigationView navigationView;
 
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
 
         //language
         String language = sharedPref.getString("language", "english");
-        Locale locale = null;
+        Locale locale;
         if (language.equals("සිංහල"))
             locale = new Locale("si");
         else
