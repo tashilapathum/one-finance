@@ -335,7 +335,7 @@
     <string name="when_enabled_you_can_spend_money_even_when_you_have_a_negative_balance_in_the_wallet_or_the_bank">මෙමගින් ඔබට සෘණ ශේෂයක් ඇති විට ද වියදම් ඇතුලත් කල හැක</string>
     <string name="purchase_the_pro_version_to_add_multiple_items">අයිතම කිහිපයක් එකතු කිරීමට Pro සංස්කරණය මිල දී ගන්න</string>
     <string name="input_mode">ඇතුලත් කරන ආකාරය</string>
-    <string name="choose_the_way_to_add_new_transactions">නව යවය ඇතුලත් කරන ආකාරය තෝරන්න</string>
+    <string name="choose_the_way_to_add_new_transactions">නව අයවැය ඇතුලත් කරන ආකාරය තෝරන්න</string>
     <string name="classic_quick_method">පැරණි (ඉක්මන් ආකාරය)</string>
     <string name="floating_action_button">එකතු කරන බොත්තම</string>
     <string name="select_input_mode">ඇතුලත් කරන ආකාරය තෝරන්න</string>
@@ -353,7 +353,7 @@
     <string name="label_only">වචනය පමණක්</string>
     <string name="select_type">ආකාරය තෝරන්න</string>
     <string name="tap_to_hide_input_sheet">ඇතුලත් කරන පත්‍රය වැසීමට ටච් කරන්න</string>
-    <string name="the_input_sheet_after_adding_a_transaction_when_using_floating_action_button_input_mode">ගනුදෙනු ඇතුලත් කරන ආකාරය ලෙස \'එකතු කරන බොත්තම\' තොර ඇති විට, ගනුදෙනුවක් එකතු කර අවසානයේ එය තිරයෙන් ඉවත් වීම වැලැක්වීමට</string>
+    <string name="the_input_sheet_after_adding_a_transaction_when_using_floating_action_button_input_mode">ගනුදෙනු ඇතුලත් කරන ආකාරය ලෙස \'එකතු කරන බොත්තම\' තෝරා ඇති විට, ගනුදෙනුවක් එකතු කර අවසානයේ එය තිරයෙන් ඉවත් වීම වැලැක්වීමට</string>
     <string name="today_s_report">අද දිනයේ වාර්තාව</string>
     <string name="this_week_s_report">මෙම සතියේ වාර්තාව</string>
     <string name="this_month_s_report">මෙම මාසයේ වාර්තාව</string>
