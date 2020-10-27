@@ -407,7 +407,8 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
         filteredList = new ArrayList<>();
         switch (date) {
             case 1: { //all
-                filteredList.addAll(transactionsList);
+                if (filteredList.isEmpty())
+                    filteredList.addAll(transactionsList);
                 break;
             }
             case 2: { //today
