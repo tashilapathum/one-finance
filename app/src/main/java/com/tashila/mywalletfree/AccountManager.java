@@ -33,7 +33,8 @@ public class AccountManager extends AppCompatActivity implements NavigationView.
     private SharedPreferences sharedPref;
     private DrawerLayout drawer;
     private MaterialNavigationView navigationView;
-
+    private RecyclerView recyclerView;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         /*------------------------------Essential for every activity------------------------------*/
@@ -95,7 +96,7 @@ public class AccountManager extends AppCompatActivity implements NavigationView.
         }
 
         final AccountsAdapter accountsAdapter = new AccountsAdapter(this);
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -113,24 +114,27 @@ public class AccountManager extends AppCompatActivity implements NavigationView.
     }
 
     private void onClickFAB() {
-        if (sharedPref.getBoolean("MyWalletPro", false)) {
-            Intent intent = new Intent(this, NewAccount.class);
-            intent.putExtra("isNewAccount", true);
+        Intent intent = new Intent(this, NewAccount.class);
+        intent.putExtra("isNewAccount", true);
+        if (sharedPref.getBoolean("MyWalletPro", false))
             startActivity(intent);
-        } else {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.reached_acc_limit)
-                    .setMessage(R.string.r_a_l_des)
-                    .setPositiveButton(R.string.buy, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(AccountManager.this, UpgradeToPro.class);
-                            startActivity(intent);
-                        }
-                    })
-                    .setNegativeButton(R.string.cancel, null)
-                    .create()
-                    .show();
+        else {
+            if (recyclerView.getChildCount() <= 1)
+                startActivity(intent);
+            else
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.reached_acc_limit)
+                        .setMessage(R.string.r_a_l_des)
+                        .setPositiveButton(R.string.buy, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(AccountManager.this, UpgradeToPro.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, null)
+                        .create()
+                        .show();
         }
     }
 

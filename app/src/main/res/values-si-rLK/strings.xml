@@ -347,9 +347,9 @@
     <string name="show_a_shortcut_on_wallet_page_to_edit_the_quick_list">ක්ෂණික ලැයිස්තුව සංස්කරණය කරන පිටුවට කෙලින්ම යාමට බොත්තමක් පසුම්බිය පිටුවෙහි පෙන්වන්න</string>
     <string name="notifications">නිවේදන </string>
     <string name="buttons_appearance">බොත්තම් වල පෙනුම</string>
-    <string name="show_or_hide_labels_icons_in_classic_input_mode">ප්‍රධාන බොත්තම් වල වචන හෝ කුඩා පින්තුරය පෙන්වීම හෝ සැඟවීම</string>
-    <string name="icon_and_label">පින්තුරය හා වචනය</string>
-    <string name="icon_only">පින්තුරය පමණක්</string>
+    <string name="show_or_hide_labels_icons_in_classic_input_mode">ප්‍රධාන බොත්තම් වල වචන හෝ නිරූපකය පෙන්වීම හෝ සැඟවීම</string>
+    <string name="icon_and_label">නිරූපකය හා වචනය</string>
+    <string name="icon_only">නිරූපකය පමණක්</string>
     <string name="label_only">වචනය පමණක්</string>
     <string name="select_type">ආකාරය තෝරන්න</string>
     <string name="tap_to_hide_input_sheet">ඇතුලත් කරන පත්‍රය වැසීමට ටච් කරන්න</string>
@@ -369,7 +369,7 @@
         - බැංකු ගිණුම් ගණන සීමාවක් නොමැත (නොමිලේ - 1)\n
         - ඇප් එක විවෘත වන විට දිස්වෙන මුල් පිටුව මාරු කළ හැක\n
         - වාර්තා සීමාවක් නොමැතිව බැලිය හැක (නොමිලේ - දින: 4, සති: 3, මාස: 2)\n
-        - ප්‍රධාන බොත්තම් වල කුඩා \'පින්තුරය + වචනය\' සහ \'පින්තුරය පමණක්\' ආකාර\n
+        - ප්‍රධාන බොත්තම් වල කුඩා \'නිරූපකය + වචනය\' සහ \'නිරූපකය පමණක්\' ආකාර\n
         - ඇප් එකෙහි ඉදිරි වැඩිදියුණු කටයුතු වලට සහයක් වීම ❤\n
     </string>
     <string name="p_success">මිල දී ගැනීම සාර්ථකයි</string>
