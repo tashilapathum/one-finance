@@ -249,7 +249,7 @@
     <string name="manage_acc">ගිණුම් කලමනාකරණය</string>
     <string name="account_in_use">දැනට භාවිතයේ පවතින ගිණුම ඉවත් කළ නොහැකියි. පළමුව වෙනත් ගිණුමක් තෝරා ඉන් පසුව මෙම ගිණුම ඉවත් කරන්න.</string>
     <string name="switched">Switched</string>
-    <string name="in_use">භාවිතයේ ඇත</string>
+    <string name="in_use">භාවිතයේ ඇත&#160;</string>
     <string name="delete_item_confirm">මෙම අයිතමය ඉවත් කිරීමට අවශ්‍යද?</string>
     <string name="add_q_item">නව ක්ෂණික අයිතමයක්</string>
     <string name="edit_q_item">ක්ෂණික අයිතමය සංස්කරණය</string>
@@ -361,6 +361,8 @@
     <string name="auto_refresh_charts">ප්‍රස්ථාර යාවත්කාලින වීම</string>
     <string name="refresh_wallet_page_to_show_updated_charts_after_adding_every_transaction"> ගනුදෙනුවක් ඇතුලත් කරන සෑම විට ම නව දත්ත පෙන්වීමට පසුම්බිය පිටුවෙහි ඇති ප්‍රස්ථාර නැවත පුරණය කරන්න</string>
     <string name="manage_notifications_sent_by_the_app">ඇප් එකෙන් පෙන්වන නිවේදන සක්‍රිය හෝ අක්‍රිය කරන්න</string>
+    <string name="p_success">මිල දී ගැනීම සාර්ථකයි</string>
+    <string name="select_content">අයිතම තෝරන්න</string>
 
     <string name="pro_features">
         &#160;- ක්ෂණික ලැයිස්තුවේ සීමාවක් නොමැත (නොමිලේ - 5)\n
@@ -372,5 +374,4 @@
         - ප්‍රධාන බොත්තම් වල කුඩා \'නිරූපකය + වචනය\' සහ \'නිරූපකය පමණක්\' ආකාර\n
         - ඇප් එකෙහි ඉදිරි වැඩිදියුණු කටයුතු වලට සහයක් වීම ❤\n
     </string>
-    <string name="p_success">මිල දී ගැනීම සාර්ථකයි</string>
 </resources>

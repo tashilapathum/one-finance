@@ -69,7 +69,7 @@ public class DialogWalletContent extends DialogFragment {
         });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Select content")
+        builder.setTitle(R.string.select_content)
                 .setView(view)
                 .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override

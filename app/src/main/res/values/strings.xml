@@ -390,5 +390,6 @@
     <string name="refresh_wallet_page_to_show_updated_charts_after_adding_every_transaction">Refresh Wallet page to show updated charts after adding every transaction</string>
     <string name="manage_notifications_sent_by_the_app">Manage notifications sent by the app</string>
     <string name="p_success">Purchase successful</string>
+    <string name="select_content">Select content</string>
 
 </resources>
