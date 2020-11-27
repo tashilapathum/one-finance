@@ -391,5 +391,12 @@
     <string name="manage_notifications_sent_by_the_app">Manage notifications sent by the app</string>
     <string name="p_success">Purchase successful</string>
     <string name="select_content">Select content</string>
+    <string name="new_pin">Enter a new PIN</string>
+    <string name="validate_pin">Enter your current PIN</string>
+    <string name="confirm_pin">Enter again to confirm. Go back to discard.</string>
+    <string name="enter_pin">Enter PIN</string>
+    <string name="incorrect_pin">Incorrect PIN</string>
+    <string name="pin">PIN</string>
+    <string name="add_a_pin_to_secure_the_app">Add or change the current PIN to secure the app</string>
 
 </resources>

@@ -144,6 +144,7 @@ public class Reports extends AppCompatActivity implements MaterialNavigationView
                     drawer.closeDrawer(GravityCompat.START);
                 else {
                     Intent intent = new Intent(this, MainActivity.class);
+                    intent.putExtra("showPinScreen", false);
                     startActivity(intent);
                 }
                 break;

@@ -146,6 +146,7 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
                     drawer.closeDrawer(GravityCompat.START);
                 else {
                     Intent intent = new Intent(this, MainActivity.class);
+                    intent.putExtra("showPinScreen", false);
                     startActivity(intent);
                 }
                 break;

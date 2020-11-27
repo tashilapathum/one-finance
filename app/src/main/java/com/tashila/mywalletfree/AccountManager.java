@@ -155,6 +155,7 @@ public class AccountManager extends AppCompatActivity implements NavigationView.
                     drawer.closeDrawer(GravityCompat.START);
                 else {
                     Intent intent = new Intent(this, MainActivity.class);
+                    intent.putExtra("showPinScreen", false);
                     startActivity(intent);
                 }
                 break;

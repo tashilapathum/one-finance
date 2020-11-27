@@ -374,4 +374,11 @@
         - ප්‍රධාන බොත්තම් වල කුඩා \'නිරූපකය + වචනය\' සහ \'නිරූපකය පමණක්\' ආකාර\n
         - ඇප් එකෙහි ඉදිරි වැඩිදියුණු කටයුතු වලට සහයක් වීම ❤\n
     </string>
+    <string name="new_pin">Enter a new PIN</string>
+    <string name="validate_pin">Enter your current PIN</string>
+    <string name="confirm_pin">Enter again to confirm</string>
+    <string name="enter_pin">Enter PIN</string>
+    <string name="incorrect_pin">Incorrect PIN</string>
+    <string name="pin">PIN</string>
+    <string name="add_a_pin_to_secure_the_app">Add a PIN to secure the app</string>
 </resources>

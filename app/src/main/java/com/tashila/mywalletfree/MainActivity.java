@@ -49,13 +49,25 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
+
         //to exit the app
         if (getIntent().getBooleanExtra("shouldExit", false))
             finish();
 
+        //PIN
+        if (sharedPref.getBoolean("pinEnabled", false)) {
+            if (getIntent().getBooleanExtra("showPinScreen", true)) {
+                boolean isPinCompleted = getIntent().getBooleanExtra("pinCompleted", false);
+                if (!isPinCompleted) {
+                    startActivity(new Intent(this, EnterPIN.class));
+                    finish();
+                }
+            }
+        }
+
         /*------------------------------Essential for every activity------------------------------*/
         Toolbar toolbar;
-        sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
 
         //language
         String language = sharedPref.getString("language", "english");

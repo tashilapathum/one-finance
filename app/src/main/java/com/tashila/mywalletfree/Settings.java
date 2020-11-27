@@ -236,6 +236,7 @@ public class Settings extends AppCompatActivity
                     drawer.closeDrawer(GravityCompat.START);
                 else {
                     Intent intent = new Intent(this, MainActivity.class);
+                    intent.putExtra("showPinScreen", false);
                     startActivity(intent);
                 }
                 break;
@@ -534,8 +535,7 @@ public class Settings extends AppCompatActivity
         if (isMyWalletPro) {
             DialogButtonType dialogButtonType = new DialogButtonType();
             dialogButtonType.show(getSupportFragmentManager(), "button type dialog");
-        }
-        else purchaseProForThis();
+        } else purchaseProForThis();
     }
 
     public void tapToHide(View view) {
@@ -556,6 +556,19 @@ public class Settings extends AppCompatActivity
             refreshCheckBox.setChecked(true);
         else
             refreshCheckBox.setChecked(false);
+    }
+
+    public void pin(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putString("setting", "pin");
+        firebaseAnalytics.logEvent("used_setting", bundle);
+
+        Intent intent = new Intent(this, EnterPIN.class);
+        if (sharedPref.getBoolean("pinEnabled", false))
+            intent.putExtra("validate", true);
+        else
+            intent.putExtra("newPin", true);
+        startActivity(intent);
     }
 
     public void purchaseProForThis() {

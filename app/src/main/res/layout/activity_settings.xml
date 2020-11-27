@@ -36,11 +36,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/general"
                     android:paddingHorizontal="20dp"
                     android:paddingTop="16dp"
+                    android:text="@string/general"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    android:textColor="?colorThemeBasedAccent"/>
+                    android:textColor="?colorThemeBasedAccent" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -167,7 +167,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"/>
+                        android:layout_centerVertical="true" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -192,8 +192,8 @@
                         android:id="@+id/setting8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/image8"
                         android:layout_toStartOf="@id/exitCheck"
+                        android:layout_toEndOf="@id/image8"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="@string/exit_confirmation"
@@ -213,7 +213,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"/>
+                        android:layout_centerVertical="true" />
 
                 </RelativeLayout>
 
@@ -389,20 +389,60 @@
                         android:text="@string/manage_notifications_sent_by_the_app" />
                 </RelativeLayout>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="pin"
+                    android:paddingVertical="16dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp">
+
+                    <ImageView
+                        android:id="@+id/image21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="8dp"
+                        android:paddingEnd="8dp"
+                        android:src="@drawable/ic_pin" />
+
+                    <TextView
+                        android:id="@+id/setting21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image21"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@string/pin"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                    <TextView
+                        android:id="@+id/description21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/setting21"
+                        android:layout_toEndOf="@id/image21"
+                        android:text="@string/add_a_pin_to_secure_the_app" />
+                </RelativeLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="8dp"
-                    android:background="@color/colorDividerLight"/>
+                    android:background="@color/colorDividerLight" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/customization"
                     android:paddingHorizontal="20dp"
                     android:paddingTop="16dp"
+                    android:text="@string/customization"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    android:textColor="?colorThemeBasedAccent"/>
+                    android:textColor="?colorThemeBasedAccent" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -627,7 +667,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"/>
+                        android:layout_centerVertical="true" />
 
                 </RelativeLayout>
 
@@ -665,9 +705,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/setting18"
+                        android:layout_toStartOf="@id/pro4"
                         android:layout_toEndOf="@id/image18"
-                        android:text="@string/show_or_hide_labels_icons_in_classic_input_mode"
-                        android:layout_toStartOf="@id/pro4"/>
+                        android:text="@string/show_or_hide_labels_icons_in_classic_input_mode" />
 
                     <TextView
                         android:id="@+id/pro4"
@@ -719,9 +759,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/setting24"
+                        android:layout_toStartOf="@id/pro5"
                         android:layout_toEndOf="@id/image24"
-                        android:text="make the font size bigger or smaller"
-                        android:layout_toStartOf="@id/pro5"/>
+                        android:text="make the font size bigger or smaller" />
 
                     <TextView
                         android:id="@+id/pro5"
@@ -741,16 +781,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="8dp"
-                    android:background="@color/colorDividerLight"/>
+                    android:background="@color/colorDividerLight" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/advanced"
                     android:paddingHorizontal="20dp"
                     android:paddingTop="16dp"
+                    android:text="@string/advanced"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    android:textColor="?colorThemeBasedAccent"/>
+                    android:textColor="?colorThemeBasedAccent" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -774,8 +814,8 @@
                         android:id="@+id/setting12"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/image12"
                         android:layout_toStartOf="@id/undoCheck"
+                        android:layout_toEndOf="@id/image12"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="@string/undo_action"
@@ -795,7 +835,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"/>
+                        android:layout_centerVertical="true" />
 
                 </RelativeLayout>
 
@@ -821,8 +861,8 @@
                         android:id="@+id/setting13"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/image13"
                         android:layout_toStartOf="@id/negativeCheck"
+                        android:layout_toEndOf="@id/image13"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="@string/allow_negative_balance"
@@ -842,7 +882,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"/>
+                        android:layout_centerVertical="true" />
 
                 </RelativeLayout>
 
@@ -888,7 +928,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"/>
+                        android:layout_centerVertical="true" />
 
                 </RelativeLayout>
 
@@ -914,8 +954,8 @@
                         android:id="@+id/setting19"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/image19"
                         android:layout_toStartOf="@id/tapHideCheck"
+                        android:layout_toEndOf="@id/image19"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="@string/tap_to_hide_input_sheet"
@@ -935,7 +975,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"/>
+                        android:layout_centerVertical="true" />
 
                 </RelativeLayout>
 
@@ -988,8 +1028,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_menu"
         app:itemStyle="rounded_right"
-        app:itemTextAppearance="@style/DrawerTextStyle"/>
+        app:itemTextAppearance="@style/DrawerTextStyle"
+        app:menu="@menu/drawer_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

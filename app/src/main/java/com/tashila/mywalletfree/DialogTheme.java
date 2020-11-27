@@ -56,6 +56,8 @@ public class DialogTheme extends DialogFragment {
         String theme = btn.getText().toString();
         if (theme.equals("අඳුරු")) theme = "dark";
         sharedPref.edit().putString("theme", theme).apply();
-        startActivity(new Intent(getActivity(), MainActivity.class));
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.putExtra("showPinScreen", false);
+        startActivity(intent);
     }
 }

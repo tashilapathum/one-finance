@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeDark"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".EnterPIN"></activity>
         <activity android:name=".Insights" />
         <activity android:name=".About" />
         <activity
