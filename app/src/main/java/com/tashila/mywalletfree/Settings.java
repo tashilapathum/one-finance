@@ -30,6 +30,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.material.checkbox.MaterialCheckBox;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.shreyaspatil.material.navigationview.MaterialNavigationView;
 
@@ -477,7 +478,7 @@ public class Settings extends AppCompatActivity
             - haveAccounts
             - alreadyDidInitSetup
           */
-        new AlertDialog.Builder(this)
+        new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.confirm)
                 .setMessage(R.string.reset_confirm)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -563,12 +564,31 @@ public class Settings extends AppCompatActivity
         bundle.putString("setting", "pin");
         firebaseAnalytics.logEvent("used_setting", bundle);
 
-        Intent intent = new Intent(this, EnterPIN.class);
-        if (sharedPref.getBoolean("pinEnabled", false))
-            intent.putExtra("validate", true);
-        else
+        if (sharedPref.getBoolean("pinEnabled", false)) {
+            new MaterialAlertDialogBuilder(this)
+                    .setMessage(R.string.choose_pin_action)
+                    .setPositiveButton(R.string.change, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent intent = new Intent(Settings.this, EnterPIN.class);
+                            intent.putExtra("validate", true);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton(R.string.remove, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            sharedPref.edit().putBoolean("pinEnabled", false).apply();
+                            Toast.makeText(Settings.this, getString(R.string.removed), Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .show();
+        }
+        else {
+            Intent intent = new Intent(this, EnterPIN.class);
             intent.putExtra("newPin", true);
-        startActivity(intent);
+            startActivity(intent);
+        }
     }
 
     public void purchaseProForThis() {

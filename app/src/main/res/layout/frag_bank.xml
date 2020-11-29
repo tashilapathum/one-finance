@@ -108,6 +108,21 @@
         android:paddingBottom="8dp">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnTransfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:fontFamily="sans-serif-condensed"
+            android:paddingVertical="12dp"
+            android:stateListAnimator="@null"
+            android:text="@string/transfer"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:translationZ="8dp"
+            app:cornerRadius="48dp"
+            app:elevation="8dp"
+            app:icon="@drawable/ic_transfer" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/deposit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

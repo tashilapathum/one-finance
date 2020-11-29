@@ -184,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
                 sharedPref.edit().putBoolean("whatsNewShownV0.2.9", true).apply();
             } //TODO: update this
         }
+        rateApp(); //to make counts
     }
 
     //nav drawer
@@ -312,6 +313,8 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
     protected void onDestroy() {
         super.onDestroy();
         sharedPref.edit().putBoolean("exit", false).apply();
+        sharedPref.edit().putBoolean("chooseAccFromWallet", false).apply();
+        sharedPref.edit().putBoolean("transferFromBank", false).apply();
     }
 
     //bottom nav
@@ -343,7 +346,6 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
                             break;
                         }
                     }
-                    rateApp(); //to make counts when navigating screens
                     navigateScreens(selectedFragment, fragmentTag, item.getItemId());
                     return true;
                 }

@@ -398,5 +398,10 @@
     <string name="incorrect_pin">Incorrect PIN</string>
     <string name="pin">PIN</string>
     <string name="add_a_pin_to_secure_the_app">Add or change the current PIN to secure the app</string>
+    <string name="transferred">Transferred</string>
+    <string name="choose_pin_action">Choose if you want to remove or change your current PIN</string>
+    <string name="change">Change</string>
+    <string name="remove">Remove</string>
+    <string name="removed">Removed</string>
 
 </resources>

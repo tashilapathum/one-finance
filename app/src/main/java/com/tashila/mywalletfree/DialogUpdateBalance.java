@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import java.text.DecimalFormat;
 
 import androidx.annotation.NonNull;
@@ -30,7 +32,7 @@ public class DialogUpdateBalance extends DialogFragment {
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_update_balance, null);
         sharedPref = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
         final EditText etBalance = view.findViewById(R.id.editBalance);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
         builder.setView(view)
                 .setTitle(R.string.edit_balance)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {

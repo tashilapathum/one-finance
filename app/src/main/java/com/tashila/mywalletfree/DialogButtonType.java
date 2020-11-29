@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -26,7 +28,7 @@ public class DialogButtonType extends DialogFragment {
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         radioGroup = view.findViewById(R.id.radioGroup);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity())
                 .setTitle(R.string.select_type)
                 .setView(view)
                 .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {

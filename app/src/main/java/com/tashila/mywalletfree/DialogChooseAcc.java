@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
 
@@ -48,7 +50,7 @@ public class DialogChooseAcc extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         view = inflater.inflate(R.layout.dialog_choose_acc, null);
         builder.setView(view)
@@ -69,6 +71,7 @@ public class DialogChooseAcc extends DialogFragment {
     private void showAccountsList() {
         String currency = sharedPref.getString("currency", "");
         final boolean calledFromWallet = sharedPref.getBoolean("chooseAccFromWallet", false);
+        final boolean transferFromBank = sharedPref.getBoolean("transferFromBank", false);
 
         final List<Account> accountsList = accountsViewModel.getAllAccounts();
         for (int i = 0; i < accountsList.size(); i++) {
@@ -80,39 +83,70 @@ public class DialogChooseAcc extends DialogFragment {
 
             tvAccountName.setText(accountsList.get(i).getAccName());
             tvAccountBalance.setText(currency + accountsList.get(i).getAccBalance());
-            if (accountsList.get(i).isSelected())
+            if (accountsList.get(i).isSelected()) {
                 tvSelectedDot.setVisibility(View.VISIBLE);
+            }
             final int finalI = i;
             sampleSwitchLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    //transfer between accounts (before setting the tapped account as selected)
+                    if (transferFromBank) {
+                        sharedPref.edit().putBoolean("transferFromBank", false).apply();
+                        double amount = getArguments().getDouble("amount");
+
+                        //to deduct money
+                        Account currentAccount = null;
+                        for (int j = 0; j < accountsList.size(); j++)
+                            if (accountsList.get(j).isSelected())
+                                currentAccount = accountsList.get(j);
+
+                        Account targetAccount = accountsList.get(finalI); //to add money
+
+                        //update current account
+                        String newCurrentBalance = String.valueOf(Double.parseDouble(currentAccount.getAccBalance()) - amount);
+                        currentAccount.setAccBalance(newCurrentBalance);
+                        List<String> activities = currentAccount.getActivities();
+                        activities.add("Transferred " + new Amount(getActivity(), amount).getAmountString()
+                                + " to " + targetAccount.getAccName() + "###" + new DateTimeHandler().getTimestamp());
+                        accountsViewModel.update(currentAccount);
+
+                        //update target account
+                        String newTargetBalance = String.valueOf(Double.parseDouble(targetAccount.getAccBalance()) + amount);
+                        targetAccount.setAccBalance(newTargetBalance); //this one gets updated below
+                        List<String> activities2 = targetAccount.getActivities();
+                        activities2.add("Transferred " + new Amount(getActivity(), amount).getAmountString()
+                                + " from " + currentAccount.getAccName() + "###" + new DateTimeHandler().getTimestamp());
+
+                        Toast.makeText(getActivity(), getString(R.string.transferred), Toast.LENGTH_SHORT).show();
+                    }
+
                     //select the tapped account
                     accountsList.get(finalI).setSelected(true);
                     accountsViewModel.update(accountsList.get(finalI));
                     //deselect all other accounts
                     int selectedAccID = accountsList.get(finalI).getId();
-                    List<Account> allAccounts = accountsViewModel.getAllAccounts();
-                    for (int i = 0; i < allAccounts.size(); i++) {
-                        if (allAccounts.get(i).getId() != selectedAccID) {
-                            allAccounts.get(i).setSelected(false);
-                            accountsViewModel.update(allAccounts.get(i));
+                    for (int i = 0; i < accountsList.size(); i++) {
+                        if (accountsList.get(i).getId() != selectedAccID) {
+                            accountsList.get(i).setSelected(false);
+                            accountsViewModel.update(accountsList.get(i));
                         }
                     }
-                    if (!calledFromWallet)
-                        Toast.makeText(getActivity(), R.string.switched, Toast.LENGTH_SHORT).show();
-                    else {
+                    if (calledFromWallet) {
                         //transfer from wallet to account
                         WalletFragment walletFragment = (WalletFragment) getActivity().getSupportFragmentManager().findFragmentByTag("WalletFragment");
                         walletFragment.doBankStuff(accountsList.get(finalI));
                         walletFragment.continueLongClickProcess();
-                    }
+                    } else
+                        Toast.makeText(getActivity(), R.string.switched, Toast.LENGTH_SHORT).show();
+
                     thisDialog.dismiss();
                 }
             });
             baseLayout.addView(sampleSwitchLayout);
         }
 
-        if (!calledFromWallet) {
+        if (!calledFromWallet || !transferFromBank) {
             MaterialButton btnAddAccount = new MaterialButton(getActivity());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);

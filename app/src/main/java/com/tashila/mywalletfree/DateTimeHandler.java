@@ -15,6 +15,10 @@ public class DateTimeHandler {
     public static final String TAG = "DateTimeHandler";
     private LocalDateTime localDateTime;
 
+    public DateTimeHandler() {
+        localDateTime = LocalDateTime.now();
+    }
+
     public DateTimeHandler(String millis) {
         localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(millis)), ZoneId.systemDefault());
     }

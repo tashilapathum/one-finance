@@ -52,6 +52,7 @@ public class BankFragment extends Fragment {
     private String accountBalance;
     private MaterialButton btnDeposit;
     private MaterialButton btnWithdraw;
+    private MaterialButton btnTransfer;
     private ImageButton btnSwitch;
     private TextInputLayout tilAmount;
     private EditText etAmount;
@@ -90,6 +91,7 @@ public class BankFragment extends Fragment {
         btnDeposit = view.findViewById(R.id.deposit);
         btnWithdraw = view.findViewById(R.id.withdraw);
         btnSwitch = view.findViewById(R.id.switchAcc);
+        btnTransfer = view.findViewById(R.id.btnTransfer);
         tilAmount = view.findViewById(R.id.editAmount);
         etAmount = tilAmount.getEditText();
         currency = sharedPref.getString("currency", null);
@@ -115,6 +117,12 @@ public class BankFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 showDialog();
+            }
+        });
+        btnTransfer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                transfer();
             }
         });
         etAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -551,6 +559,7 @@ public class BankFragment extends Fragment {
         if (buttonType.equals("labelOnly")) {
             btnDeposit.setIcon(null);
             btnWithdraw.setIcon(null);
+            btnTransfer.setIcon(null);
         }
         else if (buttonType.equals("iconOnly")) {
             btnDeposit.setText(null);
@@ -559,6 +568,28 @@ public class BankFragment extends Fragment {
             btnWithdraw.setText(null);
             btnWithdraw.setIconPadding(0);
             btnWithdraw.setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_START);
+            btnTransfer.setText(null);
+            btnTransfer.setIconPadding(0);
+            btnTransfer.setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_START);
+        }
+    }
+
+    private void transfer() {
+        if (validate()) {
+            double amount = Double.parseDouble(etAmount.getText().toString());
+            sharedPref.edit().putBoolean("transferFromBank", true).apply();
+            DialogChooseAcc dialogChooseAcc = new DialogChooseAcc();
+            Bundle bundle = new Bundle();
+            bundle.putDouble("amount", amount);
+            dialogChooseAcc.setArguments(bundle);
+            dialogChooseAcc.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    sharedPref.edit().putBoolean("transferFromBank", false).apply();
+                    reloadFragment();
+                }
+            });
+            dialogChooseAcc.show(getFragmentManager(), "choose account");
         }
     }
 }
