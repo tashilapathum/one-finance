@@ -269,7 +269,6 @@ public class BankFragment extends Fragment {
             selectedAccount.setAccBalance(newBalanceStr);
             List<String> balanceHistory = selectedAccount.getBalanceHistory();
             balanceHistory.add(newBalanceStr);
-            Log.i(TAG, "balanceHistorySize"+balanceHistory.size());
             selectedAccount.setBalanceHistory(balanceHistory);
             //activities
             List<String> activities = selectedAccount.getActivities();

@@ -647,19 +647,22 @@ public class WalletFragment extends Fragment {
     void doBankStuff(Account account) {
         if (account == null)
             account = getSelectedAccount();
+        String amountStr = new Amount(getActivity(), amount).getAmountString();
 
         //update activity
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
         String timeStamp = LocalDateTime.now().format(formatter);
         if (language.equalsIgnoreCase("සිංහල"))
-            activity = currency + df.format(amount) + "ක් පසුම්බියෙන් බැර කරන ලදී" + "###" + timeStamp;
+            activity = amountStr + "ක් පසුම්බියෙන් බැර කරන ලදී" + "###" + timeStamp;
         else
-            activity = "Deposited " + currency + df.format(amount) + " from Wallet" + "###" + timeStamp;
+            activity = "Deposited " + amountStr + " from Wallet" + "###" + timeStamp;
         account.getActivities().add(activity);
 
         //update balance
         String newBalance = String.valueOf(Double.parseDouble(account.getAccBalance()) + amount);
         account.setAccBalance(newBalance);
+        List<String> balanceHistory = account.getBalanceHistory();
+        balanceHistory.add(String.valueOf(Double.parseDouble(account.getAccBalance()) + amount));
 
         accountsViewModel.update(account);
         sharedPref.edit().putBoolean("transferred", true).apply();

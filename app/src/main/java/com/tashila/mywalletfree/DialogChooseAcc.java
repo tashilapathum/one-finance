@@ -109,6 +109,8 @@ public class DialogChooseAcc extends DialogFragment {
                         List<String> activities = currentAccount.getActivities();
                         activities.add("Transferred " + new Amount(getActivity(), amount).getAmountString()
                                 + " to " + targetAccount.getAccName() + "###" + new DateTimeHandler().getTimestamp());
+                        List<String> balanceHistory = currentAccount.getBalanceHistory();
+                        balanceHistory.add(String.valueOf(Double.parseDouble(currentAccount.getAccBalance()) - amount));
                         accountsViewModel.update(currentAccount);
 
                         //update target account
@@ -117,6 +119,8 @@ public class DialogChooseAcc extends DialogFragment {
                         List<String> activities2 = targetAccount.getActivities();
                         activities2.add("Transferred " + new Amount(getActivity(), amount).getAmountString()
                                 + " from " + currentAccount.getAccName() + "###" + new DateTimeHandler().getTimestamp());
+                        List<String> balanceHistory2 = targetAccount.getBalanceHistory();
+                        balanceHistory2.add(String.valueOf(Double.parseDouble(targetAccount.getAccBalance()) + amount));
 
                         Toast.makeText(getActivity(), getString(R.string.transferred), Toast.LENGTH_SHORT).show();
                     }
@@ -146,7 +150,7 @@ public class DialogChooseAcc extends DialogFragment {
             baseLayout.addView(sampleSwitchLayout);
         }
 
-        if (!calledFromWallet || !transferFromBank) {
+        if (!calledFromWallet && !transferFromBank) {
             MaterialButton btnAddAccount = new MaterialButton(getActivity());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
