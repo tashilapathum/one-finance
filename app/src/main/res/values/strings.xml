@@ -398,7 +398,7 @@
         - Protect the app with a PIN\n
         - Support the developer! ❤\n
     </string>
-    <string name="what_s_new_in_version" translatable="false">What\'s new in version 0.3.0 (Beta)</string>
+    <string name="what_s_new_in_version" translatable="false">What\'s new in version 0.3.0</string>
     <string name="whats_new_descr" translatable="false">
         \n - Added the ability to directly transfer money between accounts\n
         - Fixed account balance history chart\n

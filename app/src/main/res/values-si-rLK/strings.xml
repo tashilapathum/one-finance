@@ -217,7 +217,7 @@
     <string name="as_due">නොගෙවූ බවට ලකුණු කරන ලදී</string>
     <string name="monthly">මාසික</string>
     <string name="paid">ගෙවා ඇති</string>
-    <string name="due">ගෙවීය යුතු</string>
+    <string name="due">ගෙවිය යුතු</string>
     <string name="bill_title">බිලෙහි නම</string>
     <string name="remarks">සටහන්</string>
     <string name="overdue">ගෙවීමට තිබූ දිනය පසුවී ඇත</string>
@@ -390,6 +390,7 @@
         - ඇප් එක විවෘත වන විට දිස්වෙන මුල් පිටුව මාරු කළ හැක\n
         - වාර්තා සීමාවක් නොමැතිව බැලිය හැක (නොමිලේ - දින: 4, සති: 3, මාස: 2)\n
         - ප්‍රධාන බොත්තම් වල කුඩා \'නිරූපකය + වචනය\' සහ \'නිරූපකය පමණක්\' ආකාර\n
+        - ඇප් එක සුරක්ශිත කිරීමට PIN අංකයක් ඇතුලත් කිරීමේ හැකියාව\n
         - ඇප් එකෙහි ඉදිරි වැඩිදියුණු කටයුතු වලට සහයක් වීම ❤\n
     </string>
 </resources>

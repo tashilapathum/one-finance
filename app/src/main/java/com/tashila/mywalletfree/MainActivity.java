@@ -178,10 +178,10 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         if (!alreadyDid) startActivity(intent);
         else {
             //what's new
-            if (!sharedPref.getBoolean("whatsNewShownV0.2.9", false)) {
+            if (!sharedPref.getBoolean("whatsNewShownV0.3.0", false)) {
                 DialogWhatsNew dialogWhatsNew = new DialogWhatsNew();
                 dialogWhatsNew.show(getSupportFragmentManager(), "whats new dialog");
-                sharedPref.edit().putBoolean("whatsNewShownV0.2.9", true).apply();
+                sharedPref.edit().putBoolean("whatsNewShownV0.3.0", true).apply();
             } //TODO: update this
         }
         rateApp(); //to make counts
@@ -443,8 +443,6 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         }
     }
 }
-
-//TODO: Update what's new (and what's new dialog shared preference key)
 
 
 
