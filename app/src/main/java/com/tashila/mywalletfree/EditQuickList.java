@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -117,7 +118,7 @@ public class EditQuickList extends AppCompatActivity {
             if (currentNoOfItems < maxNoOfItems)
                 dialogAddQuickItem.show(getSupportFragmentManager(), "add quick item");
             else {
-                new AlertDialog.Builder(this)
+                new MaterialAlertDialogBuilder(this)
                         .setTitle(R.string.pro_feature)
                         .setMessage(R.string.add_more_quick_items)
                         .setPositiveButton(R.string.buy, new DialogInterface.OnClickListener() {
@@ -154,7 +155,7 @@ public class EditQuickList extends AppCompatActivity {
     }
 
     public void removeItemNEW(final QuickItem quickItem) {
-        new AlertDialog.Builder(this)
+        new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.confirm)
                 .setMessage(R.string.delete_item_confirm)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {

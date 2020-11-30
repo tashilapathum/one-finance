@@ -107,8 +107,9 @@ public class DialogChooseAcc extends DialogFragment {
                         String newCurrentBalance = String.valueOf(Double.parseDouble(currentAccount.getAccBalance()) - amount);
                         currentAccount.setAccBalance(newCurrentBalance);
                         List<String> activities = currentAccount.getActivities();
-                        activities.add("Transferred " + new Amount(getActivity(), amount).getAmountString()
-                                + " to " + targetAccount.getAccName() + "###" + new DateTimeHandler().getTimestamp());
+                        activities.add(getString(R.string.transferred_space) + new Amount(getActivity(), amount).getAmountString()
+                                + getString(R.string.to) + targetAccount.getAccName() + getString(R.string.transfer_to_suffix)
+                                + "###" + new DateTimeHandler().getTimestamp());
                         List<String> balanceHistory = currentAccount.getBalanceHistory();
                         balanceHistory.add(String.valueOf(Double.parseDouble(currentAccount.getAccBalance()) - amount));
                         accountsViewModel.update(currentAccount);
@@ -117,8 +118,9 @@ public class DialogChooseAcc extends DialogFragment {
                         String newTargetBalance = String.valueOf(Double.parseDouble(targetAccount.getAccBalance()) + amount);
                         targetAccount.setAccBalance(newTargetBalance); //this one gets updated below
                         List<String> activities2 = targetAccount.getActivities();
-                        activities2.add("Transferred " + new Amount(getActivity(), amount).getAmountString()
-                                + " from " + currentAccount.getAccName() + "###" + new DateTimeHandler().getTimestamp());
+                        activities2.add(getString(R.string.transferred_space) + new Amount(getActivity(), amount).getAmountString()
+                                + getString(R.string.from) + currentAccount.getAccName() + getString(R.string.transfer_from_suffix)
+                                + "###" + new DateTimeHandler().getTimestamp());
                         List<String> balanceHistory2 = targetAccount.getBalanceHistory();
                         balanceHistory2.add(String.valueOf(Double.parseDouble(targetAccount.getAccBalance()) + amount));
 

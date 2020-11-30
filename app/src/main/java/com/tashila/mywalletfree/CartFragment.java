@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -207,7 +208,7 @@ public class CartFragment extends Fragment {
     }
 
     public void clearCart() {
-        new AlertDialog.Builder(getActivity())
+        new MaterialAlertDialogBuilder(getActivity())
                 .setTitle(R.string.confirm)
                 .setMessage(R.string.sure_delete_cart)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {

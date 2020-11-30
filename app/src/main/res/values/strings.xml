@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">My Wallet</string>
     <string name="my_wallet_pro" translatable="false">My Wallet Pro</string>
-    <string name="version" translatable="false">Version 0.2.9 (Beta)</string>
+    <string name="version" translatable="false">Version 0.3.0</string>
     <string name="recent_transactions">Transactions</string>
     <string name="reports">Reports</string>
     <string name="settings">Settings</string>
@@ -362,30 +362,6 @@
     <string name="this_week_s_report">This week\'s report</string>
     <string name="this_month_s_report">This month\'s report</string>
     <string name="check_internet">Please check your internet connection</string>
-
-    <string name="pro_features">
-        &#160;- Unlimited quick list items (free limit is 5)\n
-        - Dark mode option\n
-        - Change notification reminder time\n
-        - Add an unlimited number of bank accounts (free limit is 1)\n
-        <!-- - Backup all settings and data\n-->
-        - Change the default home screen\n
-        - Access unlimited history in reports (free limits are 4 days, 3 weeks, 2 months)\n
-        - \'Icon only\' and \'Icon + Label\' modes for main buttons\n
-        - Support the developer! ❤\n
-    </string>
-    <string name="what_s_new_in_version" translatable="false">What\'s new in version 0.2.9 (Beta)</string>
-    <string name="whats_new_descr" translatable="false">
-        \n - Added more detailed daily, weekly and monthly reports\n
-        - Now you can set daily, weekly and monthly reports to show on Wallet page\n
-        - Moved account manager from settings to navigation drawer\n
-        - [Pro] \'Icon only\' and \'Icon + Label\' modes for buttons in the main interface\n
-        - [Pro] Option to show multiple reports on Wallet page\n
-        - Fixed crash in when adding quick list items\n
-        - A lot of UI updates\n
-        - Performance improvements\n
-        \nThank you for testing My Wallet! This app is still in beta stage so please let the developer if there are any bugs. Your feedback is really important for the development of this app. I read every review :)
-    </string>
     <string name="auto_refresh_charts">Auto refresh charts</string>
     <string name="refresh_wallet_page_to_show_updated_charts_after_adding_every_transaction">Refresh Wallet page to show updated charts after adding every transaction</string>
     <string name="manage_notifications_sent_by_the_app">Manage notifications sent by the app</string>
@@ -399,9 +375,36 @@
     <string name="pin">PIN</string>
     <string name="add_a_pin_to_secure_the_app">Add or change the current PIN to secure the app</string>
     <string name="transferred">Transferred</string>
+    <string name="transferred_space">Transferred&#160;</string>
     <string name="choose_pin_action">Choose if you want to remove or change your current PIN</string>
     <string name="change">Change</string>
     <string name="remove">Remove</string>
     <string name="removed">Removed</string>
+    <string name="to">&#160;to&#160;</string>
+    <string name="from">&#160;from&#160;</string>
+    <string name="transfer_to_suffix"> </string>
+    <string name="transfer_from_suffix"> </string>
+    <string name="transfer_2">Transfer</string>
+
+    <string name="pro_features">
+        &#160;- Unlimited quick list items (free limit is 5)\n
+        - Dark mode option\n
+        - Change notification reminder time\n
+        - Add an unlimited number of bank accounts (free limit is 1)\n
+        <!-- - Backup all settings and data\n-->
+        - Change the default home screen\n
+        - Access unlimited history in reports (free limits are 4 days, 3 weeks, 2 months)\n
+        - \'Icon only\' and \'Icon + Label\' modes for main buttons\n
+        - Protect the app with a PIN\n
+        - Support the developer! ❤\n
+    </string>
+    <string name="what_s_new_in_version" translatable="false">What\'s new in version 0.3.0 (Beta)</string>
+    <string name="whats_new_descr" translatable="false">
+        \n - Added the ability to directly transfer money between accounts\n
+        - Fixed account balance history chart\n
+        - Fixed misaligned buttons on some devices\n
+        - [Pro] Added option to protect app with a PIN <i>(See general settings)</i>\n
+        \nThank you for testing My Wallet! This app is still in beta stage so please let the developer if there are any bugs. Your feedback is really important for the development of this app. I read every review :)
+    </string>
 
 </resources>

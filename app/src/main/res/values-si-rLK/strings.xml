@@ -81,8 +81,8 @@
     <string name="predate_description">පෙර දිනයන්හි දී සිදුකරන ලද ගනුදෙනු ඇතුලත් කිරීමට දින දර්ශනය පෙන්වන තුරු බොත්තම ඔබාගෙන සිටින්න</string>
     <string name="search_description">මෙයින් ඔබගේ පසුගිය ගනුදෙනු දිනය හෝ විස්තරය මගින් සෙවිය හැකියි</string>
     <string name="search">සොයන්න…</string>
-    <string name="withdraw">ආපසු ගන්න</string>
-    <string name="deposit">තැන්පත් කරන්න</string>
+    <string name="withdraw">ආපසු\nගන්න</string>
+    <string name="deposit">තැන්පත්\nකරන්න</string>
     <string name="account_name">ගිණුමේ නම*</string>
     <string name="current_balance">ශේෂය*</string>
     <string name="annual_interest">වාර්ෂික පොලී අනුපාතය</string>
@@ -363,6 +363,24 @@
     <string name="manage_notifications_sent_by_the_app">ඇප් එකෙන් පෙන්වන නිවේදන සක්‍රිය හෝ අක්‍රිය කරන්න</string>
     <string name="p_success">මිල දී ගැනීම සාර්ථකයි</string>
     <string name="select_content">අයිතම තෝරන්න</string>
+    <string name="new_pin">නව PIN අංකයක් ඇතුලත් කරන්න</string>
+    <string name="validate_pin">දැනට භාවිත කරන PIN අංකය ඇතුලත් කරන්න</string>
+    <string name="confirm_pin">තහවුරු කිරීමට නැවත ඇතුලත් කරන්න</string>
+    <string name="enter_pin">PIN අංකය</string>
+    <string name="incorrect_pin">PIN අංකය වැරදියි</string>
+    <string name="pin">PIN</string>
+    <string name="add_a_pin_to_secure_the_app">ඇප් එක සුරක්ශිත කිරීමට PIN අංකයක් ඇතුලත් කරන්න</string>
+    <string name="transferred">හුවමාරු කරන ලදී</string>
+    <string name="transferred_space"> </string>
+    <string name="choose_pin_action">ඔබට අවශ්‍ය PIN අංකය වෙනස් කිරීමට ද, ඉවත් කිරීමට ද?</string>
+    <string name="change">වෙනස් කිරීම</string>
+    <string name="remove">ඉවත් කිරීම</string>
+    <string name="removed">ඉවත් කරන ලදී</string>
+    <string name="to">ක්&#160;</string>
+    <string name="from">ක්&#160;</string>
+    <string name="transfer_to_suffix">&#160; ගිණුමට හුවමාරු කරන ලදී</string>
+    <string name="transfer_from_suffix">&#160; ගිණුමෙන් හුවමාරු කරන ලදී</string>
+    <string name="transfer_2">වෙනත්\nගිණුමකට</string>
 
     <string name="pro_features">
         &#160;- ක්ෂණික ලැයිස්තුවේ සීමාවක් නොමැත (නොමිලේ - 5)\n
@@ -374,16 +392,4 @@
         - ප්‍රධාන බොත්තම් වල කුඩා \'නිරූපකය + වචනය\' සහ \'නිරූපකය පමණක්\' ආකාර\n
         - ඇප් එකෙහි ඉදිරි වැඩිදියුණු කටයුතු වලට සහයක් වීම ❤\n
     </string>
-    <string name="new_pin">Enter a new PIN</string>
-    <string name="validate_pin">Enter your current PIN</string>
-    <string name="confirm_pin">Enter again to confirm</string>
-    <string name="enter_pin">Enter PIN</string>
-    <string name="incorrect_pin">Incorrect PIN</string>
-    <string name="pin">PIN</string>
-    <string name="add_a_pin_to_secure_the_app">Add a PIN to secure the app</string>
-    <string name="transferred">Transferred</string>
-    <string name="choose_pin_action">Choose if you want to remove or change your current PIN</string>
-    <string name="change">Change</string>
-    <string name="remove">Remove</string>
-    <string name="removed">Removed</string>
 </resources>

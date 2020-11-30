@@ -43,6 +43,13 @@ public class EnterPIN extends AppCompatActivity {
             tvTitle.setText(R.string.confirm_pin);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sharedPref.getBoolean("exit", false))
+            finishAndRemoveTask();
+    }
+
     private PinLockListener pinLockListener = new PinLockListener() {
         @Override
         public void onComplete(String pin) {

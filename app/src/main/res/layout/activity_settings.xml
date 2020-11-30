@@ -427,6 +427,17 @@
                         android:layout_below="@+id/setting21"
                         android:layout_toEndOf="@id/image21"
                         android:text="@string/add_a_pin_to_secure_the_app" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:text="@string/pro"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textStyle="bold|italic" />
                 </RelativeLayout>
 
                 <View

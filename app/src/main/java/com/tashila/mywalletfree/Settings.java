@@ -564,35 +564,38 @@ public class Settings extends AppCompatActivity
         bundle.putString("setting", "pin");
         firebaseAnalytics.logEvent("used_setting", bundle);
 
-        if (sharedPref.getBoolean("pinEnabled", false)) {
-            new MaterialAlertDialogBuilder(this)
-                    .setMessage(R.string.choose_pin_action)
-                    .setPositiveButton(R.string.change, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(Settings.this, EnterPIN.class);
-                            intent.putExtra("validate", true);
-                            startActivity(intent);
-                        }
-                    })
-                    .setNegativeButton(R.string.remove, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            sharedPref.edit().putBoolean("pinEnabled", false).apply();
-                            Toast.makeText(Settings.this, getString(R.string.removed), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .show();
+        if (isMyWalletPro) {
+            if (sharedPref.getBoolean("pinEnabled", false)) {
+                new MaterialAlertDialogBuilder(this)
+                        .setMessage(R.string.choose_pin_action)
+                        .setPositiveButton(R.string.change, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(Settings.this, EnterPIN.class);
+                                intent.putExtra("validate", true);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton(R.string.remove, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                sharedPref.edit().putBoolean("pinEnabled", false).apply();
+                                Toast.makeText(Settings.this, getString(R.string.removed), Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .show();
+            } else {
+                Intent intent = new Intent(this, EnterPIN.class);
+                intent.putExtra("newPin", true);
+                startActivity(intent);
+            }
         }
-        else {
-            Intent intent = new Intent(this, EnterPIN.class);
-            intent.putExtra("newPin", true);
-            startActivity(intent);
-        }
+        else
+            purchaseProForThis();
     }
 
     public void purchaseProForThis() {
-        new AlertDialog.Builder(this)
+        new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.pro_feature)
                 .setMessage(R.string.buy_pro_for_this)
                 .setPositiveButton(R.string.buy, new DialogInterface.OnClickListener() {
