@@ -45,7 +45,7 @@ import java.util.List;
 public class TransactionHistory extends AppCompatActivity implements MaterialNavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     public static final String TAG = "TransactionHistory";
-    SharedPreferences sharedPref;
+    private SharedPreferences sharedPref;
     private RecyclerView recyclerView;
     private TransactionsAdapter transactionsAdapter;
     private RecyclerView.LayoutManager mLayoutManager;

@@ -9,22 +9,24 @@
         android:id="@+id/fabInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:icon="@drawable/ic_input"
-        android:text="@string/add"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
+        android:text="@string/add"
         android:visibility="gone"
-        tools:visibility="visible"
-        app:backgroundTint="@color/colorAccent" />
+        app:backgroundTint="@color/colorAccent"
+        app:icon="@drawable/ic_input"
+        tools:visibility="visible" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/content_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:paddingHorizontal="16dp"
             android:paddingVertical="8dp">
 
@@ -96,57 +98,53 @@
 
             <include layout="@layout/wallet_input" />
 
-            <LinearLayout
-                android:id="@+id/content_container"
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/quickChipGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!--quick list items are added here-->
+            </com.google.android.material.chip.ChipGroup>
+
+            <FrameLayout
+                android:id="@+id/content_container_2"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:visibility="gone"/>
+
+            <RelativeLayout
+                android:id="@+id/quickList_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/wallet_input_layout"
-                android:orientation="vertical"
-                android:paddingHorizontal="4dp">
+                android:visibility="gone">
 
-                <RelativeLayout
-                    android:id="@+id/quickList_title"
+                <TextView
+                    android:id="@+id/textView2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/open_sans_regular"
+                    android:padding="8dp"
+                    android:text="@string/quick_list"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textStyle="italic" />
+
+                <ImageButton
+                    android:id="@+id/editQuickList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="?android:selectableItemBackgroundBorderless"
+                    android:contentDescription="edit quick list"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_edit_list"
                     android:visibility="gone"
-                    tools:ignore="UselessParent"
-                    tools:visibility="visible">
+                    tools:visibility="visible" />
+            </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:fontFamily="@font/open_sans_regular"
-                        android:padding="8dp"
-                        android:text="@string/quick_list"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                        android:textStyle="italic" />
-
-                    <ImageButton
-                        android:id="@+id/editQuickList"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:background="?android:selectableItemBackgroundBorderless"
-                        android:contentDescription="edit quick list"
-                        android:padding="4dp"
-                        android:src="@drawable/ic_edit_list"
-                        android:visibility="gone"
-                        tools:visibility="visible" />
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/snackbarHere"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/content_container" />
-
-
-        </RelativeLayout>
+        </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+
 </RelativeLayout>

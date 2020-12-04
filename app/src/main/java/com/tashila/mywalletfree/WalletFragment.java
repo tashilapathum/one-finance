@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
@@ -72,6 +74,7 @@ public class WalletFragment extends Fragment {
     private final int TODAY_REPORT = R.id.todayReport;
     private final int THIS_WEEK_REPORT = R.id.thisWeekReport;
     private final int THIS_MONTH_REPORT = R.id.thisMonthReport;
+    private final int TRANSACTIONS = R.id.transactions;
     private MaterialButton btnEarned;
     private MaterialButton btnSpent;
     private MaterialButton btnTransfer;
@@ -188,27 +191,37 @@ public class WalletFragment extends Fragment {
         boolean hasCustomized = sharedPref.getBoolean("walletContentCustomized", false);
         if (hasCustomized) {
             String contentStr = sharedPref.getString("walletContent", null);
-            String[] contentStrings = contentStr.split("~");
-            int[] contentIds = new int[contentStrings.length];
-            for (int i = 0; i < contentStrings.length; i++)
-                contentIds[i] = Integer.parseInt(contentStrings[i]);
-            for (int itemId : contentIds) {
-                switch (itemId) {
-                    case QUICK_LIST: {
-                        loadQuickList();
-                        break;
-                    }
-                    case TODAY_REPORT: {
-                        loadContentItem(TODAY_REPORT);
-                        break;
-                    }
-                    case THIS_WEEK_REPORT: {
-                        loadContentItem(THIS_WEEK_REPORT);
-                        break;
-                    }
-                    case THIS_MONTH_REPORT: {
-                        loadContentItem(THIS_MONTH_REPORT);
-                        break;
+            if (!contentStr.isEmpty()) {
+                String[] contentStrings = contentStr.split("~");
+                int[] contentIds = new int[contentStrings.length];
+                for (int i = 0; i < contentStrings.length; i++)
+                    contentIds[i] = Integer.parseInt(contentStrings[i]);
+                for (int itemId : contentIds) {
+                    switch (itemId) {
+                        case QUICK_LIST: {
+                            String style = sharedPref.getString("quickListStyle", "chips");
+                            if (style.equals("chips"))
+                                loadQuickChips();
+                            if (style.equals("list"))
+                                loadQuickList();
+                            break;
+                        }
+                        case TODAY_REPORT: {
+                            loadContentItem(TODAY_REPORT);
+                            break;
+                        }
+                        case THIS_WEEK_REPORT: {
+                            loadContentItem(THIS_WEEK_REPORT);
+                            break;
+                        }
+                        case THIS_MONTH_REPORT: {
+                            loadContentItem(THIS_MONTH_REPORT);
+                            break;
+                        }
+                        case TRANSACTIONS: {
+                            loadContentItem(TRANSACTIONS);
+                            break;
+                        }
                     }
                 }
             }
@@ -219,6 +232,7 @@ public class WalletFragment extends Fragment {
     private void loadContentItem(int itemId) {
         Fragment fragment = null;
         String fragmentTag = null;
+        int containerId = R.id.content_container;
         switch (itemId) {
             case TODAY_REPORT: {
                 fragment = new DailyReportsFragment();
@@ -235,14 +249,19 @@ public class WalletFragment extends Fragment {
                 fragmentTag = "THIS_MONTH_REPORT";
                 break;
             }
+            case TRANSACTIONS: {
+                fragment = new TransactionsFragment();
+                fragmentTag = "TRANSACTIONS";
+                containerId = R.id.content_container_2;
+                v.findViewById(R.id.content_container_2).setVisibility(View.VISIBLE);
+                break;
+            }
         }
 
         Bundle bundle = new Bundle();
         bundle.putBoolean("fromWallet", true);
         fragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .add(R.id.content_container, fragment, fragmentTag)
-                .commit();
+        getActivity().getSupportFragmentManager().beginTransaction().add(containerId, fragment, fragmentTag).commit();
     }
 
     public void onStart() {
@@ -290,7 +309,7 @@ public class WalletFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (sharedPref.getBoolean("modifiedSettings", false)
-            || sharedPref.getBoolean("quickItemsChanged", false)) {
+                || sharedPref.getBoolean("quickItemsChanged", false)) {
             reloadFragment();
             sharedPref.edit().putBoolean("modifiedSettings", false).apply();
             sharedPref.edit().putBoolean("quickItemsChanged", false).apply();
@@ -386,9 +405,19 @@ public class WalletFragment extends Fragment {
                 Toast.makeText(getActivity(), R.string.add_acc_first, Toast.LENGTH_LONG).show();
 
         } else { //for quick list items
-            Button quickButton = (Button) view;
-            String quickItem = quickButton.getText().toString();
-            String[] amountAndDescr = quickItem.replace(currency, "").split("\n");
+            String[] amountAndDescr = new String[0];
+            String style = sharedPref.getString("quickListStyle", "chips");
+            if (style.equals("chips")) {
+                Chip quickChip = (Chip) view;
+                String quickItem = quickChip.getText().toString();
+                amountAndDescr = quickItem.trim().replace(currency, "").replace(")", "").split("\\(");
+            }
+            if (style.equals("list")) {
+                Button quickButton = (Button) view;
+                String quickItem = quickButton.getText().toString();
+                amountAndDescr = quickItem.replace(currency, "").split("\n");
+            }
+            //String[] 
             String descr = amountAndDescr[0];
             String amount = amountAndDescr[1];
             setTexts(amount, descr);
@@ -543,8 +572,7 @@ public class WalletFragment extends Fragment {
                     }
                 }
             });
-        }
-        else {
+        } else {
             TransactionItem transactionItem =
                     new TransactionItem(balance, prefix, amount, description, userDate, null, isBankRelated);
             transactionsViewModel.insert(transactionItem);
@@ -559,7 +587,6 @@ public class WalletFragment extends Fragment {
     }
 
     private void loadQuickList() {
-        v.findViewById(R.id.quickList_title).setVisibility(View.VISIBLE);
         List<QuickItem> fullQuickList = quickListViewModel.getQuickItemsList();
         if (fullQuickList.size() != 0) {
             for (int i = 0; i < fullQuickList.size(); i++) {
@@ -642,6 +669,39 @@ public class WalletFragment extends Fragment {
         button.setPadding(4, 4, 4, 4);
         button.setVisibility(View.INVISIBLE);
         layout.addView(button);
+    }
+
+    private void loadQuickChips() {
+        List<QuickItem> fullQuickList = quickListViewModel.getQuickItemsList();
+        if (fullQuickList.size() != 0) {
+            for (int i = 0; i < fullQuickList.size(); i++) {
+                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                ChipGroup chipGroup = v.findViewById(R.id.quickChipGroup);
+                Chip chip = new Chip(getActivity());
+                chip.setText(fullQuickList.get(i).getItemName() + " (" + currency + fullQuickList.get(i).getItemPrice() + ")");
+                chip.setElevation(8f);
+                chip.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onClickThreeButtons(chip);
+                    }
+                });
+                chipGroup.addView(chip, i, params);
+            }
+        } else {
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            ChipGroup chipGroup = v.findViewById(R.id.quickChipGroup);
+            Chip chip = new Chip(getActivity());
+            chip.setText(R.string.example_quick_item_text);
+            chip.setElevation(8f);
+            chip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getActivity(), EditQuickList.class));
+                }
+            });
+            chipGroup.addView(chip, 0, params);
+        }
     }
 
     void doBankStuff(Account account) {
@@ -741,8 +801,7 @@ public class WalletFragment extends Fragment {
             btnEarned.setIcon(null);
             btnSpent.setIcon(null);
             btnTransfer.setIcon(null);
-        }
-        else if (buttonType.equals("iconOnly")) {
+        } else if (buttonType.equals("iconOnly")) {
             btnEarned.setText(null);
             btnEarned.setIconPadding(0);
             btnEarned.setIconGravity(MaterialButton.ICON_GRAVITY_TEXT_START);
@@ -768,8 +827,7 @@ public class WalletFragment extends Fragment {
                 onClickThreeButtons(view);
                 showInstructions(view);
             }
-        }
-        else {
+        } else {
             onClickThreeButtons(view);
             showInstructions(view);
         }

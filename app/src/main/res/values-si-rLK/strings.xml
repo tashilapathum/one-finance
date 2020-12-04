@@ -343,7 +343,7 @@
     <string name="this_will_restore_all_settings_to_defaults_including_budget_and_currency_balance_transactions_accounts_and_other_stored_data_won_t_be_affected">සැකසුම් තිරයේ ඇති සියල්ල ඇප් එක ස්ථාපනය කරන විට තිබු සැකසුම් වලට හැරවේ. ශේෂය, ගනුදෙනු, ගිණුම් ඇතුළු ඔබ විසින් ඇතුලත් කරන ලද දත්ත ඉවත් නොවේ.</string>
     <string name="reset_confirm">සියලුම සැකසුම් මුලින් තිබු ආකාරයට නැවත හැරවීමට ඔබට අවශ්‍ය ද?</string>
     <string name="completed_success">සාර්ථකව නිම කරන ලදි</string>
-    <string name="quick_list_shortcut">ක්ෂණික ලැයිස්තුවට කෙටිමග</string>
+    <string name="quick_list_style">ක්ෂණික ලැයිස්තුවේ පෙනුම</string>
     <string name="show_a_shortcut_on_wallet_page_to_edit_the_quick_list">ක්ෂණික ලැයිස්තුව සංස්කරණය කරන පිටුවට කෙලින්ම යාමට බොත්තමක් පසුම්බිය පිටුවෙහි පෙන්වන්න</string>
     <string name="notifications">නිවේදන </string>
     <string name="buttons_appearance">බොත්තම් වල පෙනුම</string>
@@ -393,4 +393,6 @@
         - ඇප් එක සුරක්ශිත කිරීමට PIN අංකයක් ඇතුලත් කිරීමේ හැකියාව\n
         - ඇප් එකෙහි ඉදිරි වැඩිදියුණු කටයුතු වලට සහයක් වීම ❤\n
     </string>
+    <string name="chips">Chips</string>
+    <string name="list">List</string>
 </resources>

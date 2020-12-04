@@ -347,8 +347,8 @@
     <string name="this_will_restore_all_settings_to_defaults_including_budget_and_currency_balance_transactions_accounts_and_other_stored_data_won_t_be_affected">This will reset all settings to defaults including budget, currency and tips. Balance, transactions, accounts and other stored data won\'t be affected.</string>
     <string name="reset_confirm">Are you sure you want to reset all settings to defaults?</string>
     <string name="completed_success">Completed successfully</string>
-    <string name="quick_list_shortcut">Quick list shortcut</string>
-    <string name="show_a_shortcut_on_wallet_page_to_edit_the_quick_list">Show a shortcut on Wallet page to edit the quick list when the list is shown on the Wallet page</string>
+    <string name="quick_list_style">Quick list style</string>
+    <string name="show_a_shortcut_on_wallet_page_to_edit_the_quick_list">Change the appearance of the quick list</string>
     <string name="notifications">Notifications</string>
     <string name="buttons_appearance">Buttons appearance</string>
     <string name="show_or_hide_labels_icons_in_classic_input_mode">Show or hide labels/icons of main action buttons</string>
@@ -406,5 +406,7 @@
         - [Pro] Added option to protect app with a PIN <i>(See general settings)</i>\n
         \nThank you for using My Wallet! This app is still in beta stage so please let the developer if there are any bugs. Your feedback is really important for the development of this app and I read every review :)
     </string>
+    <string name="chips">Chips</string>
+    <string name="list">List</string>
 
 </resources>

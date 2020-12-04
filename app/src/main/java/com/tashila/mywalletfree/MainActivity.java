@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.play.core.review.ReviewInfo;
 import com.google.android.play.core.review.ReviewManager;
 import com.google.android.play.core.review.ReviewManagerFactory;
@@ -284,7 +285,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         } else {
             boolean confirmExit = sharedPref.getBoolean("exitConfirmation", false);
             if (confirmExit) {
-                new AlertDialog.Builder(this)
+                new MaterialAlertDialogBuilder(this)
                         .setTitle(R.string.confirm)
                         .setMessage(R.string.exit_confirm)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {

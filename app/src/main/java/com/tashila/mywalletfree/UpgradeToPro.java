@@ -34,6 +34,7 @@ import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -159,7 +160,7 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
                 Toast.makeText(this, "Loading...", Toast.LENGTH_SHORT).show();
             }
         } else {
-            new AlertDialog.Builder(UpgradeToPro.this)
+            new MaterialAlertDialogBuilder(UpgradeToPro.this)
                     .setTitle(R.string.connec_failed)
                     .setMessage(R.string.must_have_internet)
                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -193,7 +194,7 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
             else {
                 sharedPref.edit().putBoolean("MyWalletPro", true).apply();
                 Toast.makeText(this, R.string.p_restored, Toast.LENGTH_LONG).show();
-                new AlertDialog.Builder(this)
+                new MaterialAlertDialogBuilder(this)
                         .setTitle(R.string.p_restored)
                         .setMessage(R.string.thank_u_for_pro)
                         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -223,7 +224,7 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
             billingClient.acknowledgePurchase(params, new AcknowledgePurchaseResponseListener() {
                 @Override
                 public void onAcknowledgePurchaseResponse(@NonNull BillingResult billingResult) {
-                    new AlertDialog.Builder(UpgradeToPro.this)
+                    new MaterialAlertDialogBuilder(UpgradeToPro.this)
                             .setTitle(R.string.p_success)
                             .setMessage(R.string.thank_u_for_pro)
                             .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -250,16 +251,18 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
 
     @Override
     public void onBillingServiceDisconnected() {
-        new AlertDialog.Builder(UpgradeToPro.this)
-                .setTitle(R.string.connection_problem)
-                .setMessage(R.string.failed_gplay)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        recreate();
-                    }
-                })
-                .show();
+        if (!isFinishing()) {
+            new MaterialAlertDialogBuilder(UpgradeToPro.this)
+                    .setTitle(R.string.connection_problem)
+                    .setMessage(R.string.failed_gplay)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            recreate();
+                        }
+                    })
+                    .show();
+        }
     }
 
     public void querySkuDetails() {

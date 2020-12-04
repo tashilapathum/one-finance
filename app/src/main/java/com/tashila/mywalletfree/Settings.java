@@ -160,20 +160,6 @@ public class Settings extends AppCompatActivity
         if (negativeEnabled) negativeCheckBox.setChecked(true);
 
         //quick list shortcut setting
-        qlShortcutCheckBox = findViewById(R.id.qlShortcutCheck);
-        qlShortcutCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (compoundButton.isChecked())
-                    sharedPref.edit().putBoolean("qlShortcutEnabled", true).apply();
-                else
-                    sharedPref.edit().putBoolean("qlShortcutEnabled", false).apply();
-            }
-        });
-        boolean qlShortcutEnabled = sharedPref.getBoolean("qlShortcutEnabled", false);
-        if (qlShortcutEnabled) qlShortcutCheckBox.setChecked(true);
-
-        //quick list shortcut setting
         tapHideCheckBox = findViewById(R.id.tapHideCheck);
         tapHideCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -507,14 +493,38 @@ public class Settings extends AppCompatActivity
                 .show();
     }
 
-    public void qlShortcut(View view) {
+    public void quickListStyle(View view) {
         Bundle bundle = new Bundle();
-        bundle.putString("setting", "ql_shortcut_checkbox");
+        bundle.putString("setting", "ql_style");
         firebaseAnalytics.logEvent("used_setting", bundle);
-        if (!qlShortcutCheckBox.isChecked())
-            qlShortcutCheckBox.setChecked(true);
-        else
-            qlShortcutCheckBox.setChecked(false);
+
+        //get current setting
+        String current = sharedPref.getString("quickListStyle", "chips");
+        int checkingId = 0;
+        if (current.equals("list"))
+            checkingId = 1;
+
+        final int[] style = {0};
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Choose style")
+                .setSingleChoiceItems(new CharSequence[]{getString(R.string.chips), getString(R.string.list)}, checkingId, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        style[0] = i;
+                    }
+                })
+                .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (style[0] == 0)
+                            sharedPref.edit().putString("quickListStyle", "chips").apply();
+                        if (style[0] == 1)
+                            sharedPref.edit().putString("quickListStyle", "list").apply();
+                        Toast.makeText(Settings.this, R.string.saved, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
     }
 
     public void notifications(View view) {

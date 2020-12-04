@@ -640,7 +640,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?android:attr/selectableItemBackground"
-                    android:onClick="qlShortcut"
+                    android:onClick="quickListStyle"
                     android:paddingVertical="16dp"
                     android:paddingStart="8dp">
 
@@ -661,7 +661,7 @@
                         android:layout_toEndOf="@id/image16"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="@string/quick_list_shortcut"
+                        android:text="@string/quick_list_style"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                     <TextView
@@ -669,16 +669,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/setting16"
-                        android:layout_toStartOf="@id/qlShortcutCheck"
                         android:layout_toEndOf="@id/image16"
                         android:text="@string/show_a_shortcut_on_wallet_page_to_edit_the_quick_list" />
-
-                    <com.google.android.material.checkbox.MaterialCheckBox
-                        android:id="@+id/qlShortcutCheck"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true" />
 
                 </RelativeLayout>
 

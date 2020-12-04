@@ -48,6 +48,14 @@
         android:text="@string/this_month_s_report"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/transactions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="8dp"
+        android:text="@string/recent_transactions"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

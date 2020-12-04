@@ -26,6 +26,7 @@ public class DialogWalletContent extends DialogFragment {
     private MaterialCheckBox cbThisMonth;
     private MaterialCheckBox cbToday;
     private MaterialCheckBox cbThisWeek;
+    private MaterialCheckBox cbTransactions;
     private View view;
 
     @NonNull
@@ -39,6 +40,7 @@ public class DialogWalletContent extends DialogFragment {
         cbToday = view.findViewById(R.id.todayReport);
         cbThisWeek = view.findViewById(R.id.thisWeekReport);
         cbThisMonth = view.findViewById(R.id.thisMonthReport);
+        cbTransactions = view.findViewById(R.id.transactions);
 
         //first time only
         if (!sharedPref.getBoolean("walletContentCustomized", false))
@@ -68,6 +70,12 @@ public class DialogWalletContent extends DialogFragment {
                 handleSelection(buttonView, isChecked);
             }
         });
+        cbTransactions.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                handleSelection(buttonView, isChecked);
+            }
+        });
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
         builder.setTitle(R.string.select_content)
@@ -75,7 +83,7 @@ public class DialogWalletContent extends DialogFragment {
                 .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        saveData(cbQuickList, cbToday, cbThisWeek, cbThisMonth);
+                        saveData(cbQuickList, cbToday, cbThisWeek, cbThisMonth, cbTransactions);
                     }
                 })
                 .setNegativeButton(R.string.cancel, null);
@@ -98,13 +106,13 @@ public class DialogWalletContent extends DialogFragment {
     }
 
     private void loadSavedData() {
-        if (walletContent != null) {
+        if (walletContent != null && !walletContent.isEmpty()) {
             String[] checkBoxIdsStrings = walletContent.split("~");
             int[] checkBoxIds = new int[checkBoxIdsStrings.length];
             for (int i = 0; i < checkBoxIdsStrings.length; i++)
                 checkBoxIds[i] = Integer.parseInt(checkBoxIdsStrings[i]);
             for (int checkBoxId : checkBoxIds)
-                toggleMatchingCheckBox(checkBoxId, cbQuickList, cbToday, cbThisWeek, cbThisMonth);
+                toggleMatchingCheckBox(checkBoxId, cbQuickList, cbToday, cbThisWeek, cbThisMonth, cbTransactions);
         }
     }
 
@@ -117,9 +125,9 @@ public class DialogWalletContent extends DialogFragment {
     private void handleSelection(CompoundButton checkBox, boolean isChecked) {
         boolean isMyWalletPro = sharedPref.getBoolean("MyWalletPro", false);
         if (isChecked && !isMyWalletPro)
-            disableOthers(checkBox.getId(), cbToday, cbQuickList, cbThisWeek, cbThisMonth);
+            disableOthers(checkBox.getId(), cbToday, cbQuickList, cbThisWeek, cbThisMonth, cbTransactions);
         else
-            enableAll(cbToday, cbQuickList, cbThisWeek, cbThisMonth);
+            enableAll(cbToday, cbQuickList, cbThisWeek, cbThisMonth, cbTransactions);
     }
 
     private void disableOthers(int checkedId, MaterialCheckBox... checkBoxes) {
