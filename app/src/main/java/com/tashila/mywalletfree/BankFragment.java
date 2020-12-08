@@ -349,6 +349,13 @@ public class BankFragment extends Fragment {
             Toast.makeText(getActivity(), R.string.spend_more_than_have, Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (snackbar != null)
+            snackbar.dismiss();
+    }
+
     private void showInstructions(View v) {
         int viewId = v.getId();
         switch (viewId) {

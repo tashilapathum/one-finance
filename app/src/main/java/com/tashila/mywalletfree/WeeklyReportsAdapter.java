@@ -124,8 +124,8 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
             drawIncomeExpenseChart(holder.chartInEx, weeklyReport);
         if (new Amount(context, weeklyReport.getBudget()).getAmountValue() != 0)
             drawBudgetChart(holder.chartBudget, weeklyReport);
-        /*if (weeklyReport.getWeek().contains(context.getString(R.string.r_this_week)))
-            holder.daily_data_layout.setVisibility(View.GONE);*/
+        if (weeklyReport.getWeek().contains(context.getString(R.string.r_this_week)))
+            holder.daily_data_layout.setVisibility(View.GONE);
         drawDailyDetailsChart(holder.chartDaily, weeklyReport);
     }
 
@@ -219,14 +219,7 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
         int firstDay = weekFields.getFirstDayOfWeek().getValue();
         final List<String> xLabels = new ArrayList<>();
         for (int x = 0; x < 7; x++)
-            xLabels.add("DAY");
-        if (firstDay == 7) {
-            xLabels.add(0, LocalDate.now().with(DayOfWeek.of(7)).getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()));
-            for (int z = 1; z < 7; z++)
-                xLabels.add(z, LocalDate.now().with(DayOfWeek.of(z)).getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()));
-        } else
-            for (int y = 0; y < 7; y++)
-                xLabels.add(LocalDate.now().with(DayOfWeek.of(y + 1)).getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()));
+            xLabels.add(LocalDate.now().with(DayOfWeek.of(x + 1)).getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()));
 
         dailyDetailsSet.setColors(
                 context.getResources().getColor(android.R.color.holo_green_light),

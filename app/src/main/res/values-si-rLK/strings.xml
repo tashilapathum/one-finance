@@ -393,6 +393,7 @@
         - ඇප් එක සුරක්ශිත කිරීමට PIN අංකයක් ඇතුලත් කිරීමේ හැකියාව\n
         - ඇප් එකෙහි ඉදිරි වැඩිදියුණු කටයුතු වලට සහයක් වීම ❤\n
     </string>
-    <string name="chips">Chips</string>
-    <string name="list">List</string>
+    <string name="chips">කුඩා බොත්තම්</string>
+    <string name="list">ලැයිස්තුවක්</string>
+    <string name="purchase_once_keep_forever">එක් වරක් ගෙවූ පසු වෙනත් කිසිම අයකිරීමක් නැත</string>
 </resources>

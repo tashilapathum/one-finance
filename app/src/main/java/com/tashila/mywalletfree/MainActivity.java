@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -34,19 +35,27 @@ import com.google.android.play.core.tasks.OnCompleteListener;
 import com.google.android.play.core.tasks.OnFailureListener;
 import com.google.android.play.core.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.mopub.common.MoPub;
+import com.mopub.common.SdkConfiguration;
+import com.mopub.common.SdkInitializationListener;
+import com.mopub.common.logging.MoPubLog;
+import com.mopub.common.privacy.ConsentDialogListener;
+import com.mopub.common.privacy.PersonalInfoManager;
+import com.mopub.mobileads.MoPubErrorCode;
+import com.mopub.mobileads.MoPubView;
 import com.shreyaspatil.material.navigationview.MaterialNavigationView;
 
 import java.util.Calendar;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements MaterialNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements MaterialNavigationView.OnNavigationItemSelectedListener, MoPubView.BannerAdListener {
     public static final String TAG = "MainActivity";
     private DrawerLayout drawer;
     private SharedPreferences sharedPref;
     private BottomNavigationView bottomNav;
     private FirebaseAnalytics firebaseAnalytics;
     private MaterialNavigationView navigationView;
-
+    private MoPubView moPubView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +135,11 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         String homeScreen = sharedPref.getString("homeScreen", "wallet");
 
         ////STARTUP////
+
+        //ads
+        moPubView = findViewById(R.id.bottomAd);
+        moPubView.setBannerAdListener(this);
+
         //when requested after applying settings
         if (sharedPref.getBoolean("reqOpenBank", false)) {
             navigateScreens(new BankFragment(), "BankFragment", R.id.nav_bank);
@@ -308,6 +322,42 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         if (sharedPref.getBoolean("exit", false)) {
             finishAndRemoveTask();
         }
+        //ads
+        else {
+            //initialize
+            final SdkConfiguration.Builder configBuilder = new SdkConfiguration.Builder("b195f8dd8ded45fe847ad89ed1d016da");
+            configBuilder.withLogLevel(MoPubLog.LogLevel.DEBUG);
+            MoPub.initializeSdk(this, configBuilder.build(), sdkInitializationListener());
+
+            //GDPR consent
+            PersonalInfoManager mPersonalInfoManager = MoPub.getPersonalInformationManager();
+            mPersonalInfoManager.shouldShowConsentDialog();
+            mPersonalInfoManager.loadConsentDialog(new ConsentDialogListener() {
+                @Override
+                public void onConsentDialogLoaded() {
+                    if (mPersonalInfoManager != null) {
+                        if (mPersonalInfoManager.isConsentDialogReady())
+                            mPersonalInfoManager.showConsentDialog();
+                    }
+                }
+
+                @Override
+                public void onConsentDialogLoadFailed(@NonNull MoPubErrorCode moPubErrorCode) {
+                    Log.d(TAG, "consent dialog loading failed");
+                }
+            });
+
+        }
+    }
+
+    private SdkInitializationListener sdkInitializationListener() {
+        return new SdkInitializationListener() {
+            @Override
+            public void onInitializationFinished() {
+                moPubView.setAdUnitId("b195f8dd8ded45fe847ad89ed1d016da");
+                moPubView.loadAd();
+            }
+        };
     }
 
     @Override
@@ -362,21 +412,25 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
             case R.id.nav_wallet: {
                 bottomNav.getMenu().getItem(0).setChecked(true);
                 bundle.putString("feature", "Wallet");
+                moPubView.setVisibility(View.VISIBLE);
                 break;
             }
             case R.id.nav_bank: {
                 bottomNav.getMenu().getItem(1).setChecked(true);
                 bundle.putString("feature", "Bank");
+                moPubView.setVisibility(View.VISIBLE);
                 break;
             }
             case R.id.nav_cart: {
                 bottomNav.getMenu().getItem(2).setChecked(true);
                 bundle.putString("feature", "Cart");
+                moPubView.setVisibility(View.GONE);
                 break;
             }
             case R.id.nav_bills: {
                 bottomNav.getMenu().getItem(3).setChecked(true);
                 bundle.putString("feature", "Bills");
+                moPubView.setVisibility(View.GONE);
                 break;
             }
         }
@@ -442,6 +496,31 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
                 }
             });
         }
+    }
+
+    @Override
+    public void onBannerLoaded(@NonNull MoPubView banner) {
+        Log.d(TAG, "ad loaded successfully");
+    }
+
+    @Override
+    public void onBannerFailed(MoPubView banner, MoPubErrorCode errorCode) {
+        Log.d(TAG, "ad loading failed: " + errorCode.toString());
+    }
+
+    @Override
+    public void onBannerClicked(MoPubView banner) {
+
+    }
+
+    @Override
+    public void onBannerExpanded(MoPubView banner) {
+
+    }
+
+    @Override
+    public void onBannerCollapsed(MoPubView banner) {
+
     }
 }
 

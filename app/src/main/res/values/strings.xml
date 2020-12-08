@@ -408,5 +408,6 @@
     </string>
     <string name="chips">Chips</string>
     <string name="list">List</string>
+    <string name="purchase_once_keep_forever">Purchase once, keep forever</string>
 
 </resources>

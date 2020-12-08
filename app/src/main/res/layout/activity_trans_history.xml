@@ -21,7 +21,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingBottom="16dp"
         android:animateLayoutChanges="true">
 
         <androidx.appcompat.widget.Toolbar
@@ -72,7 +71,8 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="0dp"
             app:cardElevation="4dp"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <HorizontalScrollView
                 android:layout_width="wrap_content"

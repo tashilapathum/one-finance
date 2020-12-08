@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,6 +79,7 @@ public class WalletFragment extends Fragment {
     private MaterialButton btnEarned;
     private MaterialButton btnSpent;
     private MaterialButton btnTransfer;
+    private Snackbar snackbar;
 
     @Nullable
     @Override
@@ -536,7 +538,7 @@ public class WalletFragment extends Fragment {
 
         boolean isUndoEnabled = sharedPref.getBoolean("undoActionEnabled", true);
         BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottom_navigation);
-        Snackbar snackbar = Snackbar.make(bottomNav, R.string.updated, Snackbar.LENGTH_SHORT);
+        snackbar = Snackbar.make(bottomNav, R.string.updated, Snackbar.LENGTH_SHORT);
         snackbar.setAnchorView(bottomNav);
 
         if (isUndoEnabled) {
@@ -584,6 +586,13 @@ public class WalletFragment extends Fragment {
                 reloadFragment();
         }
         snackbar.show();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (snackbar != null)
+            snackbar.dismiss();
     }
 
     private void loadQuickList() {
@@ -777,6 +786,7 @@ public class WalletFragment extends Fragment {
         String inputMode = sharedPref.getString("inputMode", "classic"); //no need to do anything if classic
         if (inputMode.equals("floating")) {
             v.findViewById(R.id.wallet_input_layout).setVisibility(View.GONE);
+            getActivity().findViewById(R.id.bottomAd).setVisibility(View.GONE);
             ExtendedFloatingActionButton fab = v.findViewById(R.id.fabInput);
             fab.setVisibility(View.VISIBLE);
             fab.setOnClickListener(new View.OnClickListener() {

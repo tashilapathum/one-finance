@@ -286,6 +286,7 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
                         if ("upgrade_to_pro".equals(sku))
                             proVersionPrice = price;
                         tvProPrice.setText(proVersionPrice); //show price
+                        findViewById(R.id.priceSub).setVisibility(View.VISIBLE);
                         flowParams = BillingFlowParams.newBuilder()
                                 .setSkuDetails(skuDetails)
                                 .build();

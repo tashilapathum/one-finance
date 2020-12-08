@@ -48,7 +48,7 @@ public class WeeklyReportsFragment extends Fragment {
     private WeekFields weekFields;
     private int pickedWeek;
     private int pickedYear;
-
+    //TODO: disable daily data if not fixed
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -161,33 +161,12 @@ public class WeeklyReportsFragment extends Fragment {
 
                 for (int d = 0; d < 7; d++) {
                     if (d + 1 == transactionDay) {
-                        if (weekFields.getFirstDayOfWeek().getValue() == 7) { //for countries with sunday as start of week
-                            if (transactionDay == 7) { //sunday
-                                if (currentTransaction.getPrefix().equals("+")) {
-                                    double dailyTotal = Double.parseDouble(dailyIncomes.get(0)) + currentTransaction.getAmountValue();
-                                    dailyIncomes.add(0, "" + dailyTotal);
-                                } else {
-                                    double dailyTotal = Double.parseDouble(dailyExpenses.get(0)) + currentTransaction.getAmountValue();
-                                    dailyExpenses.add(0, "" + dailyTotal);
-                                }
-                            } else {
-                                if (currentTransaction.getPrefix().equals("+")) {
-                                    double dailyTotal = Double.parseDouble(dailyIncomes.get(d + 1)) + currentTransaction.getAmountValue();
-                                    dailyIncomes.add(d + 1, "" + dailyTotal);
-                                } else {
-                                    double dailyTotal = Double.parseDouble(dailyExpenses.get(d + 1)) + currentTransaction.getAmountValue();
-                                    dailyExpenses.add(d + 1, "" + dailyTotal);
-                                }
-                            }
-
-                        } else { //for other countries
-                            if (currentTransaction.getPrefix().equals("+")) {
-                                double dailyTotal = Double.parseDouble(dailyIncomes.get(d)) + currentTransaction.getAmountValue();
-                                dailyIncomes.add(d, "" + dailyTotal);
-                            } else {
-                                double dailyTotal = Double.parseDouble(dailyExpenses.get(d)) + currentTransaction.getAmountValue();
-                                dailyExpenses.add(d, "" + dailyTotal);
-                            }
+                        if (currentTransaction.getPrefix().equals("+")) {
+                            double dailyTotal = Double.parseDouble(dailyIncomes.get(d)) + currentTransaction.getAmountValue();
+                            dailyIncomes.add(d, "" + dailyTotal);
+                        } else {
+                            double dailyTotal = Double.parseDouble(dailyExpenses.get(d)) + currentTransaction.getAmountValue();
+                            dailyExpenses.add(d, "" + dailyTotal);
                         }
                     }
                 }
@@ -261,17 +240,9 @@ public class WeeklyReportsFragment extends Fragment {
         }
         //capitalize
         if (mostIncomeDay != null)
-            mostIncomeDay = mostIncomeDay.substring(0, 1).
-
-                    toUpperCase() + mostIncomeDay.substring(1).
-
-                    toLowerCase();
+            mostIncomeDay = mostIncomeDay.substring(0, 1).toUpperCase() + mostIncomeDay.substring(1).toLowerCase();
         if (mostExpenseDay != null)
-            mostExpenseDay = mostExpenseDay.substring(0, 1).
-
-                    toUpperCase() + mostExpenseDay.substring(1).
-
-                    toLowerCase();
+            mostExpenseDay = mostExpenseDay.substring(0, 1).toUpperCase() + mostExpenseDay.substring(1).toLowerCase();
 
         WeeklyReport weeklyReport = new WeeklyReport(weekTitle,
                 new Amount(getActivity(), income).getAmountString(),
