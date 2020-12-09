@@ -324,40 +324,53 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         }
         //ads
         else {
-            //initialize
-            final SdkConfiguration.Builder configBuilder = new SdkConfiguration.Builder("b195f8dd8ded45fe847ad89ed1d016da");
-            configBuilder.withLogLevel(MoPubLog.LogLevel.DEBUG);
-            MoPub.initializeSdk(this, configBuilder.build(), sdkInitializationListener());
+            if (adsEnabled()) {
+                //initialize
+                final SdkConfiguration.Builder configBuilder = new SdkConfiguration.Builder("b195f8dd8ded45fe847ad89ed1d016da");
+                configBuilder.withLogLevel(MoPubLog.LogLevel.DEBUG);
+                MoPub.initializeSdk(this, configBuilder.build(), sdkInitializationListener());
 
-            //GDPR consent
-            PersonalInfoManager mPersonalInfoManager = MoPub.getPersonalInformationManager();
-            mPersonalInfoManager.shouldShowConsentDialog();
-            mPersonalInfoManager.loadConsentDialog(new ConsentDialogListener() {
-                @Override
-                public void onConsentDialogLoaded() {
-                    if (mPersonalInfoManager != null) {
-                        if (mPersonalInfoManager.isConsentDialogReady())
-                            mPersonalInfoManager.showConsentDialog();
+                //GDPR consent
+                PersonalInfoManager mPersonalInfoManager = MoPub.getPersonalInformationManager();
+                mPersonalInfoManager.shouldShowConsentDialog();
+                mPersonalInfoManager.loadConsentDialog(new ConsentDialogListener() {
+                    @Override
+                    public void onConsentDialogLoaded() {
+                        if (mPersonalInfoManager != null) {
+                            if (mPersonalInfoManager.isConsentDialogReady())
+                                mPersonalInfoManager.showConsentDialog();
+                        }
                     }
-                }
 
-                @Override
-                public void onConsentDialogLoadFailed(@NonNull MoPubErrorCode moPubErrorCode) {
-                    Log.d(TAG, "consent dialog loading failed");
-                }
-            });
-
+                    @Override
+                    public void onConsentDialogLoadFailed(@NonNull MoPubErrorCode moPubErrorCode) {
+                        Log.d(TAG, "consent dialog loading failed");
+                    }
+                });
+            }
         }
     }
 
+    private boolean adsEnabled() {
+        if (sharedPref.getBoolean("MyWalletPro", false) || sharedPref.getBoolean("adsRemoved", false))
+            return true; //TODO: change this to false
+        else
+            return true;
+    }
+
     private SdkInitializationListener sdkInitializationListener() {
-        return new SdkInitializationListener() {
-            @Override
-            public void onInitializationFinished() {
-                moPubView.setAdUnitId("b195f8dd8ded45fe847ad89ed1d016da");
-                moPubView.loadAd();
-            }
-        };
+        if (adsEnabled()) {
+            return new SdkInitializationListener() {
+                @Override
+                public void onInitializationFinished() {
+                    if (sharedPref.getString("inputMode", "classic").equals("classic")) {
+                        moPubView.setAdUnitId("b195f8dd8ded45fe847ad89ed1d016da");
+                        moPubView.loadAd();
+                    }
+                }
+            };
+        }
+        return null;
     }
 
     @Override

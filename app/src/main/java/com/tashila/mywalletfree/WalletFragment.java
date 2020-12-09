@@ -23,10 +23,17 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputLayout;
+import com.mopub.common.MoPub;
+import com.mopub.common.SdkConfiguration;
+import com.mopub.common.SdkInitializationListener;
+import com.mopub.common.logging.MoPubLog;
+import com.mopub.mobileads.MoPubErrorCode;
+import com.mopub.mobileads.MoPubView;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
@@ -76,10 +83,12 @@ public class WalletFragment extends Fragment {
     private final int THIS_WEEK_REPORT = R.id.thisWeekReport;
     private final int THIS_MONTH_REPORT = R.id.thisMonthReport;
     private final int TRANSACTIONS = R.id.transactions;
+    private final int RECT_AD = R.id.rectAd;
     private MaterialButton btnEarned;
     private MaterialButton btnSpent;
     private MaterialButton btnTransfer;
     private Snackbar snackbar;
+    private String inputMode;
 
     @Nullable
     @Override
@@ -111,6 +120,7 @@ public class WalletFragment extends Fragment {
         Button btnUpdate = v.findViewById(R.id.btnUpdate);
         ImageButton imEditQuickList = v.findViewById(R.id.editQuickList);
         language = sharedPref.getString("language", "english");
+        inputMode = sharedPref.getString("inputMode", "classic");
         setShadows(txtBalance, tvBalance, tvCurrency);
         df = new DecimalFormat("#.00");
 
@@ -189,6 +199,13 @@ public class WalletFragment extends Fragment {
         });
     }
 
+    private boolean adsEnabled() {
+        if (sharedPref.getBoolean("MyWalletPro", false) || sharedPref.getBoolean("adsRemoved", false))
+            return true; //TODO: change this to false
+        else
+            return true;
+    }
+
     private void loadContent() {
         boolean hasCustomized = sharedPref.getBoolean("walletContentCustomized", false);
         if (hasCustomized) {
@@ -229,6 +246,9 @@ public class WalletFragment extends Fragment {
             }
         } else
             loadQuickList(); //default
+
+        if (adsEnabled() && sharedPref.getString("inputMode", "classic").equals("floating"))
+            loadContentItem(RECT_AD);
     }
 
     private void loadContentItem(int itemId) {
@@ -256,6 +276,13 @@ public class WalletFragment extends Fragment {
                 fragmentTag = "TRANSACTIONS";
                 containerId = R.id.content_container_2;
                 v.findViewById(R.id.content_container_2).setVisibility(View.VISIBLE);
+                break;
+            }
+            case RECT_AD: {
+                fragment = new AdFragment();
+                fragmentTag = "RECT_AD";
+                containerId = R.id.content_container_3;
+                v.findViewById(R.id.content_container_3).setVisibility(View.VISIBLE);
                 break;
             }
         }
@@ -292,7 +319,7 @@ public class WalletFragment extends Fragment {
                 imWarning.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        new AlertDialog.Builder(getActivity())
+                        new MaterialAlertDialogBuilder(getActivity())
                                 .setTitle(R.string.neg_balance)
                                 .setMessage(R.string.update_balance_des)
                                 .setPositiveButton(R.string.ok, null)
@@ -783,8 +810,7 @@ public class WalletFragment extends Fragment {
     }
 
     private void setupInputMode() {
-        String inputMode = sharedPref.getString("inputMode", "classic"); //no need to do anything if classic
-        if (inputMode.equals("floating")) {
+        if (inputMode.equals("floating")) { //no need to do anything if classic
             v.findViewById(R.id.wallet_input_layout).setVisibility(View.GONE);
             getActivity().findViewById(R.id.bottomAd).setVisibility(View.GONE);
             ExtendedFloatingActionButton fab = v.findViewById(R.id.fabInput);

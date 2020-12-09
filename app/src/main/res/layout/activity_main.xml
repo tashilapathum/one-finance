@@ -51,8 +51,8 @@
 
         <com.mopub.mobileads.MoPubView
             android:id="@+id/bottomAd"
-            android:layout_width='wrap_content'
-            android:layout_height='wrap_content'
+            android:layout_width='320dp'
+            android:layout_height='50dp'
             app:moPubAdSize="match_view"
             android:layout_centerHorizontal="true"
             android:layout_above="@id/bottom_navigation"

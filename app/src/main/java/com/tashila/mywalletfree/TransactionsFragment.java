@@ -75,6 +75,7 @@ public class TransactionsFragment extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setLayoutAnimation(new AnimationHandler().getSlideUpController());
         recyclerView.setAdapter(transactionsAdapter);
+        recyclerView.setNestedScrollingEnabled(sharedPref.getBoolean("scrollableTransactions", false));
 
         transactionsViewModel = new ViewModelProvider(this,
                 ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(TransactionsViewModel.class);

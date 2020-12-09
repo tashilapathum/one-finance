@@ -56,6 +56,29 @@
         android:text="@string/recent_transactions"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Showing transactions could increase app startup time"
+        android:layout_marginHorizontal="40dp"/>
+
+    <RadioGroup
+        android:id="@+id/rgScrolling"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Scrolling disabled"/>
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Scrollable"/>
+    </RadioGroup>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -69,6 +92,11 @@
             android:layout_marginHorizontal="6dp"
             android:layout_marginVertical="16dp"
             android:background="@color/colorDividerLight" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You can show all cards when you choose to display one of the report items on Wallet page/n"/>
 
         <LinearLayout
             android:layout_width="match_parent"

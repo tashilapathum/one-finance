@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.radiobutton.MaterialRadioButton;
 
 public class DialogWalletContent extends DialogFragment {
     public static final String TAG = "DialogWalletContent";
@@ -28,6 +30,8 @@ public class DialogWalletContent extends DialogFragment {
     private MaterialCheckBox cbThisWeek;
     private MaterialCheckBox cbTransactions;
     private View view;
+    private RadioGroup rgScrolling;
+
 
     @NonNull
     @Override
@@ -41,6 +45,11 @@ public class DialogWalletContent extends DialogFragment {
         cbThisWeek = view.findViewById(R.id.thisWeekReport);
         cbThisMonth = view.findViewById(R.id.thisMonthReport);
         cbTransactions = view.findViewById(R.id.transactions);
+        rgScrolling = view.findViewById(R.id.rgScrolling);
+        MaterialRadioButton rgDisabled = (MaterialRadioButton) rgScrolling.getChildAt(0);
+        rgDisabled.setChecked(!sharedPref.getBoolean("scrollableTransactions", false));
+        MaterialRadioButton rgEnabled = (MaterialRadioButton) rgScrolling.getChildAt(1);
+        rgEnabled.setChecked(sharedPref.getBoolean("scrollableTransactions", false));
 
         //first time only
         if (!sharedPref.getBoolean("walletContentCustomized", false))
@@ -74,6 +83,7 @@ public class DialogWalletContent extends DialogFragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 handleSelection(buttonView, isChecked);
+                showRadios(isChecked);
             }
         });
 
@@ -101,6 +111,10 @@ public class DialogWalletContent extends DialogFragment {
         }
         sharedPref.edit().putString("walletContent", walletContent).apply();
         sharedPref.edit().putBoolean("walletContentCustomized", true).apply(); //does not change later
+
+        //scrollable transaction history
+        MaterialRadioButton rbScrollable = (MaterialRadioButton) rgScrolling.getChildAt(1);
+        sharedPref.edit().putBoolean("scrollableTransactions", rbScrollable.isChecked()).apply();
 
         Toast.makeText(getActivity(), R.string.saved, Toast.LENGTH_SHORT).show();
     }
@@ -150,5 +164,12 @@ public class DialogWalletContent extends DialogFragment {
         }
         TextView proNotice = view.findViewById(R.id.proNotice);
         proNotice.setVisibility(View.GONE);
+    }
+
+    private void showRadios(boolean isChecked) {
+        if (isChecked)
+            rgScrolling.setVisibility(View.VISIBLE);
+        else
+            rgScrolling.setVisibility(View.GONE);
     }
 }

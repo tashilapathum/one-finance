@@ -12,6 +12,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
@@ -101,7 +103,7 @@ public class AccountsAdapter extends ListAdapter<Account, AccountsAdapter.Accoun
     }
 
     private void delete(final Account account, final int position) {
-        new AlertDialog.Builder(context)
+        new MaterialAlertDialogBuilder(context)
                 .setTitle(R.string.confirm)
                 .setMessage(R.string.delete_acc_confirm)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
