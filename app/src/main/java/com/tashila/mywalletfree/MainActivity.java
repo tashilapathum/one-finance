@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         }
 
         if (getPackageName().contains("debug"))
-            sharedPref.edit().putBoolean("MyWalletPro", true).apply();
+            sharedPref.edit().putBoolean("MyWalletPro", false).apply();
     }
 
     @Override //so the language change works with dark mode
@@ -352,8 +352,14 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
     }
 
     private boolean adsEnabled() {
-        if (sharedPref.getBoolean("MyWalletPro", false) || sharedPref.getBoolean("adsRemoved", false))
-            return true; //TODO: change this to false
+        int today = new DateTimeHandler().getDayOfYear();
+        int adsDeadline = sharedPref.getInt("adsDeadline", 0);
+        boolean overAdsDeadline = true;
+        if (adsDeadline != 0)
+            overAdsDeadline = today >= adsDeadline;
+
+        if (sharedPref.getBoolean("MyWalletPro", false) || !overAdsDeadline)
+            return false;
         else
             return true;
     }

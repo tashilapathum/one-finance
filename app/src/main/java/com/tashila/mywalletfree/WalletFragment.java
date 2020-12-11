@@ -201,7 +201,7 @@ public class WalletFragment extends Fragment {
 
     private boolean adsEnabled() {
         if (sharedPref.getBoolean("MyWalletPro", false) || sharedPref.getBoolean("adsRemoved", false))
-            return true; //TODO: change this to false
+            return false;
         else
             return true;
     }

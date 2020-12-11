@@ -86,6 +86,13 @@
             android:gravity="center"
             android:orientation="vertical">
 
+            <ImageView
+                android:layout_width="77dp"
+                android:layout_height="77dp"
+                android:src="@drawable/ic_cart"
+                android:alpha="0.5"
+                android:layout_marginBottom="24dp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

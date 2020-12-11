@@ -387,16 +387,16 @@
     <string name="transfer_2">Transfer</string>
 
     <string name="pro_features">
-        &#160;- Unlimited quick list items (free limit is 5)\n
-        - Dark mode option\n
-        - Change notification reminder time\n
-        - Add an unlimited number of bank accounts (free limit is 1)\n
+        &#160;\u2713 Unlimited quick list items (free limit is 5)\n
+        \u2713 Dark mode option\n
+        \u2713 Change notification reminder time\n
+        \u2713 Add an unlimited number of bank accounts (free limit is 1)\n
         <!-- - Backup all settings and data\n-->
-        - Change the default home screen\n
-        - Access unlimited history in reports (free limits are 4 days, 3 weeks, 2 months)\n
-        - \'Icon only\' and \'Icon + Label\' modes for main buttons\n
-        - Protect the app with a PIN\n
-        - Support the developer! ❤\n
+        \u2713 Change the default home screen\n
+        \u2713 Access unlimited history in reports (free limits are 4 days, 3 weeks, 2 months)\n
+        \u2713 \'Icon only\' and \'Icon + Label\' modes for main buttons\n
+        \u2713 Protect the app with a PIN\n
+        \u2713 Support the developer! ❤\n
     </string>
     <string name="what_s_new_in_version" translatable="false">What\'s new in version 0.3.0</string>
     <string name="whats_new_descr" translatable="false">
@@ -408,6 +408,14 @@
     </string>
     <string name="chips">Chips</string>
     <string name="list">List</string>
-    <string name="purchase_once_keep_forever">Purchase once, keep forever</string>
+    <string name="purchase_once_keep_forever">Purchase once, keep forever\nIncludes all future updates and features</string>
+    <string name="you_can_add_your_frequent_expenses_to_the_quick_list">
+        ● You can add your frequent expenses to the quick list.\n\n
+        ● Quick list items can be shown on Wallet page and you can add expenses with 1-tap using them.\n\n
+        ● Item names from quick list will be suggested when typing the description, too. (See general settings -> Suggestions)
+    </string>
+    <string name="watch_ad">Watch ad</string>
+    <string name="removed_ads">Removed ads for 5 more days!</string>
+    <string name="load_ad">Load ad</string>
 
 </resources>

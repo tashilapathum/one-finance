@@ -396,4 +396,8 @@
     <string name="chips">කුඩා බොත්තම්</string>
     <string name="list">ලැයිස්තුවක්</string>
     <string name="purchase_once_keep_forever">එක් වරක් ගෙවූ පසු වෙනත් කිසිම අයකිරීමක් නැත</string>
+    <string name="you_can_add_your_frequent_expenses_to_the_quick_list">You can add your frequent expenses to the quick list.</string>
+    <string name="watch_ad">Watch ad</string>
+    <string name="removed_ads">Removed ads for 5 days!</string>
+    <string name="load_ad">Load ad</string>
 </resources>

@@ -36,6 +36,8 @@ public class EditQuickList extends AppCompatActivity {
     int maxNoOfItems;
     private QuickListViewModel quickListViewModel;
     private QuickListAdapter quickListAdapter;
+    private RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +84,7 @@ public class EditQuickList extends AppCompatActivity {
             }
         });
 
-        //loadItems();
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         quickListAdapter = new QuickListAdapter(this);
@@ -95,6 +96,10 @@ public class EditQuickList extends AppCompatActivity {
             @Override
             public void onChanged(List<QuickItem> quickItems) {
                 quickListAdapter.submitList(quickItems);
+                if (quickItems.size() == 0)
+                    showInstructions(true);
+                else
+                    showInstructions(false);
             }
         });
     }
@@ -167,6 +172,18 @@ public class EditQuickList extends AppCompatActivity {
                 })
                 .setNegativeButton(R.string.no, null)
                 .show();
+    }
+
+    private void showInstructions(boolean show) {
+        LinearLayout instructions = findViewById(R.id.instructions);
+        if (show) {
+            instructions.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }
+        else {
+            instructions.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 }
 

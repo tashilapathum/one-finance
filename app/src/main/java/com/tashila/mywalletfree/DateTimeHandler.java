@@ -23,6 +23,10 @@ public class DateTimeHandler {
         localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(millis)), ZoneId.systemDefault());
     }
 
+    public DateTimeHandler(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
+    }
+
     String getTimestamp() {
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
         return formatter.format(localDateTime);

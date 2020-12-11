@@ -34,20 +34,33 @@ import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.mopub.common.MoPub;
+import com.mopub.common.MoPubReward;
+import com.mopub.common.SdkConfiguration;
+import com.mopub.common.SdkInitializationListener;
+import com.mopub.mobileads.MoPubErrorCode;
+import com.mopub.mobileads.MoPubRewardedVideoListener;
+import com.mopub.mobileads.MoPubRewardedVideos;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
-public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedListener, BillingClientStateListener {
+import static com.mopub.common.logging.MoPubLog.LogLevel.DEBUG;
+
+public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedListener, BillingClientStateListener, MoPubRewardedVideoListener {
     SharedPreferences sharedPref;
     private BillingClient billingClient;
     private TextView tvProPrice;
     BillingFlowParams flowParams;
     public static final String TAG = "UpgradeToPro";
+    private MaterialButton button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +93,19 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
         }
 
         /*----------------------------------------------------------------------------------------*/
+
+        //billing
         billingClient = BillingClient.newBuilder(this).setListener(this).enablePendingPurchases().build();
         billingClient.startConnection(this);
 
+        //ads
+        final SdkConfiguration.Builder configBuilder = new SdkConfiguration.Builder("920b6145fb1546cf8b5cf2ac34638bb7");
+        configBuilder.withLogLevel(DEBUG);
+        MoPub.initializeSdk(this, configBuilder.build(), initSdkListener());
+        MoPubRewardedVideos.setRewardedVideoListener(this);
+
         tvProPrice = findViewById(R.id.tvProPrice);
+        button = findViewById(R.id.btnRemoveAds);
         Button btnBuy = findViewById(R.id.btnBuy);
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,7 +170,7 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
         if (price.getText().toString().contains("…"))
             Toast.makeText(this, getString(R.string.check_internet), Toast.LENGTH_SHORT).show();
         else
-        continueBuyOrRestore();
+            continueBuyOrRestore();
     }
 
     private void continueBuyOrRestore() {
@@ -208,8 +230,6 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
                 sharedPref.edit().putBoolean("fromRestore", false).apply();
             }
         } else Toast.makeText(this, R.string.p_failed, Toast.LENGTH_SHORT).show();
-
-
     }
 
     private void handlePurchase(Purchase purchase) {
@@ -301,6 +321,83 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
             Log.e(TAG, "queryPurchases: BillingClient is not ready");
         }
         billingClient.queryPurchases(BillingClient.SkuType.INAPP);
+    }
+
+
+    /*------------------------------------- rewarded ad -----------------------------------------*/
+
+    private SdkInitializationListener initSdkListener() {
+        return new SdkInitializationListener() {
+            @Override
+            public void onInitializationFinished() {
+                MoPubRewardedVideos.loadRewardedVideo("920b6145fb1546cf8b5cf2ac34638bb7");
+            }
+        };
+    }
+
+    public void showAd(View view) {
+        if (MoPubRewardedVideos.hasRewardedVideo("920b6145fb1546cf8b5cf2ac34638bb7"))
+            MoPubRewardedVideos.showRewardedVideo("920b6145fb1546cf8b5cf2ac34638bb7");
+        else
+            Toast.makeText(this, getString(R.string.loading), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRewardedVideoLoadSuccess(@NonNull String adUnitId) {
+        button.setText(R.string.watch_ad);
+    }
+
+    @Override
+    public void onRewardedVideoLoadFailure(@NonNull String adUnitId, @NonNull MoPubErrorCode errorCode) {
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Error")
+                .setMessage("Failed to load the ad\n\n" + "Error code: " + errorCode.toString())
+                .setPositiveButton(R.string.ok, null)
+                .show();
+    }
+
+    @Override
+    public void onRewardedVideoStarted(@NonNull String adUnitId) {
+
+    }
+
+    @Override
+    public void onRewardedVideoPlaybackError(@NonNull String adUnitId, @NonNull MoPubErrorCode errorCode) {
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Error")
+                .setMessage("Failed to play the ad\n\n" + "Error code: " + errorCode.toString())
+                .setPositiveButton(R.string.ok, null)
+                .show();
+    }
+
+    @Override
+    public void onRewardedVideoClicked(@NonNull String adUnitId) {
+
+    }
+
+    @Override
+    public void onRewardedVideoClosed(@NonNull String adUnitId) {
+
+    }
+
+    @Override
+    public void onRewardedVideoCompleted(@NonNull Set<String> adUnitIds, @NonNull MoPubReward reward) {
+        Toast.makeText(this, getString(R.string.removed_ads), Toast.LENGTH_LONG).show();
+
+        int today = new DateTimeHandler().getDayOfYear();
+        int adsDeadline = sharedPref.getInt("adsDeadline", 0);
+        int daysWithoutAds = adsDeadline - today;
+
+        //countdown
+        LocalDateTime deadline = LocalDateTime.now().plusDays(5);
+        int newAdsDeadline = daysWithoutAds + new DateTimeHandler(deadline).getDayOfYear();
+        sharedPref.edit().putInt("adsDeadline", newAdsDeadline).apply();
+        TextView tvDays = findViewById(R.id.days);
+        tvDays.append(String.valueOf(newAdsDeadline));
+
+        //load next
+        button.setText(R.string.load_ad);
+        MoPubRewardedVideos.loadRewardedVideo("920b6145fb1546cf8b5cf2ac34638bb7");
     }
 }
 
