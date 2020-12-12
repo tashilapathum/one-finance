@@ -398,11 +398,12 @@
     <string name="load_ad">Load ad</string>
     <string name="remove_ads">Remove ads</string>
     <string name="days_by_watching_a_short_advertisement">If you don\'t have the Pro version, you can remove all ads for 5 days by watching a short advertisement. You can watch as many as ads you want, and 5 days will be added per ad.</string>
-    <string name="days_remaining_without_ads">Days remaining without ads:</string>
+    <string name="days_remaining_without_ads">Days remaining without ads:&#160;</string>
     <string name="remove_ads_free">Remove ads (Free)</string>
     <string name="showing_transactions_could_increase_app_startup_time">Showing transactions could increase app startup time</string>
     <string name="scrolling_disabled">Scrolling disabled</string>
     <string name="scrollable">Scrollable</string>
+    <string name="you_can_update_the_balance_by_tapping_the_current_balance_as_well">You can update the balance by tapping the current balance value as well.</string>
 
 
 
@@ -416,15 +417,17 @@
         \u2713 Access unlimited history in reports (free limits are 4 days, 3 weeks, 2 months)\n
         \u2713 \'Icon only\' and \'Icon + Label\' modes for main buttons\n
         \u2713 Protect the app with a PIN\n
+        \u2713 No ads\n
         \u2713 Support the developer! ❤\n
     </string>
     <string name="what_s_new_in_version" translatable="false">What\'s new in version 0.3.1</string>
     <string name="whats_new_descr" translatable="false">
-        \n - Redesigned the quick list so now more items can be shown using less space on screen. <i>(You can switch to the old style from Settings)</i>\n
+        \n - Redesigned the quick list so now more items can be shown using less space on screen. <i>(You can switch to the old style from settings)</i>\n
         - Now you can choose to show Transactions on wallet page <i>(See \'Wallet page content\' setting)</i>\n
         - Fixed several crashes on some devices\n
-        \nThank you for using My Wallet! Please let the developer if there are any bugs. Your feedback is really important for the development of this app and I read every review :)
+        - Fixed visibility issue of daily data chart in monthly reports\n
+        - UI updates\n
+        \nThank you for using My Wallet! Please contact me using the email on \'About\' page if there are any bugs or problems with the app. Your feedback is really important and I read every review :)
     </string>
-    <string name="you_can_update_the_balance_by_tapping_the_current_balance_as_well">You can update the balance by tapping the current balance value as well.</string>
 
 </resources>

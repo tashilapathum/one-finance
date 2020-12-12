@@ -25,6 +25,8 @@
     <color name="colorRed">#FF0000</color>
     <color name="colorBlue">#0000FF</color>
     <color name="colorLightRed">#A7FF0000</color>
+    <color name="colorOrange">#FF7043</color>
     <color name="colorLightBlue">#A70000FF</color>
+    <color name="colorLighterBlue">#536DFE</color>
     <color name="colorRipple">#82B1FF</color>
 </resources>

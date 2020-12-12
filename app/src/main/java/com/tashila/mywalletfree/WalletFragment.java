@@ -117,7 +117,6 @@ public class WalletFragment extends Fragment {
         btnEarned = v.findViewById(R.id.btnEarned);
         btnSpent = v.findViewById(R.id.btnSpent);
         btnTransfer = v.findViewById(R.id.btnTransfer);
-        Button btnUpdate = v.findViewById(R.id.btnUpdate);
         language = sharedPref.getString("language", "english");
         inputMode = sharedPref.getString("inputMode", "classic");
         setShadows(txtBalance, tvBalance, tvCurrency);
@@ -126,13 +125,6 @@ public class WalletFragment extends Fragment {
         setMainButtonActions();
 
         tvBalance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogUpdateBalance dialogUpdateBalance = new DialogUpdateBalance(getActivity());
-                dialogUpdateBalance.show(getActivity().getSupportFragmentManager(), "update balance dialog");
-            }
-        });
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DialogUpdateBalance dialogUpdateBalance = new DialogUpdateBalance(getActivity());

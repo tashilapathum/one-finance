@@ -2,7 +2,6 @@ package com.tashila.mywalletfree;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -13,13 +12,11 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,8 +42,6 @@ import com.mopub.mobileads.MoPubErrorCode;
 import com.mopub.mobileads.MoPubRewardedVideoListener;
 import com.mopub.mobileads.MoPubRewardedVideos;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +56,9 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
     private TextView tvProPrice;
     BillingFlowParams flowParams;
     public static final String TAG = "UpgradeToPro";
-    private MaterialButton button;
+    private MaterialButton btnRemoveAds;
+    private TextView tvDays;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,9 +101,11 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
         configBuilder.withLogLevel(DEBUG);
         MoPub.initializeSdk(this, configBuilder.build(), initSdkListener());
         MoPubRewardedVideos.setRewardedVideoListener(this);
+        btnRemoveAds = findViewById(R.id.btnRemoveAds);
+        tvDays = findViewById(R.id.days);
+        tvDays.append(String.valueOf(sharedPref.getInt("adsDeadline", 0)));
 
         tvProPrice = findViewById(R.id.tvProPrice);
-        button = findViewById(R.id.btnRemoveAds);
         Button btnBuy = findViewById(R.id.btnBuy);
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -356,7 +355,7 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
 
     @Override
     public void onRewardedVideoLoadSuccess(@NonNull String adUnitId) {
-        button.setText(R.string.watch_ad);
+        btnRemoveAds.setText(R.string.watch_ad);
     }
 
     @Override
@@ -404,12 +403,19 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
         LocalDateTime deadline = LocalDateTime.now().plusDays(5);
         int newAdsDeadline = daysWithoutAds + new DateTimeHandler(deadline).getDayOfYear();
         sharedPref.edit().putInt("adsDeadline", newAdsDeadline).apply();
-        TextView tvDays = findViewById(R.id.days);
         tvDays.append(String.valueOf(newAdsDeadline));
 
         //load next
-        button.setText(R.string.load_ad);
-        MoPubRewardedVideos.loadRewardedVideo("920b6145fb1546cf8b5cf2ac34638bb7");
+        btnRemoveAds.setText(R.string.load_ad);
+        btnRemoveAds.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UpgradeToPro.this, UpgradeToPro.class);
+                intent.putExtra("scroll", true);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }
 

@@ -216,7 +216,7 @@ public class MonthlyReportsAdapter extends ListAdapter<MonthlyReportsFragment.Mo
         incomesDataSet.setDrawValues(false);
         incomesDataSet.setDrawCircles(false);
         incomesDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        incomesDataSet.setColor(context.getResources().getColor(R.color.colorLightBlue));
+        incomesDataSet.setColor(context.getResources().getColor(R.color.colorLighterBlue));
 
         List<Entry> dailyExpenses = new ArrayList<>();
         List<String> dailyExpensesList = monthlyReport.getExpensesOfMonth();
@@ -230,7 +230,7 @@ public class MonthlyReportsAdapter extends ListAdapter<MonthlyReportsFragment.Mo
         expensesDataSet.setDrawValues(false);
         expensesDataSet.setDrawCircles(false);
         expensesDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        expensesDataSet.setColor(context.getResources().getColor(R.color.colorLightRed));
+        expensesDataSet.setColor(context.getResources().getColor(R.color.colorOrange));
 
         List<ILineDataSet> dataSetList = new ArrayList<>();
         dataSetList.add(incomesDataSet);
