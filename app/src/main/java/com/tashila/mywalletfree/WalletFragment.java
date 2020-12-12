@@ -118,7 +118,6 @@ public class WalletFragment extends Fragment {
         btnSpent = v.findViewById(R.id.btnSpent);
         btnTransfer = v.findViewById(R.id.btnTransfer);
         Button btnUpdate = v.findViewById(R.id.btnUpdate);
-        ImageButton imEditQuickList = v.findViewById(R.id.editQuickList);
         language = sharedPref.getString("language", "english");
         inputMode = sharedPref.getString("inputMode", "classic");
         setShadows(txtBalance, tvBalance, tvCurrency);
@@ -126,18 +125,18 @@ public class WalletFragment extends Fragment {
 
         setMainButtonActions();
 
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
+        tvBalance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DialogUpdateBalance dialogUpdateBalance = new DialogUpdateBalance(getActivity());
                 dialogUpdateBalance.show(getActivity().getSupportFragmentManager(), "update balance dialog");
             }
         });
-        imEditQuickList.setOnClickListener(new View.OnClickListener() {
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), EditQuickList.class);
-                startActivity(intent);
+                DialogUpdateBalance dialogUpdateBalance = new DialogUpdateBalance(getActivity());
+                dialogUpdateBalance.show(getActivity().getSupportFragmentManager(), "update balance dialog");
             }
         });
 
@@ -200,8 +199,14 @@ public class WalletFragment extends Fragment {
     }
 
     private boolean adsEnabled() {
-        if (sharedPref.getBoolean("MyWalletPro", false) || sharedPref.getBoolean("adsRemoved", false))
-            return false;
+        int today = new DateTimeHandler().getDayOfYear();
+        int adsDeadline = sharedPref.getInt("adsDeadline", 0);
+        boolean overAdsDeadline = true;
+        if (adsDeadline != 0)
+            overAdsDeadline = today >= adsDeadline;
+
+        if (sharedPref.getBoolean("MyWalletPro", false) || overAdsDeadline)
+            return true;
         else
             return true;
     }
@@ -247,8 +252,10 @@ public class WalletFragment extends Fragment {
         } else
             loadQuickList(); //default
 
-        if (adsEnabled() && sharedPref.getString("inputMode", "classic").equals("floating"))
+        if (adsEnabled() && sharedPref.getString("inputMode", "classic").equals("floating")) {
             loadContentItem(RECT_AD);
+            v.findViewById(R.id.removeAds).setVisibility(View.VISIBLE);
+        }
     }
 
     private void loadContentItem(int itemId) {
@@ -304,8 +311,6 @@ public class WalletFragment extends Fragment {
 
         if (!sharedPref.getBoolean("negativeEnabled", false))
             showNegativeWarning();
-
-        showEditQLButton();
     }
 
     private void showNegativeWarning() {
@@ -823,12 +828,6 @@ public class WalletFragment extends Fragment {
                 }
             });
         }
-    }
-
-    private void showEditQLButton() {
-        boolean qlButtonEnabled = sharedPref.getBoolean("qlShortcutEnabled", false);
-        if (qlButtonEnabled)
-            v.findViewById(R.id.editQuickList).setVisibility(View.VISIBLE);
     }
 
     private void setupButtons() {

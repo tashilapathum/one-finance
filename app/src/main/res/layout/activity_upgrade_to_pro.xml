@@ -45,6 +45,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -163,7 +164,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Remove ads"
+                        android:text="@string/remove_ads"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textStyle="bold" />
 
@@ -171,7 +172,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="If you don't have the Pro version, you can remove all ads for 5 days by watching a short advertisement."
+                        android:text="@string/days_by_watching_a_short_advertisement"
                         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle" />
 
                     <TextView
@@ -179,7 +180,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:text="Days remaining without ads: "
+                        android:text="@string/days_remaining_without_ads"
                         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
                         android:textStyle="italic"/>
 
@@ -190,7 +191,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="16dp"
                         style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:text="Load ad"
+                        android:text="@string/load_ad"
                         android:onClick="showAd"/>
 
                 </LinearLayout>

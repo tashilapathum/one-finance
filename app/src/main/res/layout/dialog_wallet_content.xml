@@ -59,7 +59,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Showing transactions could increase app startup time"
+        android:text="@string/showing_transactions_could_increase_app_startup_time"
         android:layout_marginHorizontal="40dp"/>
 
     <RadioGroup
@@ -72,11 +72,11 @@
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Scrolling disabled"/>
+            android:text="@string/scrolling_disabled"/>
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Scrollable"/>
+            android:text="@string/scrollable"/>
     </RadioGroup>
 
     <LinearLayout

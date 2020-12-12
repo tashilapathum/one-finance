@@ -65,6 +65,9 @@
                     android:layout_toEndOf="@id/currency"
                     android:fontFamily="sans-serif-condensed"
                     android:text="@string/_0_00"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                     android:textColor="@android:color/holo_green_dark" />
 
@@ -101,7 +104,8 @@
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/quickChipGroup"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp">
                 <!--quick list items are added here-->
             </com.google.android.material.chip.ChipGroup>
 
@@ -115,38 +119,20 @@
                 android:id="@+id/content_container_3"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:layout_marginTop="8dp"/>
 
-            <RelativeLayout
-                android:id="@+id/quickList_title"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:padding="8dp"
-                    android:text="@string/quick_list"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                    android:textStyle="italic" />
-
-                <ImageButton
-                    android:id="@+id/editQuickList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="?android:selectableItemBackgroundBorderless"
-                    android:contentDescription="edit quick list"
-                    android:padding="4dp"
-                    android:src="@drawable/ic_edit_list"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
-            </RelativeLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/removeAds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:text="@string/remove_ads_free"
+                android:onClick="removeAds"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:textAppearance="@style/TextAppearance.AppCompat"/>
 
         </LinearLayout>
 

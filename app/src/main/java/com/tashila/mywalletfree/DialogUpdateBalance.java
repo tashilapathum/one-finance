@@ -32,6 +32,7 @@ public class DialogUpdateBalance extends DialogFragment {
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_update_balance, null);
         sharedPref = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
         final EditText etBalance = view.findViewById(R.id.editBalance);
+        etBalance.setText(sharedPref.getString("balance", "0.00"));
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
         builder.setView(view)
                 .setTitle(R.string.edit_balance)

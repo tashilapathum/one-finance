@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         }
 
         if (getPackageName().contains("debug"))
-            sharedPref.edit().putBoolean("MyWalletPro", false).apply();
+            sharedPref.edit().putBoolean("MyWalletPro", true).apply();
     }
 
     @Override //so the language change works with dark mode
@@ -193,10 +193,10 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         if (!alreadyDid) startActivity(intent);
         else {
             //what's new
-            if (!sharedPref.getBoolean("whatsNewShownV0.3.0", false)) {
+            if (!sharedPref.getBoolean("whatsNewShownV0.3.1", false)) {
                 DialogWhatsNew dialogWhatsNew = new DialogWhatsNew();
                 dialogWhatsNew.show(getSupportFragmentManager(), "whats new dialog");
-                sharedPref.edit().putBoolean("whatsNewShownV0.3.0", true).apply();
+                sharedPref.edit().putBoolean("whatsNewShownV0.3.1", true).apply();
             } //TODO: update this
         }
         rateApp(); //to make counts
@@ -358,7 +358,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         if (adsDeadline != 0)
             overAdsDeadline = today >= adsDeadline;
 
-        if (sharedPref.getBoolean("MyWalletPro", false) || !overAdsDeadline)
+        if (sharedPref.getBoolean("MyWalletPro", false) || overAdsDeadline)
             return false;
         else
             return true;
@@ -540,6 +540,12 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
     @Override
     public void onBannerCollapsed(MoPubView banner) {
 
+    }
+
+    public void removeAds(View view) {
+        Intent intent = new Intent(this, UpgradeToPro.class);
+        intent.putExtra("scroll", true);
+        startActivity(intent);
     }
 }
 

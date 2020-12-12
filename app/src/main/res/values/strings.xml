@@ -385,6 +385,26 @@
     <string name="transfer_to_suffix"> </string>
     <string name="transfer_from_suffix"> </string>
     <string name="transfer_2">Transfer</string>
+    <string name="chips">Chips</string>
+    <string name="list">List</string>
+    <string name="purchase_once_keep_forever">Purchase once, keep forever\nIncludes all future updates and features</string>
+    <string name="you_can_add_your_frequent_expenses_to_the_quick_list">
+        ● You can add your frequent expenses to the quick list.\n\n
+        ● Quick list items can be shown on Wallet page and you can add expenses with 1-tap using them.\n\n
+        ● Item names from quick list will be suggested when typing the description, too. (See general settings -> Suggestions)
+    </string>
+    <string name="watch_ad">Watch ad</string>
+    <string name="removed_ads">Removed ads for 5 more days!</string>
+    <string name="load_ad">Load ad</string>
+    <string name="remove_ads">Remove ads</string>
+    <string name="days_by_watching_a_short_advertisement">If you don\'t have the Pro version, you can remove all ads for 5 days by watching a short advertisement. You can watch as many as ads you want, and 5 days will be added per ad.</string>
+    <string name="days_remaining_without_ads">Days remaining without ads:</string>
+    <string name="remove_ads_free">Remove ads (Free)</string>
+    <string name="showing_transactions_could_increase_app_startup_time">Showing transactions could increase app startup time</string>
+    <string name="scrolling_disabled">Scrolling disabled</string>
+    <string name="scrollable">Scrollable</string>
+
+
 
     <string name="pro_features">
         &#160;\u2713 Unlimited quick list items (free limit is 5)\n
@@ -398,24 +418,13 @@
         \u2713 Protect the app with a PIN\n
         \u2713 Support the developer! ❤\n
     </string>
-    <string name="what_s_new_in_version" translatable="false">What\'s new in version 0.3.0</string>
+    <string name="what_s_new_in_version" translatable="false">What\'s new in version 0.3.1</string>
     <string name="whats_new_descr" translatable="false">
-        \n - Added the ability to directly transfer money between accounts\n
-        - Fixed account balance history chart\n
-        - Fixed misaligned buttons on some devices\n
-        - [Pro] Added option to protect app with a PIN <i>(See general settings)</i>\n
-        \nThank you for using My Wallet! This app is still in beta stage so please let the developer if there are any bugs. Your feedback is really important for the development of this app and I read every review :)
+        \n - Redesigned the quick list so now more items can be shown using less space on screen. <i>(You can switch to the old style from Settings)</i>\n
+        - Now you can choose to show Transactions on wallet page <i>(See \'Wallet page content\' setting)</i>\n
+        - Fixed several crashes on some devices\n
+        \nThank you for using My Wallet! Please let the developer if there are any bugs. Your feedback is really important for the development of this app and I read every review :)
     </string>
-    <string name="chips">Chips</string>
-    <string name="list">List</string>
-    <string name="purchase_once_keep_forever">Purchase once, keep forever\nIncludes all future updates and features</string>
-    <string name="you_can_add_your_frequent_expenses_to_the_quick_list">
-        ● You can add your frequent expenses to the quick list.\n\n
-        ● Quick list items can be shown on Wallet page and you can add expenses with 1-tap using them.\n\n
-        ● Item names from quick list will be suggested when typing the description, too. (See general settings -> Suggestions)
-    </string>
-    <string name="watch_ad">Watch ad</string>
-    <string name="removed_ads">Removed ads for 5 more days!</string>
-    <string name="load_ad">Load ad</string>
+    <string name="you_can_update_the_balance_by_tapping_the_current_balance_as_well">You can update the balance by tapping the current balance value as well.</string>
 
 </resources>

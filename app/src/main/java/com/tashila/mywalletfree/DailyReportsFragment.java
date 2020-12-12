@@ -17,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -235,7 +237,7 @@ public class DailyReportsFragment extends Fragment {
     }
 
     public void purchaseProForThis() {
-        new AlertDialog.Builder(getActivity())
+        new MaterialAlertDialogBuilder(getActivity())
                 .setTitle(R.string.pro_feature)
                 .setMessage(R.string.buy_the_pro_version_to_see_more_into_the_history)
                 .setPositiveButton(R.string.buy, new DialogInterface.OnClickListener() {

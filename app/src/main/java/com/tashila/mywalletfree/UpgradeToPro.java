@@ -20,6 +20,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -127,6 +128,17 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
         super.onResume();
         if (sharedPref.getBoolean("exit", false)) {
             finishAndRemoveTask();
+        }
+
+        boolean scroll = getIntent().getBooleanExtra("scroll", false);
+        if (scroll) {
+            ScrollView scrollView = findViewById(R.id.scrollView);
+            scrollView.post(new Runnable() {
+                @Override
+                public void run() {
+                    scrollView.fullScroll(View.FOCUS_DOWN);
+                }
+            });
         }
     }
 

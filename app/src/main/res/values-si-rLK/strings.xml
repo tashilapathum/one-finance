@@ -383,21 +383,33 @@
     <string name="transfer_2">වෙනත්\nගිණුමකට</string>
 
     <string name="pro_features">
-        &#160;- ක්ෂණික ලැයිස්තුවේ සීමාවක් නොමැත (නොමිලේ - 5)\n
-        - අඳුරු පැහැ වර්ණ තේමාව (Dark mode) තෝරාගත හැක\n
-        - දවසේ අයවැය මතක් කරනු ලබන නිවේදනය (notification) ලැබෙන වේලාව තේරීම\n
-        - බැංකු ගිණුම් ගණන සීමාවක් නොමැත (නොමිලේ - 1)\n
-        - ඇප් එක විවෘත වන විට දිස්වෙන මුල් පිටුව මාරු කළ හැක\n
-        - වාර්තා සීමාවක් නොමැතිව බැලිය හැක (නොමිලේ - දින: 4, සති: 3, මාස: 2)\n
-        - ප්‍රධාන බොත්තම් වල කුඩා \'නිරූපකය + වචනය\' සහ \'නිරූපකය පමණක්\' ආකාර\n
-        - ඇප් එක සුරක්ශිත කිරීමට PIN අංකයක් ඇතුලත් කිරීමේ හැකියාව\n
-        - ඇප් එකෙහි ඉදිරි වැඩිදියුණු කටයුතු වලට සහයක් වීම ❤\n
+        &#160;\u2713 ක්ෂණික ලැයිස්තුවේ සීමාවක් නොමැත (නොමිලේ - 5)\n
+        \u2713 අඳුරු පැහැ වර්ණ තේමාව (Dark mode) තෝරාගත හැක\n
+        \u2713 දවසේ අයවැය මතක් කරනු ලබන නිවේදනය (notification) ලැබෙන වේලාව තේරීම\n
+        \u2713 බැංකු ගිණුම් ගණන සීමාවක් නොමැත (නොමිලේ - 1)\n
+        \u2713 ඇප් එක විවෘත වන විට දිස්වෙන මුල් පිටුව මාරු කළ හැක\n
+        \u2713 වාර්තා සීමාවක් නොමැතිව බැලිය හැක (නොමිලේ - දින: 4, සති: 3, මාස: 2)\n
+        \u2713 ප්‍රධාන බොත්තම් වල කුඩා \'නිරූපකය + වචනය\' සහ \'නිරූපකය පමණක්\' ආකාර\n
+        \u2713 ඇප් එක සුරක්ශිත කිරීමට PIN අංකයක් ඇතුලත් කිරීමේ හැකියාව\n
+        \u2713 ඇප් එකෙහි ඉදිරි වැඩිදියුණු කටයුතු වලට සහයක් වීම ❤\n
     </string>
     <string name="chips">කුඩා බොත්තම්</string>
     <string name="list">ලැයිස්තුවක්</string>
     <string name="purchase_once_keep_forever">එක් වරක් ගෙවූ පසු වෙනත් කිසිම අයකිරීමක් නැත</string>
-    <string name="you_can_add_your_frequent_expenses_to_the_quick_list">You can add your frequent expenses to the quick list.</string>
-    <string name="watch_ad">Watch ad</string>
-    <string name="removed_ads">Removed ads for 5 days!</string>
-    <string name="load_ad">Load ad</string>
+    <string name="you_can_add_your_frequent_expenses_to_the_quick_list">
+        ● නිතර සිදුකරන වියදම් ක්ෂණික ලැයිස්තුවට ඇතුලත් කළ හැක.\n\n
+        ● මෙමගින් ඔබට එක් වරක් පමණක් ටච් කිරීමෙන් ගනුදෙනු ඇතුලත් කළ හැකි ය.\n\n
+        ● ගනුදෙනුවක විස්තරය ඇතුලත් කරන විට මෙම ලයිස්තුවේ ඇති අයිතම පහලින් පෙන්වයි. (සැකසුම් -> වචන සහය)
+    </string>
+    <string name="watch_ad">වෙළෙඳ දැන්වීමක් නරඹන්න</string>
+    <string name="removed_ads">තවත් දින 5කට වෙළෙඳ දැන්වීම් ඉවත් කරන ලදී</string>
+    <string name="load_ad">වෙළෙඳ දැන්වීමක් පූරණය කරන්න්</string>
+    <string name="remove_ads">වෙළෙඳ දැන්වීම් ඉවත් කිරීම්</string>
+    <string name="days_by_watching_a_short_advertisement">ඔබගේ තිබෙන්නේ Pro සංස්කරණය නොවේ නම්, කුඩා වෙළෙඳ දැන්වීමක් නැරඹීමෙන් ඇප් එකෙහි පෙන්වන වෙළෙඳ දැන්වීම් සියල්ල දින 5කට ඉවත් කළ හැකි ය. ඔබට වෙළෙඳ දැන්වීම් ඕනෑම ප්‍රමාණයක් නැරඹිය හැකි අතර, නරඹන සෑම වෙළෙඳ දැන්වීමකට ම දින 5 බැගින් එකතු වේ.</string>
+    <string name="days_remaining_without_ads">වෙළෙඳ දැන්වීම් රහිත දින ගණන:&#160;</string>
+    <string name="remove_ads_free">වෙළෙඳ දැන්වීම් ඉවත් කරන්න (නොමිලේ)</string>
+    <string name="showing_transactions_could_increase_app_startup_time">ගනුදෙනු පෙන්වීමට තේරීමෙන් ඇප් එක විවෘන වීමට යන වේලාව වැඩි විය හැක</string>
+    <string name="scrolling_disabled">කිහිපයක් පමණක්</string>
+    <string name="scrollable">සියල්ල</string>
+    <string name="you_can_update_the_balance_by_tapping_the_current_balance_as_well">ශේෂයේ අගය මත ටච් කිරීමෙන් ද ඔබට ශේෂය සංස්කරණය කළ හැක.</string>
 </resources>
