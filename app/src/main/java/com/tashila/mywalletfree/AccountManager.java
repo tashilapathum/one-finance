@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -61,6 +62,11 @@ public class AccountManager extends AppCompatActivity implements NavigationView.
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        if (sharedPref.getBoolean("MyWalletPro", false)) {
+            View navHeader = navigationView.getHeaderView(0);
+            TextView tvAppName = navHeader.findViewById(R.id.appName);
+            tvAppName.setText(R.string.my_wallet_pro);
+        }
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_open);
