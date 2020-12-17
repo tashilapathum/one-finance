@@ -387,7 +387,7 @@
     <string name="transfer_2">Transfer</string>
     <string name="chips">Chips</string>
     <string name="list">List</string>
-    <string name="purchase_once_keep_forever">Purchase once, keep forever\nIncludes all future updates and features</string>
+    <string name="purchase_once_keep_forever">Purchase once, keep forever\n(Includes all future updates and features)</string>
     <string name="you_can_add_your_frequent_expenses_to_the_quick_list">
         ● You can add your frequent expenses to the quick list.\n\n
         ● Quick list items can be shown on Wallet page and you can add expenses with 1-tap using them.\n\n
@@ -398,7 +398,7 @@
     <string name="load_ad">Load ad</string>
     <string name="remove_ads">Remove ads</string>
     <string name="days_by_watching_a_short_advertisement">If you don\'t have the Pro version, you can remove all ads for 5 days by watching a short advertisement. You can watch as many as ads you want, and 5 days will be added per ad.</string>
-    <string name="days_remaining_without_ads">Days remaining without ads:&#160;</string>
+    <string name="days_remaining_without_ads">Days remaining without ads:</string>
     <string name="remove_ads_free">Remove ads (Free)</string>
     <string name="showing_transactions_could_increase_app_startup_time">Showing transactions could increase app startup time</string>
     <string name="scrolling_disabled">Scrolling disabled</string>
@@ -423,11 +423,13 @@
     <string name="what_s_new_in_version" translatable="false">What\'s new in version 0.3.1</string>
     <string name="whats_new_descr" translatable="false">
         \n - Redesigned the quick list so now more items can be shown using less space on screen. <i>(You can switch to the old style from settings)</i>\n
-        - Now you can choose to show Transactions on wallet page <i>(See \'Wallet page content\' setting)</i>\n
-        - Fixed several crashes on some devices\n
-        - Fixed visibility issue of daily data chart in monthly reports\n
-        - UI updates\n
+        - Now you can choose to show transaction history on Wallet page <i>(See \'Wallet page content\' setting)</i>\n
+        - [Fixed] several crashes on some devices\n
+        - [Fixed] daily data chart in monthly reports wasn\'t visible properly in dark mode\n
+        - [Fixed] transactions weren\'t saved when the app was closed unexpectedly\n
+        - Minor UI changes\n
         \nThank you for using My Wallet! Please contact me using the email on \'About\' page if there are any bugs or problems with the app. Your feedback is really important and I read every review :)
     </string>
+    <string name="yearly_ads_quota">You\'ve reached the quota of this year. Which means you don\'t have to watch ads until next year.</string>
 
 </resources>

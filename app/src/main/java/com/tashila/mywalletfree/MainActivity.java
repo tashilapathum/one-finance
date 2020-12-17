@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -41,12 +42,16 @@ import com.mopub.common.SdkInitializationListener;
 import com.mopub.common.logging.MoPubLog;
 import com.mopub.common.privacy.ConsentDialogListener;
 import com.mopub.common.privacy.PersonalInfoManager;
+import com.mopub.mobileads.AdColonyAdapterConfiguration;
 import com.mopub.mobileads.MoPubErrorCode;
 import com.mopub.mobileads.MoPubView;
 import com.shreyaspatil.material.navigationview.MaterialNavigationView;
 
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements MaterialNavigationView.OnNavigationItemSelectedListener, MoPubView.BannerAdListener {
     public static final String TAG = "MainActivity";
@@ -172,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         }
 
         if (getPackageName().contains("debug"))
-            sharedPref.edit().putBoolean("MyWalletPro", true).apply();
+            sharedPref.edit().putBoolean("MyWalletPro", false).apply();
     }
 
     @Override //so the language change works with dark mode
@@ -326,8 +331,14 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         else {
             if (adsEnabled()) {
                 //initialize
-                final SdkConfiguration.Builder configBuilder = new SdkConfiguration.Builder("b195f8dd8ded45fe847ad89ed1d016da");
+                final SdkConfiguration.Builder configBuilder = new SdkConfiguration.Builder("22d031f70e454cd7ab3a3988fc4a8433");
                 configBuilder.withLogLevel(MoPubLog.LogLevel.DEBUG);
+                //adColony
+                Map<String, String> adColonyConfigs = new HashMap<>();
+                adColonyConfigs.put("appId", "app061c223313354c859e");
+                String[] allZoneIds = new String[]{"vz4433c4cd77034ce88c", "vze71acd6eab1348b1a9"};
+                adColonyConfigs.put("allZoneConfigs", Arrays.toString(allZoneIds));
+                configBuilder.withMediatedNetworkConfiguration(AdColonyAdapterConfiguration.class.getName(), adColonyConfigs);
                 MoPub.initializeSdk(this, configBuilder.build(), sdkInitializationListener());
 
                 //GDPR consent
@@ -354,23 +365,24 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
     private boolean adsEnabled() {
         int today = new DateTimeHandler().getDayOfYear();
         int adsDeadline = sharedPref.getInt("adsDeadline", 0);
-        boolean overAdsDeadline = true;
+        boolean adsRemoved = false;
         if (adsDeadline != 0)
-            overAdsDeadline = today >= adsDeadline;
+            adsRemoved = today <= adsDeadline;
 
-        if (sharedPref.getBoolean("MyWalletPro", false) || overAdsDeadline)
+        if (sharedPref.getBoolean("MyWalletPro", false) || adsRemoved)
             return false;
         else
             return true;
     }
 
     private SdkInitializationListener sdkInitializationListener() {
+        //test ad: b195f8dd8ded45fe847ad89ed1d016da
         if (adsEnabled()) {
             return new SdkInitializationListener() {
                 @Override
                 public void onInitializationFinished() {
                     if (sharedPref.getString("inputMode", "classic").equals("classic")) {
-                        moPubView.setAdUnitId("b195f8dd8ded45fe847ad89ed1d016da");
+                        moPubView.setAdUnitId("22d031f70e454cd7ab3a3988fc4a8433");
                         moPubView.loadAd();
                     }
                 }
@@ -460,7 +472,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         boolean alreadyRated = sharedPref.getBoolean("alreadyRated", false);
         int actionCount = sharedPref.getInt("actionCount", 0);
         sharedPref.edit().putInt("actionCount", actionCount + 1).apply();
-        if (!alreadyRated & actionCount >= 14) {
+        if (!alreadyRated & (actionCount % 14 == 0)) {
             final ReviewManager reviewManager = ReviewManagerFactory.create(this);
             Task<ReviewInfo> request = reviewManager.requestReviewFlow();
             request.addOnCompleteListener(new OnCompleteListener<ReviewInfo>() {
@@ -472,7 +484,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
                         flow.addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                sharedPref.edit().putBoolean("alreadyRated", true).apply();
+                                sharedPref.edit().putInt("actionCount", 0).apply();
                             }
                         });
                     }

@@ -22,6 +22,7 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.shreyaspatil.material.navigationview.MaterialNavigationView;
@@ -122,7 +123,7 @@ public class AccountManager extends AppCompatActivity implements NavigationView.
             if (recyclerView.getChildCount() <= 1)
                 startActivity(intent);
             else
-                new AlertDialog.Builder(this)
+                new MaterialAlertDialogBuilder(this)
                         .setTitle(R.string.reached_acc_limit)
                         .setMessage(R.string.r_a_l_des)
                         .setPositiveButton(R.string.buy, new DialogInterface.OnClickListener() {

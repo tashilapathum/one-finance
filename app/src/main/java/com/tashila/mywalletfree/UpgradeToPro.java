@@ -58,7 +58,8 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
     public static final String TAG = "UpgradeToPro";
     private MaterialButton btnRemoveAds;
     private TextView tvDays;
-
+    private int daysWithoutAds;
+    private int today;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,13 +98,16 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
         billingClient.startConnection(this);
 
         //ads
-        final SdkConfiguration.Builder configBuilder = new SdkConfiguration.Builder("920b6145fb1546cf8b5cf2ac34638bb7");
+        final SdkConfiguration.Builder configBuilder = new SdkConfiguration.Builder("11b51585a0074ae985e38dfe1614c134");
         configBuilder.withLogLevel(DEBUG);
         MoPub.initializeSdk(this, configBuilder.build(), initSdkListener());
         MoPubRewardedVideos.setRewardedVideoListener(this);
         btnRemoveAds = findViewById(R.id.btnRemoveAds);
         tvDays = findViewById(R.id.days);
-        tvDays.append(String.valueOf(sharedPref.getInt("adsDeadline", 0)));
+        today = new DateTimeHandler().getDayOfYear();
+        int adsDeadline = sharedPref.getInt("adsDeadline", today);
+        daysWithoutAds = adsDeadline - today;
+        tvDays.setText(String.valueOf(adsDeadline - today));
 
         tvProPrice = findViewById(R.id.tvProPrice);
         Button btnBuy = findViewById(R.id.btnBuy);
@@ -338,17 +342,18 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
     /*------------------------------------- rewarded ad -----------------------------------------*/
 
     private SdkInitializationListener initSdkListener() {
+        //test ad: 920b6145fb1546cf8b5cf2ac34638bb7
         return new SdkInitializationListener() {
             @Override
             public void onInitializationFinished() {
-                MoPubRewardedVideos.loadRewardedVideo("920b6145fb1546cf8b5cf2ac34638bb7");
+                MoPubRewardedVideos.loadRewardedVideo("11b51585a0074ae985e38dfe1614c134");
             }
         };
     }
 
     public void showAd(View view) {
-        if (MoPubRewardedVideos.hasRewardedVideo("920b6145fb1546cf8b5cf2ac34638bb7"))
-            MoPubRewardedVideos.showRewardedVideo("920b6145fb1546cf8b5cf2ac34638bb7");
+        if (MoPubRewardedVideos.hasRewardedVideo("11b51585a0074ae985e38dfe1614c134"))
+            MoPubRewardedVideos.showRewardedVideo("11b51585a0074ae985e38dfe1614c134");
         else
             Toast.makeText(this, getString(R.string.loading), Toast.LENGTH_SHORT).show();
     }
@@ -360,11 +365,7 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
 
     @Override
     public void onRewardedVideoLoadFailure(@NonNull String adUnitId, @NonNull MoPubErrorCode errorCode) {
-        new MaterialAlertDialogBuilder(this)
-                .setTitle("Error")
-                .setMessage("Failed to load the ad\n\n" + "Error code: " + errorCode.toString())
-                .setPositiveButton(R.string.ok, null)
-                .show();
+        Toast.makeText(this, getString(R.string.connection_problem), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -388,22 +389,19 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
 
     @Override
     public void onRewardedVideoClosed(@NonNull String adUnitId) {
-
-    }
-
-    @Override
-    public void onRewardedVideoCompleted(@NonNull Set<String> adUnitIds, @NonNull MoPubReward reward) {
-        Toast.makeText(this, getString(R.string.removed_ads), Toast.LENGTH_LONG).show();
-
-        int today = new DateTimeHandler().getDayOfYear();
-        int adsDeadline = sharedPref.getInt("adsDeadline", 0);
-        int daysWithoutAds = adsDeadline - today;
-
-        //countdown
-        LocalDateTime deadline = LocalDateTime.now().plusDays(5);
-        int newAdsDeadline = daysWithoutAds + new DateTimeHandler(deadline).getDayOfYear();
-        sharedPref.edit().putInt("adsDeadline", newAdsDeadline).apply();
-        tvDays.append(String.valueOf(newAdsDeadline));
+        //count
+        LocalDateTime deadline = LocalDateTime.now().plusDays(daysWithoutAds + 5);
+        int newAdsDeadline = deadline.getDayOfYear();
+        if (newAdsDeadline < today) {
+            new MaterialAlertDialogBuilder(UpgradeToPro.this)
+                    .setMessage(R.string.yearly_ads_quota)
+                    .setPositiveButton(R.string.ok, null)
+                    .show();
+        } else {
+            sharedPref.edit().putInt("adsDeadline", newAdsDeadline).apply();
+            tvDays.setText(String.valueOf(Integer.parseInt(tvDays.getText().toString()) + 5));
+            Toast.makeText(this, getString(R.string.removed_ads), Toast.LENGTH_LONG).show();
+        }
 
         //load next
         btnRemoveAds.setText(R.string.load_ad);
@@ -416,6 +414,11 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onRewardedVideoCompleted(@NonNull Set<String> adUnitIds, @NonNull MoPubReward reward) {
+
     }
 }
 

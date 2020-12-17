@@ -193,12 +193,12 @@ public class WalletFragment extends Fragment {
     private boolean adsEnabled() {
         int today = new DateTimeHandler().getDayOfYear();
         int adsDeadline = sharedPref.getInt("adsDeadline", 0);
-        boolean overAdsDeadline = true;
+        boolean adsRemoved = false;
         if (adsDeadline != 0)
-            overAdsDeadline = today >= adsDeadline;
+            adsRemoved = today <= adsDeadline;
 
-        if (sharedPref.getBoolean("MyWalletPro", false) || overAdsDeadline)
-            return true;
+        if (sharedPref.getBoolean("MyWalletPro", false) || adsRemoved)
+            return false;
         else
             return true;
     }
@@ -242,7 +242,7 @@ public class WalletFragment extends Fragment {
                 }
             }
         } else
-            loadQuickList(); //default
+            loadQuickChips(); //default
 
         if (adsEnabled() && sharedPref.getString("inputMode", "classic").equals("floating")) {
             loadContentItem(RECT_AD);

@@ -407,10 +407,11 @@
     <string name="load_ad">වෙළෙඳ දැන්වීමක් පූරණය කරන්න්</string>
     <string name="remove_ads">වෙළෙඳ දැන්වීම් ඉවත් කිරීම්</string>
     <string name="days_by_watching_a_short_advertisement">ඔබගේ තිබෙන්නේ Pro සංස්කරණය නොවේ නම්, කුඩා වෙළෙඳ දැන්වීමක් නැරඹීමෙන් ඇප් එකෙහි පෙන්වන වෙළෙඳ දැන්වීම් සියල්ල දින 5කට ඉවත් කළ හැකි ය. ඔබට වෙළෙඳ දැන්වීම් ඕනෑම ප්‍රමාණයක් නැරඹිය හැකි අතර, නරඹන සෑම වෙළෙඳ දැන්වීමකට ම දින 5 බැගින් එකතු වේ.</string>
-    <string name="days_remaining_without_ads">වෙළෙඳ දැන්වීම් රහිත දින ගණන:&#160;</string>
+    <string name="days_remaining_without_ads">වෙළෙඳ දැන්වීම් රහිත දින ගණන:</string>
     <string name="remove_ads_free">වෙළෙඳ දැන්වීම් ඉවත් කරන්න (නොමිලේ)</string>
     <string name="showing_transactions_could_increase_app_startup_time">ගනුදෙනු පෙන්වීමට තේරීමෙන් ඇප් එක විවෘන වීමට යන වේලාව වැඩි විය හැක</string>
     <string name="scrolling_disabled">කිහිපයක් පමණක්</string>
     <string name="scrollable">සියල්ල</string>
     <string name="you_can_update_the_balance_by_tapping_the_current_balance_as_well">ශේෂයේ අගය මත ටච් කිරීමෙන් ද ඔබට ශේෂය සංස්කරණය කළ හැක.</string>
+    <string name="yearly_ads_quota">මෙම වසර අවසානය තෙක් වෙළෙඳ දැන්වීම් ඉවත් කර ඇත. ඔබට මීළඟ වසර තෙක් නැවත වෙළෙඳ දැන්වීම් නැරඹීමට අවශ්‍ය නොවේ.</string>
 </resources>
