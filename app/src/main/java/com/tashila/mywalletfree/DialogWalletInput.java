@@ -43,7 +43,7 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.wallet_input, null);
-        view.setPadding(16, 16, 16, 16);
+        view.setPadding(24, 24, 24, 24);
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         dialog = new BottomSheetDialog(getActivity());
         dialog.setContentView(view);

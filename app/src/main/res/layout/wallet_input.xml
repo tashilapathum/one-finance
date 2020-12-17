@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/wallet_input_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="4dp">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editAmnt"
@@ -17,7 +18,8 @@
         app:boxCornerRadiusTopEnd="16dp"
         app:boxCornerRadiusTopStart="16dp"
         app:errorEnabled="true"
-        app:startIconDrawable="@drawable/ic_amount">
+        app:startIconDrawable="@drawable/ic_amount"
+        app:boxStrokeWidth="2dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -42,7 +44,8 @@
         app:boxCornerRadiusTopEnd="16dp"
         app:boxCornerRadiusTopStart="16dp"
         app:errorEnabled="true"
-        app:startIconDrawable="@drawable/ic_description">
+        app:startIconDrawable="@drawable/ic_description"
+        app:boxStrokeWidth="2dp">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/aetDescription"
