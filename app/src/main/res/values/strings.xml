@@ -427,7 +427,7 @@
         - [Fixed] several crashes on some devices\n
         - [Fixed] daily data chart in monthly reports wasn\'t visible properly in dark mode\n
         - [Fixed] transactions weren\'t saved when the app was closed unexpectedly\n
-        - Minor UI changes\n
+        - UI improvements\n
         \nThank you for using My Wallet! Please contact me using the email on \'About\' page if there are any bugs or problems with the app. Your feedback is really important and I read every review :)
     </string>
     <string name="yearly_ads_quota">You\'ve reached the quota of this year. Which means you don\'t have to watch ads until next year.</string>
