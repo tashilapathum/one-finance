@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">My Wallet</string>
     <string name="my_wallet_pro" translatable="false">My Wallet Pro</string>
-    <string name="version" translatable="false">Version 0.3.0</string>
+    <string name="version" translatable="false">Version 0.3.1</string>
     <string name="recent_transactions">Transactions</string>
     <string name="reports">Reports</string>
     <string name="settings">Settings</string>
@@ -420,15 +420,35 @@
         \u2713 No ads\n
         \u2713 Support the developer! ❤\n
     </string>
-    <string name="what_s_new_in_version" translatable="false">What\'s new in version 0.3.1</string>
+    <string name="what_s_new_in_version" translatable="false">What\'s new</string>
     <string name="whats_new_descr" translatable="false">
-        \n - Redesigned the quick list so now more items can be shown using less space on screen. <i>(You can switch to the old style from settings)</i>\n
+        \nv0.3.1\n
+        - Redesigned the quick list so now more items can be shown using less space on screen. <i>(You can switch to the old style from settings)</i>\n
         - Now you can choose to show transaction history on Wallet page <i>(See \'Wallet page content\' setting)</i>\n
         - [Fixed] several crashes on some devices\n
         - [Fixed] daily data chart in monthly reports wasn\'t visible properly in dark mode\n
         - [Fixed] transactions weren\'t saved when the app was closed unexpectedly\n
         - UI improvements\n
-        \nThank you for using My Wallet! Please contact me using the email on \'About\' page if there are any bugs or problems with the app. Your feedback is really important and I read every review :)
+
+        \nv0.3.0\n
+        - Added the ability to directly transfer money between accounts\n
+        - [Fixed] account balance history chart\n
+        - [Fixed] misaligned buttons on some devices\n
+        - [Pro] Added option to protect app with a PIN <i>(See general settings)</i>\n
+
+        \nv0.2.9\n
+        - Added more detailed daily, weekly and monthly reports\n
+        - Now you can set daily, weekly and monthly reports to show on Wallet page\n
+        - Moved account manager from settings to navigation drawer\n
+        - [Pro] Option to show multiple reports on Wallet page\n
+        - [Fixed] crash when adding quick list items\n
+
+        \nv0.2.8\n
+        - Added Account details section\n
+        - Added Filters for recent transactions\n
+        - Added Option to add multiple interests for accounts\n
+        - Added Autocomplete when typing transaction details\n
+        - [Fixed] crash in Wallet screen\n
     </string>
     <string name="yearly_ads_quota">You\'ve reached the quota of this year. Which means you don\'t have to watch ads until next year.</string>
 
