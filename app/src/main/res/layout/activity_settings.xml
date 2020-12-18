@@ -162,12 +162,13 @@
                         android:layout_toEndOf="@id/image10"
                         android:text="@string/show_suggestions_from_the_quick_list_when_typing_the_description" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/suggestCheck"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true" />
+                        android:layout_centerVertical="true"
+                        android:paddingHorizontal="4dp"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -208,12 +209,13 @@
                         android:layout_toEndOf="@id/image8"
                         android:text="@string/show_confirm_dialog_when_trying_to_exit_the_app" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/exitCheck"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true" />
+                        android:layout_centerVertical="true"
+                        android:paddingHorizontal="4dp" />
 
                 </RelativeLayout>
 
@@ -833,12 +835,13 @@
                         android:layout_toEndOf="@id/image12"
                         android:text="@string/when_enabled_transactions_aren_t_saved_until_the_undo_button_is_gone" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/undoCheck"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true" />
+                        android:layout_centerVertical="true"
+                        android:paddingHorizontal="4dp"/>
 
                 </RelativeLayout>
 
@@ -880,12 +883,13 @@
                         android:layout_toEndOf="@id/image13"
                         android:text="@string/when_enabled_you_can_spend_money_even_when_you_have_a_negative_balance_in_the_wallet_or_the_bank" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/negativeCheck"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true" />
+                        android:layout_centerVertical="true"
+                        android:paddingHorizontal="4dp"/>
 
                 </RelativeLayout>
 
@@ -926,12 +930,13 @@
                         android:layout_toEndOf="@id/image20"
                         android:text="@string/refresh_wallet_page_to_show_updated_charts_after_adding_every_transaction" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/refreshCheck"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true" />
+                        android:layout_centerVertical="true"
+                        android:paddingHorizontal="4dp" />
 
                 </RelativeLayout>
 
@@ -973,12 +978,13 @@
                         android:layout_toEndOf="@id/image19"
                         android:text="@string/the_input_sheet_after_adding_a_transaction_when_using_floating_action_button_input_mode" />
 
-                    <com.google.android.material.checkbox.MaterialCheckBox
+                    <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/tapHideCheck"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true" />
+                        android:layout_centerVertical="true"
+                        android:paddingHorizontal="4dp" />
 
                 </RelativeLayout>
 

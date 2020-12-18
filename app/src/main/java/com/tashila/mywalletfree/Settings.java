@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.shreyaspatil.material.navigationview.MaterialNavigationView;
 
@@ -44,13 +45,12 @@ public class Settings extends AppCompatActivity
     SharedPreferences sharedPref;
     private DrawerLayout drawer;
     String timeString;
-    private MaterialCheckBox exitCheckBox;
-    private MaterialCheckBox suggestCheckBox;
-    private MaterialCheckBox undoCheckBox;
-    private MaterialCheckBox negativeCheckBox;
-    private MaterialCheckBox qlShortcutCheckBox;
-    private MaterialCheckBox tapHideCheckBox;
-    private MaterialCheckBox refreshCheckBox;
+    private SwitchMaterial exitCheckBox;
+    private SwitchMaterial suggestCheckBox;
+    private SwitchMaterial undoCheckBox;
+    private SwitchMaterial negativeCheckBox;
+    private SwitchMaterial tapHideCheckBox;
+    private SwitchMaterial refreshCheckBox;
     private FirebaseAnalytics firebaseAnalytics;
     private MaterialNavigationView navigationView;
     private boolean isMyWalletPro;
