@@ -89,6 +89,17 @@ public class DailyReportsFragment extends Fragment {
     }
 
     private void calculateDailyReport(int day) {
+        //for new year
+        if (LocalDate.now().isLeapYear()) {
+            if (day > 366) {
+                day = 1;
+                pickedYear--;
+            }
+        }
+        else if (day > 365) {
+            day = 1;
+            pickedYear--;
+        }
         currency = sharedPref.getString("currency", "");
         TransactionsViewModel transactionsViewModel = new ViewModelProvider(getActivity(),
                 ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(TransactionsViewModel.class);
@@ -164,7 +175,22 @@ public class DailyReportsFragment extends Fragment {
                 "(" + expensesDiffStr + ")");
 
         //to load next cards
-        dayCount++;
+        //for new year
+        if (LocalDate.now().isLeapYear()) {
+            if (dayCount < 366)
+                dayCount++;
+            else {
+                day = 1;
+            }
+        }
+        else {
+            if (dayCount < 365)
+                dayCount++;
+            else {
+                day = 1;
+            }
+        }
+
         if (pickedDay != 0)
             this.day = LocalDate.ofYearDay(pickedYear, pickedDay).minusDays(dayCount).getDayOfYear();
         else

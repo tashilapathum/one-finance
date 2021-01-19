@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -161,7 +162,7 @@ public class BankFragment extends Fragment {
             sharedPref.edit().putBoolean("bankFragAlreadyReloaded", true).apply();
         }
         if (!haveAccounts) {
-            new AlertDialog.Builder(getActivity())
+            new MaterialAlertDialogBuilder(getActivity())
                     .setTitle(R.string.bank_welcome_title)
                     .setMessage(R.string.bank_welcome_message)
                     .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {

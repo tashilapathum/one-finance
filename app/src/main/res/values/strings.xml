@@ -422,6 +422,10 @@
     </string>
     <string name="what_s_new_in_version" translatable="false">What\'s new</string>
     <string name="whats_new_descr" translatable="false">
+        \nv0.3.2\n
+        - [Fixed] Crash when opening the Reports page\n
+        - Library updates\n
+
         \nv0.3.1\n
         - Redesigned the quick list so now more items can be shown using less space on screen. <i>(You can switch to the old style from settings)</i>\n
         - Now you can choose to show transaction history on Wallet page <i>(See \'Wallet page content\' setting)</i>\n

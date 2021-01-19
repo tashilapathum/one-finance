@@ -27,6 +27,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.ads.mediation.admob.AdMobAdapter;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.play.core.review.ReviewInfo;
@@ -177,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         }
 
         if (getPackageName().contains("debug"))
-            sharedPref.edit().putBoolean("MyWalletPro", true).apply();
+            sharedPref.edit().putBoolean("MyWalletPro", false).apply();
     }
 
     @Override //so the language change works with dark mode
@@ -198,10 +202,10 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         if (!alreadyDid) startActivity(intent);
         else {
             //what's new
-            if (!sharedPref.getBoolean("whatsNewShownV0.3.1", false)) {
+            if (!sharedPref.getBoolean("whatsNewShownV0.3.2", false)) {
                 DialogWhatsNew dialogWhatsNew = new DialogWhatsNew();
                 dialogWhatsNew.show(getSupportFragmentManager(), "whats new dialog");
-                sharedPref.edit().putBoolean("whatsNewShownV0.3.1", true).apply();
+                sharedPref.edit().putBoolean("whatsNewShownV0.3.2", true).apply();
             } //TODO: update this
         }
         rateApp(); //to make counts
@@ -330,7 +334,13 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         //ads
         else {
             if (adsEnabled()) {
-                //initialize
+                MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                    @Override
+                    public void onInitializationComplete(InitializationStatus initializationStatus) {
+
+                    }
+                });
+                //initialize mopub
                 final SdkConfiguration.Builder configBuilder = new SdkConfiguration.Builder("22d031f70e454cd7ab3a3988fc4a8433");
                 configBuilder.withLogLevel(MoPubLog.LogLevel.DEBUG);
                 //adColony
@@ -339,6 +349,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
                 String[] allZoneIds = new String[]{"vz4433c4cd77034ce88c", "vze71acd6eab1348b1a9"};
                 adColonyConfigs.put("allZoneConfigs", Arrays.toString(allZoneIds));
                 configBuilder.withMediatedNetworkConfiguration(AdColonyAdapterConfiguration.class.getName(), adColonyConfigs);
+
                 MoPub.initializeSdk(this, configBuilder.build(), sdkInitializationListener());
 
                 //GDPR consent

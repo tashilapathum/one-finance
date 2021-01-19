@@ -39,7 +39,6 @@ public class MonthlyReportsFragment extends Fragment {
     private int monthCount;
     private int year;
     private int yearCount;
-    private int pickedYear;
     private int pickedMonth;
 
 
@@ -59,7 +58,7 @@ public class MonthlyReportsFragment extends Fragment {
         else
             month = LocalDate.now().getMonthValue();
         monthCount = 0;
-        pickedYear = sharedPref.getInt("reports_year", 0);
+        int pickedYear = sharedPref.getInt("reports_year", 0);
         if (pickedYear != 0)
             year = pickedYear;
         else

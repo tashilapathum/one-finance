@@ -132,6 +132,12 @@ public class WalletFragment extends Fragment {
             }
         });
 
+        //reset picked date (for bug fix only)
+        sharedPref.edit().putInt("reports_year", 0).apply();
+        sharedPref.edit().putInt("reports_month", 0).apply();
+        sharedPref.edit().putInt("reports_week", 0).apply();
+        sharedPref.edit().putInt("reports_day", 0).apply();
+
         loadContent();
         setupButtons();
         setupInputMode();

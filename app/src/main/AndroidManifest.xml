@@ -17,7 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeDark"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".EnterPIN"></activity>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8303071997891278~7113367134"/>
+
+        <activity android:name=".EnterPIN"/>
         <activity android:name=".Insights" />
         <activity android:name=".About" />
         <activity
