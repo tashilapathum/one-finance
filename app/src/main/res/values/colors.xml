@@ -6,6 +6,7 @@
     <color name="colorDividerLight">#3704908F</color>
     <color name="colorAccent">#42A5F5</color>
     <color name="colorAccentLight">#76C2FF</color>
+    <color name="colorAccentTransparent">#5676C2FF</color>
     <color name="colorAccentLightest">#C2E4FF</color>
     <color name="colorLinks">#0000ff</color>
     <color name="colorStatusBarDarkMode">#242427</color>

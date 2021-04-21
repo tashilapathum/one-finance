@@ -27,18 +27,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.google.ads.mediation.admob.AdMobAdapter;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.play.core.review.ReviewInfo;
-import com.google.android.play.core.review.ReviewManager;
-import com.google.android.play.core.review.ReviewManagerFactory;
-import com.google.android.play.core.tasks.OnCompleteListener;
-import com.google.android.play.core.tasks.OnFailureListener;
-import com.google.android.play.core.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.mopub.common.MoPub;
 import com.mopub.common.SdkConfiguration;
@@ -428,6 +421,11 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
                             fragmentTag = "BankFragment";
                             break;
                         }
+                        case R.id.nav_trans: {
+                            selectedFragment = new TransactionsFragment();
+                            fragmentTag = "TransactionsFragment";
+                            break;
+                        }
                         case R.id.nav_cart: {
                             selectedFragment = new CartFragment();
                             fragmentTag = "CartFragment";
@@ -463,14 +461,20 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
                 moPubView.setVisibility(View.VISIBLE);
                 break;
             }
-            case R.id.nav_cart: {
+            case R.id.nav_trans: {
                 bottomNav.getMenu().getItem(2).setChecked(true);
+                bundle.putString("feature", "Transactions");
+                moPubView.setVisibility(View.VISIBLE);
+                break;
+            }
+            case R.id.nav_cart: {
+                bottomNav.getMenu().getItem(3).setChecked(true);
                 bundle.putString("feature", "Cart");
                 moPubView.setVisibility(View.GONE);
                 break;
             }
             case R.id.nav_bills: {
-                bottomNav.getMenu().getItem(3).setChecked(true);
+                bottomNav.getMenu().getItem(4).setChecked(true);
                 bundle.putString("feature", "Bills");
                 moPubView.setVisibility(View.GONE);
                 break;
@@ -484,59 +488,37 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         int actionCount = sharedPref.getInt("actionCount", 0);
         sharedPref.edit().putInt("actionCount", actionCount + 1).apply();
         if (!alreadyRated & (actionCount % 14 == 0)) {
-            final ReviewManager reviewManager = ReviewManagerFactory.create(this);
-            Task<ReviewInfo> request = reviewManager.requestReviewFlow();
-            request.addOnCompleteListener(new OnCompleteListener<ReviewInfo>() {
-                @Override
-                public void onComplete(@NonNull Task<ReviewInfo> task) {
-                    if (task.isSuccessful()) {
-                        ReviewInfo reviewInfo = task.getResult();
-                        Task<Void> flow = reviewManager.launchReviewFlow(MainActivity.this, reviewInfo);
-                        flow.addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                sharedPref.edit().putInt("actionCount", 0).apply();
-                            }
-                        });
-                    }
-                }
-            });
-            request.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(Exception e) {
-                    new AlertDialog.Builder(MainActivity.this)
-                            .setTitle(R.string.enjoying_the_app)
-                            .setMessage(R.string.rate_description)
-                            .setPositiveButton("Rate", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    sharedPref.edit().putBoolean("alreadyRated", true).apply();
-                                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                                    intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.tashila.mywalletfree"));
-                                    startActivity(intent);
-                                }
-                            })
-                            .setNegativeButton("Later", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    sharedPref.edit().putInt("actionCount", 0).apply();
-                                }
-                            })
-                            .setNeutralButton("Never", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    sharedPref.edit().putBoolean("alreadyRated", true).apply();
-                                }
-                            })
-                            .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                @Override
-                                public void onDismiss(DialogInterface dialogInterface) {
-                                    sharedPref.edit().putInt("actionCount", 0).apply();
-                                }
-                            })
-                            .show();
-                }
-            });
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle(R.string.enjoying_the_app)
+                    .setMessage(R.string.rate_description)
+                    .setPositiveButton("Rate", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            sharedPref.edit().putBoolean("alreadyRated", true).apply();
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.tashila.mywalletfree"));
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("Later", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            sharedPref.edit().putInt("actionCount", 0).apply();
+                        }
+                    })
+                    .setNeutralButton("Never", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            sharedPref.edit().putBoolean("alreadyRated", true).apply();
+                        }
+                    })
+                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialogInterface) {
+                            sharedPref.edit().putInt("actionCount", 0).apply();
+                        }
+                    })
+                    .show();
         }
     }
 

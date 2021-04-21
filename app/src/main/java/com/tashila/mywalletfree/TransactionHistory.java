@@ -659,6 +659,8 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
     }
 
     public void toggleFilters(View view) {
+        view.animate().rotationBy(180f);
+
         MaterialCardView filtersCard = findViewById(R.id.filtersCard);
         if (filtersCard.getVisibility() == View.GONE)
             filtersCard.setVisibility(View.VISIBLE);

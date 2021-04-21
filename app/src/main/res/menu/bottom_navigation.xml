@@ -4,21 +4,26 @@
     <item
         android:id="@+id/nav_wallet"
         android:icon="@drawable/ic_wallet"
-        android:title="@string/wallet"/>
+        android:title="@string/wallet" />
 
     <item
         android:id="@+id/nav_bank"
         android:icon="@drawable/ic_bank"
-        android:title="@string/bank"/>
+        android:title="@string/bank" />
+
+    <item
+        android:id="@+id/nav_trans"
+        android:icon="@drawable/ic_transactions"
+        android:title="@string/transactions" />
 
     <item
         android:id="@+id/nav_cart"
         android:icon="@drawable/ic_cart"
-        android:title="@string/cart"/>
+        android:title="@string/cart" />
 
     <item
         android:id="@+id/nav_bills"
         android:icon="@drawable/ic_bills"
-        android:title="@string/bills"/>
+        android:title="@string/bills" />
 
 </menu>

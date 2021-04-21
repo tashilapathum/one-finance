@@ -5,10 +5,10 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@drawable/background"
     android:fitsSystemWindows="true"
-    tools:context=".TransactionHistory"
-    android:animateLayoutChanges="true">
+    tools:context=".TransactionHistory">
 
     <LinearLayout
         android:layout_width="0px"
@@ -20,8 +20,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:animateLayoutChanges="true">
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -40,26 +40,26 @@
                     android:id="@+id/etSearch"
                     android:layout_width="wrap_content"
                     android:layout_height="?attr/actionBarSize"
+                    android:layout_alignParentStart="true"
                     android:layout_marginEnd="8dp"
+                    android:layout_toStartOf="@id/toggleFilters"
                     android:background="@android:color/transparent"
                     android:fontFamily="sans-serif-condensed"
                     android:hint="@string/search"
                     android:importantForAutofill="no"
-                    android:inputType="textCapSentences"
-                    android:layout_toStartOf="@id/toggleFilters"
-                    android:layout_alignParentStart="true"/>
+                    android:inputType="textCapSentences" />
 
                 <ImageButton
                     android:id="@+id/toggleFilters"
                     android:layout_width="wrap_content"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_filter"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
-                    android:paddingHorizontal="16dp"
-                    android:tint="@color/colorDividerLight"
                     android:contentDescription="show or hide filters"
-                    android:onClick="toggleFilters"/>
+                    android:onClick="toggleFilters"
+                    android:paddingHorizontal="16dp"
+                    android:src="@drawable/ic_filter"
+                    android:tint="@color/colorDividerLight" />
 
             </RelativeLayout>
 
@@ -69,9 +69,9 @@
             android:id="@+id/filtersCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:cardCornerRadius="0dp"
             app:cardElevation="4dp"
-            android:visibility="gone"
             tools:visibility="visible">
 
             <HorizontalScrollView

@@ -58,7 +58,7 @@
                     android:textColor="@android:color/holo_green_dark"
                     tools:text="$" />
 
-                <TextView
+                <com.robinhood.ticker.TickerView
                     android:id="@+id/balance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -70,7 +70,9 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                    android:textColor="@android:color/holo_green_dark" />
+                    android:textColor="@android:color/holo_green_dark"
+                    android:gravity="start"
+                    app:ticker_animationDuration="1500"/>
 
                 <ImageButton
                     android:id="@+id/warning"

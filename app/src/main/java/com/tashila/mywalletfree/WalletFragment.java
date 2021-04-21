@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -34,6 +35,8 @@ import com.mopub.common.SdkInitializationListener;
 import com.mopub.common.logging.MoPubLog;
 import com.mopub.mobileads.MoPubErrorCode;
 import com.mopub.mobileads.MoPubView;
+import com.robinhood.ticker.TickerUtils;
+import com.robinhood.ticker.TickerView;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
@@ -60,7 +63,7 @@ public class WalletFragment extends Fragment {
     private EditText etAmount;
     private EditText etDescr;
     private TextView txtBalance;
-    private TextView tvBalance;
+    private TickerView tvBalance;
     private TextView tvCurrency;
     private View v;
     private String currency;
@@ -119,7 +122,10 @@ public class WalletFragment extends Fragment {
         btnTransfer = v.findViewById(R.id.btnTransfer);
         language = sharedPref.getString("language", "english");
         inputMode = sharedPref.getString("inputMode", "classic");
-        setShadows(txtBalance, tvBalance, tvCurrency);
+        //setShadows(txtBalance, tvBalance, tvCurrency);
+        tvBalance.setCharacterLists(TickerUtils.provideNumberList());
+        tvBalance.setAnimationInterpolator(new OvershootInterpolator());
+        tvBalance.setPreferredScrollingDirection(TickerView.ScrollingDirection.ANY);
         df = new DecimalFormat("#.00");
 
         setMainButtonActions();
