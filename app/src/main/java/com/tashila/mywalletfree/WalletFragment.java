@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
@@ -122,9 +123,8 @@ public class WalletFragment extends Fragment {
         btnTransfer = v.findViewById(R.id.btnTransfer);
         language = sharedPref.getString("language", "english");
         inputMode = sharedPref.getString("inputMode", "classic");
-        //setShadows(txtBalance, tvBalance, tvCurrency);
         tvBalance.setCharacterLists(TickerUtils.provideNumberList());
-        tvBalance.setAnimationInterpolator(new OvershootInterpolator());
+        tvBalance.setAnimationInterpolator(new DecelerateInterpolator());
         tvBalance.setPreferredScrollingDirection(TickerView.ScrollingDirection.ANY);
         df = new DecimalFormat("#.00");
 
@@ -810,15 +810,6 @@ public class WalletFragment extends Fragment {
             CustomAutocompleteArrayAdapter arrayAdapter = new CustomAutocompleteArrayAdapter(
                     getActivity(), android.R.layout.simple_list_item_1, templates);
             aetDescription.setAdapter(arrayAdapter);
-        }
-    }
-
-    private void setShadows(TextView... views) {
-        for (TextView view : views) {
-            if (theme.equalsIgnoreCase("dark"))
-                view.setShadowLayer(3, 1, 1, R.color.colorShadowDark);
-            else
-                view.setShadowLayer(3, 1, 1, R.color.colorShadow);
         }
     }
 
