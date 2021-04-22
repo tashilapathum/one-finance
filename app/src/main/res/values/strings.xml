@@ -455,5 +455,7 @@
         - [Fixed] crash in Wallet screen\n
     </string>
     <string name="yearly_ads_quota">You\'ve reached the quota of this year. Which means you don\'t have to watch ads until next year.</string>
+    <string name="investments">Investments</string>
+    <string name="tools">Tools</string>
 
 </resources>

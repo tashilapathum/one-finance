@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -24,7 +25,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.google.android.gms.ads.MobileAds;
@@ -151,9 +151,9 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         else if (homeScreen.equalsIgnoreCase("bank"))
             navigateScreens(new BankFragment(), "BankFragment", R.id.nav_bank);
         else if (homeScreen.equalsIgnoreCase("cart"))
-            navigateScreens(new CartFragment(), "CartFragment", R.id.nav_cart);
+            navigateScreens(new CartFragment(), "CartFragment", R.id.nav_invest);
         else if (homeScreen.equalsIgnoreCase("bills"))
-            navigateScreens(new BillsFragment(), "BillsFragment", R.id.nav_bills);
+            navigateScreens(new BillsFragment(), "BillsFragment", R.id.nav_tools);
             //when starting the app normally
         else
             navigateScreens(new WalletFragment(), "WalletFragment", R.id.nav_wallet);
@@ -298,7 +298,8 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        else {
             boolean confirmExit = sharedPref.getBoolean("exitConfirmation", false);
             if (confirmExit) {
                 new MaterialAlertDialogBuilder(this)
@@ -426,14 +427,14 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
                             fragmentTag = "TransactionsFragment";
                             break;
                         }
-                        case R.id.nav_cart: {
-                            selectedFragment = new CartFragment();
-                            fragmentTag = "CartFragment";
+                        case R.id.nav_invest: {
+                            selectedFragment = new InvestmentsFragment();
+                            fragmentTag = "InvestmentsFragment";
                             break;
                         }
-                        case R.id.nav_bills: {
-                            selectedFragment = new BillsFragment();
-                            fragmentTag = "BillsFragment";
+                        case R.id.nav_tools: {
+                            selectedFragment = new ToolsFragment();
+                            fragmentTag = "ToolsFragment";
                             break;
                         }
                     }
@@ -467,13 +468,13 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
                 moPubView.setVisibility(View.VISIBLE);
                 break;
             }
-            case R.id.nav_cart: {
+            case R.id.nav_invest: {
                 bottomNav.getMenu().getItem(3).setChecked(true);
                 bundle.putString("feature", "Cart");
                 moPubView.setVisibility(View.GONE);
                 break;
             }
-            case R.id.nav_bills: {
+            case R.id.nav_tools: {
                 bottomNav.getMenu().getItem(4).setChecked(true);
                 bundle.putString("feature", "Bills");
                 moPubView.setVisibility(View.GONE);

@@ -77,7 +77,7 @@ public class CartAdapter extends ListAdapter<CartItem, CartAdapter.CartItemHolde
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int position = getAdapterPosition();
+                    int position = getBindingAdapterPosition();
                     if (listener != null && position != RecyclerView.NO_POSITION)
                         listener.OnCartItemClick(getItem(position));
                 }
@@ -144,6 +144,16 @@ public class CartAdapter extends ListAdapter<CartItem, CartAdapter.CartItemHolde
             }
         }
 
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     public interface OnCartItemClickListener {

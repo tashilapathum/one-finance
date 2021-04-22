@@ -17,13 +17,13 @@
         android:title="@string/transactions" />
 
     <item
-        android:id="@+id/nav_cart"
-        android:icon="@drawable/ic_cart"
-        android:title="@string/cart" />
+        android:id="@+id/nav_invest"
+        android:icon="@drawable/ic_investments"
+        android:title="@string/investments" />
 
     <item
-        android:id="@+id/nav_bills"
-        android:icon="@drawable/ic_bills"
-        android:title="@string/bills" />
+        android:id="@+id/nav_tools"
+        android:icon="@drawable/ic_tools"
+        android:title="@string/tools" />
 
 </menu>
