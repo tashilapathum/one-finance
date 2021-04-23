@@ -57,7 +57,7 @@ public class DialogNewLoan extends DialogFragment {
         etDate = tilDate.getEditText();
         etDetails = tilDetails.getEditText();
         isLent = true;
-        radioGroup = view.findViewById(R.id.rgPaidOrDue);
+        radioGroup = view.findViewById(R.id.lentBorrowed);
         setDate(LocalDate.now().format(formatter));
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override

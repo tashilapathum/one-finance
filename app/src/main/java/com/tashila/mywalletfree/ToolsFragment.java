@@ -14,6 +14,7 @@ import androidx.media2.exoplayer.external.C;
 import androidx.transition.TransitionManager;
 
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class ToolsFragment extends Fragment {
     private View view;
@@ -37,7 +38,7 @@ public class ToolsFragment extends Fragment {
             public void onClick(View v) {
                 fragment[0] = new CartFragment();
                 fragmentTag[0] = "CartFragment";
-                openPage((MaterialCardView) v, fragment[0], fragmentTag[0]);
+                openPage(fragment[0], fragmentTag[0]);
             }
         });
         view.findViewById(R.id.bills).setOnClickListener(new View.OnClickListener() {
@@ -45,30 +46,32 @@ public class ToolsFragment extends Fragment {
             public void onClick(View v) {
                 fragment[0] = new BillsFragment();
                 fragmentTag[0] = "BillsFragment";
-                openPage((MaterialCardView) v, fragment[0], fragmentTag[0]);
+                openPage(fragment[0], fragmentTag[0]);
             }
         });
         view.findViewById(R.id.loans).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragment[0] = new CartFragment();
-                fragmentTag[0] = "CartFragment";
-                openPage((MaterialCardView) v, fragment[0], fragmentTag[0]);
+                fragment[0] = new LoansFragment();
+                fragmentTag[0] = "LoansFragment";
+                openPage(fragment[0], fragmentTag[0]);
             }
         });
         view.findViewById(R.id.more).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragment[0] = new CartFragment();
-                fragmentTag[0] = "CartFragment";
-                openPage((MaterialCardView) v, fragment[0], fragmentTag[0]);
+                new MaterialAlertDialogBuilder(getActivity())
+                        .setTitle("Test")
+                        .setMessage("Message")
+                        .setPositiveButton("OK", null)
+                        .show();
             }
         });
 
         return view;
     }
 
-    private void openPage(MaterialCardView cardView, Fragment fragment, String fragmentTag) {
+    private void openPage(Fragment fragment, String fragmentTag) {
         view.findViewById(R.id.tools_grid).setVisibility(View.GONE);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)

@@ -71,7 +71,7 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.2.0'
     implementation 'com.google.android.gms:play-services-ads:20.0.0'
     implementation 'com.mopub.mediation:admob:19.6.0.1'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
+    //debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
     implementation 'com.robinhood.ticker:ticker:2.0.2'
     implementation 'com.github.lhoyong:SmoothCheckBox:1.0.0'
 

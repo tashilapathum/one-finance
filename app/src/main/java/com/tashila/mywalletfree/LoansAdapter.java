@@ -19,8 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lhoyong.library.SmoothCheckBox;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -71,7 +69,7 @@ public class LoansAdapter extends ListAdapter<Loan, LoansAdapter.LoanHolder> {
 
         holder.cbMarkSettled.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(@NotNull SmoothCheckBox smoothCheckBox, boolean isChecked) {
+            public void onCheckedChanged(@NonNull SmoothCheckBox smoothCheckBox, boolean isChecked) {
                 LoansFragment.getInstance().toggleSettled(currentLoan, isChecked);
             }
         });
