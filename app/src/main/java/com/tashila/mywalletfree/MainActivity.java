@@ -299,6 +299,12 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
+        else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                    .replace(R.id.fragment_container, new ToolsFragment(), "ToolsFragment")
+                    .commit();
+        }
         else {
             boolean confirmExit = sharedPref.getBoolean("exitConfirmation", false);
             if (confirmExit) {

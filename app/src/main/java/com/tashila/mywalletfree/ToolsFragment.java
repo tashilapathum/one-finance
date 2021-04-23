@@ -71,8 +71,8 @@ public class ToolsFragment extends Fragment {
     private void openPage(MaterialCardView cardView, Fragment fragment, String fragmentTag) {
         view.findViewById(R.id.tools_grid).setVisibility(View.GONE);
         getActivity().getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.zoom_in, R.anim.zoom_out)
-                .add(R.id.fragment_container, fragment, fragmentTag)
+                .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+                .replace(R.id.fragment_container, fragment, fragmentTag)
                 .addToBackStack(null)
                 .commit();
     }
