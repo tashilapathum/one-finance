@@ -1,7 +1,5 @@
 package com.tashila.mywalletfree;
 
-import androidx.appcompat.app.AlertDialog;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -24,6 +21,9 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
+import com.tashila.mywalletfree.accounts.Account;
+import com.tashila.mywalletfree.accounts.AccountDetails;
+import com.tashila.mywalletfree.accounts.AccountsViewModel;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

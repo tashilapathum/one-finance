@@ -7,7 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -32,6 +31,8 @@ import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
 import com.shreyaspatil.material.navigationview.MaterialNavigationView;
+import com.tashila.mywalletfree.accounts.AccountManager;
+import com.tashila.mywalletfree.settings.Settings;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;

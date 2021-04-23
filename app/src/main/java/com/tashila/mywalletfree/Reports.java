@@ -28,9 +28,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.tabs.TabLayout;
 import com.shreyaspatil.material.navigationview.MaterialNavigationView;
+import com.tashila.mywalletfree.accounts.AccountManager;
+import com.tashila.mywalletfree.settings.Settings;
 
-import java.text.DecimalFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

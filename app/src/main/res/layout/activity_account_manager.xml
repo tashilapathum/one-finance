@@ -7,7 +7,7 @@
     android:id="@+id/drawer_layout"
     android:background="@drawable/background"
     android:fitsSystemWindows="true"
-    tools:context=".AccountManager">
+    tools:context=".accounts.AccountManager">
 
     <RelativeLayout
         android:id="@+id/rootLayout"

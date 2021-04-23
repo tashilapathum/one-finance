@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,9 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.tashila.mywalletfree.accounts.Account;
+import com.tashila.mywalletfree.accounts.AccountManager;
+import com.tashila.mywalletfree.accounts.AccountsViewModel;
 
 import java.util.List;
 

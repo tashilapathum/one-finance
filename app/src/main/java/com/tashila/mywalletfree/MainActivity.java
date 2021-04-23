@@ -10,7 +10,6 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -43,6 +42,10 @@ import com.mopub.mobileads.AdColonyAdapterConfiguration;
 import com.mopub.mobileads.MoPubErrorCode;
 import com.mopub.mobileads.MoPubView;
 import com.shreyaspatil.material.navigationview.MaterialNavigationView;
+import com.tashila.mywalletfree.accounts.AccountManager;
+import com.tashila.mywalletfree.bills.BillsFragment;
+import com.tashila.mywalletfree.cart.CartFragment;
+import com.tashila.mywalletfree.settings.Settings;
 
 import java.util.Arrays;
 import java.util.Calendar;

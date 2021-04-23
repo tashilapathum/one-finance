@@ -17,6 +17,8 @@ import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
+import com.tashila.mywalletfree.loans.Loan;
+import com.tashila.mywalletfree.loans.LoansFragment;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

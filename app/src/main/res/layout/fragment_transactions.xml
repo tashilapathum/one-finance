@@ -43,7 +43,7 @@
                 android:contentDescription="show or hide filters"
                 android:paddingHorizontal="16dp"
                 android:src="@drawable/ic_filter"
-                android:tint="?android:attr/color"/>
+                android:tint="@android:color/black"/>
 
         </RelativeLayout>
 

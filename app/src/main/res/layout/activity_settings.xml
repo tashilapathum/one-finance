@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:fitsSystemWindows="true"
-    tools:context=".Settings">
+    tools:context=".settings.Settings">
 
     <RelativeLayout
         android:layout_width="match_parent"

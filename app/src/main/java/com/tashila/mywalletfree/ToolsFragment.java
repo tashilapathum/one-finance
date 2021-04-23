@@ -1,8 +1,6 @@
 package com.tashila.mywalletfree;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +8,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.media2.exoplayer.external.C;
-import androidx.transition.TransitionManager;
 
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.tashila.mywalletfree.bills.BillsFragment;
+import com.tashila.mywalletfree.cart.CartFragment;
+import com.tashila.mywalletfree.loans.LoansFragment;
 
 public class ToolsFragment extends Fragment {
     private View view;

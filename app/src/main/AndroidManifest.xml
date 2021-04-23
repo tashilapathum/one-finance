@@ -26,10 +26,10 @@
         <activity android:name=".Insights" />
         <activity android:name=".About" />
         <activity
-            android:name=".AccountManager"
+            android:name=".accounts.AccountManager"
             android:label="Account Manager" />
         <activity android:name=".UpgradeToPro" />
-        <activity android:name=".AccountDetails" />
+        <activity android:name=".accounts.AccountDetails" />
         <activity android:name=".NewAccount" />
         <activity android:name=".InitialSetup" />
         <activity
@@ -42,7 +42,7 @@
             android:name=".TransactionHistory"
             android:label="@string/recent_transactions" />
         <activity
-            android:name=".Settings"
+            android:name=".settings.Settings"
             android:label="@string/settings" />
         <activity
             android:name=".MainActivity"
