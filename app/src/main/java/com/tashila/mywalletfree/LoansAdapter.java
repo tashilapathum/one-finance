@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lhoyong.library.SmoothCheckBox;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -62,19 +64,15 @@ public class LoansAdapter extends ListAdapter<Loan, LoansAdapter.LoanHolder> {
     public void onBindViewHolder(@NonNull LoanHolder holder, int position) {
         final Loan currentLoan = getItem(position);
         holder.tvTitle.setText(currentLoan.getPerson());
+        holder.tvAmount.setText(currency + currentLoan.getAmount());
         holder.tvSettledDate.setText(currentLoan.getSettledDate());
         holder.tvDueDate.setText(currentLoan.getDueDate());
         holder.tvRemarks.setText(currentLoan.getDetails());
-        holder.imMarkAsPaid.setOnClickListener(new View.OnClickListener() {
+
+        holder.cbMarkSettled.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                LoansFragment.getInstance().markAsPaid(currentLoan);
-            }
-        });
-        holder.imMarkUnpaid.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LoansFragment.getInstance().markUnpaid(currentLoan);
+            public void onCheckedChanged(@NotNull SmoothCheckBox smoothCheckBox, boolean isChecked) {
+                LoansFragment.getInstance().toggleSettled(currentLoan, isChecked);
             }
         });
         holder.imEdit.setOnClickListener(new View.OnClickListener() {
@@ -133,7 +131,6 @@ public class LoansAdapter extends ListAdapter<Loan, LoansAdapter.LoanHolder> {
         private TextView tvOverdue;
         private ImageButton imEdit;
         private ImageButton imDelete;
-        private ImageButton imMarkUnpaid;
         private SmoothCheckBox cbMarkSettled;
         private LinearLayout invisible_part;
 
@@ -148,7 +145,6 @@ public class LoansAdapter extends ListAdapter<Loan, LoansAdapter.LoanHolder> {
             cbMarkSettled = itemView.findViewById(R.id.markAsSettled);
             imEdit = itemView.findViewById(R.id.edit);
             imDelete = itemView.findViewById(R.id.delete);
-            imMarkUnpaid = itemView.findViewById(R.id.markUnpaid);
             invisible_part = itemView.findViewById(R.id.invisible_part);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

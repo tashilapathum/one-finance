@@ -42,12 +42,12 @@ public class LoansFragment extends Fragment {
         ViewPager viewPager = view.findViewById(R.id.loans_view_pager);
         TabLayout tabLayout = view.findViewById(R.id.loans_tab_layout);
 
-        DueFragment dueFragment = new DueFragment();
-        PaidFragment paidFragment = new PaidFragment();
+        BorrowedFragment borrowedFragment = new BorrowedFragment();
+        LentFragment lentFragment = new LentFragment();
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), 0);
-        viewPagerAdapter.addFragment(dueFragment, getActivity().getResources().getString(R.string.due));
-        viewPagerAdapter.addFragment(paidFragment, getActivity().getResources().getString(R.string.paid));
+        viewPagerAdapter.addFragment(borrowedFragment, getActivity().getResources().getString(R.string.borrowed));
+        viewPagerAdapter.addFragment(lentFragment, getActivity().getResources().getString(R.string.lent));
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -76,21 +76,11 @@ public class LoansFragment extends Fragment {
         loansViewModel.insert(loan);
     }
 
-    public void markAsPaid(Loan loan) {
-        loan.setPaid(true);
+    public void toggleSettled(Loan loan, boolean isSettled) {
+        loan.setSettled(isSettled);
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-        loan.setPaidDate(formatter.format(LocalDate.now()));
-        loan.setLastPaidMonth(LocalDate.now().getMonthValue());
-        Log.i(TAG, "month value: " + LocalDate.now().getMonthValue());
+        loan.setSettledDate(formatter.format(LocalDate.now()));
         loansViewModel.update(loan);
-        Toast.makeText(getActivity(), R.string.as_paid, Toast.LENGTH_SHORT).show();
-    }
-
-    public void markUnpaid(Loan loan) {
-        loan.setPaid(false);
-        loan.setPaidDate("N/A");
-        loansViewModel.update(loan);
-        Toast.makeText(getActivity(), R.string.as_due, Toast.LENGTH_SHORT).show();
     }
 
     public void editLoan(Loan loan) {
@@ -106,7 +96,7 @@ public class LoansFragment extends Fragment {
     public void deleteLoan(final Loan loan) {
         new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.confirm)
-                .setMessage(R.string.confirm_delete_loan)
+                .setMessage(R.string.confirm_loan_delete)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

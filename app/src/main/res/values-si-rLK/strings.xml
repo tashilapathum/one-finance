@@ -418,4 +418,9 @@
     <string name="tools">Tools</string>
     <string name="person_s_name">Person\'s name</string>
     <string name="settled_">"Settled: "</string>
+    <string name="new_loan">New loan</string>
+    <string name="edit_loan">Edit loan</string>
+    <string name="lent_date">Lent date</string>
+    <string name="confirm_loan_delete">Are you sure you want to delete this item?</string>
+    <string name="lent_">"Lent: "</string>
 </resources>

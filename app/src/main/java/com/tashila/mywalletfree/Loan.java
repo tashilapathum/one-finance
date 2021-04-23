@@ -15,23 +15,27 @@ public class Loan {
     private String person;
     private String amount;
     private String settledDate;
+    private String lentDate;
     private String dueDate;
     private String details;
 
-    public Loan(boolean isLent, boolean isBorrowed, boolean isSettled, String person, String amount, String settledDate, String dueDate, String details) {
+    public Loan(boolean isLent, boolean isBorrowed, boolean isSettled, String person, String amount, String settledDate, String lentDate, String dueDate, String details) {
         this.isLent = isLent;
         this.isBorrowed = isBorrowed;
         this.isSettled = isSettled;
         this.person = person;
         this.amount = amount;
-        if (settledDate == null || settledDate.isEmpty())
-            this.settledDate = "N/A";
-        else
-            this.settledDate = settledDate;
-        if (dueDate == null || dueDate.isEmpty())
-            this.dueDate = "N/A";
-        else
-            this.dueDate = dueDate;
+        this.lentDate = lentDate;
+
+        if (lentDate == null || lentDate.isEmpty()) this.lentDate = "N/A";
+        else this.lentDate = lentDate;
+
+        if (dueDate == null || dueDate.isEmpty()) this.dueDate = "N/A";
+        else this.dueDate = dueDate;
+
+        if (settledDate == null || settledDate.isEmpty()) this.settledDate = "N/A";
+        else this.settledDate = settledDate;
+
         this.details = details;
     }
 
@@ -105,5 +109,13 @@ public class Loan {
 
     public void setSettled(boolean settled) {
         isSettled = settled;
+    }
+
+    public String getLentDate() {
+        return lentDate;
+    }
+
+    public void setLentDate(String lentDate) {
+        this.lentDate = lentDate;
     }
 }

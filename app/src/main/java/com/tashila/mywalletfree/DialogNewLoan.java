@@ -6,8 +6,6 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -27,21 +25,19 @@ import java.time.format.FormatStyle;
 public class DialogNewLoan extends DialogFragment {
     private View view;
     private AlertDialog dialog;
-    private TextInputLayout tilTitle;
+    private TextInputLayout tilPerson;
     private TextInputLayout tilAmount;
     private TextInputLayout tilDate;
-    private TextInputLayout tilRemarks;
-    private EditText etTitle;
+    private TextInputLayout tilDetails;
+    private EditText etPerson;
     private EditText etAmount;
     private EditText etDate;
-    private EditText etRemarks;
-    private boolean isPaid;
-    private boolean isMonthly;
+    private EditText etDetails;
+    private boolean isLent;
     private RadioGroup radioGroup;
     private DateTimeFormatter formatter;
     private static DialogNewLoan instance;
     private Loan editingLoan;
-    private CheckBox cbMonthly;
     private SharedPreferences sharedPref;
 
     @NonNull
@@ -52,17 +48,16 @@ public class DialogNewLoan extends DialogFragment {
         instance = this;
 
         view = getActivity().getLayoutInflater().inflate(R.layout.dialog_new_loan, null);
-        tilTitle = view.findViewById(R.id.title);
+        tilPerson = view.findViewById(R.id.person);
         tilAmount = view.findViewById(R.id.amount);
-        tilDate = view.findViewById(R.id.loanDate);
-        tilRemarks = view.findViewById(R.id.remarks);
-        etTitle = tilTitle.getEditText();
+        tilDate = view.findViewById(R.id.date);
+        tilDetails = view.findViewById(R.id.details);
+        etPerson = tilPerson.getEditText();
         etAmount = tilAmount.getEditText();
         etDate = tilDate.getEditText();
-        etRemarks = tilRemarks.getEditText();
-        isPaid = true;
+        etDetails = tilDetails.getEditText();
+        isLent = true;
         radioGroup = view.findViewById(R.id.rgPaidOrDue);
-        cbMonthly = view.findViewById(R.id.cbMonthly);
         setDate(LocalDate.now().format(formatter));
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,12 +69,6 @@ public class DialogNewLoan extends DialogFragment {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 setPaymentStatus(radioGroup);
-            }
-        });
-        cbMonthly.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                isMonthly = isChecked;
             }
         });
 
@@ -116,22 +105,20 @@ public class DialogNewLoan extends DialogFragment {
     }
 
     private void fillDetails(Loan editingLoan) {
-        String title = editingLoan.getTitle();
+        String person = editingLoan.getPerson();
         String amount = editingLoan.getAmount();
         String date;
-        if (editingLoan.isPaid())
-            date = editingLoan.getPaidDate();
+        if (editingLoan.isLent())
+            date = editingLoan.getLentDate();
         else {
             date = editingLoan.getDueDate();
             radioGroup.check(radioGroup.getChildAt(1).getId());
         }
-        if (editingLoan.isMonthly())
-            cbMonthly.setChecked(true);
-        String remarks = editingLoan.getRemarks();
-        etTitle.setText(title);
+        String details = editingLoan.getDetails();
+        etPerson.setText(person);
         etAmount.setText(amount);
         etDate.setText(date);
-        etRemarks.setText(remarks);
+        etDetails.setText(details);
     }
 
     public static DialogNewLoan getInstance() {
@@ -151,25 +138,17 @@ public class DialogNewLoan extends DialogFragment {
     }
 
     private void onClickAddOrEdit() {
-        if (validateTitle() && validateAmount()) {
-            String title = etTitle.getText().toString();
+        if (validatePerson() && validateAmount()) {
+            String person = etPerson.getText().toString();
             String amount = etAmount.getText().toString();
-            String paidDate = null;
+            String lentDate = null;
             String dueDate = null;
-            int lastPaidMonth = -1; //to check if this was set
-            if (isPaid) {
-                paidDate = etDate.getText().toString();
-                DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-                try {
-                    lastPaidMonth = LocalDate.parse(paidDate, formatter).getMonthValue();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+            if (isLent)
+                lentDate = etDate.getText().toString();
             else
                 dueDate = etDate.getText().toString();
-            String remarks = etRemarks.getText().toString();
-            Loan loan = new Loan(isPaid, title, amount, paidDate, dueDate, remarks, isMonthly, lastPaidMonth);
+            String details = etDetails.getText().toString();
+            Loan loan = new Loan(isLent, !isLent, false, person, amount, null, lentDate, dueDate, details);
             if (editingLoan != null) {
                 loan.setId(editingLoan.getId());
                 LoansFragment.getInstance().updateLoan(loan);
@@ -181,12 +160,12 @@ public class DialogNewLoan extends DialogFragment {
         }
     }
 
-    private boolean validateTitle() {
-        if (etTitle.getText().toString().isEmpty()) {
-            tilTitle.setError(getActivity().getResources().getString(R.string.required));
+    private boolean validatePerson() {
+        if (etPerson.getText().toString().isEmpty()) {
+            tilPerson.setError(getActivity().getResources().getString(R.string.required));
             return false;
         } else {
-            tilTitle.setError(null);
+            tilPerson.setError(null);
             return true;
         }
     }
@@ -214,15 +193,15 @@ public class DialogNewLoan extends DialogFragment {
     }
 
     private void setPaymentStatus(RadioGroup radioGroup) {
-        RadioButton rbPaid = (RadioButton) radioGroup.getChildAt(0);
-        RadioButton rbDue = (RadioButton) radioGroup.getChildAt(1);
-        if (rbPaid.isChecked()) {
-            tilDate.setHint(getString(R.string.paid_date));
-            isPaid = true;
+        RadioButton rbLent = (RadioButton) radioGroup.getChildAt(0);
+        RadioButton rbBorrowed = (RadioButton) radioGroup.getChildAt(1);
+        if (rbLent.isChecked()) {
+            tilDate.setHint(getString(R.string.lent_date));
+            isLent = true;
         }
-        if (rbDue.isChecked()) {
+        if (rbBorrowed.isChecked()) {
             tilDate.setHint(getString(R.string.pay_due_date));
-            isPaid = false;
+            isLent = false;
         }
     }
 }

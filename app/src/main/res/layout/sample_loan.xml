@@ -87,10 +87,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/settled_" />
+                    android:text="@string/lent_" />
 
                 <TextView
-                    android:id="@+id/settledDate"
+                    android:id="@+id/lentOrBorrowedDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="10/07/2020" />
@@ -110,6 +110,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="30/08/2020" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settled_" />
+
+                <TextView
+                    android:id="@+id/settledDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="10/07/2020" />
             </LinearLayout>
 
             <TextView
