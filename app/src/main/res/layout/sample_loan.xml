@@ -2,7 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/billCard"
+    android:id="@+id/loanCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
@@ -29,11 +29,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_toStartOf="@id/markAsPaid"
+                android:layout_toStartOf="@id/markAsSettled"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                tools:text="Bill title" />
+                tools:text="Loan title" />
 
             <TextView
                 android:id="@+id/amount"
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
                 android:layout_alignParentStart="true"
-                android:layout_toStartOf="@id/markAsPaid"
+                android:layout_toStartOf="@id/markAsSettled"
                 tools:text="$25.00" />
 
             <TextView
@@ -50,22 +50,24 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/amount"
                 android:layout_alignParentStart="true"
-                android:layout_toStartOf="@id/markAsPaid"
+                android:layout_toStartOf="@id/markAsSettled"
                 android:text="@string/overdue"
-                android:visibility="gone"
                 android:textStyle="italic"
                 android:textColor="@android:color/holo_red_light"/>
 
-            <ImageButton
-                android:id="@+id/markAsPaid"
+            <com.lhoyong.library.SmoothCheckBox
+                android:id="@+id/markAsSettled"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:contentDescription="mark as paid"
-                android:padding="8dp"
-                android:src="@drawable/ic_paid" />
+                app:stroke_enable="true"
+                app:color_checked="@color/colorPrimary"
+                app:color_tick="@android:color/transparent"
+                app:color_unchecked="@android:color/transparent"
+                app:color_unchecked_stroke="@color/colorDividerLight"
+                app:duration="150"
+                app:stroke_width="1dp" />
         </RelativeLayout>
 
         <LinearLayout
@@ -85,7 +87,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/paid_" />
+                    android:text="@string/settled_" />
 
                 <TextView
                     android:id="@+id/settledDate"
@@ -111,10 +113,10 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/remarks"
+                android:id="@+id/details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Netflix monthly bill" />
+                tools:text="Netflix monthly loan" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -124,24 +126,12 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/markUnpaid"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="8dp"
-                    android:background="?android:selectableItemBackgroundBorderless"
-                    android:contentDescription="mark as unpaid"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_undo"
-                    android:visibility="gone"
-                    tools:visibility="visible"/>
-
-                <ImageButton
                     android:id="@+id/edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:background="?android:selectableItemBackgroundBorderless"
-                    android:contentDescription="delete bill"
+                    android:contentDescription="delete loan"
                     android:padding="8dp"
                     android:src="@drawable/ic_edit" />
 
@@ -151,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:background="?android:selectableItemBackgroundBorderless"
-                    android:contentDescription="delete bill"
+                    android:contentDescription="delete loan"
                     android:padding="8dp"
                     android:src="@drawable/ic_delete" />
 

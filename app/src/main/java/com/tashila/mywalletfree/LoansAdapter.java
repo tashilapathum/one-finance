@@ -17,89 +17,82 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.lhoyong.library.SmoothCheckBox;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
-public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
-    public static final String TAG = "BillsAdapter";
+public class LoansAdapter extends ListAdapter<Loan, LoansAdapter.LoanHolder> {
+    public static final String TAG = "LoansAdapter";
     private Context context;
     private SharedPreferences sharedPref;
     private String currency;
 
 
-    public BillsAdapter(Context context) {
+    public LoansAdapter(Context context) {
         super(DIFF_CALLBACK);
         this.context = context;
         sharedPref = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
         currency = sharedPref.getString("currency", "");
     }
 
-    private static final DiffUtil.ItemCallback<Bill> DIFF_CALLBACK = new DiffUtil.ItemCallback<Bill>() {
+    private static final DiffUtil.ItemCallback<Loan> DIFF_CALLBACK = new DiffUtil.ItemCallback<Loan>() {
         @Override
-        public boolean areItemsTheSame(@NonNull Bill oldItem, @NonNull Bill newItem) {
+        public boolean areItemsTheSame(@NonNull Loan oldItem, @NonNull Loan newItem) {
             return false;
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull Bill oldItem, @NonNull Bill newItem) {
+        public boolean areContentsTheSame(@NonNull Loan oldItem, @NonNull Loan newItem) {
             return false;
         }
     };
 
     @NonNull
     @Override
-    public BillHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_bill, parent, false);
-        return new BillHolder(itemView);
+    public LoanHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_loan, parent, false);
+        return new LoanHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BillHolder holder, int position) {
-        final Bill currentBill = getItem(position);
-        holder.tvTitle.setText(currentBill.getTitle());
-        if (currentBill.isMonthly())
-            holder.tvAmount.setText(currency + currentBill.getAmount() + " (" + context.getResources().getString(R.string.monthly) + ")");
-        else
-            holder.tvAmount.setText(currency + currentBill.getAmount());
-        holder.tvPaidDate.setText(currentBill.getPaidDate());
-        holder.tvDueDate.setText(currentBill.getDueDate());
-        holder.tvRemarks.setText(currentBill.getRemarks());
+    public void onBindViewHolder(@NonNull LoanHolder holder, int position) {
+        final Loan currentLoan = getItem(position);
+        holder.tvTitle.setText(currentLoan.getPerson());
+        holder.tvSettledDate.setText(currentLoan.getSettledDate());
+        holder.tvDueDate.setText(currentLoan.getDueDate());
+        holder.tvRemarks.setText(currentLoan.getDetails());
         holder.imMarkAsPaid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BillsFragment.getInstance().markAsPaid(currentBill);
+                LoansFragment.getInstance().markAsPaid(currentLoan);
             }
         });
         holder.imMarkUnpaid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BillsFragment.getInstance().markUnpaid(currentBill);
+                LoansFragment.getInstance().markUnpaid(currentLoan);
             }
         });
         holder.imEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BillsFragment.getInstance().editBill(currentBill);
+                LoansFragment.getInstance().editLoan(currentLoan);
             }
         });
         holder.imDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BillsFragment.getInstance().deleteBill(currentBill);
+                LoansFragment.getInstance().deleteLoan(currentLoan);
             }
         });
 
-        //toggle due and paid buttons
-        if (currentBill.isPaid()) {
-            holder.imMarkAsPaid.setVisibility(View.GONE);
-            holder.imMarkUnpaid.setVisibility(View.VISIBLE);
-        } else {
-            holder.imMarkAsPaid.setVisibility(View.VISIBLE);
-            holder.imMarkUnpaid.setVisibility(View.GONE);
-        }
+        //toggle isSettled
+        if (currentLoan.isSettled())
+            holder.cbMarkSettled.setChecked(true, true);
 
         //show and hide "overdue"
         //TODO: convert this to millis method
@@ -107,10 +100,10 @@ public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
         int today = LocalDate.now().getDayOfYear();
         int dueDay;
         try {
-            if (!currentBill.getDueDate().equals("N/A")) {
-                dueDay = LocalDate.parse(currentBill.getDueDate(), formatter).getDayOfYear();
+            if (!currentLoan.getDueDate().equals("N/A")) {
+                dueDay = LocalDate.parse(currentLoan.getDueDate(), formatter).getDayOfYear();
                 setNotifications(dueDay);
-                if (today > dueDay && !currentBill.isPaid())
+                if (today > dueDay && !currentLoan.isSettled())
                     holder.tvOverdue.setVisibility(View.VISIBLE);
                 else
                     holder.tvOverdue.setVisibility(View.GONE);
@@ -118,10 +111,6 @@ public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
         } catch (Exception e) { //because the user might change the localization
             e.printStackTrace();
         }
-
-        //renew monthly payments
-        if (currentBill.isMonthly() && currentBill.getLastPaidMonth() < LocalDate.now().getMonthValue())
-            currentBill.setPaid(false);
     }
 
     private void setNotifications(int dueDayOfYear) {
@@ -135,28 +124,28 @@ public class BillsAdapter extends ListAdapter<Bill, BillsAdapter.BillHolder> {
     }
 
 
-    class BillHolder extends RecyclerView.ViewHolder {
+    class LoanHolder extends RecyclerView.ViewHolder {
         private TextView tvTitle;
         private TextView tvAmount;
-        private TextView tvPaidDate;
+        private TextView tvSettledDate;
         private TextView tvDueDate;
         private TextView tvRemarks;
         private TextView tvOverdue;
-        private ImageButton imMarkAsPaid;
         private ImageButton imEdit;
         private ImageButton imDelete;
         private ImageButton imMarkUnpaid;
+        private SmoothCheckBox cbMarkSettled;
         private LinearLayout invisible_part;
 
-        public BillHolder(@NonNull View itemView) {
+        public LoanHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.title);
             tvAmount = itemView.findViewById(R.id.amount);
-            tvPaidDate = itemView.findViewById(R.id.settledDate);
+            tvSettledDate = itemView.findViewById(R.id.settledDate);
             tvDueDate = itemView.findViewById(R.id.dueDate);
             tvRemarks = itemView.findViewById(R.id.remarks);
             tvOverdue = itemView.findViewById(R.id.overdue);
-            imMarkAsPaid = itemView.findViewById(R.id.markAsPaid);
+            cbMarkSettled = itemView.findViewById(R.id.markAsSettled);
             imEdit = itemView.findViewById(R.id.edit);
             imDelete = itemView.findViewById(R.id.delete);
             imMarkUnpaid = itemView.findViewById(R.id.markUnpaid);

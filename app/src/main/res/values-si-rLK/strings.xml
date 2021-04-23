@@ -416,4 +416,6 @@
     <string name="yearly_ads_quota">මෙම වසර අවසානය තෙක් වෙළෙඳ දැන්වීම් ඉවත් කර ඇත. ඔබට මීළඟ වසර තෙක් නැවත වෙළෙඳ දැන්වීම් නැරඹීමට අවශ්‍ය නොවේ.</string>
     <string name="investments">Investments</string>
     <string name="tools">Tools</string>
+    <string name="person_s_name">Person\'s name</string>
+    <string name="settled_">"Settled: "</string>
 </resources>

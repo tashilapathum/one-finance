@@ -146,16 +146,6 @@ public class CartAdapter extends ListAdapter<CartItem, CartAdapter.CartItemHolde
 
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return position;
-    }
-
     public interface OnCartItemClickListener {
         void OnCartItemClick(CartItem cartItem);
     }
