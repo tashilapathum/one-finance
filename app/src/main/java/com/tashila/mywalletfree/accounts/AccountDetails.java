@@ -20,7 +20,6 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.tashila.mywalletfree.NewAccount;
 import com.tashila.mywalletfree.R;
 
 import java.text.DecimalFormat;

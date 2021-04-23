@@ -1,11 +1,11 @@
-package com.tashila.mywalletfree;
+package com.tashila.mywalletfree.reports;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,42 +14,44 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.tashila.mywalletfree.Amount;
+import com.tashila.mywalletfree.R;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
-public class MonthlyReportsAdapter extends ListAdapter<MonthlyReportsFragment.MonthlyReport, MonthlyReportsAdapter.ReportHolder> {
-    public static final String TAG = "MonthlyReportsAdapter";
+public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.WeeklyReport, WeeklyReportsAdapter.ReportHolder> {
+    public static final String TAG = "WeeklyReportsAdapter";
     private Context context;
     private String currency;
     private String theme;
     private boolean isFromWallet;
 
-    protected MonthlyReportsAdapter(boolean isFromWallet) {
+    protected WeeklyReportsAdapter(boolean isFromWallet) {
         super(DIFF_CALLBACK);
         this.isFromWallet = isFromWallet;
     }
 
-    private static final DiffUtil.ItemCallback<MonthlyReportsFragment.MonthlyReport> DIFF_CALLBACK = new DiffUtil.ItemCallback<MonthlyReportsFragment.MonthlyReport>() {
+    private static final DiffUtil.ItemCallback<WeeklyReportsFragment.WeeklyReport> DIFF_CALLBACK = new DiffUtil.ItemCallback<WeeklyReportsFragment.WeeklyReport>() {
         @Override
-        public boolean areItemsTheSame(@NonNull MonthlyReportsFragment.MonthlyReport oldItem, @NonNull MonthlyReportsFragment.MonthlyReport newItem) {
+        public boolean areItemsTheSame(@NonNull WeeklyReportsFragment.WeeklyReport oldItem, @NonNull WeeklyReportsFragment.WeeklyReport newItem) {
             return false;
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull MonthlyReportsFragment.MonthlyReport oldItem, @NonNull MonthlyReportsFragment.MonthlyReport newItem) {
+        public boolean areContentsTheSame(@NonNull WeeklyReportsFragment.WeeklyReport oldItem, @NonNull WeeklyReportsFragment.WeeklyReport newItem) {
             return false;
         }
     };
@@ -59,79 +61,79 @@ public class MonthlyReportsAdapter extends ListAdapter<MonthlyReportsFragment.Mo
     public ReportHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView;
         if (isFromWallet)
-            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_monthly_report_2, parent, false);
+            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_weekly_report_2, parent, false);
         else
-            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_monthly_report, parent, false);
+            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_weekly_report, parent, false);
         return new ReportHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ReportHolder holder, int position) {
-        MonthlyReportsFragment.MonthlyReport monthlyReport = getItem(position);
+        WeeklyReportsFragment.WeeklyReport weeklyReport = getItem(position);
         context = holder.itemView.getContext();
         SharedPreferences sharedPref = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
         currency = sharedPref.getString("currency", "");
         theme = sharedPref.getString("theme", "light");
 
         //Strings
-        holder.tvMonth.setText(monthlyReport.getMonth());
-        holder.tvIncome.setText(monthlyReport.getIncome());
-        holder.tvExpenses.setText(monthlyReport.getExpenses());
-        holder.tvBudget.setText(monthlyReport.getBudget());
-        holder.tvBudgetLeft.setText(monthlyReport.getBudgetLeft());
-        if (monthlyReport.getBudgetLeft().contains("-"))
+        holder.tvWeek.setText(weeklyReport.getWeek());
+        holder.tvIncome.setText(weeklyReport.getIncome());
+        holder.tvExpenses.setText(weeklyReport.getExpenses());
+        holder.tvBudget.setText(weeklyReport.getBudget());
+        holder.tvBudgetLeft.setText(weeklyReport.getBudgetLeft());
+        if (weeklyReport.getBudgetLeft().contains("-"))
             holder.tvBudgetLeft.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
         else
             holder.tvBudgetLeft.setTextColor(context.getResources().getColor(android.R.color.tab_indicator_text));
-        holder.tvHighestExpense.setText(monthlyReport.getHighestExpense());
-        holder.tvHighestItem.setText(monthlyReport.getHighestItem());
-        if (!monthlyReport.getIncomeDiff().contains("null")
-                && !monthlyReport.getIncomeDiff().equals("(+.00)") && !monthlyReport.getIncomeDiff().equals("(-.00)")) {
+        holder.tvHighestExpense.setText(weeklyReport.getHighestExpense());
+        holder.tvHighestItem.setText(weeklyReport.getHighestItem());
+        if (!weeklyReport.getIncomeDiff().contains("null")
+                && !weeklyReport.getIncomeDiff().equals("(+.00)") && !weeklyReport.getIncomeDiff().equals("(-.00)")) {
             holder.tvIncomeDiff.setVisibility(View.VISIBLE);
-            holder.tvIncomeDiff.setText(monthlyReport.getIncomeDiff());
-            if (monthlyReport.getIncomeDiff().contains("+"))
+            holder.tvIncomeDiff.setText(weeklyReport.getIncomeDiff());
+            if (weeklyReport.getIncomeDiff().contains("+"))
                 holder.tvIncomeDiff.setTextColor(context.getResources().getColor(android.R.color.holo_green_dark));
             else
                 holder.tvIncomeDiff.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
         } else
             holder.tvIncomeDiff.setVisibility(View.GONE);
-        if (!monthlyReport.getExpensesDiff().contains("null")
-                && !monthlyReport.getExpensesDiff().equals("(+.00)") && !monthlyReport.getExpensesDiff().equals("(-.00)")) {
+        if (!weeklyReport.getExpensesDiff().contains("null")
+                && !weeklyReport.getExpensesDiff().equals("(+.00)") && !weeklyReport.getExpensesDiff().equals("(-.00)")) {
             holder.tvExpensesDiff.setVisibility(View.VISIBLE);
-            holder.tvExpensesDiff.setText(monthlyReport.getExpensesDiff());
-            if (monthlyReport.getExpensesDiff().contains("+-")) { //that weird thing of 'today'
-                String diff = monthlyReport.getExpensesDiff().replace("+", "");
+            holder.tvExpensesDiff.setText(weeklyReport.getExpensesDiff());
+            if (weeklyReport.getExpensesDiff().contains("+-")) { //that weird thing of 'today'
+                String diff = weeklyReport.getExpensesDiff().replace("+", "");
                 holder.tvExpensesDiff.setText(diff);
             }
-            if (monthlyReport.getExpensesDiff().contains("-"))
+            if (weeklyReport.getExpensesDiff().contains("-"))
                 holder.tvExpensesDiff.setTextColor(context.getResources().getColor(android.R.color.holo_green_dark));
             else
                 holder.tvExpensesDiff.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
         } else
             holder.tvExpensesDiff.setVisibility(View.GONE);
-        holder.tvAverageIncome.setText(monthlyReport.getAverageIncome());
-        holder.tvAverageExpense.setText(monthlyReport.getAverageExpenses());
-        if (monthlyReport.getMostIncomeDay() != null)
-            holder.tvMostIncome.setText(monthlyReport.getMostIncomeDay());
+        if (weeklyReport.getMostIncomeDay() != null)
+            holder.tvMostIncome.setText(weeklyReport.getMostIncomeDay());
         else
             holder.tvMostIncome.setText(null);
-        if (monthlyReport.getMostExpenseDay() != null)
-            holder.tvMostExpense.setText(monthlyReport.getMostExpenseDay());
+        if (weeklyReport.getMostExpenseDay() != null)
+            holder.tvMostExpense.setText(weeklyReport.getMostExpenseDay());
         else
             holder.tvMostExpense.setText(null);
 
         //charts
-        if (monthlyReport.getIncome() != null || monthlyReport.getExpenses() != null)
-            drawIncomeExpenseChart(holder.chartInEx, monthlyReport);
-        if (new Amount(context, monthlyReport.getBudget()).getAmountValue() != 0)
-            drawBudgetChart(holder.chartBudget, monthlyReport);
-        drawDailyChart(holder.chartDaily, monthlyReport);
+        if (weeklyReport.getIncome() != null || weeklyReport.getExpenses() != null)
+            drawIncomeExpenseChart(holder.chartInEx, weeklyReport);
+        if (new Amount(context, weeklyReport.getBudget()).getAmountValue() != 0)
+            drawBudgetChart(holder.chartBudget, weeklyReport);
+        if (weeklyReport.getWeek().contains(context.getString(R.string.r_this_week)))
+            holder.daily_data_layout.setVisibility(View.GONE);
+        drawDailyDetailsChart(holder.chartDaily, weeklyReport);
     }
 
-    private void drawBudgetChart(HorizontalBarChart chartView, MonthlyReportsFragment.MonthlyReport monthlyReport) {
+    private void drawBudgetChart(HorizontalBarChart chartView, WeeklyReportsFragment.WeeklyReport weeklyReport) {
         List<BarEntry> budgetUsed = new ArrayList<>();
-        double budget = Double.parseDouble(monthlyReport.getBudget().replace(currency, ""));
-        double expenses = Double.parseDouble(monthlyReport.getExpenses().replace(currency, ""));
+        double budget = Double.parseDouble(weeklyReport.getBudget().replace(currency, ""));
+        double expenses = Double.parseDouble(weeklyReport.getExpenses().replace(currency, ""));
         double usedBudget = (expenses / budget) * 100;
         if (expenses > budget)
             usedBudget = 100;
@@ -168,11 +170,11 @@ public class MonthlyReportsAdapter extends ListAdapter<MonthlyReportsFragment.Mo
         chartView.invalidate();
     }
 
-    private void drawIncomeExpenseChart(HorizontalBarChart chartView, MonthlyReportsFragment.MonthlyReport monthlyReport) {
+    private void drawIncomeExpenseChart(HorizontalBarChart chartView, WeeklyReportsFragment.WeeklyReport weeklyReport) {
         List<BarEntry> incomes = new ArrayList<>();
         List<BarEntry> expenses = new ArrayList<>();
-        incomes.add(new BarEntry(1f, Float.parseFloat(monthlyReport.getIncome().replace(currency, ""))));
-        expenses.add(new BarEntry(2f, Float.parseFloat(monthlyReport.getExpenses().replace(currency, ""))));
+        incomes.add(new BarEntry(1f, Float.parseFloat(weeklyReport.getIncome().replace(currency, ""))));
+        expenses.add(new BarEntry(2f, Float.parseFloat(weeklyReport.getExpenses().replace(currency, ""))));
         BarDataSet expensesSet = new BarDataSet(expenses, "Expenses");
         expensesSet.setColor(context.getResources().getColor(R.color.colorRed));
         BarDataSet incomesSet = new BarDataSet(incomes, "Income");
@@ -203,57 +205,61 @@ public class MonthlyReportsAdapter extends ListAdapter<MonthlyReportsFragment.Mo
         chartView.invalidate();
     }
 
-    private void drawDailyChart(LineChart chartView, MonthlyReportsFragment.MonthlyReport monthlyReport) {
-        List<Entry> dailyIncomes = new ArrayList<>();
-        List<String> dailyIncomesList = monthlyReport.getIncomesOfMonth();
-        Collections.reverse(dailyIncomesList);
-        for (int x = 0; x < dailyIncomesList.size(); x++) {
-            Entry entry = new Entry((float) x, Float.parseFloat(dailyIncomesList.get(x)));
-            dailyIncomes.add(entry);
-        }
-        LineDataSet incomesDataSet = new LineDataSet(dailyIncomes, context.getResources().getString(R.string.income));
-        incomesDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-        incomesDataSet.setDrawValues(false);
-        incomesDataSet.setDrawCircles(false);
-        incomesDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        incomesDataSet.setColor(context.getResources().getColor(R.color.colorLighterBlue));
+    private void drawDailyDetailsChart(BarChart chartView, WeeklyReportsFragment.WeeklyReport weeklyReport) {
+        List<BarEntry> dailyDetails = new ArrayList<>();
+        for (int i = 0; i < 7; i++)
+            dailyDetails.add(new BarEntry(
+                    (float) i, new float[]{
+                    Float.parseFloat(weeklyReport.getDailyIncomes().get(i)),
+                    Float.parseFloat(weeklyReport.getDailyExpenses().get(i))
+            }));
+        BarDataSet dailyDetailsSet = new BarDataSet(dailyDetails, "");
+        String[] labels = {context.getString(R.string.incomes), context.getString(R.string.expenses)};
+        //add x axis labels (days of week)
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+        int firstDay = weekFields.getFirstDayOfWeek().getValue();
+        final List<String> xLabels = new ArrayList<>();
+        for (int x = 0; x < 7; x++)
+            xLabels.add(LocalDate.now().with(DayOfWeek.of(x + 1)).getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault()));
 
-        List<Entry> dailyExpenses = new ArrayList<>();
-        List<String> dailyExpensesList = monthlyReport.getExpensesOfMonth();
-        Collections.reverse(dailyExpensesList);
-        for (int x = 0; x < dailyExpensesList.size(); x++) {
-            Entry entry = new Entry((float) x, Float.parseFloat(dailyExpensesList.get(x)));
-            dailyExpenses.add(entry);
-        }
-        LineDataSet expensesDataSet = new LineDataSet(dailyExpenses, context.getResources().getString(R.string.expenses));
-        expensesDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-        expensesDataSet.setDrawValues(false);
-        expensesDataSet.setDrawCircles(false);
-        expensesDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        expensesDataSet.setColor(context.getResources().getColor(R.color.colorOrange));
-
-        List<ILineDataSet> dataSetList = new ArrayList<>();
-        dataSetList.add(incomesDataSet);
-        dataSetList.add(expensesDataSet);
-        LineData data = new LineData(dataSetList);
+        dailyDetailsSet.setColors(
+                context.getResources().getColor(android.R.color.holo_green_light),
+                context.getResources().getColor(android.R.color.holo_orange_dark));
+        dailyDetailsSet.setStackLabels(labels);
+        BarData data = new BarData(dailyDetailsSet);
+        chartView.setData(data);
+        chartView.getXAxis().setValueFormatter(new IndexAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return xLabels.get((int) value);
+            }
+        });
+        chartView.getXAxis().setTextColor(context.getResources().getColor(R.color.colorDivider));
+        chartView.getAxisLeft().setDrawGridLines(false);
+        chartView.getAxisRight().setDrawGridLines(false);
+        chartView.getXAxis().setDrawGridLines(false);
+        chartView.getAxisLeft().setDrawAxisLine(false);
+        chartView.getAxisRight().setDrawAxisLine(false);
+        chartView.getXAxis().setDrawAxisLine(false);
+        chartView.getAxisRight().setDrawLabels(false);
         chartView.animateY(1000, Easing.EaseOutCirc);
         chartView.getDescription().setEnabled(false);
-        chartView.getXAxis().setEnabled(false);
-        chartView.getXAxis().setAxisLineColor(context.getResources().getColor(R.color.colorDividerLight));
-        chartView.getAxisLeft().setAxisLineColor(context.getResources().getColor(R.color.colorDividerLight));
-        chartView.getAxisLeft().setTextColor(context.getResources().getColor(R.color.colorDivider));
-        chartView.getAxisLeft().setGridColor(context.getResources().getColor(R.color.colorDividerLight));
-        chartView.getAxisRight().setTextColor(context.getResources().getColor(R.color.colorDivider));
-        chartView.getAxisRight().setAxisLineColor(context.getResources().getColor(R.color.colorDividerLight));
-        chartView.getAxisRight().setGridColor(context.getResources().getColor(R.color.colorDividerLight));
         chartView.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
         chartView.getLegend().setTextColor(context.getResources().getColor(R.color.colorDivider));
-        chartView.setData(data);
+        chartView.getAxisLeft().setTextColor(context.getResources().getColor(R.color.colorDivider));
+        chartView.getAxisRight().setTextColor(context.getResources().getColor(R.color.colorDivider));
+        chartView.getAxisLeft().setAxisMinimum(0);
+        chartView.getBarData().setDrawValues(false);
+        chartView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        if (theme.equalsIgnoreCase("dark"))
+            chartView.getRenderer().getPaintRender().setShadowLayer(4, 3, -2, context.getResources().getColor(R.color.colorShadowDark));
+        else
+            chartView.getRenderer().getPaintRender().setShadowLayer(4, 3, -2, context.getResources().getColor(R.color.colorShadow));
         chartView.invalidate();
     }
 
     static class ReportHolder extends RecyclerView.ViewHolder {
-        private TextView tvMonth;
+        private TextView tvWeek;
         private TextView tvIncome;
         private TextView tvExpenses;
         private TextView tvBudget;
@@ -264,15 +270,14 @@ public class MonthlyReportsAdapter extends ListAdapter<MonthlyReportsFragment.Mo
         private TextView tvExpensesDiff;
         private HorizontalBarChart chartInEx;
         private HorizontalBarChart chartBudget;
-        private LineChart chartDaily;
-        private TextView tvAverageIncome;
-        private TextView tvAverageExpense;
         private TextView tvMostIncome;
         private TextView tvMostExpense;
+        private BarChart chartDaily;
+        private LinearLayout daily_data_layout;
 
         public ReportHolder(@NonNull View itemView) {
             super(itemView);
-            tvMonth = itemView.findViewById(R.id.month);
+            tvWeek = itemView.findViewById(R.id.week);
             tvIncome = itemView.findViewById(R.id.income);
             tvExpenses = itemView.findViewById(R.id.expenses);
             tvBudget = itemView.findViewById(R.id.budget);
@@ -283,11 +288,10 @@ public class MonthlyReportsAdapter extends ListAdapter<MonthlyReportsFragment.Mo
             tvExpensesDiff = itemView.findViewById(R.id.expensesDiff);
             chartInEx = itemView.findViewById(R.id.chartInEx);
             chartBudget = itemView.findViewById(R.id.chartBudget);
-            chartDaily = itemView.findViewById(R.id.chartDaily);
-            tvAverageIncome = itemView.findViewById(R.id.avIncome);
-            tvAverageExpense = itemView.findViewById(R.id.avExpense);
             tvMostIncome = itemView.findViewById(R.id.mostIncome);
             tvMostExpense = itemView.findViewById(R.id.mostExpense);
+            chartDaily = itemView.findViewById(R.id.chartDaily);
+            daily_data_layout = itemView.findViewById(R.id.daily_data_layout);
         }
     }
 }

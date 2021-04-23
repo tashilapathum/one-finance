@@ -45,7 +45,10 @@ import com.shreyaspatil.material.navigationview.MaterialNavigationView;
 import com.tashila.mywalletfree.accounts.AccountManager;
 import com.tashila.mywalletfree.bills.BillsFragment;
 import com.tashila.mywalletfree.cart.CartFragment;
+import com.tashila.mywalletfree.reports.Reports;
 import com.tashila.mywalletfree.settings.Settings;
+import com.tashila.mywalletfree.transactions.TransactionHistory;
+import com.tashila.mywalletfree.transactions.TransactionsFragment;
 
 import java.util.Arrays;
 import java.util.Calendar;

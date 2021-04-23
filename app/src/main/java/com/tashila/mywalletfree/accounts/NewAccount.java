@@ -1,4 +1,4 @@
-package com.tashila.mywalletfree;
+package com.tashila.mywalletfree.accounts;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,8 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
-import com.tashila.mywalletfree.accounts.Account;
-import com.tashila.mywalletfree.accounts.AccountsViewModel;
+import com.tashila.mywalletfree.MainActivity;
+import com.tashila.mywalletfree.R;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

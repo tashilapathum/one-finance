@@ -1,4 +1,4 @@
-package com.tashila.mywalletfree;
+package com.tashila.mywalletfree.quicklist;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.tashila.mywalletfree.R;
 
 public class QuickListAdapter extends ListAdapter<QuickItem, QuickListAdapter.QuickItemHolder> {
     private Context context;

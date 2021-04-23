@@ -27,42 +27,42 @@ public class DateTimeHandler {
         this.localDateTime = localDateTime;
     }
 
-    String getTimestamp() {
+    public String getTimestamp() {
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
         return formatter.format(localDateTime);
     }
 
-    int getDayOfYear() {
+    public int getDayOfYear() {
         return localDateTime.getDayOfYear();
     }
 
-    int getWeekOfYear() {
+    public int getWeekOfYear() {
         TemporalField weekOfYear = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
         return localDateTime.get(weekOfYear);
     }
 
-    int getWeekOfYear(LocalDateTime localDateTime) {
+    public int getWeekOfYear(LocalDateTime localDateTime) {
         TemporalField weekOfYear = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
         return localDateTime.get(weekOfYear);
     }
 
-    LocalDateTime getLocalDateTime() {
+    public LocalDateTime getLocalDateTime() {
         return localDateTime;
     }
 
-    int getDayOfWeek() {
+    public int getDayOfWeek() {
         return localDateTime.getDayOfWeek().getValue();
     }
 
-    int getMonthValue() {
+    public int getMonthValue() {
         return localDateTime.getMonthValue();
     }
 
-    int getYear() {
+    public int getYear() {
         return localDateTime.getYear();
     }
 
-    int getDayOfMonth(){
+    public int getDayOfMonth(){
         return localDateTime.getDayOfMonth();
     }
 }

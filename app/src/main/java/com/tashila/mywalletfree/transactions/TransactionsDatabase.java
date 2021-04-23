@@ -1,11 +1,10 @@
-package com.tashila.mywalletfree;
+package com.tashila.mywalletfree.transactions;
 
 import android.content.Context;
 
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverters;
 
 @Database(entities = {TransactionItem.class}, version = 2, exportSchema = false)
 public abstract class TransactionsDatabase extends RoomDatabase {

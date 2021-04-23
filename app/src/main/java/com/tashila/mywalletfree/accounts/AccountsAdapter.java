@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.tashila.mywalletfree.NewAccount;
 import com.tashila.mywalletfree.R;
 
 import androidx.annotation.NonNull;

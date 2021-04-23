@@ -24,6 +24,9 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.tashila.mywalletfree.accounts.Account;
 import com.tashila.mywalletfree.accounts.AccountDetails;
 import com.tashila.mywalletfree.accounts.AccountsViewModel;
+import com.tashila.mywalletfree.accounts.NewAccount;
+import com.tashila.mywalletfree.transactions.TransactionItem;
+import com.tashila.mywalletfree.transactions.TransactionsViewModel;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

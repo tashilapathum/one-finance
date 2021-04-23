@@ -45,6 +45,6 @@
             android:contentDescription="remove item"
             android:padding="8dp"
             android:onClick="removeItem"
-            android:src="@drawable/ic_remove" />
+            android:src="@drawable/ic_delete" />
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>

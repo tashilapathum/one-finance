@@ -1,7 +1,6 @@
-package com.tashila.mywalletfree;
+package com.tashila.mywalletfree.quicklist;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +8,7 @@ import android.widget.EditText;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
+import com.tashila.mywalletfree.R;
 
 import java.text.DecimalFormat;
 

@@ -1,4 +1,4 @@
-package com.tashila.mywalletfree;
+package com.tashila.mywalletfree.transactions;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,12 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.tashila.mywalletfree.DateTimeHandler;
+import com.tashila.mywalletfree.R;
 
 public class TransactionsAdapter extends ListAdapter<TransactionItem, TransactionsAdapter.TransactionsViewHolder> {
     public static final String TAG = "TransactionsAdapter";

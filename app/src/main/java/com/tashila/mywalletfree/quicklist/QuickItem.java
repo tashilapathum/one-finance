@@ -1,4 +1,4 @@
-package com.tashila.mywalletfree;
+package com.tashila.mywalletfree.quicklist;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

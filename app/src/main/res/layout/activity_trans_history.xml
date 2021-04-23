@@ -8,7 +8,7 @@
     android:animateLayoutChanges="true"
     android:background="@drawable/background"
     android:fitsSystemWindows="true"
-    tools:context=".TransactionHistory">
+    tools:context=".transactions.TransactionHistory">
 
     <LinearLayout
         android:layout_width="0px"

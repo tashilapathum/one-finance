@@ -30,16 +30,16 @@
             android:label="Account Manager" />
         <activity android:name=".UpgradeToPro" />
         <activity android:name=".accounts.AccountDetails" />
-        <activity android:name=".NewAccount" />
+        <activity android:name=".accounts.NewAccount" />
         <activity android:name=".InitialSetup" />
         <activity
-            android:name=".Reports"
+            android:name=".reports.Reports"
             android:label="@string/reports" />
         <activity
-            android:name=".EditQuickList"
+            android:name=".quicklist.EditQuickList"
             android:label="@string/settings_quick_list" />
         <activity
-            android:name=".TransactionHistory"
+            android:name=".transactions.TransactionHistory"
             android:label="@string/recent_transactions" />
         <activity
             android:name=".settings.Settings"

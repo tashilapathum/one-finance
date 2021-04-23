@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:fitsSystemWindows="true"
-    tools:context=".ReportsOverviewFragment">
+    tools:context=".reports.ReportsOverviewFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -31,7 +31,16 @@ import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
 import com.tashila.mywalletfree.accounts.Account;
 import com.tashila.mywalletfree.accounts.AccountsViewModel;
+import com.tashila.mywalletfree.quicklist.EditQuickList;
+import com.tashila.mywalletfree.quicklist.QuickItem;
+import com.tashila.mywalletfree.quicklist.QuickListViewModel;
+import com.tashila.mywalletfree.reports.DailyReportsFragment;
+import com.tashila.mywalletfree.reports.MonthlyReportsFragment;
+import com.tashila.mywalletfree.reports.WeeklyReportsFragment;
 import com.tashila.mywalletfree.settings.DialogWalletInput;
+import com.tashila.mywalletfree.transactions.TransactionItem;
+import com.tashila.mywalletfree.transactions.TransactionsFragment;
+import com.tashila.mywalletfree.transactions.TransactionsViewModel;
 
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;

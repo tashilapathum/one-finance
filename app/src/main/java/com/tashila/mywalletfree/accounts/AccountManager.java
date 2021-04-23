@@ -28,11 +28,10 @@ import com.shreyaspatil.material.navigationview.MaterialNavigationView;
 import com.tashila.mywalletfree.About;
 import com.tashila.mywalletfree.AnimationHandler;
 import com.tashila.mywalletfree.MainActivity;
-import com.tashila.mywalletfree.NewAccount;
 import com.tashila.mywalletfree.R;
-import com.tashila.mywalletfree.Reports;
+import com.tashila.mywalletfree.reports.Reports;
 import com.tashila.mywalletfree.settings.Settings;
-import com.tashila.mywalletfree.TransactionHistory;
+import com.tashila.mywalletfree.transactions.TransactionHistory;
 import com.tashila.mywalletfree.UpgradeToPro;
 
 import java.util.List;

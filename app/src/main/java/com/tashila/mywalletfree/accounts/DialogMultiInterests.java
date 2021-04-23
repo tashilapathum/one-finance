@@ -1,4 +1,4 @@
-package com.tashila.mywalletfree;
+package com.tashila.mywalletfree.accounts;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.tashila.mywalletfree.R;
 import com.tashila.mywalletfree.accounts.Account;
 import com.tashila.mywalletfree.accounts.AccountsViewModel;
 
@@ -31,7 +32,7 @@ public class DialogMultiInterests extends DialogFragment {
 
     private DialogInterface.OnDismissListener onDismissListener;
 
-    void setOnDismissListener(DialogInterface.OnDismissListener onDismissListener) {
+    public void setOnDismissListener(DialogInterface.OnDismissListener onDismissListener) {
         this.onDismissListener = onDismissListener;
     }
 

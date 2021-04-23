@@ -18,7 +18,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
-import com.tashila.mywalletfree.DialogNewLoan;
 import com.tashila.mywalletfree.R;
 
 import java.time.LocalDate;

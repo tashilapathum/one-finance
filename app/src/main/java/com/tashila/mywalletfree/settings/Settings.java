@@ -33,13 +33,13 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.shreyaspatil.material.navigationview.MaterialNavigationView;
 import com.tashila.mywalletfree.About;
 import com.tashila.mywalletfree.AlertReceiver;
-import com.tashila.mywalletfree.EditQuickList;
+import com.tashila.mywalletfree.quicklist.EditQuickList;
 import com.tashila.mywalletfree.EnterPIN;
 import com.tashila.mywalletfree.MainActivity;
 import com.tashila.mywalletfree.R;
-import com.tashila.mywalletfree.Reports;
+import com.tashila.mywalletfree.reports.Reports;
 import com.tashila.mywalletfree.TimePickerFrag;
-import com.tashila.mywalletfree.TransactionHistory;
+import com.tashila.mywalletfree.transactions.TransactionHistory;
 import com.tashila.mywalletfree.UpgradeToPro;
 import com.tashila.mywalletfree.accounts.AccountManager;
 
