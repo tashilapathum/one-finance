@@ -67,7 +67,7 @@ public class LoansAdapter extends ListAdapter<Loan, LoansAdapter.LoanHolder> {
         holder.tvAmount.setText(currency + currentLoan.getAmount());
         holder.tvSettledDate.setText(currentLoan.getSettledDate());
         holder.tvDueDate.setText(currentLoan.getDueDate());
-        holder.tvRemarks.setText(currentLoan.getDetails());
+        holder.tvDetails.setText(currentLoan.getDetails());
 
         holder.cbMarkSettled.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
             @Override
@@ -127,7 +127,7 @@ public class LoansAdapter extends ListAdapter<Loan, LoansAdapter.LoanHolder> {
         private TextView tvAmount;
         private TextView tvSettledDate;
         private TextView tvDueDate;
-        private TextView tvRemarks;
+        private TextView tvDetails;
         private TextView tvOverdue;
         private ImageButton imEdit;
         private ImageButton imDelete;
@@ -140,7 +140,7 @@ public class LoansAdapter extends ListAdapter<Loan, LoansAdapter.LoanHolder> {
             tvAmount = itemView.findViewById(R.id.amount);
             tvSettledDate = itemView.findViewById(R.id.settledDate);
             tvDueDate = itemView.findViewById(R.id.dueDate);
-            tvRemarks = itemView.findViewById(R.id.remarks);
+            tvDetails = itemView.findViewById(R.id.details);
             tvOverdue = itemView.findViewById(R.id.overdue);
             cbMarkSettled = itemView.findViewById(R.id.markAsSettled);
             imEdit = itemView.findViewById(R.id.edit);

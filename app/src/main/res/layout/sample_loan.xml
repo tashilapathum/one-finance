@@ -59,6 +59,7 @@
                 android:id="@+id/markAsSettled"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 app:stroke_enable="true"
