@@ -143,14 +143,9 @@ public class DialogNewLoan extends DialogFragment {
         if (validatePerson() && validateAmount()) {
             String person = etPerson.getText().toString();
             String amount = etAmount.getText().toString();
-            String lentDate = null;
-            String dueDate = null;
-            if (isLent)
-                lentDate = etDate.getText().toString();
-            else
-                dueDate = etDate.getText().toString();
+            String lentDate = etDate.getText().toString();
             String details = etDetails.getText().toString();
-            Loan loan = new Loan(isLent, !isLent, false, person, amount, null, lentDate, dueDate, details);
+            Loan loan = new Loan(isLent, !isLent, false, person, amount, null, lentDate, null, details);
             if (editingLoan != null) {
                 loan.setId(editingLoan.getId());
                 LoansFragment.getInstance().updateLoan(loan);

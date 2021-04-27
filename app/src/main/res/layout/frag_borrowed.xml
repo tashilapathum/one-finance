@@ -12,7 +12,7 @@
         tools:visibility="gone"/>
 
     <RelativeLayout
-        android:id="@+id/bills_instructions"
+        android:id="@+id/loans_instructions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="64dp">
@@ -28,7 +28,7 @@
             <ImageView
                 android:layout_width="77dp"
                 android:layout_height="77dp"
-                android:src="@drawable/ic_bills"
+                android:src="@drawable/ic_loan"
                 android:alpha="0.5"
                 android:layout_marginBottom="24dp"/>
 
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="@string/you_can_manage_your_bills_using_this_feature_n"
+                android:text="@string/you_can_manage_your_loans_using_this_feature"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:alpha="0.5"/>
 
@@ -50,11 +50,11 @@
                     android:id="@+id/add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_add_bill" />
+                    android:src="@drawable/ic_add" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_a_new_bill"
+                    android:text="@string/add_a_new_loan"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
             </LinearLayout>
 
@@ -72,25 +72,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/mark_as_paid"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:alpha="0.5">
-                <ImageView
-                    android:id="@+id/unpaid"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_undo" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/mark_as_unpaid_due"
+                    android:text="@string/mark_as_settled"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
             </LinearLayout>
 
@@ -98,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="@string/ntap_a_bill_to_see_more_details_edit_or_delete"
+                android:text="@string/ntap_a_bill_to_see_more_details"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:alpha="0.5"/>
 

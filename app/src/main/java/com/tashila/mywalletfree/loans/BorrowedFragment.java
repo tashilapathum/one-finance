@@ -52,7 +52,7 @@ public class BorrowedFragment extends Fragment {
     }
 
     private void toggleInsVisibility(int itemCount) {
-        RelativeLayout loans_instructions = view.findViewById(R.id.bills_instructions);
+        RelativeLayout loans_instructions = view.findViewById(R.id.loans_instructions);
         if (itemCount > 0)
             loans_instructions.setVisibility(View.GONE);
         else

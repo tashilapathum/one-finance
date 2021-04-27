@@ -46,6 +46,7 @@ public class LoansAdapter extends ListAdapter<Loan, LoansAdapter.LoanHolder> {
         public boolean areContentsTheSame(@NonNull Loan oldItem, @NonNull Loan newItem) {
             return oldItem.isBorrowed() == newItem.isBorrowed()
                     && oldItem.isSettled() == newItem.isSettled()
+                    && oldItem.getSettledDate().equals(newItem.getSettledDate())
                     && oldItem.getAmount().equals(newItem.getAmount())
                     && oldItem.getDetails().equals(newItem.getDetails());
         }
@@ -63,12 +64,13 @@ public class LoansAdapter extends ListAdapter<Loan, LoansAdapter.LoanHolder> {
         final Loan currentLoan = getItem(position);
         if (currentLoan.isLent()) {
             holder.tvLentBorrowed.setText(R.string.lent_);
-            holder.tvTitle.setText("Lent to " + currentLoan.getPerson());
+            holder.tvTitle.setText(context.getString(R.string.lent_prefix) + currentLoan.getPerson() + context.getString(R.string.lent_suffix_si));
         } else {
             holder.tvLentBorrowed.setText(R.string.borrowed_);
-            holder.tvTitle.setText("Borrowed from " + currentLoan.getPerson());
+            holder.tvTitle.setText(context.getString(R.string.borrow_prefix) + currentLoan.getPerson() + context.getString(R.string.borrow_suffix_si));
         }
         holder.tvAmount.setText(currency + currentLoan.getAmount());
+        holder.tvLentBorrowedDate.setText(currentLoan.getLentDate());
         holder.tvSettledDate.setText(currentLoan.getSettledDate());
         holder.tvDetails.setText(currentLoan.getDetails());
 
@@ -86,16 +88,16 @@ public class LoansAdapter extends ListAdapter<Loan, LoansAdapter.LoanHolder> {
         });
 
         //settle
+        holder.lottieAnimationView.setMinAndMaxProgress(0.4f, 1.0f); //to show empty circle on start
         if (currentLoan.isSettled())
             holder.lottieAnimationView.playAnimation();
-        else
-            holder.lottieAnimationView.setProgress(0.4f); //to show empty circle on start
     }
 
     class LoanHolder extends RecyclerView.ViewHolder {
         private final TextView tvTitle;
         private final TextView tvAmount;
         private final TextView tvLentBorrowed;
+        private final TextView tvLentBorrowedDate;
         private final TextView tvSettledDate;
         private final TextView tvDetails;
         private final ImageButton imEdit;
@@ -110,6 +112,7 @@ public class LoansAdapter extends ListAdapter<Loan, LoansAdapter.LoanHolder> {
             tvTitle = itemView.findViewById(R.id.title);
             tvAmount = itemView.findViewById(R.id.amount);
             tvLentBorrowed = itemView.findViewById(R.id.txtLentBorrowed);
+            tvLentBorrowedDate = itemView.findViewById(R.id.lentOrBorrowedDate);
             tvSettledDate = itemView.findViewById(R.id.settledDate);
             tvDetails = itemView.findViewById(R.id.details);
             tick_layout = itemView.findViewById(R.id.tick_layout);
@@ -128,6 +131,7 @@ public class LoansAdapter extends ListAdapter<Loan, LoansAdapter.LoanHolder> {
             tick_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    lottieAnimationView.setMinAndMaxProgress(0.4f, 1.0f);
                     if (!getItem(getBindingAdapterPosition()).isSettled())
                         lottieAnimationView.playAnimation();
                     else
@@ -139,17 +143,7 @@ public class LoansAdapter extends ListAdapter<Loan, LoansAdapter.LoanHolder> {
             cbMarkSettled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Runnable runnable = new Runnable() {
-                        @Override
-                        public void run() {
-                            LoansFragment.getInstance().toggleSettled(getItem(getBindingAdapterPosition()), isChecked);
-                        }
-                    };
-                    Handler handler = new Handler(Looper.getMainLooper());
-                    if (isChecked)
-                        handler.postDelayed(runnable, 1000); //to move down after tick animation
-                    else
-                        handler.post(runnable);
+                    LoansFragment.getInstance().toggleSettled(getItem(getBindingAdapterPosition()), isChecked);
                 }
             });
         }

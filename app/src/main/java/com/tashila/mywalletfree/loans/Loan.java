@@ -56,6 +56,8 @@ public class Loan {
     }
 
     public String getSettledDate() {
+        if (settledDate == null)
+            return "N/A";
         return settledDate;
     }
 

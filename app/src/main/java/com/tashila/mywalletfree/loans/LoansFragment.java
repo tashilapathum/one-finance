@@ -79,7 +79,8 @@ public class LoansFragment extends Fragment {
     public void toggleSettled(Loan loan, boolean isSettled) {
         loan.setSettled(isSettled);
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-        loan.setSettledDate(formatter.format(LocalDate.now()));
+        if (isSettled) loan.setSettledDate(formatter.format(LocalDate.now()));
+        else loan.setSettledDate(null);
         loansViewModel.update(loan);
     }
 
