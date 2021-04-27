@@ -433,4 +433,5 @@
     <string name="add_a_new_loan">Add a new loan</string>
     <string name="mark_as_settled">Mark as settled</string>
     <string name="ntap_a_bill_to_see_more_details">\nTap a bill to see more details, and to show edit and delete options.</string>
+    <string name="calculator">Calculator</string>
 </resources>

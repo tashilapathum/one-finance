@@ -72,5 +72,6 @@ dependencies {
     //debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
     implementation 'com.robinhood.ticker:ticker:2.0.2'
     implementation 'com.airbnb.android:lottie:3.7.0'
+    implementation "com.maltaisn:calcdialog:2.2.1"
 
 }

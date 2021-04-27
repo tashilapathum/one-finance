@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.maltaisn.calcdialog.CalcDialog;
 import com.tashila.mywalletfree.bills.BillsFragment;
 import com.tashila.mywalletfree.cart.CartFragment;
 import com.tashila.mywalletfree.loans.LoansFragment;
@@ -55,14 +55,12 @@ public class ToolsFragment extends Fragment {
                 openPage(fragment[0], fragmentTag[0]);
             }
         });
-        view.findViewById(R.id.more).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.calc).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new MaterialAlertDialogBuilder(getActivity())
-                        .setTitle("Test")
-                        .setMessage("Message")
-                        .setPositiveButton("OK", null)
-                        .show();
+                CalcDialog calcDialog = new CalcDialog();
+                calcDialog.getSettings().setExpressionShown(true);
+                calcDialog.show(getChildFragmentManager(), "calculator dialog");
             }
         });
 

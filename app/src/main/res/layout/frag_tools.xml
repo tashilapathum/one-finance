@@ -14,7 +14,7 @@
         android:animateLayoutChanges="true"
         android:columnCount="2"
         android:padding="16dp"
-        android:rowCount="2">
+        android:rowCount="3">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cart"
@@ -111,8 +111,9 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/more"
+            android:id="@+id/calc"
             android:layout_width="140dp"
             android:layout_height="150dp"
             android:layout_row="1"
@@ -131,12 +132,12 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:src="@drawable/ic_add" />
+                    android:src="@drawable/ic_calc" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Request more tools"
+                    android:text="@string/calculator"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
             </LinearLayout>
