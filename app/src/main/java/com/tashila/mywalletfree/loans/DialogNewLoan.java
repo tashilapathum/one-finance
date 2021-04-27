@@ -202,7 +202,7 @@ public class DialogNewLoan extends DialogFragment {
             isLent = true;
         }
         if (rbBorrowed.isChecked()) {
-            tilDate.setHint(getString(R.string.pay_due_date));
+            tilDate.setHint(getString(R.string.borrowed_date));
             isLent = false;
         }
     }

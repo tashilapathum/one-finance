@@ -32,7 +32,8 @@ public class CartAdapter extends ListAdapter<CartItem, CartAdapter.CartItemHolde
 
         @Override
         public boolean areContentsTheSame(@NonNull CartItem oldItem, @NonNull CartItem newItem) {
-            return oldItem.getItemName().equals(newItem.getItemName()) &&
+            return oldItem.isChecked() == newItem.isChecked() &&
+                    oldItem.getItemName().equals(newItem.getItemName()) &&
                     oldItem.getItemPrice().equals(newItem.getItemPrice()) &&
                     oldItem.getQuantity() == newItem.getQuantity();
         }
@@ -52,10 +53,7 @@ public class CartAdapter extends ListAdapter<CartItem, CartAdapter.CartItemHolde
         holder.tvItemPrice.setText(currentCartItem.getItemPrice());
         holder.tvQuantity.setText(String.valueOf(currentCartItem.getQuantity()));
         holder.tvItemTotal.setText(currentCartItem.getItemTotal());
-        if (currentCartItem.isChecked())
-            holder.cbItemCheck.setChecked(true);
-        else
-            holder.cbItemCheck.setChecked(false);
+        holder.cbItemCheck.setChecked(currentCartItem.isChecked());
     }
 
     public CartItem getCartItemAt(int position) {
@@ -93,56 +91,10 @@ public class CartAdapter extends ListAdapter<CartItem, CartAdapter.CartItemHolde
             cbItemCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                    toggleChecked(itemView, isChecked);
+                    CartFragment.getInstance().toggleChecked(getItem(getBindingAdapterPosition()), isChecked);
                 }
             });
-        }
 
-        private void toggleChecked(final View itemView, boolean isChecked) {
-            final Animation fadeOut = new AlphaAnimation(1.0f, 0.5f);
-            fadeOut.setDuration(250);
-            fadeOut.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    itemView.setAlpha(0.5f);
-                    CartFragment.getInstance().checkItem(getItem(getAdapterPosition()));
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-            final Animation fadeIn = new AlphaAnimation(0.5f, 1.0f);
-            fadeIn.setDuration(250);
-            fadeIn.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    itemView.setAlpha(1.0f);
-                    CartFragment.getInstance().uncheckItem(getItem(getAdapterPosition()));
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-            if (isChecked) {
-                itemView.startAnimation(fadeOut);
-            }
-            else {
-                itemView.startAnimation(fadeIn);
-            }
         }
 
     }

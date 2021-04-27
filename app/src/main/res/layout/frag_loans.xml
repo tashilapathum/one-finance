@@ -27,9 +27,9 @@
         android:id="@+id/loansFAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="20dp"
         android:layout_gravity="bottom|end"
-        android:backgroundTint="@color/colorBillsFAB"
+        android:backgroundTint="@color/colorLoansFAB"
         android:src="@drawable/ic_add"
         app:borderWidth="0dp"/>
 

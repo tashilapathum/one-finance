@@ -43,7 +43,7 @@ public class LentFragment extends Fragment {
         recyclerView.setAdapter(loansAdapter);
 
         loansViewModel = new ViewModelProvider(getActivity(), ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(LoansViewModel.class);
-        loansViewModel.getAllLoans(false).observe(getActivity(), new Observer<List<Loan>>() {
+        loansViewModel.getAllLoans(true).observe(getActivity(), new Observer<List<Loan>>() {
             @Override
             public void onChanged(List<Loan> loans) {
                 loansAdapter.submitList(loans);

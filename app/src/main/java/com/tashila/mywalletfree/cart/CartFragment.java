@@ -198,13 +198,8 @@ public class CartFragment extends Fragment {
         }
     }
 
-    public void checkItem(CartItem cartItem) {
-        cartItem.setChecked(true);
-        cartViewModel.update(cartItem);
-    }
-
-    public void uncheckItem(CartItem cartItem) {
-        cartItem.setChecked(false);
+    public void toggleChecked(CartItem cartItem, boolean isChecked) {
+        cartItem.setChecked(isChecked);
         cartViewModel.update(cartItem);
     }
 

@@ -21,7 +21,7 @@ public interface LoansDao {
     @Delete
     void delete(Loan loan);
 
-    @Query("SELECT * FROM loans_table WHERE isLent = :isLent ORDER BY id AND isSettled DESC")
+    @Query("SELECT * FROM loans_table WHERE isLent = :isLent ORDER BY id AND isSettled ASC")
     LiveData<List<Loan>> getAllLoans(boolean isLent);
 
 }

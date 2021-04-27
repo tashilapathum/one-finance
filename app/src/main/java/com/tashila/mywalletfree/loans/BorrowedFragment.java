@@ -26,8 +26,6 @@ public class BorrowedFragment extends Fragment {
     private LoansViewModel loansViewModel;
     private SharedPreferences sharedPref;
     private String theme;
-    private int itemCount;
-
 
     @Nullable
     @Override

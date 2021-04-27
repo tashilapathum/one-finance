@@ -462,7 +462,9 @@
     <string name="new_loan">New loan</string>
     <string name="edit_loan">Edit loan</string>
     <string name="lent_date">Lent date</string>
+    <string name="borrowed_date">Borrowed date</string>
     <string name="confirm_loan_delete">Are you sure you want to delete this item?</string>
     <string name="lent_">Lent: </string>
+    <string name="borrowed_">"Borrowed: "</string>
 
 </resources>
