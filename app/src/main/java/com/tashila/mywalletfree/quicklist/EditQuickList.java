@@ -86,7 +86,6 @@ public class EditQuickList extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         quickListAdapter = new QuickListAdapter(this);
-        recyclerView.setLayoutAnimation(new AnimationHandler().getSlideUpController());
         recyclerView.setAdapter(quickListAdapter);
         quickListViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(getApplication())).get(QuickListViewModel.class);

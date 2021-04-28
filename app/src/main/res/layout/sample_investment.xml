@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Investment Title"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Some details about this investment item such as relevant details about this investment item such as dates and other noteworthy stuff." />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal"
+        android:paddingVertical="2dp">
+
+        <TextView
+            android:id="@+id/investValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="3dp"
+            android:gravity="center"
+            android:paddingHorizontal="8dp"
+            android:text="$24,000"
+            app:drawableStartCompat="@drawable/ic_invest"
+            app:drawableTint="@android:color/holo_red_light" />
+
+        <TextView
+            android:id="@+id/profitValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="3dp"
+            android:gravity="center"
+            android:paddingHorizontal="8dp"
+            android:text="$2,000"
+            app:drawableStartCompat="@drawable/ic_income"
+            app:drawableTint="@android:color/holo_green_light" />
+
+        <TextView
+            android:id="@+id/timePassed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="3dp"
+            android:gravity="center"
+            android:paddingHorizontal="8dp"
+            android:text="30 days"
+            app:drawableStartCompat="@drawable/ic_time"
+            app:drawableTint="@android:color/holo_blue_light" />
+
+    </LinearLayout>
+</LinearLayout>

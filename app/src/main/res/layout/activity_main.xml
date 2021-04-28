@@ -25,7 +25,7 @@
                 android:id="@+id/toolbarTitle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="M y  W a l l e t             "
+                android:text="M Y   W A L L E T             "
                 android:fontFamily="@font/quicksand_medium"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/colorAccentLight"

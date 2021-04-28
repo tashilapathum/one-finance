@@ -68,6 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/totalCard"
             android:layout_below="@id/titleCard"
+            android:layoutAnimation="@anim/cascade_anim"
             tools:listitem="@layout/sample_cart_item"
             tools:visibility="gone">
 

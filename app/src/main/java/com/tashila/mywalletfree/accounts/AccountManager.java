@@ -112,7 +112,6 @@ public class AccountManager extends AppCompatActivity implements NavigationView.
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setLayoutAnimation(new AnimationHandler().getSlideUpController());
         recyclerView.setAdapter(accountsAdapter);
 
         AccountsViewModel accountsViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory

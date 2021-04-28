@@ -129,6 +129,7 @@ public class TransactionsFragment extends Fragment {
             @Override
             public void onChanged(List<TransactionItem> transactionItems) {
                 transactionsAdapter.submitList(transactionItems);
+                recyclerView.scheduleLayoutAnimation();
             }
         });
 

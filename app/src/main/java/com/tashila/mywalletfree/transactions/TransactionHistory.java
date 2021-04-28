@@ -274,7 +274,6 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
         recyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setLayoutAnimation(new AnimationHandler().getSlideUpController());
         recyclerView.scheduleLayoutAnimation();
         recyclerView.setAdapter(transactionsAdapter);
 

@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layoutAnimation xmlns:android="http://schemas.android.com/apk/res/android"
-    android:animation="@anim/item_animation_fall_down"
-    android:animationOrder="normal"
-    android:delay="15%" />
+<set
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:interpolator/linear_out_slow_in">
+
+    <alpha
+        android:duration="@android:integer/config_shortAnimTime"
+        android:fromAlpha="0"
+        android:toAlpha="1" />
+
+    <translate
+        android:duration="@android:integer/config_mediumAnimTime"
+        android:fromYDelta="25%"
+        android:toYDelta="0%" />
+</set>
