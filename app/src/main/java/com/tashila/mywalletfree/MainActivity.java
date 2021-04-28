@@ -45,6 +45,7 @@ import com.shreyaspatil.material.navigationview.MaterialNavigationView;
 import com.tashila.mywalletfree.accounts.AccountManager;
 import com.tashila.mywalletfree.bills.BillsFragment;
 import com.tashila.mywalletfree.cart.CartFragment;
+import com.tashila.mywalletfree.investments.InvestmentsFragment;
 import com.tashila.mywalletfree.reports.Reports;
 import com.tashila.mywalletfree.settings.Settings;
 import com.tashila.mywalletfree.transactions.TransactionHistory;
@@ -457,7 +458,6 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
 
     private void navigateScreens(Fragment selectedFragment, String fragmentTag, int itemId) {
         getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
                 .replace(R.id.fragment_container, selectedFragment, fragmentTag)
                 .commit();
         Bundle bundle = new Bundle();

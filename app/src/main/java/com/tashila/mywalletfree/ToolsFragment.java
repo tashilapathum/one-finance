@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.transition.MaterialSharedAxis;
 import com.maltaisn.calcdialog.CalcDialog;
 import com.tashila.mywalletfree.bills.BillsFragment;
 import com.tashila.mywalletfree.cart.CartFragment;
@@ -20,6 +21,14 @@ public class ToolsFragment extends Fragment {
 
     public static ToolsFragment getInstance() {
         return instance;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setExitTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
+        setReenterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, false));
+        setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, true));
     }
 
     @Nullable
@@ -70,7 +79,6 @@ public class ToolsFragment extends Fragment {
     private void openPage(Fragment fragment, String fragmentTag) {
         view.findViewById(R.id.tools_grid).setVisibility(View.GONE);
         getActivity().getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
                 .replace(R.id.fragment_container, fragment, fragmentTag)
                 .addToBackStack(null)
                 .commit();

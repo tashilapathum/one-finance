@@ -21,6 +21,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.transition.MaterialSharedAxis;
 import com.tashila.mywalletfree.accounts.Account;
 import com.tashila.mywalletfree.accounts.AccountDetails;
 import com.tashila.mywalletfree.accounts.AccountsViewModel;
@@ -70,6 +71,13 @@ public class BankFragment extends Fragment {
     private DecimalFormat df;
     private Snackbar snackbar;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setExitTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, false));
+        setReenterTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, true));
+        setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, true));
+    }
 
     @Nullable
     @Override

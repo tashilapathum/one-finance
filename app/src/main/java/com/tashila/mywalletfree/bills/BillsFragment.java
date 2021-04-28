@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.transition.MaterialSharedAxis;
 import com.tashila.mywalletfree.R;
 
 import java.time.LocalDate;
@@ -33,6 +34,12 @@ public class BillsFragment extends Fragment {
     private static BillsFragment instance;
     private BillsViewModel billsViewModel;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
+        setReturnTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, false));
+    }
 
     @Nullable
     @Override

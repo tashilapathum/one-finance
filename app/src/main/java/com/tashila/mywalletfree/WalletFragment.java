@@ -27,6 +27,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.transition.MaterialSharedAxis;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
 import com.tashila.mywalletfree.accounts.Account;
@@ -95,6 +96,14 @@ public class WalletFragment extends Fragment {
     private MaterialButton btnTransfer;
     private Snackbar snackbar;
     private String inputMode;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setExitTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, false));
+        setReenterTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, true));
+        setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, true));
+    }
 
     @Nullable
     @Override

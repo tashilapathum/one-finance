@@ -25,7 +25,7 @@ public class AnimationHandler {
         slideUp.setDuration(400);
         set.addAnimation(slideUp);
         //controller
-        return new LayoutAnimationController(set, 0.1f);
+        return new LayoutAnimationController(set, 0.07f);
     }
 
 }

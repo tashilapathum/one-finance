@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.transition.MaterialSharedAxis;
 import com.tashila.mywalletfree.AnimationHandler;
 import com.tashila.mywalletfree.CustomFilterArrayAdapter;
 import com.tashila.mywalletfree.DateTimeHandler;
@@ -56,6 +57,14 @@ public class TransactionsFragment extends Fragment {
     private int sort;
     List<TransactionItem> transactionsList;
     List<TransactionItem> filteredList;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setExitTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, false));
+        setReenterTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, true));
+        setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, true));
+    }
 
     @Nullable
     @Override
@@ -111,7 +120,6 @@ public class TransactionsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setLayoutAnimation(new AnimationHandler().getSlideUpController());
         recyclerView.setAdapter(transactionsAdapter);
         recyclerView.setNestedScrollingEnabled(sharedPref.getBoolean("scrollableTransactions", false));
 

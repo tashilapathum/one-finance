@@ -30,7 +30,7 @@ public class BorrowedFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.frag_due, null);
+        view = inflater.inflate(R.layout.frag_borrowed, container, false);
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         theme = sharedPref.getString("theme", "light");
 

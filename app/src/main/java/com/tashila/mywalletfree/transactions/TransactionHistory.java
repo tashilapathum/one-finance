@@ -275,6 +275,7 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setLayoutAnimation(new AnimationHandler().getSlideUpController());
+        recyclerView.scheduleLayoutAnimation();
         recyclerView.setAdapter(transactionsAdapter);
 
         transactionsViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(TransactionsViewModel.class);

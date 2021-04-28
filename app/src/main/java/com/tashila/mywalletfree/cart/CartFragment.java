@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.transition.MaterialSharedAxis;
 import com.tashila.mywalletfree.AnimationHandler;
 import com.tashila.mywalletfree.R;
 
@@ -47,6 +48,12 @@ public class CartFragment extends Fragment {
     private String theme;
     private CartAdapter cartAdapter;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
+        setReturnTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, false));
+    }
 
     @Nullable
     @Override

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:transitionGroup="true">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -95,7 +96,7 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"/>
 
 </LinearLayout>
 
