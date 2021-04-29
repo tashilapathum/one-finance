@@ -76,8 +76,8 @@ public class LoansFragment extends Fragment {
     }
 
     private void onClickFAB() {
-        DialogNewLoan dialogNewLoan = new DialogNewLoan(null);
-        dialogNewLoan.show(getActivity().getSupportFragmentManager(), "new loan dialog");
+        DialogAddInvestment dialogAddInvestment = new DialogAddInvestment(null);
+        dialogAddInvestment.show(getActivity().getSupportFragmentManager(), "new loan dialog");
     }
 
     public void addLoan(Loan loan) {
@@ -93,8 +93,8 @@ public class LoansFragment extends Fragment {
     }
 
     public void editLoan(Loan loan) {
-        DialogNewLoan dialogNewLoan = new DialogNewLoan(loan);
-        dialogNewLoan.show(getActivity().getSupportFragmentManager(), "edit loan dialog");
+        DialogAddInvestment dialogAddInvestment = new DialogAddInvestment(loan);
+        dialogAddInvestment.show(getActivity().getSupportFragmentManager(), "edit loan dialog");
     }
 
     public void updateLoan(Loan editingLoan) {
@@ -105,7 +105,7 @@ public class LoansFragment extends Fragment {
     public void deleteLoan(final Loan loan) {
         new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.confirm)
-                .setMessage(R.string.confirm_loan_delete)
+                .setMessage(R.string.confirm_item_delete)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

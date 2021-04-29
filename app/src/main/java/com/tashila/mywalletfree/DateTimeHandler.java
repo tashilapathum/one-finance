@@ -1,8 +1,7 @@
 package com.tashila.mywalletfree;
 
-import android.util.Log;
-
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -14,6 +13,7 @@ import java.util.Locale;
 public class DateTimeHandler {
     public static final String TAG = "DateTimeHandler";
     private LocalDateTime localDateTime;
+    private LocalDate localDate;
 
     public DateTimeHandler() {
         localDateTime = LocalDateTime.now();
@@ -27,9 +27,23 @@ public class DateTimeHandler {
         this.localDateTime = localDateTime;
     }
 
+    public DateTimeHandler(LocalDate localDate) {
+        this.localDate = localDate;
+    }
+
+    public long getInMillis() {
+        if (localDateTime != null)
+            return localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        return 0;
+    }
+
     public String getTimestamp() {
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
         return formatter.format(localDateTime);
+    }
+
+    public String getDateStamp() {
+        return localDateTime.toLocalDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
     }
 
     public int getDayOfYear() {

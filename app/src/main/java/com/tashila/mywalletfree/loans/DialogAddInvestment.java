@@ -24,7 +24,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
-public class DialogNewLoan extends DialogFragment {
+public class DialogAddInvestment extends DialogFragment {
     private View view;
     private AlertDialog dialog;
     private TextInputLayout tilPerson;
@@ -38,7 +38,7 @@ public class DialogNewLoan extends DialogFragment {
     private boolean isLent;
     private RadioGroup radioGroup;
     private DateTimeFormatter formatter;
-    private static DialogNewLoan instance;
+    private static DialogAddInvestment instance;
     private Loan editingLoan;
     private SharedPreferences sharedPref;
 
@@ -102,7 +102,7 @@ public class DialogNewLoan extends DialogFragment {
         return builder.create();
     }
 
-    public DialogNewLoan(Loan editingLoan) {
+    public DialogAddInvestment(Loan editingLoan) {
         this.editingLoan = editingLoan;
     }
 
@@ -123,7 +123,7 @@ public class DialogNewLoan extends DialogFragment {
         etDetails.setText(details);
     }
 
-    public static DialogNewLoan getInstance() {
+    public static DialogAddInvestment getInstance() {
         return instance;
     }
 

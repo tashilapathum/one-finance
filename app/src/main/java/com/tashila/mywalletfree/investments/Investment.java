@@ -3,6 +3,8 @@ package com.tashila.mywalletfree.investments;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.List;
+
 @Entity(tableName = "investments_table")
 public class Investment {
 
@@ -14,11 +16,11 @@ public class Investment {
     private double investValue;
     private double returnValue;
     private int dayCount;
-    private String dateInMillis;
+    private long dateInMillis;
     private String tag;
+    private List<String> history;
 
-    public Investment(int id, String title, String description, double investValue, double returnValue, int dayCount, String dateInMillis, String tag) {
-        this.id = id;
+    public Investment(String title, String description, double investValue, double returnValue, int dayCount, long dateInMillis, String tag, List<String> history) {
         this.title = title;
         this.description = description;
         this.investValue = investValue;
@@ -26,6 +28,7 @@ public class Investment {
         this.dayCount = dayCount;
         this.dateInMillis = dateInMillis;
         this.tag = tag;
+        this.history = history;
     }
 
     public int getId() {
@@ -76,11 +79,11 @@ public class Investment {
         this.dayCount = dayCount;
     }
 
-    public String getDateInMillis() {
+    public long getDateInMillis() {
         return dateInMillis;
     }
 
-    public void setDateInMillis(String dateInMillis) {
+    public void setDateInMillis(long dateInMillis) {
         this.dateInMillis = dateInMillis;
     }
 
@@ -90,5 +93,13 @@ public class Investment {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public List<String> getHistory() {
+        return history;
+    }
+
+    public void setHistory(List<String> history) {
+        this.history = history;
     }
 }

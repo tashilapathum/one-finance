@@ -51,6 +51,12 @@ public class InvestmentsAdapter extends ListAdapter<Investment, InvestmentsAdapt
         holder.tvTitle.setText(currentInvestment.getTitle());
         holder.tvDescription.setText(currentInvestment.getDescription());
 
+        //tag
+        if (currentInvestment.getTag().isEmpty())
+            holder.chipTag.setVisibility(View.GONE);
+        else
+            holder.chipTag.setText(currentInvestment.getTag());
+
         //invested money
         Amount investValue = new Amount(context, currentInvestment.getInvestValue());
         holder.tvInvestValue.setText(investValue.getAmountString());
@@ -59,19 +65,26 @@ public class InvestmentsAdapter extends ListAdapter<Investment, InvestmentsAdapt
         Amount profit = new Amount(context,
                 (currentInvestment.getInvestValue() - currentInvestment.getReturnValue()) / currentInvestment.getReturnValue() * 100
         );
-        holder.tvProfitValue.setText(profit.getAmountString());
+        holder.tvProfitValue.setText(String.valueOf(profit.getAmountValue()));
 
         //passed time
-        int passedTime;
-        DateTimeHandler dth = new DateTimeHandler(currentInvestment.getDateInMillis());
+        String passedTime;
+        DateTimeHandler dth = new DateTimeHandler(String.valueOf(currentInvestment.getDateInMillis()));
         Period period = Period.between(LocalDate.of(dth.getYear(), dth.getMonthValue(), dth.getDayOfMonth()), LocalDate.now());
         if (period.getYears() > 0)
-            passedTime = period.getYears();
+            passedTime = period.getYears() + context.getString(R.string.years);
         else if (period.getMonths() > 0)
-            passedTime = period.getMonths();
+            passedTime = period.getMonths() + context.getString(R.string.months);
         else
-            passedTime = period.getDays();
-        holder.tvTimePassed.setText(String.valueOf(passedTime));
+            passedTime = period.getDays() + context.getString(R.string.days);
+        holder.tvTimePassed.setText(passedTime);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InvestmentsFragment.getInstance().editInvestment(currentInvestment);
+            }
+        });
     }
 
     class InvestmentViewHolder extends RecyclerView.ViewHolder {

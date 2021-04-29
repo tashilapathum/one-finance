@@ -5,8 +5,12 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
-@Database(entities = {Investment.class}, version = 1, exportSchema = false)
+import com.tashila.mywalletfree.Converters;
+
+@Database(entities = {Investment.class}, version = 2, exportSchema = false)
+@TypeConverters(Converters.class)
 public abstract class InvestmentsDatabase extends RoomDatabase {
 
     private static InvestmentsDatabase instance;

@@ -1,84 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp"
-    android:clickable="true"
-    android:focusable="true">
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginBottom="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Investment Title"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:elevation="0dp"
+                app:chipMinTouchTargetSize="0dp"
+                app:chipMinHeight="24dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:text="Business tag"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                app:chipBackgroundColor="@color/colorInvestFAB" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Investment Title"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+            android:text="Some details about this investment item such as relevant details about this investment item such as dates and other noteworthy stuff." />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/tag"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Business tag"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-            android:layout_marginHorizontal="8dp"
-            app:chipBackgroundColor="@color/colorInvestFAB"
-            android:elevation="0dp" />
+            android:gravity="end"
+            android:orientation="horizontal"
+            android:paddingVertical="2dp">
 
+            <TextView
+                android:id="@+id/investValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="3dp"
+                android:gravity="center"
+                android:paddingHorizontal="8dp"
+                android:text="$24,000"
+                app:drawableStartCompat="@drawable/ic_invest"
+                app:drawableTint="@android:color/holo_red_light" />
+
+            <TextView
+                android:id="@+id/profitValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="3dp"
+                android:gravity="center"
+                android:paddingHorizontal="8dp"
+                android:text="$2,000"
+                app:drawableStartCompat="@drawable/ic_income"
+                app:drawableTint="@android:color/holo_green_light" />
+
+            <TextView
+                android:id="@+id/timePassed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="3dp"
+                android:gravity="center"
+                android:paddingHorizontal="8dp"
+                android:text="30 days"
+                app:drawableStartCompat="@drawable/ic_time"
+                app:drawableTint="@android:color/holo_blue_light" />
+
+        </LinearLayout>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Some details about this investment item such as relevant details about this investment item such as dates and other noteworthy stuff." />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:orientation="horizontal"
-        android:paddingVertical="2dp">
-
-        <TextView
-            android:id="@+id/investValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawablePadding="3dp"
-            android:gravity="center"
-            android:paddingHorizontal="8dp"
-            android:text="$24,000"
-            app:drawableStartCompat="@drawable/ic_invest"
-            app:drawableTint="@android:color/holo_red_light" />
-
-        <TextView
-            android:id="@+id/profitValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawablePadding="3dp"
-            android:gravity="center"
-            android:paddingHorizontal="8dp"
-            android:text="$2,000"
-            app:drawableStartCompat="@drawable/ic_income"
-            app:drawableTint="@android:color/holo_green_light" />
-
-        <TextView
-            android:id="@+id/timePassed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawablePadding="3dp"
-            android:gravity="center"
-            android:paddingHorizontal="8dp"
-            android:text="30 days"
-            app:drawableStartCompat="@drawable/ic_time"
-            app:drawableTint="@android:color/holo_blue_light" />
-
-    </LinearLayout>
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

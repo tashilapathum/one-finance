@@ -463,7 +463,7 @@
     <string name="edit_loan">Edit loan</string>
     <string name="lent_date">Lent date</string>
     <string name="borrowed_date">Borrowed date</string>
-    <string name="confirm_loan_delete">Are you sure you want to delete this item?</string>
+    <string name="confirm_item_delete">Are you sure you want to delete this item?</string>
     <string name="lent_">Lent:&#160;</string>
     <string name="borrowed_">Borrowed:&#160;</string>
     <string name="lent_prefix">Lent to&#160;</string>
@@ -475,5 +475,11 @@
     <string name="mark_as_settled">Mark as settled</string>
     <string name="ntap_a_bill_to_see_more_details">\nTap a bill to see more details, and to show edit and delete options.</string>
     <string name="calculator">Calculator</string>
+    <string name="add_investment">Add new investment</string>
+    <string name="edit_investment">Edit investment</string>
+    <string name="delete_inv_confirm">Are you sure you want to permanently delete this investment?</string>
+    <string name="days">&#160;days</string>
+    <string name="months">&#160;months</string>
+    <string name="years">&#160;years</string>
 
 </resources>
