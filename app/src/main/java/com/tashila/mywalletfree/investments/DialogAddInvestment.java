@@ -139,7 +139,7 @@ public class DialogAddInvestment extends DialogFragment {
             ).getInMillis();
             String description = etDescription.getText().toString();
             String tag = etTag.getText().toString();
-            Investment investment = new Investment(title, description, Double.parseDouble(amount), 0, 0, dateInMillis, tag, history);
+            Investment investment = new Investment(title, description, Double.parseDouble(amount), 0, 0, dateInMillis, tag, null);
             if (editingInvestment != null) {
                 investment.setId(editingInvestment.getId());
                 InvestmentsFragment.getInstance().updateInvestment(investment);

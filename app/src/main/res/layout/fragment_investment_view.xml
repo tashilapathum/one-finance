@@ -55,7 +55,7 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/details_layout"
+        android:id="@+id/collapsing_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -217,28 +217,28 @@
                     android:text="30 days" />
             </LinearLayout>
         </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="start"
+                android:text="History"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/addNote"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:text="Add note" />
+
+        </RelativeLayout>
     </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="start"
-            android:text="History"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/addNote"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:text="Add note" />
-
-    </RelativeLayout>
 </LinearLayout>
