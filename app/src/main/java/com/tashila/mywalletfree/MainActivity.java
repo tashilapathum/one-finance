@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -303,32 +304,41 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+        //to check for opened fragments
+        FragmentManager childFm = null;
+        FragmentManager fm = getSupportFragmentManager();
+        for (Fragment frag : fm.getFragments())
+            if (frag.isVisible())
+                childFm = frag.getChildFragmentManager();
+
+        if (drawer.isDrawerOpen(GravityCompat.START))
             drawer.closeDrawer(GravityCompat.START);
+
+        else if (childFm != null) {
+            if (childFm.getBackStackEntryCount() > 0)
+                childFm.popBackStack();
+            else processExit();
         }
-        else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().beginTransaction()
-                    .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-                    .replace(R.id.fragment_container, new ToolsFragment(), "ToolsFragment")
-                    .commit();
-        }
-        else {
-            boolean confirmExit = sharedPref.getBoolean("exitConfirmation", false);
-            if (confirmExit) {
-                new MaterialAlertDialogBuilder(this)
-                        .setTitle(R.string.confirm)
-                        .setMessage(R.string.exit_confirm)
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                sharedPref.edit().putBoolean("exit", true).apply();
-                                finishAndRemoveTask();
-                            }
-                        })
-                        .setNegativeButton(R.string.no, null)
-                        .show();
-            } else finishAndRemoveTask();
-        }
+
+        else processExit();
+    }
+
+    private void processExit() {
+        boolean confirmExit = sharedPref.getBoolean("exitConfirmation", false);
+        if (confirmExit) {
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle(R.string.confirm)
+                    .setMessage(R.string.exit_confirm)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            sharedPref.edit().putBoolean("exit", true).apply();
+                            finishAndRemoveTask();
+                        }
+                    })
+                    .setNegativeButton(R.string.no, null)
+                    .show();
+        } else finishAndRemoveTask();
     }
 
     @Override

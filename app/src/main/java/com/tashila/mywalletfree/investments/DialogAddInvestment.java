@@ -22,6 +22,8 @@ import com.tashila.mywalletfree.R;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DialogAddInvestment extends DialogFragment {
     private View view;
@@ -139,7 +141,9 @@ public class DialogAddInvestment extends DialogFragment {
             ).getInMillis();
             String description = etDescription.getText().toString();
             String tag = etTag.getText().toString();
-            Investment investment = new Investment(title, description, Double.parseDouble(amount), 0, 0, dateInMillis, tag, null);
+            List<String> history = new ArrayList<>();
+            history.add("Created investment");
+            Investment investment = new Investment(title, description, Double.parseDouble(amount), 0, 0, dateInMillis, tag, history);
             if (editingInvestment != null) {
                 investment.setId(editingInvestment.getId());
                 InvestmentsFragment.getInstance().updateInvestment(investment);

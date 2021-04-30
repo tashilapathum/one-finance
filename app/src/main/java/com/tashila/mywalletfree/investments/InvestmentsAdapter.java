@@ -68,21 +68,13 @@ public class InvestmentsAdapter extends ListAdapter<Investment, InvestmentsAdapt
         holder.tvProfitValue.setText(String.valueOf(profit.getAmountValue()));
 
         //passed time
-        String passedTime;
-        DateTimeHandler dth = new DateTimeHandler(String.valueOf(currentInvestment.getDateInMillis()));
-        Period period = Period.between(LocalDate.of(dth.getYear(), dth.getMonthValue(), dth.getDayOfMonth()), LocalDate.now());
-        if (period.getYears() > 0)
-            passedTime = period.getYears() + context.getString(R.string.years);
-        else if (period.getMonths() > 0)
-            passedTime = period.getMonths() + context.getString(R.string.months);
-        else
-            passedTime = period.getDays() + context.getString(R.string.days);
+        String passedTime = new DateTimeHandler(String.valueOf(currentInvestment.getDateInMillis())).getPassedTime(context);
         holder.tvTimePassed.setText(passedTime);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InvestmentsFragment.getInstance().editInvestment(currentInvestment);
+                InvestmentsFragment.getInstance().openInvestment(currentInvestment);
             }
         });
     }

@@ -73,6 +73,7 @@ dependencies {
     implementation 'com.robinhood.ticker:ticker:2.0.2'
     implementation 'com.airbnb.android:lottie:3.7.0'
     implementation 'com.maltaisn:calcdialog:2.2.1'
-    implementation 'com.github.ksoichiro:android-observablescrollview:1.6.0'
+    implementation 'com.github.amarjain07:StickyScrollView:1.0.2'
+    implementation 'com.github.qapqap:TimelineView:v1.6'
 
 }

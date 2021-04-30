@@ -76,10 +76,17 @@ public class ToolsFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (view.findViewById(R.id.tools_grid).getVisibility() == View.INVISIBLE)
+            view.findViewById(R.id.tools_grid).setVisibility(View.VISIBLE);
+    }
+
     private void openPage(Fragment fragment, String fragmentTag) {
-        view.findViewById(R.id.tools_grid).setVisibility(View.GONE);
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, fragment, fragmentTag)
+        view.findViewById(R.id.tools_grid).setVisibility(View.INVISIBLE);
+        getChildFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, fragment, fragmentTag)
                 .addToBackStack(null)
                 .commit();
     }

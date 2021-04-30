@@ -51,11 +51,11 @@ public class InvestmentsFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.scheduleLayoutAnimation();
         InvestmentsAdapter investmentsAdapter = new InvestmentsAdapter();
         recyclerView.setAdapter(investmentsAdapter);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(mLayoutManager);
 
         investmentsViewModel = new ViewModelProvider(getActivity(), ViewModelProvider.AndroidViewModelFactory.
                 getInstance(getActivity().getApplication())).get(InvestmentsViewModel.class);
@@ -82,28 +82,16 @@ public class InvestmentsFragment extends Fragment {
         investmentsViewModel.insert(investment);
     }
 
-    public void editInvestment(Investment investment) {
-        DialogAddInvestment dialogAddInvestment = new DialogAddInvestment(investment);
-        dialogAddInvestment.show(getActivity().getSupportFragmentManager(), "edit investment dialog");
+    public void openInvestment(Investment investment) {
+        getChildFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, new InvestmentView(investment), "investment view")
+                .addToBackStack(null)
+                .commit();
     }
 
     public void updateInvestment(Investment editingInvestment) {
         investmentsViewModel.update(editingInvestment);
         Toast.makeText(getActivity(), R.string.updated, Toast.LENGTH_SHORT).show();
-    }
-
-    public void deleteInvestment(final Investment investment) {
-        new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.confirm)
-                .setMessage(R.string.delete_inv_confirm)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        investmentsViewModel.delete(investment);
-                    }
-                })
-                .setNegativeButton(R.string.no, null)
-                .show();
     }
 
 

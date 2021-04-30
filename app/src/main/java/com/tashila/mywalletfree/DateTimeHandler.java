@@ -1,8 +1,11 @@
 package com.tashila.mywalletfree;
 
+import android.content.Context;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -78,5 +81,18 @@ public class DateTimeHandler {
 
     public int getDayOfMonth(){
         return localDateTime.getDayOfMonth();
+    }
+
+    public String getPassedTime(Context context) {
+        String passedTime;
+        Period period = Period.between(LocalDate.of(getYear(), getMonthValue(), getDayOfMonth()), LocalDate.now());
+        if (period.getYears() > 0)
+            passedTime = period.getYears() + context.getString(R.string.years);
+        else if (period.getMonths() > 0)
+            passedTime = period.getMonths() + context.getString(R.string.months);
+        else
+            passedTime = period.getDays() + context.getString(R.string.days);
+
+        return passedTime;
     }
 }
