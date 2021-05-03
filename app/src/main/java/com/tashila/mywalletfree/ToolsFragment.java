@@ -77,8 +77,8 @@ public class ToolsFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         if (view.findViewById(R.id.tools_grid).getVisibility() == View.INVISIBLE)
             view.findViewById(R.id.tools_grid).setVisibility(View.VISIBLE);
     }
@@ -86,7 +86,7 @@ public class ToolsFragment extends Fragment {
     private void openPage(Fragment fragment, String fragmentTag) {
         view.findViewById(R.id.tools_grid).setVisibility(View.INVISIBLE);
         getChildFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, fragment, fragmentTag)
+                .replace(R.id.fragment_container, fragment, fragmentTag)
                 .addToBackStack(null)
                 .commit();
     }

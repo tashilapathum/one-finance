@@ -440,4 +440,5 @@
     <string name="days">&#160;days</string>
     <string name="months">&#160;months</string>
     <string name="years">&#160;years</string>
+    <string name="created_investment">Created investment</string>
 </resources>

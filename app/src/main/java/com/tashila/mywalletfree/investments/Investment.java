@@ -15,17 +15,15 @@ public class Investment {
     private String description;
     private double investValue;
     private double returnValue;
-    private int dayCount;
     private long dateInMillis;
     private String tag;
     private List<String> history;
 
-    public Investment(String title, String description, double investValue, double returnValue, int dayCount, long dateInMillis, String tag, List<String> history) {
+    public Investment(String title, String description, double investValue, double returnValue, long dateInMillis, String tag, List<String> history) {
         this.title = title;
         this.description = description;
         this.investValue = investValue;
         this.returnValue = returnValue;
-        this.dayCount = dayCount;
         this.dateInMillis = dateInMillis;
         this.tag = tag;
         this.history = history;
@@ -69,14 +67,6 @@ public class Investment {
 
     public void setReturnValue(double returnValue) {
         this.returnValue = returnValue;
-    }
-
-    public int getDayCount() {
-        return dayCount;
-    }
-
-    public void setDayCount(int dayCount) {
-        this.dayCount = dayCount;
     }
 
     public long getDateInMillis() {

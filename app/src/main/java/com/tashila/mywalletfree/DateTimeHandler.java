@@ -67,6 +67,10 @@ public class DateTimeHandler {
         return localDateTime;
     }
 
+    public LocalDate getLocalDate() {
+        return localDateTime.toLocalDate();
+    }
+
     public int getDayOfWeek() {
         return localDateTime.getDayOfWeek().getValue();
     }

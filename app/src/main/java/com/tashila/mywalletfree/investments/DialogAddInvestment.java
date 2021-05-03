@@ -20,6 +20,8 @@ import com.tashila.mywalletfree.DateTimeHandler;
 import com.tashila.mywalletfree.R;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
@@ -84,6 +86,12 @@ public class DialogAddInvestment extends DialogFragment {
         } else {
             builder.setView(view)
                     .setTitle(R.string.edit_investment)
+                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+
+                        }
+                    })
                     .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -135,19 +143,18 @@ public class DialogAddInvestment extends DialogFragment {
         if (validateTitle() && validateAmount()) {
             String title = etTitle.getText().toString();
             String amount = etInvAmount.getText().toString();
-            long dateInMillis = new DateTimeHandler(
-                    LocalDate.parse(etDate.getText().toString(), DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
-                    .atStartOfDay()
-            ).getInMillis();
+            long dateInMillis = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
             String description = etDescription.getText().toString();
             String tag = etTag.getText().toString();
-            List<String> history = new ArrayList<>();
-            history.add("Created investment");
-            Investment investment = new Investment(title, description, Double.parseDouble(amount), 0, 0, dateInMillis, tag, history);
-            if (editingInvestment != null) {
+            if (editingInvestment != null) { //when updating existing investment
+                Investment investment = new Investment(title, description, Double.parseDouble(amount),
+                        editingInvestment.getReturnValue(), dateInMillis, tag, editingInvestment.getHistory());
                 investment.setId(editingInvestment.getId());
                 InvestmentsFragment.getInstance().updateInvestment(investment);
-            } else {
+            } else { //when creating new investment
+                List<String> history = new ArrayList<>();
+                history.add(getString(R.string.created_investment) + "###" + dateInMillis);
+                Investment investment = new Investment(title, description, Double.parseDouble(amount), 0, dateInMillis, tag, history);
                 InvestmentsFragment.getInstance().addInvestment(investment);
                 sharedPref.edit().putBoolean("haveInvestments", true).apply();
             }

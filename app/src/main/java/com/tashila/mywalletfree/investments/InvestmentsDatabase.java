@@ -9,7 +9,7 @@ import androidx.room.TypeConverters;
 
 import com.tashila.mywalletfree.Converters;
 
-@Database(entities = {Investment.class}, version = 2, exportSchema = false)
+@Database(entities = {Investment.class}, version = 3, exportSchema = false)
 @TypeConverters(Converters.class)
 public abstract class InvestmentsDatabase extends RoomDatabase {
 

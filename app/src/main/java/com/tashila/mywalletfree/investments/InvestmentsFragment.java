@@ -84,7 +84,7 @@ public class InvestmentsFragment extends Fragment {
 
     public void openInvestment(Investment investment) {
         getChildFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, new InvestmentView(investment), "investment view")
+                .replace(R.id.fragment_container, new InvestmentView(investment), "investment view")
                 .addToBackStack(null)
                 .commit();
     }
