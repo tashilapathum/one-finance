@@ -75,6 +75,6 @@ dependencies {
     implementation 'com.maltaisn:calcdialog:2.2.1'
     implementation 'com.github.amarjain07:StickyScrollView:1.0.2'
     implementation 'com.github.qapqap:TimelineView:v1.6'
-    implementation 'com.github.vipulasri:timelineview:1.1.5'
+    implementation 'com.github.midorikocak:currency-picker-android:1.2.1'
 
 }

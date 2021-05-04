@@ -15,13 +15,17 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.mynameismidori.currencypicker.CurrencyPicker;
+import com.mynameismidori.currencypicker.CurrencyPickerListener;
 
 import java.util.Locale;
 
 public class InitialSetup extends AppCompatActivity {
     public static final String TAG = "InitialSetup";
-    SharedPreferences sharedPref;
-    RadioGroup radioGroup;
+    private SharedPreferences sharedPref;
+    private RadioGroup radioGroup;
+    private TextInputLayout tilCurrency;
+    private EditText etCurrency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,8 @@ public class InitialSetup extends AppCompatActivity {
         radioGroup = findViewById(R.id.radioGroup);
         RadioButton rb1 = findViewById(R.id.otEnglish);
         RadioButton rb2 = findViewById(R.id.otSinhala);
+        tilCurrency = findViewById(R.id.addCurrency);
+        etCurrency = tilCurrency.getEditText();
         rb1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,6 +48,19 @@ public class InitialSetup extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 saveLangRadio(view.getId());
+            }
+        });
+        findViewById(R.id.more).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CurrencyPicker picker = CurrencyPicker.newInstance("Select currency");  // dialog title
+                picker.setListener(new CurrencyPickerListener() {
+                    @Override
+                    public void onSelectCurrency(String name, String code, String symbol, int flagDrawableResID) {
+                        etCurrency.setText(symbol);
+                    }
+                });
+                picker.show(getSupportFragmentManager(), "CURRENCY_PICKER");
             }
         });
     }
@@ -120,8 +139,6 @@ public class InitialSetup extends AppCompatActivity {
 
     public void setQuickCurrency(View view) {
         int btnID = view.getId();
-        TextInputLayout tilCurrency = findViewById(R.id.addCurrency);
-        EditText etCurrency = tilCurrency.getEditText();
         String currency = null;
         switch (btnID) {
             case R.id.dollar: {
