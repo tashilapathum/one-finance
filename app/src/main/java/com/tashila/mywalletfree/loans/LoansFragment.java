@@ -76,8 +76,8 @@ public class LoansFragment extends Fragment {
     }
 
     private void onClickFAB() {
-        DialogAddInvestment dialogAddInvestment = new DialogAddInvestment(null);
-        dialogAddInvestment.show(getActivity().getSupportFragmentManager(), "new loan dialog");
+        DialogAddLoan dialogAddLoan = new DialogAddLoan(null);
+        dialogAddLoan.show(getActivity().getSupportFragmentManager(), "new loan dialog");
     }
 
     public void addLoan(Loan loan) {
@@ -93,8 +93,8 @@ public class LoansFragment extends Fragment {
     }
 
     public void editLoan(Loan loan) {
-        DialogAddInvestment dialogAddInvestment = new DialogAddInvestment(loan);
-        dialogAddInvestment.show(getActivity().getSupportFragmentManager(), "edit loan dialog");
+        DialogAddLoan dialogAddLoan = new DialogAddLoan(loan);
+        dialogAddLoan.show(getActivity().getSupportFragmentManager(), "edit loan dialog");
     }
 
     public void updateLoan(Loan editingLoan) {

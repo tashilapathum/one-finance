@@ -44,6 +44,7 @@ public class DialogAddInvestment extends DialogFragment {
     private static DialogAddInvestment instance;
     private Investment editingInvestment;
     private SharedPreferences sharedPref;
+    private long dateInMillis;
 
     @NonNull
     @Override
@@ -63,7 +64,7 @@ public class DialogAddInvestment extends DialogFragment {
         etDate = tilDate.getEditText();
         etDescription = tilDescription.getEditText();
         etTag = tilTag.getEditText();
-        setDate(LocalDate.now().format(formatter));
+        setDate(LocalDate.now().format(formatter), 0);
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -143,7 +144,6 @@ public class DialogAddInvestment extends DialogFragment {
         if (validateTitle() && validateAmount()) {
             String title = etTitle.getText().toString();
             String amount = etInvAmount.getText().toString();
-            long dateInMillis = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
             String description = etDescription.getText().toString();
             String tag = etTag.getText().toString();
             if (editingInvestment != null) { //when updating existing investment
@@ -151,6 +151,7 @@ public class DialogAddInvestment extends DialogFragment {
                         editingInvestment.getReturnValue(), dateInMillis, tag, editingInvestment.getHistory());
                 investment.setId(editingInvestment.getId());
                 InvestmentsFragment.getInstance().updateInvestment(investment);
+                InvestmentView.getInstance().showDetails(investment);
             } else { //when creating new investment
                 List<String> history = new ArrayList<>();
                 history.add(getString(R.string.created_investment) + "###" + dateInMillis);
@@ -190,7 +191,8 @@ public class DialogAddInvestment extends DialogFragment {
         investmentDatePicker.show(getActivity().getSupportFragmentManager(), "investments date picker");
     }
 
-    public void setDate(String date) {
+    public void setDate(String date, long dateInMillis) {
+        this.dateInMillis = dateInMillis;
         etDate.setText(date);
     }
 }

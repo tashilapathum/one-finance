@@ -3,7 +3,6 @@ package com.tashila.mywalletfree.investments;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -24,7 +23,6 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.transition.MaterialSharedAxis;
 import com.tashila.mywalletfree.Amount;
 import com.tashila.mywalletfree.DateTimeHandler;
-import com.tashila.mywalletfree.MainActivity;
 import com.tashila.mywalletfree.R;
 
 import org.qap.ctimelineview.TimelineRow;
@@ -32,12 +30,8 @@ import org.qap.ctimelineview.TimelineViewAdapter;
 
 import java.text.DecimalFormat;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,6 +49,11 @@ public class InvestmentView extends Fragment {
     private TextView tvTimePeriod;
     private TextView tvDate;
     private Chip tagChip;
+    private static InvestmentView instance;
+
+    public static InvestmentView getInstance() {
+        return instance;
+    }
 
     public InvestmentView(Investment investment) {
         this.investment = investment;
@@ -68,11 +67,11 @@ public class InvestmentView extends Fragment {
         setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
     }
 
-    @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_investment_view, container, false);
+        instance = this;
 
         investmentsViewModel = new ViewModelProvider(getActivity(), ViewModelProvider.AndroidViewModelFactory.
                 getInstance(getActivity().getApplication())).get(InvestmentsViewModel.class);
@@ -108,10 +107,9 @@ public class InvestmentView extends Fragment {
                                 if (!inputText.isEmpty()) {
                                     double amount = investment.getInvestValue();
                                     amount = amount + Double.parseDouble(inputText);
-                                    ((TextView) view.findViewById(R.id.investedValue))
-                                            .setText(new Amount(getActivity(), amount).getAmountString());
                                     investment.setInvestValue(amount);
                                     investmentsViewModel.update(investment);
+                                    showDetails(null);
                                 }
                             }
                         })
@@ -130,10 +128,9 @@ public class InvestmentView extends Fragment {
                                 if (!inputText.isEmpty()) {
                                     double amount = investment.getReturnValue();
                                     amount = amount + Double.parseDouble(inputText);
-                                    ((TextView) view.findViewById(R.id.returnValue))
-                                            .setText(new Amount(getActivity(), amount).getAmountString());
                                     investment.setReturnValue(amount);
                                     investmentsViewModel.update(investment);
+                                    showDetails(null);
                                 }
                             }
                         })
@@ -151,24 +148,7 @@ public class InvestmentView extends Fragment {
         tagChip = view.findViewById(R.id.tag);
 
         //basic details
-        tvTitle.setText(investment.getTitle());
-        tvDescription.setText(investment.getDescription());
-
-        double investValue = investment.getInvestValue();
-        double returnValue = investment.getReturnValue();
-
-        tvInvestedValue.setText(new Amount(getActivity(), investValue).getAmountString());
-        tvReturnValue.setText(new Amount(getActivity(), returnValue).getAmountString());
-        tvProfitValue.setText(
-                new Amount(getActivity(), investValue - returnValue).getAmountString() //profit value
-                        + " (" +
-                        new DecimalFormat("0.##").format(((investValue - returnValue) / investValue) * 100) //profit percentage
-                        + "%)"
-        );
-        DateTimeHandler dateTimeHandler = new DateTimeHandler(String.valueOf(investment.getDateInMillis()));
-        tvTimePeriod.setText(dateTimeHandler.getPassedTime(getActivity()));
-        tvDate.setText(dateTimeHandler.getDateStamp());
-        tagChip.setText(investment.getTag());
+        showDetails(null);
 
         //timeline
         updateTimeline();
@@ -238,5 +218,29 @@ public class InvestmentView extends Fragment {
         ListView timeline = view.findViewById(R.id.timeline);
         timeline.setAdapter(timelineViewAdapter);
 
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void showDetails(Investment editedInvestment) {
+        if (editedInvestment != null) investment = editedInvestment;
+
+        double investValue = investment.getInvestValue();
+        double returnValue = investment.getReturnValue();
+
+        tvInvestedValue.setText(new Amount(getActivity(), investValue).getAmountString());
+        tvReturnValue.setText(new Amount(getActivity(), returnValue).getAmountString());
+        tvProfitValue.setText(
+                new Amount(getActivity(), returnValue - investValue).getAmountString() //profit value
+                        + " (" +
+                        new DecimalFormat("0.##").format(((returnValue - investValue) / investValue) * 100) //profit percentage
+                        + "%)"
+        );
+
+        tvTitle.setText(investment.getTitle());
+        tvDescription.setText(investment.getDescription());
+        DateTimeHandler dateTimeHandler = new DateTimeHandler(String.valueOf(investment.getDateInMillis()));
+        tvTimePeriod.setText(dateTimeHandler.getPassedTime(getActivity()));
+        tvDate.setText(dateTimeHandler.getDateStamp());
+        tagChip.setText(investment.getTag());
     }
 }

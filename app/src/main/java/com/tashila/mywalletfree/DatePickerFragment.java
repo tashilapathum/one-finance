@@ -20,7 +20,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.tashila.mywalletfree.bills.DialogNewBill;
-import com.tashila.mywalletfree.loans.DialogAddInvestment;
+import com.tashila.mywalletfree.investments.DialogAddInvestment;
+import com.tashila.mywalletfree.loans.DialogAddLoan;
 import com.tashila.mywalletfree.reports.Reports;
 import com.tashila.mywalletfree.transactions.DialogTransactionEditor;
 import com.tashila.mywalletfree.transactions.TransactionHistory;
@@ -64,10 +65,10 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
             DialogNewBill.getInstance().setDate(date);
 
         if (fromContext.equals("fromLoansFragment"))
-            DialogAddInvestment.getInstance().setDate(date);
+            DialogAddLoan.getInstance().setDate(date);
 
         if (fromContext.equals("fromInvestmentsFragment"))
-            com.tashila.mywalletfree.investments.DialogAddInvestment.getInstance().setDate(date);
+            DialogAddInvestment.getInstance().setDate(date, Long.parseLong(dateInMillis));
 
         if (fromContext.equals("fromTransactionEditor"))
             DialogTransactionEditor.getInstance().setDate(date, dateInMillis);
