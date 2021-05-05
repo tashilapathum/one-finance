@@ -14,7 +14,7 @@ import androidx.core.app.NotificationCompat;
 
 public class NotificationHelper extends ContextWrapper {
     public static final String channel1ID = "channel1ID";
-    public static final String channel1Name = "Add transactions reminder";
+    public static final String channel1Name = "Reminder to add transactions";
     public static final String channel2ID = "channel2ID";
     public static final String channel2Name = "Due and overdue bills";
     private NotificationManager mManager;

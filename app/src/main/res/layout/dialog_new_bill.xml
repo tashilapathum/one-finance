@@ -118,7 +118,8 @@
         <RelativeLayout
             android:id="@+id/payment_strip"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/paymentCheck"

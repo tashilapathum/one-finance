@@ -19,7 +19,7 @@ android {
             versionNameSuffix '-DEBUG'
         }
         release {
-            minifyEnabled false
+            minifyEnabled false //TODO: enable this
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -68,7 +68,7 @@ dependencies {
     implementation 'com.adcolony:sdk:4.3.1'
     implementation 'com.mopub.mediation:adcolony:4.3.0.0'
     implementation 'androidx.annotation:annotation:1.2.0'
-    implementation 'com.google.android.gms:play-services-ads:20.0.0'
+    implementation 'com.google.android.gms:play-services-ads:20.1.0'
     implementation 'com.mopub.mediation:admob:19.6.0.1'
     implementation 'com.robinhood.ticker:ticker:2.0.2'
     implementation 'com.airbnb.android:lottie:3.7.0'

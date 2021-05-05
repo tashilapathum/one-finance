@@ -1,10 +1,15 @@
 package com.tashila.mywalletfree.bills;
 
 import android.app.Dialog;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -15,6 +20,7 @@ import android.widget.RadioGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tashila.mywalletfree.DatePickerFragment;
+import com.tashila.mywalletfree.DateTimeHandler;
 import com.tashila.mywalletfree.R;
 
 import androidx.annotation.NonNull;
@@ -25,6 +31,7 @@ import androidx.fragment.app.DialogFragment;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.TimeZone;
 
 public class DialogNewBill extends DialogFragment {
     private View view;
@@ -44,7 +51,11 @@ public class DialogNewBill extends DialogFragment {
     private static DialogNewBill instance;
     private Bill editingBill;
     private CheckBox cbMonthly;
+    private CheckBox cbCalendar;
+    private boolean addToCalendar = true;
     private SharedPreferences sharedPref;
+    private long dateInMillis;
+    private long dateEndInMillis;
 
     @NonNull
     @Override
@@ -65,7 +76,12 @@ public class DialogNewBill extends DialogFragment {
         isPaid = true;
         radioGroup = view.findViewById(R.id.rgPaidOrDue);
         cbMonthly = view.findViewById(R.id.cbMonthly);
-        setDate(LocalDate.now().format(formatter));
+        cbCalendar = view.findViewById(R.id.calendarCheck);
+        setDate(
+                LocalDate.now().format(formatter),
+                new DateTimeHandler(LocalDate.now()).getInMillis(),
+                new DateTimeHandler(LocalDate.now().atStartOfDay().plusHours(23)).getInMillis()
+        );
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,6 +98,12 @@ public class DialogNewBill extends DialogFragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 isMonthly = isChecked;
+            }
+        });
+        cbCalendar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                addToCalendar = isChecked;
             }
         });
 
@@ -107,6 +129,7 @@ public class DialogNewBill extends DialogFragment {
                         }
                     })
                     .setNegativeButton(R.string.cancel, null);
+            cbCalendar.setVisibility(View.GONE);
             fillDetails(editingBill);
         }
 
@@ -183,6 +206,19 @@ public class DialogNewBill extends DialogFragment {
         }
     }
 
+    private void addToCalendar() {
+        Intent intent = new Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, dateInMillis)
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, dateEndInMillis)
+                .putExtra(CalendarContract.Events.TITLE, "Yoga")
+                .putExtra(CalendarContract.Events.DESCRIPTION, "Group class")
+                .putExtra(CalendarContract.Events.EVENT_LOCATION, "The gym")
+                .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
+                .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com");
+        startActivity(intent);
+    }
+
     private boolean validateTitle() {
         if (etTitle.getText().toString().isEmpty()) {
             tilTitle.setError(getActivity().getResources().getString(R.string.required));
@@ -211,8 +247,10 @@ public class DialogNewBill extends DialogFragment {
         billDatePicker.show(getActivity().getSupportFragmentManager(), "bill date picker");
     }
 
-    public void setDate(String date) {
+    public void setDate(String date, long dateInMillis, long dateEndInMillis) {
         etDate.setText(date);
+        this.dateInMillis = dateInMillis;
+        this.dateEndInMillis = dateEndInMillis;
     }
 
     private void setPaymentStatus(RadioGroup radioGroup) {
