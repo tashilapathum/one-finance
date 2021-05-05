@@ -211,11 +211,9 @@ public class DialogNewBill extends DialogFragment {
                 .setData(CalendarContract.Events.CONTENT_URI)
                 .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, dateInMillis)
                 .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, dateEndInMillis)
-                .putExtra(CalendarContract.Events.TITLE, "Yoga")
-                .putExtra(CalendarContract.Events.DESCRIPTION, "Group class")
-                .putExtra(CalendarContract.Events.EVENT_LOCATION, "The gym")
-                .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
-                .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com");
+                .putExtra(CalendarContract.Events.TITLE, etTitle.getText().toString())
+                .putExtra(CalendarContract.Events.DESCRIPTION, etRemarks.getText().toString())
+                .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
         startActivity(intent);
     }
 
