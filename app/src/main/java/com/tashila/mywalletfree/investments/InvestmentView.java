@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -50,6 +51,9 @@ public class InvestmentView extends Fragment {
     private TextView tvDate;
     private Chip tagChip;
     private static InvestmentView instance;
+    private ListView timeline;
+
+    //TODO: add to timeline when adding funds and returns
 
     public static InvestmentView getInstance() {
         return instance;
@@ -71,6 +75,7 @@ public class InvestmentView extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_investment_view, container, false);
+        timeline = view.findViewById(R.id.timeline);
         instance = this;
 
         investmentsViewModel = new ViewModelProvider(getActivity(), ViewModelProvider.AndroidViewModelFactory.
@@ -215,7 +220,6 @@ public class InvestmentView extends Fragment {
         }
 
         ArrayAdapter<TimelineRow> timelineViewAdapter = new TimelineViewAdapter(getActivity(), 0, timelineRowsList, false);
-        ListView timeline = view.findViewById(R.id.timeline);
         timeline.setAdapter(timelineViewAdapter);
 
     }

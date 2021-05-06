@@ -30,6 +30,7 @@ public class ToolsFragment extends Fragment {
         setExitTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
         setReenterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, false));
         setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, true));
+        setReturnTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, false));
     }
 
     @Nullable

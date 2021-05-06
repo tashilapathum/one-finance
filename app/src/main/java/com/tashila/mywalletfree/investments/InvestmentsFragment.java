@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
-import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.transition.MaterialSharedAxis;
 import com.tashila.mywalletfree.R;
@@ -35,6 +34,7 @@ public class InvestmentsFragment extends Fragment {
         setExitTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
         setReenterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, false));
         setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, true));
+        setReturnTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, false));
     }
 
     @Nullable
