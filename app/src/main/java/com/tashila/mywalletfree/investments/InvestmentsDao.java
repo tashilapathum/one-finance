@@ -24,10 +24,13 @@ public interface InvestmentsDao {
     @Query("SELECT * FROM investments_table")
     LiveData<List<Investment>> getAllInvestments();
 
-    @Query("SELECT * FROM investments_table ORDER BY investValue")
+    @Query("SELECT * FROM investments_table ORDER BY investValue DESC")
     LiveData<List<Investment>> getInvestmentsSortByInvestValue();
 
-    @Query("SELECT * FROM investments_table ORDER BY returnValue") //profit percentage is different from return value because
+    @Query("SELECT * FROM investments_table ORDER BY dateInMillis")
+    LiveData<List<Investment>> getInvestmentsSortByTime();
+
+    @Query("SELECT * FROM investments_table ORDER BY returnValue DESC") //profit percentage is different from return value because
     LiveData<List<Investment>> getInvestmentsSortByReturnValue();  //the invested values could be relatively large or small
 
     @Query("SELECT * FROM investments_table ORDER BY (investValue - returnValue) / investValue * 100")

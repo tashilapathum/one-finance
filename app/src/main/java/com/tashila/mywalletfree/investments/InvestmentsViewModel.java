@@ -43,4 +43,8 @@ public class InvestmentsViewModel extends AndroidViewModel {
     public LiveData<List<Investment>> getInvestmentsSortByMostProfitable() {
         return investmentsRepository.getInvestmentsSortByMostProfitable();
     }
+
+    public LiveData<List<Investment>> getInvestmentsSortByTime() {
+        return investmentsRepository.getInvestmentsSortByTime();
+    }
 }

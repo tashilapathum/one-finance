@@ -1,21 +1,22 @@
 package com.tashila.mywalletfree.investments;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.transition.MaterialSharedAxis;
 import com.tashila.mywalletfree.R;
@@ -26,6 +27,7 @@ public class InvestmentsFragment extends Fragment {
     private RecyclerView recyclerView;
     private static InvestmentsFragment instance;
     private InvestmentsViewModel investmentsViewModel;
+    private InvestmentsAdapter investmentsAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,7 +54,7 @@ public class InvestmentsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.scheduleLayoutAnimation();
-        InvestmentsAdapter investmentsAdapter = new InvestmentsAdapter();
+        investmentsAdapter = new InvestmentsAdapter();
         recyclerView.setAdapter(investmentsAdapter);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -66,7 +68,70 @@ public class InvestmentsFragment extends Fragment {
             }
         });
 
+        //filters
+        ((Chip) view.findViewById(R.id.profitChip)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    investmentsViewModel.getInvestmentsSortByMostProfitable().observe(getActivity(), new Observer<List<Investment>>() {
+                        @Override
+                        public void onChanged(List<Investment> investments) {
+                            investmentsAdapter.submitList(investments);
+                        }
+                    });
+                } else clearFilter();
+            }
+        });
+        ((Chip) view.findViewById(R.id.returnChip)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    investmentsViewModel.getInvestmentsSortByReturnValue().observe(getActivity(), new Observer<List<Investment>>() {
+                        @Override
+                        public void onChanged(List<Investment> investments) {
+                            investmentsAdapter.submitList(investments);
+                        }
+                    });
+                } else clearFilter();
+            }
+        });
+        ((Chip) view.findViewById(R.id.timeChip)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    investmentsViewModel.getInvestmentsSortByTime().observe(getActivity(), new Observer<List<Investment>>() {
+                        @Override
+                        public void onChanged(List<Investment> investments) {
+                            investmentsAdapter.submitList(investments);
+                        }
+                    });
+                } else clearFilter();
+            }
+        });
+        ((Chip) view.findViewById(R.id.investChip)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    investmentsViewModel.getInvestmentsSortByInvestValue().observe(getActivity(), new Observer<List<Investment>>() {
+                        @Override
+                        public void onChanged(List<Investment> investments) {
+                            investmentsAdapter.submitList(investments);
+                        }
+                    });
+                } else clearFilter();
+            }
+        });
+
         return view;
+    }
+
+    private void clearFilter() {
+        investmentsViewModel.getAllInvestments().observe(getActivity(), new Observer<List<Investment>>() {
+            @Override
+            public void onChanged(List<Investment> investments) {
+                investmentsAdapter.submitList(investments);
+            }
+        });
     }
 
     public static InvestmentsFragment getInstance() {
@@ -75,7 +140,7 @@ public class InvestmentsFragment extends Fragment {
 
     private void onClickFAB() {
         DialogAddInvestment dialogAddInvestment = new DialogAddInvestment(null);
-        dialogAddInvestment.show(getChildFragmentManager(), "add investments dialog"); //altered this
+        dialogAddInvestment.show(getChildFragmentManager(), "add investments dialog");
     }
 
     public void addInvestment(Investment investment) {

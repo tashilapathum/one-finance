@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:transitionGroup="true"
-    android:id="@+id/fragment_container">
+    android:transitionGroup="true">
 
     <HorizontalScrollView
         android:id="@+id/filters_layout"
@@ -18,29 +18,37 @@
             android:layout_marginHorizontal="8dp">
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/profitChip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Default" />
+                android:checkable="true"
+                android:text="Most profitable"
+                app:chipBackgroundColor="@color/colorAccentTransparent" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/returnChip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Most profitable" />
+                android:checkable="true"
+                android:text="Most return"
+                app:chipBackgroundColor="@color/colorAccentTransparent" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/timeChip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Most return" />
+                android:checkable="true"
+                android:text="Longest time period"
+                app:chipBackgroundColor="@color/colorAccentTransparent" />
 
             <com.google.android.material.chip.Chip
+                android:id="@+id/investChip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Time period" />
-
-            <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Highest investment" />
+                android:layout_marginEnd="16dp"
+                android:checkable="true"
+                android:text="Highest investment"
+                app:chipBackgroundColor="@color/colorAccentTransparent" />
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
 
@@ -48,8 +56,8 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layoutAnimation="@anim/cascade_anim"
         android:layout_below="@id/filters_layout"
+        android:layoutAnimation="@anim/cascade_anim"
         tools:itemCount="7"
         tools:listitem="@layout/sample_investment" />
 

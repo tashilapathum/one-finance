@@ -13,6 +13,7 @@ public class InvestmentsRepository {
     private LiveData<List<Investment>> allInvestments;
     private LiveData<List<Investment>> investmentsSortByInvestValue;
     private LiveData<List<Investment>> investmentsSortByReturnValue;
+    private LiveData<List<Investment>> investmentsSortByTime;
     private LiveData<List<Investment>> investmentsSortByMostProfitable;
 
     public InvestmentsRepository(Application application) {
@@ -21,6 +22,7 @@ public class InvestmentsRepository {
         allInvestments = investmentsDao.getAllInvestments();
         investmentsSortByInvestValue = investmentsDao.getInvestmentsSortByInvestValue();
         investmentsSortByReturnValue = investmentsDao.getInvestmentsSortByReturnValue();
+        investmentsSortByTime = investmentsDao.getInvestmentsSortByTime();
         investmentsSortByMostProfitable = investmentsDao.getInvestmentsSortByMostProfitable();
     }
 
@@ -50,6 +52,10 @@ public class InvestmentsRepository {
 
     public LiveData<List<Investment>> getInvestmentsSortByMostProfitable() {
         return investmentsSortByMostProfitable;
+    }
+
+    public LiveData<List<Investment>> getInvestmentsSortByTime() {
+        return investmentsSortByTime;
     }
 
     private static class InsertInvestmentAsyncTask extends AsyncTask<Investment, Void, Void> {
