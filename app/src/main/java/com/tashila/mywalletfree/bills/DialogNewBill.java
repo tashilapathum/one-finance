@@ -262,6 +262,7 @@ public class DialogNewBill extends DialogFragment {
         if (rbDue.isChecked()) {
             tilDate.setHint(getString(R.string.pay_due_date));
             isPaid = false;
+            cbCalendar.setVisibility(View.VISIBLE);
         }
     }
 }

@@ -3,9 +3,13 @@ package com.tashila.mywalletfree.loans;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -37,10 +41,15 @@ public class DialogAddLoan extends DialogFragment {
     private EditText etDetails;
     private boolean isLent;
     private RadioGroup radioGroup;
+    private CheckBox cbCalendar;
     private DateTimeFormatter formatter;
     private static DialogAddLoan instance;
     private Loan editingLoan;
+    private boolean addToCalendar = true;
     private SharedPreferences sharedPref;
+    private long dateInMillis;
+    private long dateEndInMillis;
+    private String loanTitle;
 
     @NonNull
     @Override
@@ -60,7 +69,8 @@ public class DialogAddLoan extends DialogFragment {
         etDetails = tilDetails.getEditText();
         isLent = true;
         radioGroup = view.findViewById(R.id.lentBorrowed);
-        setDate(LocalDate.now().format(formatter));
+        cbCalendar = view.findViewById(R.id.calendarCheck);
+        setDate(LocalDate.now().format(formatter), 0, 0);
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +81,12 @@ public class DialogAddLoan extends DialogFragment {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 setPaymentStatus(radioGroup);
+            }
+        });
+        cbCalendar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                addToCalendar = isChecked;
             }
         });
 
@@ -145,16 +161,32 @@ public class DialogAddLoan extends DialogFragment {
             String amount = etAmount.getText().toString();
             String lentDate = etDate.getText().toString();
             String details = etDetails.getText().toString();
-            Loan loan = new Loan(isLent, !isLent, false, person, amount, null, lentDate, null, details);
+            if (isLent)
+                loanTitle = getString(R.string.lent_prefix) + person + getString(R.string.lent_suffix_si);
+            else
+                loanTitle = getString(R.string.borrow_prefix) + person + getString(R.string.borrow_suffix_si);
+            Loan loan = new Loan(isLent, !isLent, false, loanTitle, amount, null, lentDate, null, details);
             if (editingLoan != null) {
                 loan.setId(editingLoan.getId());
                 LoansFragment.getInstance().updateLoan(loan);
             } else {
                 LoansFragment.getInstance().addLoan(loan);
                 sharedPref.edit().putBoolean("haveLoans", true).apply();
+                addToCalendar();
             }
             dialog.dismiss();
         }
+    }
+
+    private void addToCalendar() {
+        Intent intent = new Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, dateInMillis)
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, dateEndInMillis)
+                .putExtra(CalendarContract.Events.TITLE, loanTitle)
+                .putExtra(CalendarContract.Events.DESCRIPTION, etDetails.getText().toString())
+                .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
+        startActivity(intent);
     }
 
     private boolean validatePerson() {
@@ -185,8 +217,10 @@ public class DialogAddLoan extends DialogFragment {
         loanDatePicker.show(getActivity().getSupportFragmentManager(), "loan date picker");
     }
 
-    public void setDate(String date) {
+    public void setDate(String date, long dateInMillis, long dateEndInMillis) {
         etDate.setText(date);
+        this.dateInMillis = dateInMillis;
+        this.dateEndInMillis = dateEndInMillis;
     }
 
     private void setPaymentStatus(RadioGroup radioGroup) {
@@ -194,10 +228,12 @@ public class DialogAddLoan extends DialogFragment {
         RadioButton rbBorrowed = (RadioButton) radioGroup.getChildAt(1);
         if (rbLent.isChecked()) {
             tilDate.setHint(getString(R.string.lent_date));
+            loanTitle = getString(R.string.lent_prefix) + etPerson.getText().toString() + getString(R.string.lent_suffix_si);
             isLent = true;
         }
         if (rbBorrowed.isChecked()) {
             tilDate.setHint(getString(R.string.borrowed_date));
+            loanTitle = getString(R.string.borrow_prefix) + etPerson.getText().toString() + getString(R.string.borrow_suffix_si);
             isLent = false;
         }
     }

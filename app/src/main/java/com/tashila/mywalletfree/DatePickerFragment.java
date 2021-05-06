@@ -65,7 +65,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
             DialogNewBill.getInstance().setDate(date, Long.parseLong(dateInMillis), zdt.plusHours(23).toInstant().toEpochMilli());
 
         if (fromContext.equals("fromLoansFragment"))
-            DialogAddLoan.getInstance().setDate(date);
+            DialogAddLoan.getInstance().setDate(date, Long.parseLong(dateInMillis), zdt.plusHours(23).toInstant().toEpochMilli());
 
         if (fromContext.equals("fromInvestmentsFragment"))
             DialogAddInvestment.getInstance().setDate(date, Long.parseLong(dateInMillis));
