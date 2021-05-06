@@ -15,8 +15,7 @@
     <RelativeLayout
         android:id="@+id/bills_instructions"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="64dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,7 +23,8 @@
             android:layout_centerVertical="true"
             android:gravity="center"
             android:orientation="vertical"
-            android:layout_margin="32dp">
+            android:layout_margin="32dp"
+            android:paddingBottom="64dp">
 
             <ImageView
                 android:layout_width="77dp"

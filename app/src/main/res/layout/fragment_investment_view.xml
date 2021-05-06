@@ -288,6 +288,9 @@
                     </RelativeLayout>
                 </com.google.android.material.card.MaterialCardView>
 
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <ListView
                     android:id="@+id/timeline"
                     android:layout_width="match_parent"
@@ -295,6 +298,7 @@
                     android:animateLayoutChanges="true"
                     android:divider="@null"
                     android:dividerHeight="0dp" />
+                </androidx.core.widget.NestedScrollView>
 
             </LinearLayout>
         </com.amar.library.ui.StickyScrollView>

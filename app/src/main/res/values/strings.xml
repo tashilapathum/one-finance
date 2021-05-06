@@ -471,8 +471,8 @@
     <string name="lent_suffix_si" />
     <string name="borrow_suffix_si" />
     <string name="you_can_manage_your_loans_using_this_feature">You can manage your loans using this feature</string>
-    <string name="add_a_new_loan">Add a new loan</string>
-    <string name="mark_as_settled">Mark as settled</string>
+    <string name="add_a_new_loan"> - Add a new loan</string>
+    <string name="mark_as_settled"> - Mark as settled</string>
     <string name="ntap_a_bill_to_see_more_details">\nTap a bill to see more details, and to show edit and delete options.</string>
     <string name="calculator">Calculator</string>
     <string name="add_investment">Add new investment</string>
