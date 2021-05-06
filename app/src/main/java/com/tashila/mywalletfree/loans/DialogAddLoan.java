@@ -171,8 +171,7 @@ public class DialogAddLoan extends DialogFragment {
                 LoansFragment.getInstance().updateLoan(loan);
             } else {
                 LoansFragment.getInstance().addLoan(loan);
-                sharedPref.edit().putBoolean("haveLoans", true).apply();
-                addToCalendar();
+                if (addToCalendar) addToCalendar();
             }
             dialog.dismiss();
         }

@@ -201,7 +201,6 @@ public class DialogNewBill extends DialogFragment {
             } else {
                 BillsFragment.getInstance().addBill(bill);
                 if (addToCalendar) addToCalendar();
-                sharedPref.edit().putBoolean("haveBills", true).apply();
             }
             dialog.dismiss();
         }
