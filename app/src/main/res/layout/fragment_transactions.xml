@@ -33,7 +33,7 @@
                 android:hint="@string/search"
                 android:importantForAutofill="no"
                 android:inputType="textCapSentences"
-                android:textColorHint="?android:attr/textColorHintInverse"/>
+                android:textColorHint="?android:textColorHintInverse"/>
 
             <ImageButton
                 android:id="@+id/toggleFilters"
@@ -44,7 +44,7 @@
                 android:contentDescription="show or hide filters"
                 android:paddingHorizontal="16dp"
                 android:src="@drawable/ic_filter"
-                android:tint="@android:color/black"/>
+                android:tint="?android:colorBackground"/>
 
         </RelativeLayout>
 
