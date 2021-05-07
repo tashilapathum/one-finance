@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     app:layout_behavior="com.google.android.material.R.id.design_bottom_sheet">
 
     <LinearLayout
@@ -15,15 +15,15 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:text="@string/edit_transaction"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:layout_marginBottom="16dp"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <RadioGroup
-            android:layout_marginTop="6dp"
             android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
             android:orientation="horizontal"
             android:visibility="gone">
 
@@ -31,55 +31,55 @@
                 android:id="@+id/expense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/expense"
+                android:checked="true"
                 android:paddingEnd="16dp"
-                tools:ignore="RtlSymmetry"
-                android:checked="true"/>
+                android:text="@string/expense"
+                tools:ignore="RtlSymmetry" />
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/income"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/income"/>
+                android:text="@string/income" />
 
         </RadioGroup>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/amount"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:errorEnabled="true"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/amount"
-                android:inputType="numberDecimal"/>
+                android:inputType="numberDecimal" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/description"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:errorEnabled="true"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/description"
-                android:inputType="textCapSentences"/>
+                android:inputType="textCapSentences" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/date"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:errorEnabled="true"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -92,10 +92,10 @@
             android:id="@+id/bottomNote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/remove_transaction_note"
             android:paddingBottom="8dp"
+            android:text="@string/remove_transaction_note"
             android:visibility="gone"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -110,14 +110,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="4dp"
-                android:text="@string/cancel" />
+                android:text="@string/cancel"
+                app:cornerRadius="16dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="4dp"
-                android:text="@string/save" />
+                android:text="@string/save"
+                app:cornerRadius="16dp" />
 
         </LinearLayout>
 

@@ -27,13 +27,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="4dp"
-                android:text="@string/cancel" />
+                android:text="@string/cancel"
+                app:cornerRadius="16dp"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/addCartItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/add" />
+                android:text="@string/add"
+                app:cornerRadius="16dp"/>
 
         </LinearLayout>
 
