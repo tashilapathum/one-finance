@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.transition.MaterialSharedAxis;
+import com.tashila.mywalletfree.MainActivity;
 import com.tashila.mywalletfree.R;
 
 import java.util.List;
@@ -148,10 +150,12 @@ public class InvestmentsFragment extends Fragment {
     }
 
     public void openInvestment(Investment investment) {
-        getChildFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new InvestmentView(investment), "investment view")
-                .addToBackStack(null)
-                .commit();
+        if (getChildFragmentManager().findFragmentByTag("InvestmentView") == null) { //avoid opening over and over
+            getChildFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new InvestmentView(investment), "InvestmentView")
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 
     public void updateInvestment(Investment editingInvestment) {

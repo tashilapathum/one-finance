@@ -422,6 +422,14 @@
     </string>
     <string name="what_s_new_in_version" translatable="false">What\'s new</string>
     <string name="whats_new_descr" translatable="false">
+        \nv0.4.1\n
+        - [Added] Investments feature to track progress, profits and timeline of your projects or investments\n
+        - [Added] Loan Manager and Basic Calculator as Tools\n
+        - [Added] Transaction History to the bottom navigation\n
+        - [Added] option to add new bills to your calendar (also available for loans)\n
+        - Moved Shopping Cart and Bill Manager to the Tools page\n
+        - Fixed bugs and improved performance\n
+
         \nv0.3.2\n
         - [Fixed] Crash when opening the Reports page\n
         - Library updates\n
@@ -482,5 +490,8 @@
     <string name="months">&#160;months</string>
     <string name="years">&#160;years</string>
     <string name="created_investment">Created investment</string>
+    <string name="note">Note</string>
+    <string name="invested_suffix_si" />
+    <string name="returned_suffix_si" />
 
 </resources>

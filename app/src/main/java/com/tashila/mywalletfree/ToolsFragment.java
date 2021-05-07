@@ -84,13 +84,4 @@ public class ToolsFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        GridLayout toolsGrid = view.findViewById(R.id.tools_grid);
-        if (hidden) toolsGrid.setVisibility(View.GONE);
-        else toolsGrid.setVisibility(View.VISIBLE);
-
-    }
 }

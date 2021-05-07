@@ -155,7 +155,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/additional_info_optional"
                         android:importantForAutofill="no"
-                        android:inputType="textMultiLine|textCapSentences" />
+                        android:inputType="textMultiLine|textImeMultiLine|textCapSentences" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 

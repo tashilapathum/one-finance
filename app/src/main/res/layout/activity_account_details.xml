@@ -186,7 +186,8 @@
                         android:id="@+id/adAccNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:text="10001245698" />
+                        tools:text="10001245698"
+                        android:textIsSelectable="true" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
@@ -212,7 +213,8 @@
                         android:id="@+id/adExDetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:text="varous other account details go here" />
+                        tools:text="varous other account details go here"
+                        android:textIsSelectable="true"/>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>

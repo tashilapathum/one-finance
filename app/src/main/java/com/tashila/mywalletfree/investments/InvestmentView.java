@@ -53,8 +53,6 @@ public class InvestmentView extends Fragment {
     private static InvestmentView instance;
     private ListView timeline;
 
-    //TODO: add to timeline when adding funds and returns
-
     public static InvestmentView getInstance() {
         return instance;
     }
@@ -110,11 +108,23 @@ public class InvestmentView extends Fragment {
                             @Override
                             public void onClickAdd(String inputText) {
                                 if (!inputText.isEmpty()) {
+                                    //update value
                                     double amount = investment.getInvestValue();
                                     amount = amount + Double.parseDouble(inputText);
                                     investment.setInvestValue(amount);
+
+                                    //update timeline
+                                    String timelineItem = "Invested "
+                                            + new Amount(getActivity(), amount).getAmountString()
+                                            + getString(R.string.invested_suffix_si)
+                                            + "###" + System.currentTimeMillis();
+                                    List<String> history = investment.getHistory();
+                                    history.add(timelineItem);
+                                    investment.setHistory(history);
+
                                     investmentsViewModel.update(investment);
                                     showDetails(null);
+                                    updateTimeline();
                                 }
                             }
                         })
@@ -131,11 +141,23 @@ public class InvestmentView extends Fragment {
                             @Override
                             public void onClickAdd(String inputText) {
                                 if (!inputText.isEmpty()) {
+                                    //update amount
                                     double amount = investment.getReturnValue();
                                     amount = amount + Double.parseDouble(inputText);
                                     investment.setReturnValue(amount);
+
+                                    //update timeline
+                                    String timelineItem = "Earned "
+                                            + new Amount(getActivity(), amount).getAmountString()
+                                            + getString(R.string.returned_suffix_si)
+                                            + "###" + System.currentTimeMillis();
+                                    List<String> history = investment.getHistory();
+                                    history.add(timelineItem);
+                                    investment.setHistory(history);
+
                                     investmentsViewModel.update(investment);
                                     showDetails(null);
+                                    updateTimeline();
                                 }
                             }
                         })
@@ -183,7 +205,7 @@ public class InvestmentView extends Fragment {
 
     private void addNote() {
         new InputTextDialog(
-                "Note",
+                getString(R.string.note),
                 InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE,
                 new InputTextDialog.OnClickAddListener() {
                     @Override

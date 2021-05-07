@@ -441,4 +441,7 @@
     <string name="months">&#160;months</string>
     <string name="years">&#160;years</string>
     <string name="created_investment">Created investment</string>
+    <string name="note">Note</string>
+    <string name="invested_suffix_si" />
+    <string name="returned_suffix_si" />
 </resources>

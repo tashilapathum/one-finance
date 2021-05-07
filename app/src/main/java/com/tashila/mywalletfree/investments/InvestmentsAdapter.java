@@ -62,9 +62,7 @@ public class InvestmentsAdapter extends ListAdapter<Investment, InvestmentsAdapt
         holder.tvInvestValue.setText(investValue.getAmountString());
 
         //profit
-        Amount profit = new Amount(context,
-                (currentInvestment.getReturnValue() - currentInvestment.getInvestValue()) / currentInvestment.getInvestValue() * 100
-        );
+        Amount profit = new Amount(context, currentInvestment.getReturnValue() - currentInvestment.getInvestValue());
         holder.tvProfitValue.setText(profit.getAmountString());
 
         //passed time
