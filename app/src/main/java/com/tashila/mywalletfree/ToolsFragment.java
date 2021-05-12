@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -78,10 +77,19 @@ public class ToolsFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (view.findViewById(R.id.tools_grid).getVisibility() == View.INVISIBLE)
+            view.findViewById(R.id.tools_grid).setVisibility(View.VISIBLE);
+    }
+
     private void openPage(Fragment fragment, String fragmentTag) {
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, fragment, fragmentTag)
                 .addToBackStack(null)
                 .commit();
     }
+
+
 }

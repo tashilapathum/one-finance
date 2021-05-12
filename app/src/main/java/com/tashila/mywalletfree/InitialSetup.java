@@ -58,6 +58,7 @@ public class InitialSetup extends AppCompatActivity {
                     @Override
                     public void onSelectCurrency(String name, String code, String symbol, int flagDrawableResID) {
                         etCurrency.setText(symbol);
+                        picker.dismiss();
                     }
                 });
                 picker.show(getSupportFragmentManager(), "CURRENCY_PICKER");

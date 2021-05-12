@@ -107,7 +107,6 @@ public class BankFragment extends Fragment {
         tilAmount = view.findViewById(R.id.editAmount);
         etAmount = tilAmount.getEditText();
         currency = sharedPref.getString("currency", null);
-        setShadows(tv1, tv2, tvAccountName, tvAccountBalance, tvCurrency);
         String language = sharedPref.getString("language", "english");
         if (language.equalsIgnoreCase("සිංහල")) sinhala = true;
 
@@ -559,16 +558,6 @@ public class BankFragment extends Fragment {
                     }
                 }
             }
-        }
-    }
-
-    private void setShadows(TextView... views) {
-        String theme = sharedPref.getString("theme", "light");
-        for (TextView view : views) {
-            if (theme.equalsIgnoreCase("dark"))
-                view.setShadowLayer(3, 1, 1, R.color.colorShadowDark);
-            else
-                view.setShadowLayer(3, 1, 1, R.color.colorShadow);
         }
     }
 

@@ -44,7 +44,7 @@ public class LoansFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.frag_loans, null);
+        view = inflater.inflate(R.layout.frag_loans, container, false);
         instance = this;
 
         ViewPager viewPager = view.findViewById(R.id.loans_view_pager);

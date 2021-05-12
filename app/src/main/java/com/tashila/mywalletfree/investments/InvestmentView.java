@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.chip.Chip;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.transition.MaterialSharedAxis;
 import com.tashila.mywalletfree.Amount;
 import com.tashila.mywalletfree.DateTimeHandler;
@@ -174,6 +176,18 @@ public class InvestmentView extends Fragment {
         tvDate = view.findViewById(R.id.date);
         tagChip = view.findViewById(R.id.tag);
 
+        LinearLayout collapsingLayout = view.findViewById(R.id.collapsing_layout);
+        view.findViewById(R.id.expandHistory).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                view.animate().rotationBy(180f);
+                if (collapsingLayout.getVisibility() == View.VISIBLE)
+                    collapsingLayout.setVisibility(View.GONE);
+                else
+                    collapsingLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
         //basic details
         showDetails(null);
 
@@ -189,7 +203,7 @@ public class InvestmentView extends Fragment {
     }
 
     public void deleteInvestment(final Investment investment) {
-        new AlertDialog.Builder(getActivity())
+        new MaterialAlertDialogBuilder(getActivity())
                 .setTitle(R.string.confirm)
                 .setMessage(R.string.delete_inv_confirm)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {

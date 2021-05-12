@@ -66,7 +66,6 @@ public class WalletFragment extends Fragment {
     private TextInputLayout tilDescr;
     private EditText etAmount;
     private EditText etDescr;
-    private TextView txtBalance;
     private TickerView tvBalance;
     private TextView tvCurrency;
     private View v;
@@ -122,7 +121,6 @@ public class WalletFragment extends Fragment {
                 .getInstance(getActivity().getApplication())).get(QuickListViewModel.class);
 
         //get data
-        txtBalance = v.findViewById(R.id.txtBalance);
         tvCurrency = v.findViewById(R.id.currency);
         tvBalance = v.findViewById(R.id.balance);
         tilAmount = v.findViewById(R.id.editAmnt);

@@ -8,142 +8,147 @@
     android:background="?android:colorBackground"
     android:transitionGroup="true">
 
-    <GridLayout
-        android:id="@+id/tools_grid"
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:animateLayoutChanges="true"
-        android:columnCount="2"
-        android:padding="16dp"
-        android:rowCount="3">
+        android:layout_centerInParent="true">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cart"
-            android:layout_width="140dp"
-            android:layout_height="150dp"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:layout_margin="16dp"
+        <GridLayout
+            android:id="@+id/tools_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
+            android:columnCount="2"
             android:padding="16dp"
-            app:cardBackgroundColor="@color/colorAccentTransparent"
-            app:cardCornerRadius="16dp">
+            android:rowCount="3">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cart"
+                android:layout_width="140dp"
+                android:layout_height="150dp"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_margin="16dp"
+                android:animateLayoutChanges="true"
+                android:padding="16dp"
+                app:cardBackgroundColor="@color/colorAccentTransparent"
+                app:cardCornerRadius="16dp">
 
-                <ImageView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:src="@drawable/ic_cart" />
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                <TextView
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_cart" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Shopping cart"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/bills"
+                android:layout_width="140dp"
+                android:layout_height="150dp"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:layout_margin="16dp"
+                android:padding="16dp"
+                app:cardBackgroundColor="@color/colorAccentTransparent"
+                app:cardCornerRadius="16dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Shopping cart"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/bills"
-            android:layout_width="140dp"
-            android:layout_height="150dp"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:layout_margin="16dp"
-            android:padding="16dp"
-            app:cardBackgroundColor="@color/colorAccentTransparent"
-            app:cardCornerRadius="16dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_bills" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bills"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                <ImageView
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/loans"
+                android:layout_width="140dp"
+                android:layout_height="150dp"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:layout_margin="16dp"
+                android:padding="16dp"
+                app:cardBackgroundColor="@color/colorAccentTransparent"
+                app:cardCornerRadius="16dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:src="@drawable/ic_bills" />
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                <TextView
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_loan" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Loans"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/calc"
+                android:layout_width="140dp"
+                android:layout_height="150dp"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:layout_margin="16dp"
+                android:padding="16dp"
+                app:cardBackgroundColor="@color/colorAccentTransparent"
+                app:cardCornerRadius="16dp">
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Bills"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/loans"
-            android:layout_width="140dp"
-            android:layout_height="150dp"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:layout_margin="16dp"
-            android:padding="16dp"
-            app:cardBackgroundColor="@color/colorAccentTransparent"
-            app:cardCornerRadius="16dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_calc" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/calculator"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:src="@drawable/ic_loan" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="Loans"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/calc"
-            android:layout_width="140dp"
-            android:layout_height="150dp"
-            android:layout_row="1"
-            android:layout_column="1"
-            android:layout_margin="16dp"
-            android:padding="16dp"
-            app:cardBackgroundColor="@color/colorAccentTransparent"
-            app:cardCornerRadius="16dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:src="@drawable/ic_calc" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/calculator"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-    </GridLayout>
+        </GridLayout>
+    </ScrollView>
 </RelativeLayout>
