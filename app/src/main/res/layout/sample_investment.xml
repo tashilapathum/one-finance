@@ -38,7 +38,7 @@
                 android:focusable="false"
                 android:text="Business tag"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                app:chipBackgroundColor="@color/colorInvestFAB" />
+                app:chipBackgroundColor="@color/colorAccentTransparent" />
 
         </LinearLayout>
 

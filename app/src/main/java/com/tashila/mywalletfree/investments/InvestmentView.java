@@ -176,7 +176,7 @@ public class InvestmentView extends Fragment {
         tvDate = view.findViewById(R.id.date);
         tagChip = view.findViewById(R.id.tag);
 
-        LinearLayout collapsingLayout = view.findViewById(R.id.collapsing_layout);
+        /*LinearLayout collapsingLayout = view.findViewById(R.id.collapsing_layout);
         view.findViewById(R.id.expandHistory).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -185,6 +185,14 @@ public class InvestmentView extends Fragment {
                     collapsingLayout.setVisibility(View.GONE);
                 else
                     collapsingLayout.setVisibility(View.VISIBLE);
+            }
+        });*/
+
+        view.findViewById(R.id.expandHistory).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogTimeline dialogTimeline = new DialogTimeline(investment);
+                dialogTimeline.show(getChildFragmentManager(), "timeline dialog");
             }
         });
 
@@ -256,6 +264,7 @@ public class InvestmentView extends Fragment {
         }
 
         ArrayAdapter<TimelineRow> timelineViewAdapter = new TimelineViewAdapter(getActivity(), 0, timelineRowsList, false);
+        timeline.setScrollingCacheEnabled(false);
         timeline.setAdapter(timelineViewAdapter);
 
     }

@@ -1,308 +1,304 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp">
 
-    <com.google.android.material.card.MaterialCardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardCornerRadius="0dp"
-        app:cardElevation="0dp">
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:animateLayoutChanges="true"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:id="@+id/title_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@id/buttons_layout">
-
-                    <TextView
-                        android:id="@+id/title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:paddingVertical="4dp"
-                        android:text="Example investment 1"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/tag"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginHorizontal="8dp"
-                        android:clickable="false"
-                        android:elevation="0dp"
-                        android:focusable="false"
-                        android:text="Tag"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                        app:chipBackgroundColor="@color/colorAccentTransparent"
-                        app:chipMinHeight="26dp"
-                        app:chipMinTouchTargetSize="0dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/buttons_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:orientation="horizontal">
-
-                    <ImageButton
-                        android:id="@+id/editInvestment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="4dp"
-                        android:background="?android:attr/selectableItemBackgroundBorderless"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_edit" />
-
-                    <ImageButton
-                        android:id="@+id/deleteInvestment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="?android:attr/selectableItemBackgroundBorderless"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_delete" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/title_layout"
-                    android:layout_marginTop="-4dp"
-                    android:text="03/05/2021"
-                    android:textStyle="italic" />
-
-                <TextView
-                    android:id="@+id/description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/date"
-                    android:layout_marginBottom="8dp"
-                    android:text="This is a quite long description about the investment you can see in this app" />
-            </RelativeLayout>
+            android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/collapsing_layout"
+                android:id="@+id/title_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/buttons_layout">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingVertical="4dp"
+                    android:text="Example investment 1"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="8dp"
+                    android:clickable="false"
+                    android:elevation="0dp"
+                    android:focusable="false"
+                    android:text="Tag"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                    app:chipBackgroundColor="@color/colorAccentTransparent"
+                    app:chipMinHeight="26dp"
+                    app:chipMinTouchTargetSize="0dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/buttons_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                android:orientation="vertical">
+                android:layout_alignParentEnd="true"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/editInvestment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="4dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_edit" />
+
+                <ImageButton
+                    android:id="@+id/deleteInvestment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_delete" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title_layout"
+                android:layout_marginTop="-4dp"
+                android:text="03/05/2021"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/date"
+                android:layout_marginBottom="8dp"
+                android:text="This is a quite long description about the investment you can see in this app" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/collapsing_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingHorizontal="2dp"
+                    android:src="@drawable/ic_invest_large" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="4dp"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <ImageView
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:paddingHorizontal="2dp"
-                        android:src="@drawable/ic_invest_large" />
+                        android:text="Invested amount"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/investedValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Invested amount"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
-
-                        <TextView
-                            android:id="@+id/investedValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$69,420" />
-                    </LinearLayout>
-
-                    <ImageButton
-                        android:id="@+id/addFunds"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginHorizontal="8dp"
-                        android:background="?android:attr/selectableItemBackgroundBorderless"
-                        android:padding="6dp"
-                        android:src="@drawable/ic_add"
-                        android:tint="@color/colorAccent" />
-
+                        android:text="$69,420" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <ImageButton
+                    android:id="@+id/addFunds"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="4dp"
-                    android:orientation="horizontal">
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="8dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_add"
+                    android:tint="@color/colorAccent" />
 
-                    <ImageView
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingHorizontal="8dp"
+                    android:src="@drawable/ic_income" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:paddingHorizontal="8dp"
-                        android:src="@drawable/ic_income" />
+                        android:text="Return value"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/returnValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Return value"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
-
-                        <TextView
-                            android:id="@+id/returnValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$5,200" />
-                    </LinearLayout>
-
-                    <ImageButton
-                        android:id="@+id/addReturns"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginHorizontal="8dp"
-                        android:background="?android:attr/selectableItemBackgroundBorderless"
-                        android:padding="6dp"
-                        android:src="@drawable/ic_add"
-                        android:tint="@color/colorAccent" />
+                        android:text="$5,200" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <ImageButton
+                    android:id="@+id/addReturns"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="4dp"
-                    android:orientation="horizontal">
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="8dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_add"
+                    android:tint="@color/colorAccent" />
+            </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:paddingHorizontal="8dp"
-                        android:src="@drawable/ic_profit" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Profit"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
-
-                        <TextView
-                            android:id="@+id/profitValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="$1,100" />
-                    </LinearLayout>
-                </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingHorizontal="8dp"
+                    android:src="@drawable/ic_profit" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="4dp"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <ImageView
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:paddingHorizontal="8dp"
-                        android:src="@drawable/ic_time" />
+                        android:text="Profit"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/profitValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Time period"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
-
-                        <TextView
-                            android:id="@+id/timePeriod"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="30 days" />
-                    </LinearLayout>
+                        android:text="$1,100" />
                 </LinearLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingHorizontal="8dp"
+                    android:src="@drawable/ic_time" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Time period"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+
+                    <TextView
+                        android:id="@+id/timePeriod"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="30 days" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <RelativeLayout
+                android:id="@+id/title_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <RelativeLayout
-                    android:id="@+id/title_history"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txtHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="History"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
-                    <TextView
-                        android:id="@+id/txtHistory"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:text="History"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+                <ImageButton
+                    android:id="@+id/expandHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/txtHistory"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_expand"
+                    android:rotation="90"/>
 
-                    <ImageButton
-                        android:id="@+id/expandHistory"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="?android:attr/selectableItemBackgroundBorderless"
-                        android:padding="6dp"
-                        android:src="@drawable/ic_up"
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@id/txtHistory"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/addNote"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:text="Add note" />
-                </RelativeLayout>
-
-                <ListView
-                    android:id="@+id/timeline"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/title_history"
-                    android:animateLayoutChanges="true"
-                    android:divider="@null"
-                    android:dividerHeight="0dp"
-                    android:nestedScrollingEnabled="true" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/addNote"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:text="Add note" />
             </RelativeLayout>
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+            <ListView
+                android:id="@+id/timeline"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/title_history"
+                android:animateLayoutChanges="true"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:nestedScrollingEnabled="true" />
+        </RelativeLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
