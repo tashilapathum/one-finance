@@ -897,53 +897,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?android:attr/selectableItemBackground"
-                    android:onClick="autoRefresh"
-                    android:paddingVertical="16dp"
-                    android:paddingStart="8dp">
-
-                    <ImageView
-                        android:id="@+id/image20"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="8dp"
-                        android:paddingEnd="8dp"
-                        android:src="@drawable/ic_refresh" />
-
-                    <TextView
-                        android:id="@+id/setting20"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/image20"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@string/auto_refresh_charts"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                    <TextView
-                        android:id="@+id/description20"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/setting20"
-                        android:layout_toStartOf="@id/refreshCheck"
-                        android:layout_toEndOf="@id/image20"
-                        android:text="@string/refresh_wallet_page_to_show_updated_charts_after_adding_every_transaction" />
-
-                    <com.google.android.material.switchmaterial.SwitchMaterial
-                        android:id="@+id/refreshCheck"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:paddingHorizontal="4dp" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
                     android:onClick="tapToHide"
                     android:paddingVertical="16dp"
                     android:paddingStart="8dp">

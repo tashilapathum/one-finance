@@ -185,20 +185,6 @@ public class Settings extends AppCompatActivity
         });
         boolean tapToHideEnabled = sharedPref.getBoolean("tapToHideEnabled", false);
         if (tapToHideEnabled) tapHideCheckBox.setChecked(true);
-
-        //auto refresh setting
-        refreshCheckBox = findViewById(R.id.refreshCheck);
-        refreshCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (compoundButton.isChecked())
-                    sharedPref.edit().putBoolean("autoRefreshEnabled", true).apply();
-                else
-                    sharedPref.edit().putBoolean("autoRefreshEnabled", false).apply();
-            }
-        });
-        boolean autoRefreshEnabled = sharedPref.getBoolean("autoRefreshEnabled", false);
-        if (autoRefreshEnabled) refreshCheckBox.setChecked(true);
     }
 
     @Override //so the language change works with dark mode
@@ -570,16 +556,6 @@ public class Settings extends AppCompatActivity
             tapHideCheckBox.setChecked(true);
         else
             tapHideCheckBox.setChecked(false);
-    }
-
-    public void autoRefresh(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putString("setting", "auto_refresh_checkbox");
-        firebaseAnalytics.logEvent("used_setting", bundle);
-        if (!refreshCheckBox.isChecked())
-            refreshCheckBox.setChecked(true);
-        else
-            refreshCheckBox.setChecked(false);
     }
 
     public void pin(View view) {
