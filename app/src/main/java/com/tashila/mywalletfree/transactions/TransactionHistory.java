@@ -321,12 +321,6 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
         });
     }
 
-    public void updateTransaction(TransactionItem transactionItem) {
-        transactionsViewModel.update(transactionItem);
-        transactionsAdapter.notifyDataSetChanged();
-        Toast.makeText(this, R.string.updated, Toast.LENGTH_SHORT).show();
-    }
-
     private void deleteTransaction(TransactionItem transactionItem) {
         transactionsViewModel.delete(transactionItem);
         String prefix = transactionItem.getPrefix();

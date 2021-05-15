@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -17,12 +18,14 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.tashila.mywalletfree.DatePickerFragment;
 import com.tashila.mywalletfree.DateTimeHandler;
 import com.tashila.mywalletfree.R;
+import com.tashila.mywalletfree.investments.InvestmentsFragment;
 
 import java.text.DecimalFormat;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
 public class DialogTransactionEditor extends BottomSheetDialogFragment {
     private View view;
@@ -41,6 +44,8 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
     private RadioGroup radioGroup;
     private MaterialRadioButton rbExpense;
     private MaterialRadioButton rbIncome;
+    private boolean isFromTransactionsActivity;
+    private TransactionsViewModel transactionsViewModel;
 
 
     @NonNull
@@ -51,6 +56,8 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
         view = getActivity().getLayoutInflater().inflate(R.layout.dialog_edit_transaction, null);
         dialog = new BottomSheetDialog(getActivity());
         dialog.setContentView(view);
+        transactionsViewModel = new ViewModelProvider(getActivity(), ViewModelProvider.AndroidViewModelFactory
+                .getInstance(getActivity().getApplication())).get(TransactionsViewModel.class);
 
         Button btnSave = view.findViewById(R.id.save);
         Button btnCancel = view.findViewById(R.id.cancel);
@@ -167,8 +174,9 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
             sharedPref.edit().putString("balance", newBalance).apply();
 
             //save changes
-            TransactionHistory transactionHistory = (TransactionHistory) context;
-            transactionHistory.updateTransaction(transactionItem);
+            transactionsViewModel.update(transactionItem);
+            Toast.makeText(getActivity(), R.string.updated, Toast.LENGTH_SHORT).show();
+            TransactionsFragment.getInstance().reloadFragment();
             dialog.cancel();
         } else {
             TextView tvBottomNote = view.findViewById(R.id.bottomNote);

@@ -199,10 +199,13 @@ public class InvestmentView extends Fragment {
         //basic details
         showDetails(null);
 
-        //timeline
-        updateTimeline();
-
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateTimeline();
     }
 
     public void editInvestment(Investment investment) {

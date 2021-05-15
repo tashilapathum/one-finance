@@ -33,6 +33,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -57,6 +58,11 @@ public class TransactionsFragment extends Fragment {
     private int sort;
     List<TransactionItem> transactionsList;
     List<TransactionItem> filteredList;
+    private static TransactionsFragment instance;
+
+    public static TransactionsFragment getInstance() {
+        return instance;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,6 +77,7 @@ public class TransactionsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_transactions, null);
         sharedPref = getActivity().getSharedPreferences("myPref", MODE_PRIVATE);
+        instance = this;
 
         loadItems();
         loadFilters();
@@ -528,6 +535,12 @@ public class TransactionsFragment extends Fragment {
             transactionsAdapter.submitList(transactionsList);
             mLayoutManager.smoothScrollToPosition(recyclerView, null, 0);
         }
+    }
+
+    public void reloadFragment() {
+        Fragment walletFrag = getActivity().getSupportFragmentManager().findFragmentByTag("TransactionsFragment");
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.detach(walletFrag).attach(walletFrag).commit();
     }
 
 }
