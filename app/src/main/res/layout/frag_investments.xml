@@ -16,14 +16,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
-            app:singleSelection="true">
+            app:singleSelection="true"
+            app:selectionRequired="true"
+            app:checkedChip="@id/recentChip">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/recentChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkable="true"
+                android:text="@string/recently_added"
+                app:chipBackgroundColor="@color/colorAccentTransparent" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/profitChip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"
-                android:text="Most profitable"
+                android:text="@string/most_profitable"
                 app:chipBackgroundColor="@color/colorAccentTransparent" />
 
             <com.google.android.material.chip.Chip
@@ -31,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"
-                android:text="Most return"
+                android:text="@string/most_return"
                 app:chipBackgroundColor="@color/colorAccentTransparent" />
 
             <com.google.android.material.chip.Chip
@@ -39,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"
-                android:text="Longest time period"
+                android:text="@string/longest_time_period"
                 app:chipBackgroundColor="@color/colorAccentTransparent" />
 
             <com.google.android.material.chip.Chip
@@ -48,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:checkable="true"
-                android:text="Highest investment"
+                android:text="@string/highest_investment"
                 app:chipBackgroundColor="@color/colorAccentTransparent" />
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>

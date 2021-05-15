@@ -505,5 +505,10 @@
     </string>
     <string name="title">Title</string>
     <string name="tag">Tag</string>
+    <string name="most_profitable">Most profitable</string>
+    <string name="most_return">Most return</string>
+    <string name="longest_time_period">Longest time period</string>
+    <string name="highest_investment">Highest investment</string>
+    <string name="recently_added">Recently added</string>
 
 </resources>

@@ -457,4 +457,9 @@
         \u2713 වෙළෙඳ දැන්වීම් නොමැත\n
         \u2713 ඇප් එකෙහි ඉදිරි වැඩිදියුණු කටයුතු වලට සහයක් වීම ❤\n
     </string>
+    <string name="most_profitable">Most profitable</string>
+    <string name="most_return">Most return</string>
+    <string name="longest_time_period">Longest time period</string>
+    <string name="highest_investment">Highest investment</string>
+    <string name="recently_added">Recently added</string>
 </resources>

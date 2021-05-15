@@ -72,6 +72,19 @@ public class InvestmentsFragment extends Fragment {
         });
 
         //filters
+        ((Chip) view.findViewById(R.id.recentChip)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    investmentsViewModel.getAllInvestments().observe(getActivity(), new Observer<List<Investment>>() {
+                        @Override
+                        public void onChanged(List<Investment> investments) {
+                            investmentsAdapter.submitList(investments);
+                        }
+                    });
+                } else clearFilter();
+            }
+        });
         ((Chip) view.findViewById(R.id.profitChip)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -129,12 +142,13 @@ public class InvestmentsFragment extends Fragment {
     }
 
     private void clearFilter() {
-        investmentsViewModel.getAllInvestments().observe(getActivity(), new Observer<List<Investment>>() {
+        /*investmentsViewModel.getAllInvestments().observe(getActivity(), new Observer<List<Investment>>() {
             @Override
             public void onChanged(List<Investment> investments) {
                 investmentsAdapter.submitList(investments);
             }
-        });
+        });*/
+        investmentsAdapter.notifyDataSetChanged();
     }
 
     public static InvestmentsFragment getInstance() {

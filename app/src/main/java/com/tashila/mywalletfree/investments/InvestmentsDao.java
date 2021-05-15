@@ -21,7 +21,7 @@ public interface InvestmentsDao {
     @Delete
     void delete(Investment investment);
 
-    @Query("SELECT * FROM investments_table")
+    @Query("SELECT * FROM investments_table ORDER BY id DESC")
     LiveData<List<Investment>> getAllInvestments();
 
     @Query("SELECT * FROM investments_table ORDER BY investValue DESC")

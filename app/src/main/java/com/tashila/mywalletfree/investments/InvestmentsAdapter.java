@@ -77,6 +77,16 @@ public class InvestmentsAdapter extends ListAdapter<Investment, InvestmentsAdapt
         });
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
     class InvestmentViewHolder extends RecyclerView.ViewHolder {
         private TextView tvTitle;
         private TextView tvDescription;
