@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="@string/ntap_a_bill_to_see_more_details"
+                android:text="@string/ntap_a_loan_to_see_more_details_and_to_show_edit_and_delete_options"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:alpha="0.5"/>
 

@@ -381,19 +381,6 @@
     <string name="transfer_to_suffix">&#160; ගිණුමට හුවමාරු කරන ලදී</string>
     <string name="transfer_from_suffix">&#160; ගිණුමෙන් හුවමාරු කරන ලදී</string>
     <string name="transfer_2">වෙනත්\nගිණුමකට</string>
-
-    <string name="pro_features">
-        &#160;\u2713 ක්ෂණික ලැයිස්තුවේ සීමාවක් නොමැත (නොමිලේ - 5)\n
-        \u2713 අඳුරු පැහැ වර්ණ තේමාව (Dark mode) තෝරාගත හැක\n
-        \u2713 දවසේ අයවැය මතක් කරනු ලබන නිවේදනය (notification) ලැබෙන වේලාව තේරීම\n
-        \u2713 බැංකු ගිණුම් ගණන සීමාවක් නොමැත (නොමිලේ - 1)\n
-        \u2713 ඇප් එක විවෘත වන විට දිස්වෙන මුල් පිටුව මාරු කළ හැක\n
-        \u2713 වාර්තා සීමාවක් නොමැතිව බැලිය හැක (නොමිලේ - දින: 4, සති: 3, මාස: 2)\n
-        \u2713 ප්‍රධාන බොත්තම් වල කුඩා \'නිරූපකය + වචනය\' සහ \'නිරූපකය පමණක්\' ආකාර\n
-        \u2713 ඇප් එක සුරක්ශිත කිරීමට PIN අංකයක් ඇතුලත් කිරීමේ හැකියාව\n
-        \u2713 වෙළෙඳ දැන්වීම් නොමැත\n
-        \u2713 ඇප් එකෙහි ඉදිරි වැඩිදියුණු කටයුතු වලට සහයක් වීම ❤\n
-    </string>
     <string name="chips">කුඩා බොත්තම්</string>
     <string name="list">ලැයිස්තුවක්</string>
     <string name="purchase_once_keep_forever">එක් වරක් ගෙවූ පසු වෙනත් කිසිම අයකිරීමක් නැත</string>
@@ -414,34 +401,60 @@
     <string name="scrollable">සියල්ල</string>
     <string name="you_can_update_the_balance_by_tapping_the_current_balance_as_well">ශේෂයේ අගය මත ටච් කිරීමෙන් ද ඔබට ශේෂය සංස්කරණය කළ හැක.</string>
     <string name="yearly_ads_quota">මෙම වසර අවසානය තෙක් වෙළෙඳ දැන්වීම් ඉවත් කර ඇත. ඔබට මීළඟ වසර තෙක් නැවත වෙළෙඳ දැන්වීම් නැරඹීමට අවශ්‍ය නොවේ.</string>
-    <string name="investments">Investments</string>
-    <string name="tools">Tools</string>
-    <string name="person_s_name">Person\'s name</string>
-    <string name="settled_">"Settled: "</string>
-    <string name="new_loan">New loan</string>
-    <string name="edit_loan">Edit loan</string>
-    <string name="lent_date">Lent date</string>
-    <string name="borrowed_date">Borrowed date</string>
-    <string name="confirm_item_delete">Are you sure you want to delete this item?</string>
-    <string name="lent_">"Lent: "</string>
-    <string name="borrowed_">"Borrowed: "</string>
-    <string name="lent_prefix">"Lent to "</string>
-    <string name="borrow_prefix">"Borrowed from "</string>
-    <string name="lent_suffix_si" />
-    <string name="borrow_suffix_si" />
-    <string name="you_can_manage_your_loans_using_this_feature">You can manage your loans using this feature</string>
-    <string name="add_a_new_loan">Add a new loan</string>
-    <string name="mark_as_settled">Mark as settled</string>
-    <string name="ntap_a_bill_to_see_more_details">\nTap a bill to see more details, and to show edit and delete options.</string>
-    <string name="calculator">Calculator</string>
-    <string name="add_investment">Add new investment</string>
-    <string name="edit_investment">Edit investment</string>
-    <string name="delete_inv_confirm">Are you sure you want to permanently delete this investment?</string>
-    <string name="days">&#160;days</string>
-    <string name="months">&#160;months</string>
-    <string name="years">&#160;years</string>
-    <string name="created_investment">Created investment</string>
-    <string name="note">Note</string>
-    <string name="invested_suffix_si" />
-    <string name="returned_suffix_si" />
+    <string name="investments">ආයෝජන</string>
+    <string name="tools">මෙවලම්</string>
+    <string name="person_s_name">පුද්ගලයාගේ නම</string>
+    <string name="settled_">පියවන ලද:&#160;</string>
+    <string name="new_loan">නව ණයක්</string>
+    <string name="edit_loan">ණය සංස්කරණය කිරීම</string>
+    <string name="lent_date">ණයට දුන් දිනය</string>
+    <string name="borrowed_date">ණයට ගත් දිනය</string>
+    <string name="confirm_item_delete">ඔබට මෙම අයිතමය ඉවත් කිරීමට අවශ්‍ය ද?</string>
+    <string name="lent_">ණයට දුන්:</string>
+    <string name="borrowed_">ණයට ගත්:</string>
+    <string name="lent_prefix"/>
+    <string name="borrow_prefix"/>
+    <string name="lent_suffix_si" >ට ණයට දෙන ලදී</string>
+    <string name="borrow_suffix_si" >ගෙන් ණයට ගන්නා ලදී</string>
+    <string name="you_can_manage_your_loans_using_this_feature">ඔබගේ ණය මුදල් මෙමගින් කලමනාකරණය කරගත හැකියි</string>
+    <string name="add_a_new_loan">ණය අයිතමයක් එකතු කරන්න</string>
+    <string name="mark_as_settled">පියවූ බවට ලකුණු කරන්න</string>
+    <string name="ntap_a_bill_to_see_more_details">\nසංස්කරණය කිරීමට, ඉවත් කිරීමට හෝ වැඩි විස්තර බලා ගැනීමට බිල්පතක් ටච් කරන්න</string>
+    <string name="calculator">කැල්ක්යුලේටරය</string>
+    <string name="add_investment">නව ආයෝජනයක් එකතු කිරීම</string>
+    <string name="edit_investment">ආයෝජනය සංස්කරණය කිරීම</string>
+    <string name="delete_inv_confirm">ඔබට මෙම ආයෝජනය සම්පූර්ණයෙන් ඉවත් කිරීමට අවශ්‍ය ද?</string>
+    <string name="days">&#160;දින</string>
+    <string name="months">&#160;මාස</string>
+    <string name="years">&#160;අවුරුදු</string>
+    <string name="created_investment">ආයෝජනය සාදන ලදී</string>
+    <string name="note">සටහන</string>
+    <string name="invested_suffix_si" >ක් ආයෝජනය කරන ලදී</string>
+    <string name="returned_suffix_si" >ක් ආපසු ලැබුණි</string>
+    <string name="ntap_a_loan_to_see_more_details_and_to_show_edit_and_delete_options">\nසංස්කරණය කිරීමට, ඉවත් කිරීමට හෝ වැඩි විස්තර බලා ගැනීමට ණය අයිතමයක් ටච් කරන්න</string>
+    <string name="shopping_cart">භාණ්ඩ ලැයිස්තුව</string>
+    <string name="invested_amount">ආයෝජනය කළ මුදල</string>
+    <string name="return_value">ආපසු ලැබුණු මුදල</string>
+    <string name="profit">ලාභය</string>
+    <string name="time_period">කාල පරාසය</string>
+    <string name="history">ඉතිහාසය</string>
+    <string name="add_note">සටහනක් එක් කරන්න</string>
+    <string name="add_to_my_calendar">කැලන්ඩරයට ඇතුලත් කරන්න</string>
+    <string name="title">මාතෘකාව</string>
+    <string name="tag">වර්ගය</string>
+
+
+
+    <string name="pro_features">
+        &#160;\u2713 ක්ෂණික ලැයිස්තුවේ සීමාවක් නොමැත (නොමිලේ - 5)\nSZ
+        \u2713 අඳුරු පැහැ වර්ණ තේමාව (Dark mode) තෝරාගත හැක\n
+        \u2713 දවසේ අයවැය මතක් කරනු ලබන නිවේදනය (notification) ලැබෙන වේලාව තේරීම\n
+        \u2713 බැංකු ගිණුම් ගණන සීමාවක් නොමැත (නොමිලේ - 1)\n
+        \u2713 ඇප් එක විවෘත වන විට දිස්වෙන මුල් පිටුව මාරු කළ හැක\n
+        \u2713 වාර්තා සීමාවක් නොමැතිව බැලිය හැක (නොමිලේ - දින: 4, සති: 3, මාස: 2)\n
+        \u2713 ඇප් එක සුරක්ශිත කිරීමට PIN අංකයක් ඇතුලත් කිරීමේ හැකියාව\n
+        \u2713 අමතර විශේෂිතකරණය කළ හැකි සැකසුම්\n
+        \u2713 වෙළෙඳ දැන්වීම් නොමැත\n
+        \u2713 ඇප් එකෙහි ඉදිරි වැඩිදියුණු කටයුතු වලට සහයක් වීම ❤\n
+    </string>
 </resources>

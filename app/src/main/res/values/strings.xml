@@ -404,6 +404,46 @@
     <string name="scrolling_disabled">Scrolling disabled</string>
     <string name="scrollable">Scrollable</string>
     <string name="you_can_update_the_balance_by_tapping_the_current_balance_as_well">You can update the balance by tapping the current balance value as well.</string>
+    <string name="yearly_ads_quota">You\'ve reached the quota of this year. Which means you don\'t have to watch ads until next year.</string>
+    <string name="investments">Investments</string>
+    <string name="tools">Tools</string>
+    <string name="person_s_name">Person\'s name</string>
+    <string name="settled_">Settled:&#160;</string>
+    <string name="new_loan">New loan</string>
+    <string name="edit_loan">Edit loan</string>
+    <string name="lent_date">Lent date</string>
+    <string name="borrowed_date">Borrowed date</string>
+    <string name="confirm_item_delete">Are you sure you want to delete this item?</string>
+    <string name="lent_">Lent:&#160;</string>
+    <string name="borrowed_">Borrowed:&#160;</string>
+    <string name="lent_prefix">Lent to&#160;</string>
+    <string name="borrow_prefix">Borrowed from&#160;</string>
+    <string name="lent_suffix_si" />
+    <string name="borrow_suffix_si" />
+    <string name="you_can_manage_your_loans_using_this_feature">You can manage your loans using this feature</string>
+    <string name="add_a_new_loan"> - Add a new loan</string>
+    <string name="mark_as_settled"> - Mark as settled</string>
+    <string name="ntap_a_bill_to_see_more_details">\nTap a bill to see more details, and to show edit and delete options.</string>
+    <string name="calculator">Calculator</string>
+    <string name="add_investment">Add new investment</string>
+    <string name="edit_investment">Edit investment</string>
+    <string name="delete_inv_confirm">Are you sure you want to permanently delete this investment?</string>
+    <string name="days">&#160;days</string>
+    <string name="months">&#160;months</string>
+    <string name="years">&#160;years</string>
+    <string name="created_investment">Created investment</string>
+    <string name="note">Note</string>
+    <string name="invested_suffix_si" />
+    <string name="returned_suffix_si" />
+    <string name="ntap_a_loan_to_see_more_details_and_to_show_edit_and_delete_options">\nTap a loan to see more details, and to show edit and delete options.</string>
+    <string name="shopping_cart">Shopping cart</string>
+    <string name="invested_amount">Invested amount</string>
+    <string name="return_value">Return value</string>
+    <string name="profit">Profit</string>
+    <string name="time_period">Time period</string>
+    <string name="history">History</string>
+    <string name="add_note">Add note</string>
+    <string name="add_to_my_calendar">Add to my calendar</string>
 
 
 
@@ -415,8 +455,8 @@
         <!-- - Backup all settings and data\n-->
         \u2713 Change the default home screen\n
         \u2713 Access unlimited history in reports (free limits are 4 days, 3 weeks, 2 months)\n
-        \u2713 \'Icon only\' and \'Icon + Label\' modes for main buttons\n
         \u2713 Protect the app with a PIN\n
+        \u2713 More customization options\n
         \u2713 No ads\n
         \u2713 Support the developer! ❤\n
     </string>
@@ -428,6 +468,7 @@
         - [Added] Transaction History to the bottom navigation\n
         - [Added] option to add new bills to your calendar (also available for loans)\n
         - Moved Shopping Cart and Bill Manager to the Tools page\n
+        - UI changes to improve user experience\n
         - Fixed bugs and improved performance\n
 
         \nv0.3.2\n
@@ -462,36 +503,7 @@
         - Added Autocomplete when typing transaction details\n
         - [Fixed] crash in Wallet screen\n
     </string>
-    <string name="yearly_ads_quota">You\'ve reached the quota of this year. Which means you don\'t have to watch ads until next year.</string>
-    <string name="investments">Investments</string>
-    <string name="tools">Tools</string>
-    <string name="person_s_name">Person\'s name</string>
-    <string name="settled_">Settled:&#160;</string>
-    <string name="new_loan">New loan</string>
-    <string name="edit_loan">Edit loan</string>
-    <string name="lent_date">Lent date</string>
-    <string name="borrowed_date">Borrowed date</string>
-    <string name="confirm_item_delete">Are you sure you want to delete this item?</string>
-    <string name="lent_">Lent:&#160;</string>
-    <string name="borrowed_">Borrowed:&#160;</string>
-    <string name="lent_prefix">Lent to&#160;</string>
-    <string name="borrow_prefix">Borrowed from&#160;</string>
-    <string name="lent_suffix_si" />
-    <string name="borrow_suffix_si" />
-    <string name="you_can_manage_your_loans_using_this_feature">You can manage your loans using this feature</string>
-    <string name="add_a_new_loan"> - Add a new loan</string>
-    <string name="mark_as_settled"> - Mark as settled</string>
-    <string name="ntap_a_bill_to_see_more_details">\nTap a bill to see more details, and to show edit and delete options.</string>
-    <string name="calculator">Calculator</string>
-    <string name="add_investment">Add new investment</string>
-    <string name="edit_investment">Edit investment</string>
-    <string name="delete_inv_confirm">Are you sure you want to permanently delete this investment?</string>
-    <string name="days">&#160;days</string>
-    <string name="months">&#160;months</string>
-    <string name="years">&#160;years</string>
-    <string name="created_investment">Created investment</string>
-    <string name="note">Note</string>
-    <string name="invested_suffix_si" />
-    <string name="returned_suffix_si" />
+    <string name="title">Title</string>
+    <string name="tag">Tag</string>
 
 </resources>

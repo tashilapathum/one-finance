@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     app:cardCornerRadius="0dp"
     app:cardElevation="0dp">
 
@@ -30,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:paddingVertical="4dp"
-                    android:text="Example investment 1"
+                    tools:text="Example investment 1"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
 
                 <com.google.android.material.chip.Chip
@@ -42,7 +43,7 @@
                     android:clickable="false"
                     android:elevation="0dp"
                     android:focusable="false"
-                    android:text="Tag"
+                    tools:text="Tag"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
                     app:chipBackgroundColor="@color/colorAccentTransparent"
                     app:chipMinHeight="26dp"
@@ -80,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title_layout"
                 android:layout_marginTop="-4dp"
-                android:text="03/05/2021"
+                tools:text="03/05/2021"
                 android:textStyle="italic" />
 
             <TextView
@@ -89,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/date"
                 android:layout_marginBottom="8dp"
-                android:text="This is a quite long description about the investment you can see in this app" />
+                tools:text="This is a quite long description about the investment you can see in this app" />
         </RelativeLayout>
 
         <LinearLayout
@@ -120,14 +121,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Invested amount"
+                        android:text="@string/invested_amount"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
                     <TextView
                         android:id="@+id/investedValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="$69,420" />
+                        tools:text="$69,420" />
                 </LinearLayout>
 
                 <ImageButton
@@ -164,14 +165,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Return value"
+                        android:text="@string/return_value"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
                     <TextView
                         android:id="@+id/returnValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="$5,200" />
+                        tools:text="$5,200" />
                 </LinearLayout>
 
                 <ImageButton
@@ -207,14 +208,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Profit"
+                        android:text="@string/profit"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
                     <TextView
                         android:id="@+id/profitValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="$1,100" />
+                        tools:text="$1,100" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -239,14 +240,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Time period"
+                        android:text="@string/time_period"
                         android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
                     <TextView
                         android:id="@+id/timePeriod"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="30 days" />
+                        tools:text="30 days" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -266,7 +267,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:text="History"
+                    android:text="@string/history"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
                 <ImageButton
@@ -287,7 +288,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:text="Add note" />
+                    android:text="@string/add_note" />
             </RelativeLayout>
 
             <ListView
