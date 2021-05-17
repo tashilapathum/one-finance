@@ -67,6 +67,9 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
     private MaterialNavigationView navigationView;
     private MoPubView moPubView;
 
+    //TODO: fix loans in sinhala
+    //TODO: update starting page setting
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
@@ -158,10 +161,12 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         //when set as home screen (won't set it back to false)
         else if (homeScreen.equalsIgnoreCase("bank"))
             navigateScreens(new BankFragment(), "BankFragment", R.id.nav_bank);
-        else if (homeScreen.equalsIgnoreCase("cart"))
-            navigateScreens(new CartFragment(), "CartFragment", R.id.nav_invest);
-        else if (homeScreen.equalsIgnoreCase("bills"))
-            navigateScreens(new BillsFragment(), "BillsFragment", R.id.nav_tools);
+        else if (homeScreen.equalsIgnoreCase("transactions"))
+            navigateScreens(new TransactionsFragment(), "BillsFragment", R.id.nav_trans);
+        else if (homeScreen.equalsIgnoreCase("investments"))
+            navigateScreens(new InvestmentsFragment(), "BillsFragment", R.id.nav_invest);
+        else if (homeScreen.equalsIgnoreCase("tools"))
+            navigateScreens(new ToolsFragment(), "BillsFragment", R.id.nav_tools);
             //when starting the app normally
         else
             navigateScreens(new WalletFragment(), "WalletFragment", R.id.nav_wallet);

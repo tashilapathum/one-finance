@@ -58,10 +58,14 @@ public class Settings extends AppCompatActivity
     private SwitchMaterial undoCheckBox;
     private SwitchMaterial negativeCheckBox;
     private SwitchMaterial tapHideCheckBox;
-    private SwitchMaterial refreshCheckBox;
     private FirebaseAnalytics firebaseAnalytics;
     private MaterialNavigationView navigationView;
     private boolean isMyWalletPro;
+    private final String HOME_OPTION_WALLET = "Wallet";
+    private final String HOME_OPTION_BANK = "Bank";
+    private final String HOME_OPTION_TRANSACTIONS = "Transactions";
+    private final String HOME_OPTION_INVESTMENTS = "Investments";
+    private final String HOME_OPTION_TOOLS = "Tools";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -416,14 +420,100 @@ public class Settings extends AppCompatActivity
         } else purchaseProForThis();
     }
 
+    //choose home screen
     public void chooseHome(View view) {
         Bundle bundle = new Bundle();
         bundle.putString("setting", "set_home");
         firebaseAnalytics.logEvent("used_setting", bundle);
         if (isMyWalletPro) {
-            DialogChooseHome dialogChooseHome = new DialogChooseHome();
-            dialogChooseHome.show(getSupportFragmentManager(), "choose home dialog");
+            final int[] home = {0};
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle(R.string.set_home_screen)
+                    .setSingleChoiceItems(new CharSequence[]{
+                                    getString(R.string.wallet),
+                                    getString(R.string.bank),
+                                    getString(R.string.recent_transactions),
+                                    getString(R.string.investments),
+                                    getString(R.string.tools)
+                            },
+                            getCheckedHomeIndex(),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int checkedIndex) {
+                                    home[0] = checkedIndex;
+                                }
+                            }
+                    )
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            saveCheckedHome(home[0]);
+                        }
+                    })
+                    .show();
         } else purchaseProForThis();
+    }
+
+    private int getCheckedHomeIndex() {
+        String homeScreen = sharedPref.getString("homeScreen", "Wallet");
+        int id = 0;
+        switch (homeScreen) {
+            case HOME_OPTION_WALLET: {
+                id = 0;
+                break;
+            }
+            case HOME_OPTION_BANK: {
+                id = 1;
+                break;
+            }
+            case HOME_OPTION_TRANSACTIONS: {
+                id = 2;
+                break;
+            }
+            case HOME_OPTION_INVESTMENTS: {
+                id = 3;
+                break;
+            }
+            case HOME_OPTION_TOOLS: {
+                id = 4;
+                break;
+            }
+        }
+        return id;
+    }
+
+    private void saveCheckedHome(int checkedIndex) {
+        String home = null;
+        switch (checkedIndex) {
+            case 0: {
+                home = HOME_OPTION_WALLET;
+                break;
+            }
+            case 1: {
+                home = HOME_OPTION_BANK;
+                break;
+            }
+            case 2: {
+                home = HOME_OPTION_TRANSACTIONS;
+                break;
+            }
+            case 3: {
+                home = HOME_OPTION_INVESTMENTS;
+                break;
+            }
+            case 4: {
+                home = HOME_OPTION_TOOLS;
+                break;
+            }
+        }
+
+        sharedPref.edit().putString("homeScreen", home).apply();
+        Toast.makeText(this, getString(R.string.saved), Toast.LENGTH_SHORT).show();
     }
 
     public void walletContent(View view) {
@@ -588,8 +678,7 @@ public class Settings extends AppCompatActivity
                 intent.putExtra("newPin", true);
                 startActivity(intent);
             }
-        }
-        else
+        } else
             purchaseProForThis();
     }
 
