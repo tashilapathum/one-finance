@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
     private MoPubView moPubView;
 
     //TODO: fix loans in sinhala
-    //TODO: update starting page setting
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

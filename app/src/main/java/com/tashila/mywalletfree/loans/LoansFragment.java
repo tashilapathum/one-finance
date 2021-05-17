@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.transition.MaterialSharedAxis;
@@ -103,7 +104,7 @@ public class LoansFragment extends Fragment {
     }
 
     public void deleteLoan(final Loan loan) {
-        new AlertDialog.Builder(getActivity())
+        new MaterialAlertDialogBuilder(getActivity())
                 .setTitle(R.string.confirm)
                 .setMessage(R.string.confirm_item_delete)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {

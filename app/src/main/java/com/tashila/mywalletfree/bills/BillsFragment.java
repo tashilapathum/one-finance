@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.transition.MaterialSharedAxis;
@@ -112,7 +113,7 @@ public class BillsFragment extends Fragment {
     }
 
     public void deleteBill(final Bill bill) {
-        new AlertDialog.Builder(getActivity())
+        new MaterialAlertDialogBuilder(getActivity())
                 .setTitle(R.string.confirm)
                 .setMessage(R.string.confirm_delete_bill)
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
