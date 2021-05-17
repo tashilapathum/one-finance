@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tashila.mywalletfree.DatePickerFragment;
@@ -33,9 +35,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.TimeZone;
 
-public class DialogNewBill extends DialogFragment {
+public class DialogNewBill extends BottomSheetDialogFragment {
     private View view;
-    private AlertDialog dialog;
+    private BottomSheetDialog dialog;
     private TextInputLayout tilTitle;
     private TextInputLayout tilAmount;
     private TextInputLayout tilDate;
@@ -107,33 +109,30 @@ public class DialogNewBill extends DialogFragment {
             }
         });
 
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
+        dialog = new BottomSheetDialog(getActivity());
 
         if (getActivity().getSupportFragmentManager().findFragmentByTag("edit bill dialog") == null) {
-            builder.setView(view)
-                    .setTitle(R.string.new_bill)
-                    .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            //handled in onResume
-                        }
-                    })
-                    .setNegativeButton(R.string.cancel, null);
+            dialog.setContentView(view);
         } else {
-            builder.setView(view)
-                    .setTitle(R.string.edit_bill)
-                    .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            //handled in onResume
-                        }
-                    })
-                    .setNegativeButton(R.string.cancel, null);
+            dialog.setContentView(view);
             cbCalendar.setVisibility(View.GONE);
             fillDetails(editingBill);
         }
 
-        return builder.create();
+        view.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        view.findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickAddOrEdit();
+            }
+        });
+
+        return dialog;
     }
 
     public DialogNewBill(Bill editingBill) {
@@ -161,18 +160,6 @@ public class DialogNewBill extends DialogFragment {
 
     public static DialogNewBill getInstance() {
         return instance;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        dialog = (AlertDialog) getDialog();
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickAddOrEdit();
-            }
-        });
     }
 
     private void onClickAddOrEdit() {

@@ -19,6 +19,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tashila.mywalletfree.DatePickerFragment;
@@ -28,9 +30,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
-public class DialogAddLoan extends DialogFragment {
+public class DialogAddLoan extends BottomSheetDialogFragment {
     private View view;
-    private AlertDialog dialog;
+    private BottomSheetDialog dialog;
     private TextInputLayout tilPerson;
     private TextInputLayout tilAmount;
     private TextInputLayout tilDate;
@@ -90,32 +92,29 @@ public class DialogAddLoan extends DialogFragment {
             }
         });
 
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
+        dialog = new BottomSheetDialog(getActivity());
 
         if (getActivity().getSupportFragmentManager().findFragmentByTag("edit loan dialog") == null) {
-            builder.setView(view)
-                    .setTitle(R.string.new_loan)
-                    .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            //handled in onResume
-                        }
-                    })
-                    .setNegativeButton(R.string.cancel, null);
+            dialog.setContentView(view);
         } else {
-            builder.setView(view)
-                    .setTitle(R.string.edit_loan)
-                    .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            //handled in onResume
-                        }
-                    })
-                    .setNegativeButton(R.string.cancel, null);
+            dialog.setContentView(view);
             fillDetails(editingLoan);
         }
 
-        return builder.create();
+        view.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        view.findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickAddOrEdit();
+            }
+        });
+
+        return dialog;
     }
 
     public DialogAddLoan(Loan editingLoan) {
@@ -143,28 +142,23 @@ public class DialogAddLoan extends DialogFragment {
         return instance;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        dialog = (AlertDialog) getDialog();
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickAddOrEdit();
-            }
-        });
-    }
-
     private void onClickAddOrEdit() {
         if (validatePerson() && validateAmount()) {
             String person = etPerson.getText().toString();
             String amount = etAmount.getText().toString();
             String lentDate = etDate.getText().toString();
             String details = etDetails.getText().toString();
+
             if (isLent)
                 loanTitle = getString(R.string.lent_prefix) + person + getString(R.string.lent_suffix_si);
             else
                 loanTitle = getString(R.string.borrow_prefix) + person + getString(R.string.borrow_suffix_si);
+            //remove duplicate strings
+            if (loanTitle.replace(getString(R.string.lent_suffix_si), "").contains(getString(R.string.lent_suffix_si)))
+                loanTitle = loanTitle.replace(getString(R.string.lent_suffix_si), "");
+            else if (loanTitle.replace(getString(R.string.borrow_suffix_si), "").contains(getString(R.string.borrow_suffix_si)))
+                loanTitle = loanTitle.replace(getString(R.string.borrow_suffix_si), "");
+
             Loan loan = new Loan(isLent, !isLent, false, loanTitle, amount, null, lentDate, null, details);
             if (editingLoan != null) {
                 loan.setId(editingLoan.getId());
