@@ -6,7 +6,7 @@
     <string name="get_pro">Pro සංස්කරණය</string>
     <string name="about">ඇප් එක ගැන</string>
     <string name="my_wallet">My Wallet</string>
-    <string name="developed_by_tashila_pathum">\nසැකසුම: ටෂිල පැතුම්</string>
+    <string name="developed_by_tashila_pathum">\nසැකසුම: Tantalum Technologies</string>
     <string name="balance">ශේෂය:</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -261,9 +261,9 @@
         සටහන: බැංකුව හා පසුම්බිය අතර ගනුදෙනු ඉවත් කළ විට බැංකු ගිණුමේ ශේෂය ඔබ විසින් නිවැරැදි කළ යුතු ය.
     </string>
     <string name="budget_na">බජට් අගය\nනොමැත</string>
-    <string name="bd_highest">වැඩිම:</string>
-    <string name="bd_lowest">අඩුම:</string>
-    <string name="bd_average">මධ්‍ය:</string>
+    <string name="bd_highest">වැඩිම:&#160;</string>
+    <string name="bd_lowest">අඩුම:&#160;</string>
+    <string name="bd_average">මධ්‍ය:&#160;</string>
     <string name="expense">වියදම්</string>
     <string name="income">ආදායම්</string>
     <string name="acc_details">ගිණුම් විස්තර</string>
@@ -410,23 +410,23 @@
     <string name="lent_date">ණයට දුන් දිනය</string>
     <string name="borrowed_date">ණයට ගත් දිනය</string>
     <string name="confirm_item_delete">ඔබට මෙම අයිතමය ඉවත් කිරීමට අවශ්‍ය ද?</string>
-    <string name="lent_">ණයට දුන්:</string>
-    <string name="borrowed_">ණයට ගත්:</string>
+    <string name="lent_">ණයට දුන්:&#160;</string>
+    <string name="borrowed_">ණයට ගත්:&#160;</string>
     <string name="lent_prefix"/>
     <string name="borrow_prefix"/>
     <string name="lent_suffix_si" >ට ණයට දෙන ලදී</string>
     <string name="borrow_suffix_si" >ගෙන් ණයට ගන්නා ලදී</string>
     <string name="you_can_manage_your_loans_using_this_feature">ඔබගේ ණය මුදල් මෙමගින් කලමනාකරණය කරගත හැකියි</string>
-    <string name="add_a_new_loan">ණය අයිතමයක් එකතු කරන්න</string>
-    <string name="mark_as_settled">පියවූ බවට ලකුණු කරන්න</string>
+    <string name="add_a_new_loan"> - ණය අයිතමයක් එකතු කරන්න</string>
+    <string name="mark_as_settled"> - පියවූ බවට ලකුණු කරන්න</string>
     <string name="ntap_a_bill_to_see_more_details">\nසංස්කරණය කිරීමට, ඉවත් කිරීමට හෝ වැඩි විස්තර බලා ගැනීමට බිල්පතක් ටච් කරන්න</string>
     <string name="calculator">කැල්ක්යුලේටරය</string>
     <string name="add_investment">නව ආයෝජනයක් එකතු කිරීම</string>
     <string name="edit_investment">ආයෝජනය සංස්කරණය කිරීම</string>
     <string name="delete_inv_confirm">ඔබට මෙම ආයෝජනය සම්පූර්ණයෙන් ඉවත් කිරීමට අවශ්‍ය ද?</string>
-    <string name="days">&#160;දින</string>
-    <string name="months">&#160;මාස</string>
-    <string name="years">&#160;අවුරුදු</string>
+    <string name="days">&#160;(දින)</string>
+    <string name="months">&#160;(මාස)</string>
+    <string name="years">&#160;(අවුරුදු)</string>
     <string name="created_investment">ආයෝජනය සාදන ලදී</string>
     <string name="note">සටහන</string>
     <string name="invested_suffix_si" >ක් ආයෝජනය කරන ලදී</string>
@@ -442,11 +442,17 @@
     <string name="add_to_my_calendar">කැලන්ඩරයට ඇතුලත් කරන්න</string>
     <string name="title">මාතෘකාව</string>
     <string name="tag">වර්ගය</string>
+    <string name="most_profitable">වඩාත් ලාභදායි</string>
+    <string name="most_return">වැඩිම ආපසු ලැබුණු</string>
+    <string name="longest_time_period">දිගු ම කාල වකවානුව</string>
+    <string name="highest_investment">වැඩියෙන්ම ආයෝජනය කළ</string>
+    <string name="recently_added">ළඟදී එකතු කරන ලද</string>
+    <string name="pick">තෝරන්න…</string>
 
 
 
     <string name="pro_features">
-        &#160;\u2713 ක්ෂණික ලැයිස්තුවේ සීමාවක් නොමැත (නොමිලේ - 5)\nSZ
+        &#160;\u2713 ක්ෂණික ලැයිස්තුවේ සීමාවක් නොමැත (නොමිලේ - 5)\n
         \u2713 අඳුරු පැහැ වර්ණ තේමාව (Dark mode) තෝරාගත හැක\n
         \u2713 දවසේ අයවැය මතක් කරනු ලබන නිවේදනය (notification) ලැබෙන වේලාව තේරීම\n
         \u2713 බැංකු ගිණුම් ගණන සීමාවක් නොමැත (නොමිලේ - 1)\n
@@ -457,9 +463,4 @@
         \u2713 වෙළෙඳ දැන්වීම් නොමැත\n
         \u2713 ඇප් එකෙහි ඉදිරි වැඩිදියුණු කටයුතු වලට සහයක් වීම ❤\n
     </string>
-    <string name="most_profitable">වඩාත් ලාභදායි</string>
-    <string name="most_return">වැඩිම ආපසු ලැබුණු </string>
-    <string name="longest_time_period">දිගු ම කාල වකවානුව</string>
-    <string name="highest_investment">වැඩියෙන්ම ආයෝජනය කළ</string>
-    <string name="recently_added">ළඟදී එකතු කරන ලද</string>
 </resources>

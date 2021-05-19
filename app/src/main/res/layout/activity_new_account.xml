@@ -57,9 +57,9 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/accName"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     app:errorEnabled="true"
                     app:helperText="@string/account_name_desc">
 
@@ -74,10 +74,10 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/currentBalance"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="16dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -97,10 +97,10 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/annualInterest"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:errorEnabled="true"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         app:helperText="@string/interest_description">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -117,20 +117,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:padding="8dp"
                         android:layout_marginTop="12dp"
                         android:layout_marginEnd="4dp"
+                        android:background="?android:attr/selectableItemBackground"
                         android:contentDescription="@string/add_multiple_interests"
-                        android:src="@drawable/ic_add"
-                        android:background="?android:attr/selectableItemBackground"/>
+                        android:padding="8dp"
+                        android:src="@drawable/ic_add" />
 
                 </RelativeLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/accNumber"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:paddingTop="16dp">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -144,10 +144,10 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/additional"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="16dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -174,12 +174,13 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/cancel"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="onClickCancel"
                         android:text="@string/cancel"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:textAllCaps="false"
+                        app:cornerRadius="16dp"
                         tools:ignore="ButtonStyle" />
 
                     <com.google.android.material.button.MaterialButton
@@ -189,6 +190,7 @@
                         android:onClick="onClickAdd"
                         android:text="@string/add"
                         android:textAllCaps="false"
+                        app:cornerRadius="16dp"
                         tools:ignore="ButtonStyle" />
 
                 </LinearLayout>

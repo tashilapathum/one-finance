@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.mynameismidori.currencypicker.CurrencyPicker;
+import com.mynameismidori.currencypicker.CurrencyPickerListener;
 import com.tashila.mywalletfree.R;
 
 import androidx.annotation.NonNull;
@@ -49,6 +51,21 @@ public class DialogCurrency extends DialogFragment {
         //load saved data
         String currency = sharedPref.getString("currency", "");
         editCurrency.setText(currency);
+
+        view2.findViewById(R.id.pick).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CurrencyPicker picker = CurrencyPicker.newInstance("Select currency");  // dialog title
+                picker.setListener(new CurrencyPickerListener() {
+                    @Override
+                    public void onSelectCurrency(String name, String code, String symbol, int flagDrawableResID) {
+                        editCurrency.setText(symbol);
+                        picker.dismiss();
+                    }
+                });
+                picker.show(getChildFragmentManager(), "CURRENCY_PICKER");
+            }
+        });
         return builder.create();
     }
 

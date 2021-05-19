@@ -16,6 +16,7 @@
         <item name="android:shadowColor">@color/colorShadow</item>
         <item name="colorThemeBasedAccent">@color/colorPrimary</item>
         <item name="buttonTint">@color/colorPrimary</item>
+        <item name="textInputStyle">@style/TextInputLayoutTheme</item>
     </style>
 
     <style name="AppThemeDark" parent="Theme.MaterialComponents.DayNight">
@@ -33,6 +34,7 @@
         <item name="android:shadowColor">@color/colorShadowDark</item>
         <item name="colorThemeBasedAccent">@color/colorAccent</item>
         <item name="buttonTint">@color/colorAccent</item>
+        <item name="textInputStyle">@style/TextInputLayoutTheme</item>
     </style>
 
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
@@ -77,4 +79,12 @@
     <style name="DrawerTextStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/open_sans_regular</item>
     </style>
+
+    <style name="TextInputLayoutTheme" parent="Widget.Design.TextInputLayout">
+        <item name="boxCornerRadiusBottomEnd">16dp</item>
+        <item name="boxCornerRadiusTopEnd">16dp</item>
+        <item name="boxCornerRadiusBottomStart">16dp</item>
+        <item name="boxCornerRadiusTopStart">16dp</item>
+    </style>
+
 </resources>

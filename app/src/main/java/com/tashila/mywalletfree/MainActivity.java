@@ -67,8 +67,6 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
     private MaterialNavigationView navigationView;
     private MoPubView moPubView;
 
-    //TODO: fix loans in sinhala
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
