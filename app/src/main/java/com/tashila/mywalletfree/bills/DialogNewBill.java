@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -116,6 +117,7 @@ public class DialogNewBill extends BottomSheetDialogFragment {
         } else {
             dialog.setContentView(view);
             cbCalendar.setVisibility(View.GONE);
+            ((Button) view.findViewById(R.id.add)).setText(R.string.save);
             fillDetails(editingBill);
         }
 

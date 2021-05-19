@@ -456,6 +456,7 @@
         \u2713 Change the default home screen\n
         \u2713 Access unlimited history in reports (free limits are 4 days, 3 weeks, 2 months)\n
         \u2713 Protect the app with a PIN\n
+        \u2713 Add an unlimited number of investments (free limit is 3)\n
         \u2713 More customization options\n
         \u2713 No ads\n
         \u2713 Support the developer! ❤\n
@@ -511,5 +512,7 @@
     <string name="highest_investment">Highest investment</string>
     <string name="recently_added">Recently added</string>
     <string name="pick">Pick…</string>
+    <string name="reached_free_limit">You\'ve reached the free limit</string>
+    <string name="unlimited_inv_descr">Upgrade to the Pro version to add unlimited investments!</string>
 
 </resources>

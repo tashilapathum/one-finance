@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -24,6 +25,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tashila.mywalletfree.DatePickerFragment;
+import com.tashila.mywalletfree.DateTimeHandler;
 import com.tashila.mywalletfree.R;
 
 import java.time.LocalDate;
@@ -58,6 +60,7 @@ public class DialogAddLoan extends BottomSheetDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+        dateInMillis = System.currentTimeMillis();
         instance = this;
 
         view = getActivity().getLayoutInflater().inflate(R.layout.dialog_new_loan, null);
@@ -72,7 +75,11 @@ public class DialogAddLoan extends BottomSheetDialogFragment {
         isLent = true;
         radioGroup = view.findViewById(R.id.lentBorrowed);
         cbCalendar = view.findViewById(R.id.calendarCheck);
-        setDate(LocalDate.now().format(formatter), 0, 0);
+        setDate(
+                LocalDate.now().format(formatter),
+                new DateTimeHandler(LocalDate.now()).getInMillis(),
+                new DateTimeHandler(LocalDate.now().atStartOfDay().plusHours(23)).getInMillis()
+        );
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +105,7 @@ public class DialogAddLoan extends BottomSheetDialogFragment {
             dialog.setContentView(view);
         } else {
             dialog.setContentView(view);
+            ((Button) view.findViewById(R.id.add)).setText(R.string.save);
             fillDetails(editingLoan);
         }
 

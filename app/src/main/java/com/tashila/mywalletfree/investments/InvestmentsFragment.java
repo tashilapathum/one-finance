@@ -1,5 +1,9 @@
 package com.tashila.mywalletfree.investments;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +22,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.transition.MaterialSharedAxis;
+import com.tashila.mywalletfree.Constants;
 import com.tashila.mywalletfree.MainActivity;
 import com.tashila.mywalletfree.R;
+import com.tashila.mywalletfree.UpgradeToPro;
+import com.tashila.mywalletfree.settings.Settings;
 
 import java.util.List;
 
@@ -30,6 +38,7 @@ public class InvestmentsFragment extends Fragment {
     private static InvestmentsFragment instance;
     private InvestmentsViewModel investmentsViewModel;
     private InvestmentsAdapter investmentsAdapter;
+    private SharedPreferences sharedPref;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +54,7 @@ public class InvestmentsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_investments, container, false);
         instance = this;
+        sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
 
         FloatingActionButton invFAB = view.findViewById(R.id.fab);
         invFAB.setOnClickListener(new View.OnClickListener() {
@@ -156,8 +166,24 @@ public class InvestmentsFragment extends Fragment {
     }
 
     private void onClickFAB() {
-        DialogAddInvestment dialogAddInvestment = new DialogAddInvestment(null);
-        dialogAddInvestment.show(getChildFragmentManager(), "add investments dialog");
+        if (sharedPref.getBoolean("MyWalletPro", false) || investmentsAdapter.getItemCount() < Constants.FREE_INVESTMENTS_LIMIT) {
+            DialogAddInvestment dialogAddInvestment = new DialogAddInvestment(null);
+            dialogAddInvestment.show(getChildFragmentManager(), "add investments dialog");
+        }
+        else {
+            new MaterialAlertDialogBuilder(getActivity())
+                    .setTitle(R.string.reached_free_limit)
+                    .setMessage(R.string.unlimited_inv_descr)
+                    .setPositiveButton(R.string.buy, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(getActivity(), UpgradeToPro.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, null)
+                    .show();
+        }
     }
 
     public void addInvestment(Investment investment) {

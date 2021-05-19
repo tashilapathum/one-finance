@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -53,6 +54,7 @@ public class DialogAddInvestment extends BottomSheetDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+        dateInMillis = System.currentTimeMillis();
         instance = this;
 
         view = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_investment, null);
@@ -66,7 +68,7 @@ public class DialogAddInvestment extends BottomSheetDialogFragment {
         etDate = tilDate.getEditText();
         etDescription = tilDescription.getEditText();
         etTag = tilTag.getEditText();
-        setDate(LocalDate.now().format(formatter), 0);
+        setDate(LocalDate.now().format(formatter), dateInMillis);
         etDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,6 +82,7 @@ public class DialogAddInvestment extends BottomSheetDialogFragment {
             dialog.setContentView(view);
         } else {
             dialog.setContentView(view);
+            ((Button) view.findViewById(R.id.add)).setText(R.string.save);
             fillDetails(editingInvestment);
         }
 

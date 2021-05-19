@@ -121,7 +121,7 @@ public class EditQuickList extends AppCompatActivity {
                 dialogAddQuickItem.show(getSupportFragmentManager(), "add quick item");
             else {
                 new MaterialAlertDialogBuilder(this)
-                        .setTitle(R.string.pro_feature)
+                        .setTitle(R.string.reached_free_limit)
                         .setMessage(R.string.add_more_quick_items)
                         .setPositiveButton(R.string.buy, new DialogInterface.OnClickListener() {
                             @Override

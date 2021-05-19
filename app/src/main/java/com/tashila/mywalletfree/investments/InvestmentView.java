@@ -1,4 +1,4 @@
-    package com.tashila.mywalletfree.investments;
+package com.tashila.mywalletfree.investments;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -293,6 +293,9 @@ public class InvestmentView extends Fragment {
         DateTimeHandler dateTimeHandler = new DateTimeHandler(String.valueOf(investment.getDateInMillis()));
         tvTimePeriod.setText(dateTimeHandler.getPassedTime(getActivity()));
         tvDate.setText(dateTimeHandler.getDateStamp());
-        tagChip.setText(investment.getTag());
+        if (investment.getTag().isEmpty())
+            tagChip.setVisibility(View.GONE);
+        else
+            tagChip.setText(investment.getTag());
     }
 }
