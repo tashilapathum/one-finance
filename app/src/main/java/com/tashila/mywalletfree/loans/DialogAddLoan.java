@@ -153,7 +153,7 @@ public class DialogAddLoan extends BottomSheetDialogFragment {
     private void onClickAddOrEdit() {
         if (validatePerson() && validateAmount()) {
             String person = etPerson.getText().toString();
-            String amount = etAmount.getText().toString();
+            String amount = etAmount.getText().toString().replace(",", ".");
             String lentDate = etDate.getText().toString();
             String details = etDetails.getText().toString();
 

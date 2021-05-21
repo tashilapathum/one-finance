@@ -139,7 +139,7 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
         DecimalFormat df = new DecimalFormat("#.00");
         if (validateAmount() & validateDescription()) {
             String oldAmountStr = transactionItem.getAmount();
-            String newAmountStr = etAmount.getText().toString();
+            String newAmountStr = etAmount.getText().toString().replace(",", ".");
             String description = etDescription.getText().toString();
             if (!transactionItem.getAmount().equals(df.format(Double.parseDouble(newAmountStr))))
                 transactionItem.setAmount(df.format(Double.parseDouble(newAmountStr)));

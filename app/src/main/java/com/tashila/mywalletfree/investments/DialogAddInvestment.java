@@ -127,7 +127,7 @@ public class DialogAddInvestment extends BottomSheetDialogFragment {
     private void onClickAddOrEdit() {
         if (validateTitle() && validateAmount()) {
             String title = etTitle.getText().toString();
-            String amount = etInvAmount.getText().toString();
+            String amount = etInvAmount.getText().toString().replace(",", ".");
             String description = etDescription.getText().toString();
             String tag = etTag.getText().toString();
             if (editingInvestment != null) { //when updating existing investment

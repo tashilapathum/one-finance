@@ -172,7 +172,7 @@ public class CartFragment extends Fragment {
 
         //update total
         if (!itemPrice.isEmpty()) {
-            total = total + Double.parseDouble(itemPrice) * quantity;
+            total = total + Double.parseDouble(itemPrice.replace(",", ".")) * quantity;
             showTotal(total);
             sharedPref.edit().putString("cartTotal", String.valueOf(total)).apply();
         }
@@ -184,8 +184,8 @@ public class CartFragment extends Fragment {
         cartItem.setId(dbID);
         cartViewModel.update(cartItem);
 
-        double oldPrice = Double.parseDouble(oldItemPrice);
-        double newPrice = Double.parseDouble(newItemPrice);
+        double oldPrice = Double.parseDouble(oldItemPrice.replace(",", "."));
+        double newPrice = Double.parseDouble(newItemPrice.replace(",", "."));
         total = total - oldPrice * oldQuantity + newPrice * newQuantity;
         showTotal(total);
         sharedPref.edit().putString("cartTotal", String.valueOf(total)).apply();

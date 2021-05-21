@@ -39,7 +39,7 @@ public class DialogUpdateBalance extends DialogFragment {
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        newBalance = etBalance.getText().toString();
+                        newBalance = etBalance.getText().toString().replace(",", ".");
                         Log.i(TAG, "newBalance.isEmpty(): " + newBalance.isEmpty());
                         if (!newBalance.isEmpty()) {
                             DecimalFormat df = new DecimalFormat("#.00");

@@ -429,7 +429,7 @@ public class WalletFragment extends Fragment {
         sharedPref.edit().putBoolean("longClicked", false).apply();
         if (view.getId() == R.id.btnEarned || view.getId() == R.id.btnSpent) {
             if (validateAmount() & validateDescr()) {
-                amount = Double.parseDouble(etAmount.getText().toString());
+                amount = Double.parseDouble(etAmount.getText().toString().replace(",", "."));
                 viewId = view.getId();
                 handleData(viewId);
             }
@@ -437,7 +437,7 @@ public class WalletFragment extends Fragment {
         } else if (view.getId() == R.id.btnTransfer) {
             if (sharedPref.getBoolean("haveAccounts", false)) {
                 if (validateAmount()) {
-                    amount = Double.parseDouble(etAmount.getText().toString());
+                    amount = Double.parseDouble(etAmount.getText().toString().replace(",", "."));
                     String accountName = getSelectedAccount().getAccName();
                     if (etDescr.getText().toString().isEmpty()) {
                         if (language.equals("සිංහල"))
@@ -489,7 +489,7 @@ public class WalletFragment extends Fragment {
         if (viewId == R.id.btnTransfer) {
             if (sharedPref.getBoolean("haveAccounts", false)) {
                 if (validateAmount()) {
-                    amount = Double.parseDouble(etAmount.getText().toString());
+                    amount = Double.parseDouble(etAmount.getText().toString().replace(",", "."));
                     sharedPref.edit().putBoolean("chooseAccFromWallet", true).apply();
                     DialogChooseAcc dialogChooseAcc = new DialogChooseAcc();
                     dialogChooseAcc.setOnDismissListener(new DialogInterface.OnDismissListener() {

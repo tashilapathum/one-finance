@@ -53,7 +53,7 @@ public class DialogBudget extends DialogFragment {
     }
 
     private void saveBudget() {
-        String monthlyBudget = editBudget.getText().toString();
+        String monthlyBudget = editBudget.getText().toString().replace(",", ".");
         if (!monthlyBudget.isEmpty())
             sharedPref.edit().putString("monthlyBudget", monthlyBudget).apply();
         else

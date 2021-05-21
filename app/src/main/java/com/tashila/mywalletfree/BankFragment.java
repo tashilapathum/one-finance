@@ -242,7 +242,7 @@ public class BankFragment extends Fragment {
         final String timeStamp = LocalDateTime.now().format(formatter);
         String savedCurrentBalance = selectedAccount.getAccBalance();
         double currentBalance = Double.parseDouble(savedCurrentBalance);
-        final double inputAmount = Double.parseDouble(etAmount.getText().toString());
+        final double inputAmount = Double.parseDouble(etAmount.getText().toString().replace(",", "."));
 
         boolean isDepositId = false;
         boolean isWithdrawId = false;

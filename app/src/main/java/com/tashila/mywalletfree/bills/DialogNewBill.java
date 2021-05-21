@@ -167,7 +167,7 @@ public class DialogNewBill extends BottomSheetDialogFragment {
     private void onClickAddOrEdit() {
         if (validateTitle() && validateAmount()) {
             String title = etTitle.getText().toString();
-            String amount = etAmount.getText().toString();
+            String amount = etAmount.getText().toString().replace(",", ".");
             String paidDate = null;
             String dueDate = null;
             int lastPaidMonth = -1; //to check if this was set
