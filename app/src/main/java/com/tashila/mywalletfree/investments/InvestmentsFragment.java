@@ -9,13 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,10 +25,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.transition.MaterialSharedAxis;
 import com.tashila.mywalletfree.Constants;
-import com.tashila.mywalletfree.MainActivity;
 import com.tashila.mywalletfree.R;
 import com.tashila.mywalletfree.UpgradeToPro;
-import com.tashila.mywalletfree.settings.Settings;
 
 import java.util.List;
 
@@ -39,6 +36,8 @@ public class InvestmentsFragment extends Fragment {
     private InvestmentsViewModel investmentsViewModel;
     private InvestmentsAdapter investmentsAdapter;
     private SharedPreferences sharedPref;
+    private LinearLayout inv_instructions;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,6 +63,7 @@ public class InvestmentsFragment extends Fragment {
             }
         });
 
+        inv_instructions = view.findViewById(R.id.inv_instructions);
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.scheduleLayoutAnimation();
@@ -78,6 +78,7 @@ public class InvestmentsFragment extends Fragment {
             @Override
             public void onChanged(List<Investment> investments) {
                 investmentsAdapter.submitList(investments);
+                toggleInsVisibility(investments.size());
             }
         });
 
@@ -204,5 +205,12 @@ public class InvestmentsFragment extends Fragment {
         Toast.makeText(getActivity(), R.string.updated, Toast.LENGTH_SHORT).show();
     }
 
+    private void toggleInsVisibility(int itemCount) {
+        inv_instructions.setAlpha(0.5f);
+        if (itemCount > 0)
+            inv_instructions.setVisibility(View.GONE);
+        else
+            inv_instructions.setVisibility(View.VISIBLE);
+    }
 
 }

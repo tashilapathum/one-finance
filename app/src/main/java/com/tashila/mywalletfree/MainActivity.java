@@ -205,10 +205,10 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         if (!alreadyDid) startActivity(intent);
         else {
             //what's new
-            if (!sharedPref.getBoolean("whatsNewShownV0.3.2", false)) {
+            if (!sharedPref.getBoolean("whatsNewShownV0.4.2", false)) {
                 DialogWhatsNew dialogWhatsNew = new DialogWhatsNew();
                 dialogWhatsNew.show(getSupportFragmentManager(), "whats new dialog");
-                sharedPref.edit().putBoolean("whatsNewShownV0.3.2", true).apply();
+                sharedPref.edit().putBoolean("whatsNewShownV0.4.2", true).apply();
             } //TODO: update this
         }
         rateApp(); //to make counts

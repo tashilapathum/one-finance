@@ -76,7 +76,7 @@
                 android:gravity="center"
                 android:paddingHorizontal="8dp"
                 android:text="$2,000"
-                app:drawableStartCompat="@drawable/ic_income"
+                app:drawableStartCompat="@drawable/ic_profit"
                 app:drawableTint="@android:color/holo_green_light" />
 
             <TextView

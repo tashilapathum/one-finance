@@ -463,6 +463,10 @@
     </string>
     <string name="what_s_new_in_version" translatable="false">What\'s new</string>
     <string name="whats_new_descr" translatable="false">
+        \nv0.4.2\n
+        - Fixed crash when using commas instead of period in amounts\n
+        - Added Investments details screen\n
+
         \nv0.4.1\n
         - [Added] Investments feature to track progress, profits and timeline of your projects or investments\n
         - [Added] Loan Manager and Basic Calculator as Tools\n
@@ -514,5 +518,6 @@
     <string name="pick">Pick…</string>
     <string name="reached_free_limit">You\'ve reached the free limit</string>
     <string name="unlimited_inv_descr">Upgrade to the Pro version to add unlimited investments!</string>
+    <string name="you_can_use_this_feature_to_track">You can use this feature to track progress, profits and timeline of your projects or investments\n</string>
 
 </resources>

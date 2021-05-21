@@ -16,9 +16,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
-            app:singleSelection="true"
+            app:checkedChip="@id/recentChip"
             app:selectionRequired="true"
-            app:checkedChip="@id/recentChip">
+            app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/recentChip"
@@ -71,6 +71,54 @@
         android:layoutAnimation="@anim/cascade_anim"
         tools:itemCount="7"
         tools:listitem="@layout/sample_investment" />
+
+    <LinearLayout
+        android:id="@+id/inv_instructions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/filters_layout"
+        android:layout_margin="32dp"
+        android:alpha="0.5"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="42dp">
+
+        <ImageView
+            android:layout_width="77dp"
+            android:layout_height="77dp"
+            android:layout_marginBottom="24dp"
+            android:src="@drawable/ic_investments" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/you_can_use_this_feature_to_track"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" - Invested amount"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            app:drawableStartCompat="@drawable/ic_invest" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" - Profit"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            app:drawableStartCompat="@drawable/ic_profit" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" - Time period"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            app:drawableStartCompat="@drawable/ic_time" />
+
+
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
