@@ -126,7 +126,7 @@ public class NewAccount extends AppCompatActivity {
     }
 
     private boolean validateAccBalance() {
-        String accBalanceInput = tilCurrentBalance.getEditText().getText().toString();
+        String accBalanceInput = tilCurrentBalance.getEditText().getText().toString().replace(",", ".");
         if (accBalanceInput.isEmpty()) {
             tilCurrentBalance.setError(getString(R.string.required));
             return false;

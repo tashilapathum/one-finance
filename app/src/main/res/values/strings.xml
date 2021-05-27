@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">My Wallet</string>
     <string name="my_wallet_pro" translatable="false">My Wallet Pro</string>
-    <string name="version" translatable="false">Version 0.4.1</string>
+    <string name="version" translatable="false">Version 0.4.3</string>
     <string name="recent_transactions">Transactions</string>
     <string name="reports">Reports</string>
     <string name="settings">Settings</string>
@@ -104,7 +104,7 @@
     <string name="multiple">-Multiple-</string>
     <string name="bank_welcome_message">You can manage your bank accounts here. Add an account to continue.</string>
     <string name="bank_welcome_title">Welcome</string>
-    <string name="account_name_desc">To identify the account (displayed at the top of the "Bank" screen)</string>
+    <string name="account_name_desc">To identify the account (displayed at the top of the "Bank" page)</string>
     <string name="interest_description">If you add this, the interest will be automatically calculated and added to your balance. \nNote:The accuracy depends on the location, bank, taxes… etc.</string>
     <string name="add">Add</string>
     <string name="deposit_to_bank">Deposit to bank</string>
@@ -444,6 +444,18 @@
     <string name="history">History</string>
     <string name="add_note">Add note</string>
     <string name="add_to_my_calendar">Add to my calendar</string>
+    <string name="title">Title</string>
+    <string name="tag">Tag</string>
+    <string name="most_profitable">Most profitable</string>
+    <string name="most_return">Most return</string>
+    <string name="longest_time_period">Longest time period</string>
+    <string name="highest_investment">Highest investment</string>
+    <string name="recently_added">Recently added</string>
+    <string name="pick">Pick…</string>
+    <string name="reached_free_limit">You\'ve reached the free limit</string>
+    <string name="unlimited_inv_descr">Upgrade to the Pro version to add unlimited investments!</string>
+    <string name="you_can_use_this_feature_to_track">You can use this feature to track progress, profits and timeline of your projects or investments\n</string>
+    <string name="bank_account_notice">Important: This account is not connected to your real bank account in any way. So you have to update everything manually. The purpose of this virtual account is just to keep track of the activities of your real-world bank account.</string>
 
 
 
@@ -463,9 +475,10 @@
     </string>
     <string name="what_s_new_in_version" translatable="false">What\'s new</string>
     <string name="whats_new_descr" translatable="false">
-        \nv0.4.2\n
+        \nv0.4.3\n
         - Fixed crash when using commas instead of period in amounts\n
         - Added Investments details screen\n
+        - Minor fixes and improvements\n
 
         \nv0.4.1\n
         - [Added] Investments feature to track progress, profits and timeline of your projects or investments\n
@@ -508,16 +521,5 @@
         - Added Autocomplete when typing transaction details\n
         - [Fixed] crash in Wallet screen\n
     </string>
-    <string name="title">Title</string>
-    <string name="tag">Tag</string>
-    <string name="most_profitable">Most profitable</string>
-    <string name="most_return">Most return</string>
-    <string name="longest_time_period">Longest time period</string>
-    <string name="highest_investment">Highest investment</string>
-    <string name="recently_added">Recently added</string>
-    <string name="pick">Pick…</string>
-    <string name="reached_free_limit">You\'ve reached the free limit</string>
-    <string name="unlimited_inv_descr">Upgrade to the Pro version to add unlimited investments!</string>
-    <string name="you_can_use_this_feature_to_track">You can use this feature to track progress, profits and timeline of your projects or investments\n</string>
 
 </resources>

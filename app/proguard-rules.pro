@@ -27,3 +27,12 @@
 
 # For removing warnings due to lack of Multi-Window support
 -dontwarn android.app.Activity
+
+# for admob
+#-keep public class com.google.android.gms.ads.** {
+#    public *;
+#}
+#
+#-keep public class com.google.ads.** {
+#    public *;
+#}
