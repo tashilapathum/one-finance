@@ -1,34 +1,62 @@
 {
   "project_info": {
-    "project_number": "615339790521",
-    "firebase_url": "https://my-wallet-d7fae.firebaseio.com",
-    "project_id": "my-wallet-d7fae",
-    "storage_bucket": "my-wallet-d7fae.appspot.com"
+    "project_number": "20417559859",
+    "project_id": "finance-journal-b859b",
+    "storage_bucket": "finance-journal-b859b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:615339790521:android:a54ce30e1047dc49fdcb68",
+        "mobilesdk_app_id": "1:20417559859:android:57acc935fed3bf39e31246",
         "android_client_info": {
-          "package_name": "com.tashila.mywalletfree"
+          "package_name": "com.tantalum.financejournal"
         }
       },
       "oauth_client": [
         {
-          "client_id": "615339790521-ph6ak0rn4lkq5qk3d8nroff1pe3uckhu.apps.googleusercontent.com",
+          "client_id": "20417559859-h3cbc8clqk0e4v48qk9moejcnnrilha0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCrSWmgPtF4_WJKefPAMLd9-wTd-2V8mFM"
+          "current_key": "AIzaSyDF8qPzI3qugTyLw8gNJuKcTriBW0LRZdg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "615339790521-ph6ak0rn4lkq5qk3d8nroff1pe3uckhu.apps.googleusercontent.com",
+              "client_id": "20417559859-h3cbc8clqk0e4v48qk9moejcnnrilha0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:20417559859:android:87ae8cc29e6ab16de31246",
+        "android_client_info": {
+          "package_name": "com.tantalum.financejournal.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "20417559859-h3cbc8clqk0e4v48qk9moejcnnrilha0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF8qPzI3qugTyLw8gNJuKcTriBW0LRZdg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "20417559859-h3cbc8clqk0e4v48qk9moejcnnrilha0.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

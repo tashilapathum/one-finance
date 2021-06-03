@@ -235,11 +235,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginVertical="32dp"
+            android:layout_marginTop="32dp"
             android:onClick="onClickContinue"
             android:text="@string/continue_next"
             android:textAllCaps="false"
             app:cornerRadius="16dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="32dp">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="-16dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I have read the Privacy Policy and Terms of Service"/>
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>
