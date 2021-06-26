@@ -11,7 +11,6 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="-4dp"
         android:layout_marginBottom="6dp"
         android:contentDescription="my wallet icon"
         android:src="@mipmap/ic_launcher_foreground" />
@@ -22,16 +21,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="-16dp"
         android:fontFamily="@font/quicksand_medium"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:paddingHorizontal="16dp"
         android:text="@string/my_wallet"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:paddingHorizontal="16dp"
         android:paddingBottom="4dp"
         android:text="@string/version" />
 

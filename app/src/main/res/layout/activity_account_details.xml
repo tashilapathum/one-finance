@@ -142,7 +142,8 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -168,7 +169,8 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -197,13 +199,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:padding="8dp">
 
                     <TextView
+                        android:id="@+id/txtExDetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/additional_information"
@@ -213,9 +215,20 @@
                         android:id="@+id/adExDetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/txtExDetails"
                         tools:text="varous other account details go here"
                         android:textIsSelectable="true"/>
-                </LinearLayout>
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginHorizontal="6dp"
+                        android:onClick="copy"
+                        android:src="@drawable/ic_copy"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"/>
+                </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
 

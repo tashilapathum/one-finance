@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_centerVertical="true"
     android:paddingVertical="16dp"
-    tools:context=".InitialSetup">
+    tools:context=".InitialSetup"
+    android:fadeScrollbars="false">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +19,6 @@
             android:id="@+id/logo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:alpha="0.7"
             android:contentDescription="logo"
             android:paddingBottom="8dp"
             android:src="@mipmap/ic_launcher" />
@@ -34,11 +34,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/all_fields_are_optional_you_can_change_these_settings_later" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:paddingTop="16dp"
             android:text="@string/choose_language"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
@@ -47,7 +42,8 @@
             android:id="@+id/radioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp">
+            android:layout_marginHorizontal="8dp"
+            android:orientation="horizontal">
 
             <RadioButton
                 android:id="@+id/otEnglish"
@@ -60,7 +56,8 @@
                 android:id="@+id/otSinhala"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sinhala" />
+                android:text="@string/sinhala"
+                android:layout_marginHorizontal="16dp"/>
 
         </RadioGroup>
 
@@ -239,7 +236,8 @@
             android:onClick="onClickContinue"
             android:text="@string/continue_next"
             android:textAllCaps="false"
-            app:cornerRadius="16dp" />
+            app:cornerRadius="16dp"
+            android:enabled="false"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -248,13 +246,34 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="32dp">
             <CheckBox
+                android:id="@+id/agreeCheck"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="-16dp"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="I have read the Privacy Policy and Terms of Service"/>
+                android:text="I have read the "/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Privacy Policy"
+                android:textAlignment="center"
+                android:onClick="openPrivacyPolicy"
+                android:textColor="@color/colorLinks" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" and "/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Terms of Service"
+                android:onClick="openTC"
+                android:textAlignment="center"
+                android:textColor="@color/colorLinks" />
+
         </LinearLayout>
 
     </LinearLayout>

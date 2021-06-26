@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -12,6 +15,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
@@ -198,6 +202,13 @@ public class AccountDetails extends AppCompatActivity {
         intent.putExtra("isNewAccount", false);
         intent.putExtra("updatingAccount", account);
         startActivity(intent);
+    }
+
+    public void copy(View view) {
+        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText("extraDetails", ((TextView) findViewById(R.id.adExDetails)).getText());
+        clipboardManager.setPrimaryClip(clipData);
+        Toast.makeText(this, getString(R.string.copied), Toast.LENGTH_SHORT).show();
     }
 
 }

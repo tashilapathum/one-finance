@@ -17,35 +17,36 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeDark"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".WebViewActivity"></activity>
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8303071997891278~7113367134"/>
+            android:value="ca-app-pub-8303071997891278~7113367134" />
 
-        <activity android:name="com.tantalum.financejournal.EnterPIN"/>
-        <activity android:name="com.tantalum.financejournal.Insights" />
-        <activity android:name="com.tantalum.financejournal.About" />
+        <activity android:name=".EnterPIN" />
+        <activity android:name=".Insights" />
+        <activity android:name=".About" />
         <activity
-            android:name="com.tantalum.financejournal.accounts.AccountManager"
+            android:name=".accounts.AccountManager"
             android:label="Account Manager" />
-        <activity android:name="com.tantalum.financejournal.UpgradeToPro" />
-        <activity android:name="com.tantalum.financejournal.accounts.AccountDetails" />
-        <activity android:name="com.tantalum.financejournal.accounts.NewAccount" />
-        <activity android:name="com.tantalum.financejournal.InitialSetup" />
+        <activity android:name=".UpgradeToPro" />
+        <activity android:name=".accounts.AccountDetails" />
+        <activity android:name=".accounts.NewAccount" />
+        <activity android:name=".InitialSetup" />
         <activity
-            android:name="com.tantalum.financejournal.reports.Reports"
+            android:name=".reports.Reports"
             android:label="@string/reports" />
         <activity
-            android:name="com.tantalum.financejournal.quicklist.EditQuickList"
+            android:name=".quicklist.EditQuickList"
             android:label="@string/settings_quick_list" />
         <activity
-            android:name="com.tantalum.financejournal.transactions.TransactionHistory"
+            android:name=".transactions.TransactionHistory"
             android:label="@string/recent_transactions" />
         <activity
-            android:name="com.tantalum.financejournal.settings.Settings"
+            android:name=".settings.Settings"
             android:label="@string/settings" />
         <activity
-            android:name="com.tantalum.financejournal.MainActivity"
+            android:name=".MainActivity"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,15 +54,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.adcolony.sdk.AdColonyInterstitialActivity"
+        <activity
+            android:name="com.adcolony.sdk.AdColonyInterstitialActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
-            android:hardwareAccelerated="true"/>
-        <activity android:name="com.adcolony.sdk.AdColonyAdViewActivity"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
+        <activity
+            android:name="com.adcolony.sdk.AdColonyAdViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
-            android:hardwareAccelerated="true"/>
-        <receiver android:name="com.tantalum.financejournal.AlertReceiver" />
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
+
+        <receiver android:name=".AlertReceiver" />
     </application>
 
 </manifest>

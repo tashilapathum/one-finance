@@ -458,7 +458,6 @@
     <string name="bank_account_notice">Important: This account is not connected to your real bank account in any way. So you have to update everything manually. The purpose of this virtual account is just to keep track of the activities of your real-world bank account.</string>
 
 
-
     <string name="pro_features">
         &#160;\u2713 Unlimited quick list items (free limit is 5)\n
         \u2713 Dark mode option\n
@@ -521,5 +520,6 @@
         - Added Autocomplete when typing transaction details\n
         - [Fixed] crash in Wallet screen\n
     </string>
+    <string name="copied">Copied</string>
 
 </resources>

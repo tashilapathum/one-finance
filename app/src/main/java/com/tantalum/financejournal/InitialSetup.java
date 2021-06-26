@@ -8,6 +8,9 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -63,6 +66,20 @@ public class InitialSetup extends AppCompatActivity {
                 picker.show(getSupportFragmentManager(), "CURRENCY_PICKER");
             }
         });
+
+        Button btnContinue = findViewById(R.id.btnContinue);
+        btnContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickContinue();
+            }
+        });
+        ((CheckBox) findViewById(R.id.agreeCheck)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                btnContinue.setEnabled(b);
+            }
+        });
     }
 
     @Override
@@ -94,7 +111,7 @@ public class InitialSetup extends AppCompatActivity {
         recreate();
     }
 
-    public void onClickContinue(View view) {
+    public void onClickContinue() {
         //language (in case of not tapping the language)
         RadioGroup radioGroup = findViewById(R.id.radioGroup);
         View radioButton = findViewById(radioGroup.getCheckedRadioButtonId());
@@ -132,7 +149,7 @@ public class InitialSetup extends AppCompatActivity {
         startActivity(intent);
         finish();
         sharedPref.edit().putBoolean("alreadyDidInitSetup", true).apply();
-        Toast.makeText(this, "Welcome to My Wallet!", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Welcome to Finance Journal!", Toast.LENGTH_LONG).show();
 
         finish();
     }
@@ -175,6 +192,20 @@ public class InitialSetup extends AppCompatActivity {
             }
         }
         etCurrency.setText(currency);
+    }
+
+    public void openPrivacyPolicy(View view) {
+        Intent intent = new Intent(this, WebViewActivity.class);
+        intent.putExtra("title", "Privacy Policy");
+        intent.putExtra("url", "https://finance-journal.flycricket.io/privacy.html");
+        startActivity(intent);
+    }
+
+    public void openTC(View view) {
+        Intent intent = new Intent(this, WebViewActivity.class);
+        intent.putExtra("title", "Terms and Conditions");
+        intent.putExtra("url", "https://finance-journal.flycricket.io/terms.html");
+        startActivity(intent);
     }
 
 }
