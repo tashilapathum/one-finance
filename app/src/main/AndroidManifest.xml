@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeDark"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".WebViewActivity"></activity>
+        <activity android:name=".CategoriesActivity"></activity>
+        <activity android:name=".WebViewActivity" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"

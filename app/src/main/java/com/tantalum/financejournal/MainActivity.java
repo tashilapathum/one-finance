@@ -21,27 +21,14 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.mopub.common.MoPub;
-import com.mopub.common.SdkConfiguration;
-import com.mopub.common.SdkInitializationListener;
-import com.mopub.common.logging.MoPubLog;
-import com.mopub.common.privacy.ConsentDialogListener;
-import com.mopub.common.privacy.PersonalInfoManager;
-import com.mopub.mobileads.AdColonyAdapterConfiguration;
-import com.mopub.mobileads.MoPubErrorCode;
-import com.mopub.mobileads.MoPubView;
 import com.shreyaspatil.material.navigationview.MaterialNavigationView;
 import com.tantalum.financejournal.accounts.AccountManager;
 import com.tantalum.financejournal.investments.InvestmentsFragment;
@@ -50,20 +37,16 @@ import com.tantalum.financejournal.settings.Settings;
 import com.tantalum.financejournal.transactions.TransactionHistory;
 import com.tantalum.financejournal.transactions.TransactionsFragment;
 
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements MaterialNavigationView.OnNavigationItemSelectedListener, MoPubView.BannerAdListener {
+public class MainActivity extends AppCompatActivity implements MaterialNavigationView.OnNavigationItemSelectedListener {
     public static final String TAG = "MainActivity";
     private DrawerLayout drawer;
     private SharedPreferences sharedPref;
     private BottomNavigationView bottomNav;
     private FirebaseAnalytics firebaseAnalytics;
     private MaterialNavigationView navigationView;
-    private MoPubView moPubView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,11 +126,6 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         String homeScreen = sharedPref.getString("homeScreen", "wallet");
 
         ////STARTUP////
-
-        //ads
-        moPubView = findViewById(R.id.bottomAd);
-        moPubView.setBannerAdListener(this);
-
         //when requested after applying settings
         if (sharedPref.getBoolean("reqOpenBank", false)) {
             navigateScreens(new BankFragment(), "BankFragment", R.id.nav_bank);
@@ -164,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
             navigateScreens(new ToolsFragment(), "BillsFragment", R.id.nav_tools);
             //when starting the app normally
         else
-            navigateScreens(new WalletFragment(), "WalletFragment", R.id.nav_wallet);
+            navigateScreens(new WalletFragmentNEW(), "WalletFragment", R.id.nav_wallet);
 
         //set notification
         boolean isNotificationSet = sharedPref.getBoolean("isNotificationSet", false);
@@ -182,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         }
 
         if (getPackageName().contains("debug"))
-            sharedPref.edit().putBoolean("MyWalletPro", false).apply();
+            sharedPref.edit().putBoolean("MyWalletPro", true).apply();
     }
 
     @Override //so the language change works with dark mode
@@ -233,6 +211,16 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
                     drawer.closeDrawer(GravityCompat.START);
                 else {
                     Intent intent = new Intent(this, TransactionHistory.class);
+                    startActivity(intent);
+                }
+                break;
+            }
+            case R.id.nav_categories: {
+                bundle.putString("feature", "categories");
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_categories)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, CategoriesActivity.class);
                     startActivity(intent);
                 }
                 break;
@@ -351,41 +339,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
         //ads
         else {
             if (adsEnabled()) {
-                MobileAds.initialize(this, new OnInitializationCompleteListener() {
-                    @Override
-                    public void onInitializationComplete(InitializationStatus initializationStatus) {
-
-                    }
-                });
-                //initialize mopub
-                final SdkConfiguration.Builder configBuilder = new SdkConfiguration.Builder("22d031f70e454cd7ab3a3988fc4a8433");
-                configBuilder.withLogLevel(MoPubLog.LogLevel.DEBUG);
-                //adColony
-                Map<String, String> adColonyConfigs = new HashMap<>();
-                adColonyConfigs.put("appId", "app061c223313354c859e");
-                String[] allZoneIds = new String[]{"vz4433c4cd77034ce88c", "vze71acd6eab1348b1a9"};
-                adColonyConfigs.put("allZoneConfigs", Arrays.toString(allZoneIds));
-                configBuilder.withMediatedNetworkConfiguration(AdColonyAdapterConfiguration.class.getName(), adColonyConfigs);
-
-                MoPub.initializeSdk(this, configBuilder.build(), sdkInitializationListener());
-
-                //GDPR consent
-                PersonalInfoManager mPersonalInfoManager = MoPub.getPersonalInformationManager();
-                mPersonalInfoManager.shouldShowConsentDialog();
-                mPersonalInfoManager.loadConsentDialog(new ConsentDialogListener() {
-                    @Override
-                    public void onConsentDialogLoaded() {
-                        if (mPersonalInfoManager != null) {
-                            if (mPersonalInfoManager.isConsentDialogReady())
-                                mPersonalInfoManager.showConsentDialog();
-                        }
-                    }
-
-                    @Override
-                    public void onConsentDialogLoadFailed(@NonNull MoPubErrorCode moPubErrorCode) {
-                        Log.d(TAG, "consent dialog loading failed");
-                    }
-                });
+                //TODO: show ads
             }
         }
     }
@@ -401,22 +355,6 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
             return false;
         else
             return true;
-    }
-
-    private SdkInitializationListener sdkInitializationListener() {
-        //test ad: b195f8dd8ded45fe847ad89ed1d016da
-        if (adsEnabled()) {
-            return new SdkInitializationListener() {
-                @Override
-                public void onInitializationFinished() {
-                    if (sharedPref.getString("inputMode", "classic").equals("classic")) {
-                        moPubView.setAdUnitId("22d031f70e454cd7ab3a3988fc4a8433");
-                        moPubView.loadAd();
-                    }
-                }
-            };
-        }
-        return null;
     }
 
     @Override
@@ -436,7 +374,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
                     String fragmentTag = null;
                     switch (item.getItemId()) {
                         case R.id.nav_wallet: {
-                            selectedFragment = new WalletFragment();
+                            selectedFragment = new WalletFragmentNEW();
                             fragmentTag = "WalletFragment";
                             break;
                         }
@@ -475,31 +413,26 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
             case R.id.nav_wallet: {
                 bottomNav.getMenu().getItem(0).setChecked(true);
                 bundle.putString("feature", "Wallet");
-                moPubView.setVisibility(View.VISIBLE);
                 break;
             }
             case R.id.nav_bank: {
                 bottomNav.getMenu().getItem(1).setChecked(true);
                 bundle.putString("feature", "Bank");
-                moPubView.setVisibility(View.VISIBLE);
                 break;
             }
             case R.id.nav_trans: {
                 bottomNav.getMenu().getItem(2).setChecked(true);
                 bundle.putString("feature", "Transactions");
-                moPubView.setVisibility(View.VISIBLE);
                 break;
             }
             case R.id.nav_invest: {
                 bottomNav.getMenu().getItem(3).setChecked(true);
                 bundle.putString("feature", "Cart");
-                moPubView.setVisibility(View.GONE);
                 break;
             }
             case R.id.nav_tools: {
                 bottomNav.getMenu().getItem(4).setChecked(true);
                 bundle.putString("feature", "Bills");
-                moPubView.setVisibility(View.GONE);
                 break;
             }
         }
@@ -543,31 +476,6 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
                     })
                     .show();
         }
-    }
-
-    @Override
-    public void onBannerLoaded(@NonNull MoPubView banner) {
-        Log.d(TAG, "ad loaded successfully");
-    }
-
-    @Override
-    public void onBannerFailed(MoPubView banner, MoPubErrorCode errorCode) {
-        Log.d(TAG, "ad loading failed: " + errorCode.toString());
-    }
-
-    @Override
-    public void onBannerClicked(MoPubView banner) {
-
-    }
-
-    @Override
-    public void onBannerExpanded(MoPubView banner) {
-
-    }
-
-    @Override
-    public void onBannerCollapsed(MoPubView banner) {
-
     }
 
     public void removeAds(View view) {

@@ -25,11 +25,10 @@
                 android:id="@+id/toolbarTitle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="M y   W a l l e t             "
+                android:text="Finance Journal             "
                 android:fontFamily="@font/quicksand_medium"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/colorAccentLight"
-                android:textStyle="bold"
                 android:gravity="center"
                 android:textAlignment="center"
                 tools:ignore="RtlCompat"
@@ -50,16 +49,6 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/bottom_navigation"
             android:layout_marginTop="56dp"/>
-
-        <com.mopub.mobileads.MoPubView
-            android:id="@+id/bottomAd"
-            android:layout_width='320dp'
-            android:layout_height='50dp'
-            app:moPubAdSize="match_view"
-            android:layout_centerHorizontal="true"
-            android:layout_above="@id/bottom_navigation"
-            android:layout_marginBottom="8dp"
-            android:visibility="gone"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"

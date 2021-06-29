@@ -58,7 +58,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
         if (fromContext.equals("fromWalletFragment")) {
             sharedPref.edit().putString("preDate", dateInMillis).apply();
-            WalletFragment.getInstance().continueLongClickProcess();
+            //WalletFragment.getInstance().continueLongClickProcess();
         }
 
         if (fromContext.equals("fromBillsFragment"))

@@ -34,23 +34,14 @@ import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.mopub.common.MoPub;
-import com.mopub.common.MoPubReward;
-import com.mopub.common.SdkConfiguration;
-import com.mopub.common.SdkInitializationListener;
-import com.mopub.mobileads.MoPubErrorCode;
-import com.mopub.mobileads.MoPubRewardedVideoListener;
-import com.mopub.mobileads.MoPubRewardedVideos;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import static com.mopub.common.logging.MoPubLog.LogLevel.DEBUG;
 
-public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedListener, BillingClientStateListener, MoPubRewardedVideoListener {
+public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedListener, BillingClientStateListener {
     SharedPreferences sharedPref;
     private BillingClient billingClient;
     private TextView tvProPrice;
@@ -96,18 +87,6 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
         //billing
         billingClient = BillingClient.newBuilder(this).setListener(this).enablePendingPurchases().build();
         billingClient.startConnection(this);
-
-        //ads
-        final SdkConfiguration.Builder configBuilder = new SdkConfiguration.Builder("11b51585a0074ae985e38dfe1614c134");
-        configBuilder.withLogLevel(DEBUG);
-        MoPub.initializeSdk(this, configBuilder.build(), initSdkListener());
-        MoPubRewardedVideos.setRewardedVideoListener(this);
-        btnRemoveAds = findViewById(R.id.btnRemoveAds);
-        tvDays = findViewById(R.id.days);
-        today = new DateTimeHandler().getDayOfYear();
-        int adsDeadline = sharedPref.getInt("adsDeadline", today);
-        daysWithoutAds = adsDeadline - today;
-        tvDays.setText(String.valueOf(adsDeadline - today));
 
         tvProPrice = findViewById(R.id.tvProPrice);
         Button btnBuy = findViewById(R.id.btnBuy);
@@ -338,88 +317,6 @@ public class UpgradeToPro extends AppCompatActivity implements PurchasesUpdatedL
         billingClient.queryPurchases(BillingClient.SkuType.INAPP);
     }
 
-
-    /*------------------------------------- rewarded ad -----------------------------------------*/
-
-    private SdkInitializationListener initSdkListener() {
-        //test ad: 920b6145fb1546cf8b5cf2ac34638bb7
-        return new SdkInitializationListener() {
-            @Override
-            public void onInitializationFinished() {
-                MoPubRewardedVideos.loadRewardedVideo("11b51585a0074ae985e38dfe1614c134");
-            }
-        };
-    }
-
-    public void showAd(View view) {
-        if (MoPubRewardedVideos.hasRewardedVideo("11b51585a0074ae985e38dfe1614c134"))
-            MoPubRewardedVideos.showRewardedVideo("11b51585a0074ae985e38dfe1614c134");
-        else
-            Toast.makeText(this, getString(R.string.loading), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onRewardedVideoLoadSuccess(@NonNull String adUnitId) {
-        btnRemoveAds.setText(R.string.watch_ad);
-    }
-
-    @Override
-    public void onRewardedVideoLoadFailure(@NonNull String adUnitId, @NonNull MoPubErrorCode errorCode) {
-        Toast.makeText(this, getString(R.string.connection_problem), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onRewardedVideoStarted(@NonNull String adUnitId) {
-
-    }
-
-    @Override
-    public void onRewardedVideoPlaybackError(@NonNull String adUnitId, @NonNull MoPubErrorCode errorCode) {
-        new MaterialAlertDialogBuilder(this)
-                .setTitle("Error")
-                .setMessage("Failed to play the ad\n\n" + "Error code: " + errorCode.toString())
-                .setPositiveButton(R.string.ok, null)
-                .show();
-    }
-
-    @Override
-    public void onRewardedVideoClicked(@NonNull String adUnitId) {
-
-    }
-
-    @Override
-    public void onRewardedVideoClosed(@NonNull String adUnitId) {
-        //count
-        LocalDateTime deadline = LocalDateTime.now().plusDays(daysWithoutAds + 5);
-        int newAdsDeadline = deadline.getDayOfYear();
-        if (newAdsDeadline < today) {
-            new MaterialAlertDialogBuilder(UpgradeToPro.this)
-                    .setMessage(R.string.yearly_ads_quota)
-                    .setPositiveButton(R.string.ok, null)
-                    .show();
-        } else {
-            sharedPref.edit().putInt("adsDeadline", newAdsDeadline).apply();
-            tvDays.setText(String.valueOf(Integer.parseInt(tvDays.getText().toString()) + 5));
-            Toast.makeText(this, getString(R.string.removed_ads), Toast.LENGTH_LONG).show();
-        }
-
-        //load next
-        btnRemoveAds.setText(R.string.load_ad);
-        btnRemoveAds.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(UpgradeToPro.this, UpgradeToPro.class);
-                intent.putExtra("scroll", true);
-                startActivity(intent);
-                finish();
-            }
-        });
-    }
-
-    @Override
-    public void onRewardedVideoCompleted(@NonNull Set<String> adUnitIds, @NonNull MoPubReward reward) {
-
-    }
 }
 
 

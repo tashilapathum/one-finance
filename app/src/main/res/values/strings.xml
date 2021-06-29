@@ -521,5 +521,7 @@
         - [Fixed] crash in Wallet screen\n
     </string>
     <string name="copied">Copied</string>
+    <string name="categories">Categories</string>
+    <string name="added">Added</string>
 
 </resources>
