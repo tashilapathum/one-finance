@@ -56,10 +56,8 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         if (bundle != null)
             fromContext = bundle.getString("pickDate", "fromWalletFragment");
 
-        if (fromContext.equals("fromWalletFragment")) {
-            sharedPref.edit().putString("preDate", dateInMillis).apply();
-            //WalletFragment.getInstance().continueLongClickProcess();
-        }
+        if (fromContext.equals("fromWalletInput"))
+            DialogWalletInput.getInstance().setDate(dateInMillis);
 
         if (fromContext.equals("fromBillsFragment"))
             DialogNewBill.getInstance().setDate(date, Long.parseLong(dateInMillis), zdt.plusHours(23).toInstant().toEpochMilli());

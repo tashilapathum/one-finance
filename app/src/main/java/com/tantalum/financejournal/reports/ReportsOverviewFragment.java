@@ -99,8 +99,8 @@ public class ReportsOverviewFragment extends Fragment {
         LocalDate currentDate = LocalDate.now();
         for (int i = 0; i < transactionsList.size(); i++) {
             TransactionItem transaction = transactionsList.get(i);
-            LocalDateTime transactionDate = new DateTimeHandler(transaction.getUserDate()).getLocalDateTime();
-            if (!transaction.isBankRelated()) {
+            LocalDateTime transactionDate = new DateTimeHandler(transaction.getTimeInMillis()).getLocalDateTime();
+            if (!transaction.getPrefix().isEmpty()) {
                 //daily
                 if (transactionDate.getDayOfYear() == currentDate.getDayOfYear()) {
                     if (transaction.getPrefix().equals("+"))

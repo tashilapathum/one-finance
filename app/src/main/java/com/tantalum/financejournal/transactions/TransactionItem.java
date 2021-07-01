@@ -10,21 +10,19 @@ public class TransactionItem {
     private int id;
 
     private String balance;
-    private String prefix;
+    private String prefix; //"+"income "-"expense ""transfer/deposit
     private String amount;
     private String description;
-    private String userDate;
-    private String databaseDate;
-    private boolean isBankRelated;
+    private String timeInMillis;
+    private String category; //only applicable for expenses. otherwise null
 
-    public TransactionItem(String balance, String prefix, String amount, String description, String userDate,
-                           String databaseDate, boolean isBankRelated) {
+    public TransactionItem(String balance, String prefix, String amount, String description, String timeInMillis, String category) {
         this.balance = balance;
         this.prefix = prefix;
         this.amount = amount;
         this.description = description;
-        this.userDate = userDate;
-        this.databaseDate = databaseDate;
+        this.timeInMillis = timeInMillis;
+        this.category = category;
     }
 
     public void setId(int id) {
@@ -37,10 +35,6 @@ public class TransactionItem {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setUserDate(String userDate) {
-        this.userDate = userDate;
     }
 
     public int getId() {
@@ -67,14 +61,6 @@ public class TransactionItem {
         return description;
     }
 
-    public String getUserDate() {
-        return userDate;
-    }
-
-    public String getDatabaseDate() {
-        return databaseDate;
-    }
-
     public void setBalance(String balance) {
         this.balance = balance;
     }
@@ -83,15 +69,19 @@ public class TransactionItem {
         this.prefix = prefix;
     }
 
-    public void setDatabaseDate(String databaseDate) {
-        this.databaseDate = databaseDate;
+    public String getTimeInMillis() {
+        return timeInMillis;
     }
 
-    public boolean isBankRelated() {
-        return isBankRelated;
+    public void setTimeInMillis(String timeInMillis) {
+        this.timeInMillis = timeInMillis;
     }
 
-    public void setBankRelated(boolean bankRelated) {
-        isBankRelated = bankRelated;
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

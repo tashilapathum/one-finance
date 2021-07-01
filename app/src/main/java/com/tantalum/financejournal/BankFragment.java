@@ -323,11 +323,11 @@ public class BankFragment extends Fragment {
                             accountsViewModel.update(selectedAccount); //update for real
                             //add transaction
                             if (finalIsWithdrawId) {
-                                TransactionItem transaction = new TransactionItem(
-                                        sharedPref.getString("balance", "0"), "+",
-                                        df.format(inputAmount), transactionDescription,
-                                        String.valueOf(System.currentTimeMillis()), null, true);
-                                transactionsViewModel.insert(transaction);
+                                //TransactionItem transaction = new TransactionItem(
+                                //        sharedPref.getString("balance", "0"), "+",
+                                //        df.format(inputAmount), transactionDescription,
+                                //        String.valueOf(System.currentTimeMillis()), null, true);
+                                //transactionsViewModel.insert(transaction);
                             }
                             if (BankFragment.this.isVisible())
                                 loadActivities();
@@ -345,11 +345,11 @@ public class BankFragment extends Fragment {
                 accountsViewModel.update(selectedAccount); //update for real
                 //add transaction
                 if (finalIsWithdrawId) {
-                    TransactionItem transaction = new TransactionItem(
-                            sharedPref.getString("balance", "0"), "+",
-                            df.format(inputAmount), transactionDescription,
-                            String.valueOf(System.currentTimeMillis()), null, true);
-                    transactionsViewModel.insert(transaction);
+                    //TransactionItem transaction = new TransactionItem(
+                    //        sharedPref.getString("balance", "0"), "+",
+                    //        df.format(inputAmount), transactionDescription,
+                    //        String.valueOf(System.currentTimeMillis()), null, true);
+                    //transactionsViewModel.insert(transaction);
                 }
                 if (BankFragment.this.isVisible())
                     loadActivities();

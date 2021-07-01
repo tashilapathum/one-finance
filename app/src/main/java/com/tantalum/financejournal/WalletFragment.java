@@ -98,9 +98,9 @@ public class WalletFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setExitTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, false));
-        setReenterTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, true));
-        setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, true));
+        setExitTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, false));
+        setReenterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
+        setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Z, true));
     }
 
     @Nullable
@@ -594,9 +594,9 @@ public class WalletFragment extends Fragment {
                 @Override
                 public void onDismissed(Snackbar transientBottomBar, int event) {
                     if (event != Snackbar.Callback.DISMISS_EVENT_ACTION) {
-                        TransactionItem transactionItem =
-                                new TransactionItem(balance, prefix, amount, description, userDate, null, isBankRelated);
-                        transactionsViewModel.insert(transactionItem);
+                        //TransactionItem transactionItem =
+                          //      new TransactionItem(balance, prefix, amount, description, userDate, null, isBankRelated);
+                        //transactionsViewModel.insert(transactionItem);
                         if (viewId == R.id.btnTransfer && !longClicked)
                             doBankStuff(null);
                         sharedPref.edit().putBoolean("longClicked", false).apply();
@@ -607,9 +607,9 @@ public class WalletFragment extends Fragment {
                 }
             });
         } else {
-            TransactionItem transactionItem =
-                    new TransactionItem(balance, prefix, amount, description, userDate, null, isBankRelated);
-            transactionsViewModel.insert(transactionItem);
+            //TransactionItem transactionItem =
+            //        new TransactionItem(balance, prefix, amount, description, userDate, null, isBankRelated);
+            //transactionsViewModel.insert(transactionItem);
             if (viewId == R.id.btnTransfer && !longClicked)
                 doBankStuff(null);
             sharedPref.edit().putBoolean("longClicked", false).apply();

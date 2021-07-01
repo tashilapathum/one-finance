@@ -32,4 +32,8 @@
     <color name="colorLightBlue">#A70000FF</color>
     <color name="colorLighterBlue">#536DFE</color>
     <color name="colorRipple">#82B1FF</color>
+    <color name="colorDeselectedChip">#ECF7FF</color>
+    <color name="colorSelectedChip">#125495</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
 </resources>

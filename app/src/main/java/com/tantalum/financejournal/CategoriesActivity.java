@@ -74,7 +74,6 @@ public class CategoriesActivity extends AppCompatActivity {
             categories.add("Transport###" + (int) (Math.random() * 1000000000));
             categories.add("Clothes###" + (int) (Math.random() * 1000000000));
             categories.add("Education###" + (int) (Math.random() * 1000000000));
-            categories.add("Misc###" + (int) (Math.random() * 1000000000));
             categories.add("Other###" + (int) (Math.random() * 1000000000));
 
             //save

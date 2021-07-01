@@ -126,7 +126,7 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
     private void fillDetails() {
         etAmount.setText(transactionItem.getAmount());
         etDescription.setText(transactionItem.getDescription());
-        String date = new DateTimeHandler(transactionItem.getUserDate()).getTimestamp();
+        String date = new DateTimeHandler(transactionItem.getTimeInMillis()).getTimestamp();
         etDate.setText(date);
         etDate.setFocusable(false);
         String prefix = transactionItem.getPrefix();
@@ -146,10 +146,10 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
                 transactionItem.setDescription(description);
 
             if (dateInMillis != null) {
-                if (new DateTimeHandler(transactionItem.getUserDate()).getDayOfYear() != new DateTimeHandler(dateInMillis).getDayOfYear())
-                    transactionItem.setUserDate(dateInMillis);
+                if (new DateTimeHandler(transactionItem.getTimeInMillis()).getDayOfYear() != new DateTimeHandler(dateInMillis).getDayOfYear())
+                    transactionItem.setTimeInMillis(dateInMillis);
                 else
-                    transactionItem.setUserDate(String.valueOf(System.currentTimeMillis()));
+                    transactionItem.setTimeInMillis(String.valueOf(System.currentTimeMillis()));
             }
 
             //update balance

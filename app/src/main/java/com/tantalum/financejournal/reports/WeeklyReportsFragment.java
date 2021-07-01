@@ -149,7 +149,7 @@ public class WeeklyReportsFragment extends Fragment {
         }
         for (int i = 0; i < transactionsList.size(); i++) {
             TransactionItem currentTransaction = transactionsList.get(i);
-            DateTimeHandler dateTimeHandler = new DateTimeHandler(currentTransaction.getUserDate());
+            DateTimeHandler dateTimeHandler = new DateTimeHandler(currentTransaction.getTimeInMillis());
             int transactionYear = dateTimeHandler.getYear();
             int transactionWeek = dateTimeHandler.getWeekOfYear();
             int transactionDay = dateTimeHandler.getDayOfWeek();
@@ -184,7 +184,7 @@ public class WeeklyReportsFragment extends Fragment {
         for (
                 int i = 0; i < transactionsList.size(); i++) {
             TransactionItem currentTransaction = transactionsList.get(i);
-            DateTimeHandler dateTimeHandler = new DateTimeHandler(currentTransaction.getUserDate());
+            DateTimeHandler dateTimeHandler = new DateTimeHandler(currentTransaction.getTimeInMillis());
             int transactionYear = dateTimeHandler.getYear();
             int transactionWeek = dateTimeHandler.getWeekOfYear();
             if (transactionWeek == week - 1 && transactionYear == year) {

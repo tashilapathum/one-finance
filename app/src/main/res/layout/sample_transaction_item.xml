@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginEnd="8dp"
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
@@ -19,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:text="$0.00"
+            android:layout_marginHorizontal="4dp"
             android:layout_centerVertical="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
@@ -37,9 +39,19 @@
             android:id="@+id/hDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/hDescr"
-            android:text="Date"/>
+            android:layout_below="@id/hDescr"
+            tools:text="Date"/>
 
+        <com.google.android.material.chip.Chip
+            android:id="@+id/hCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/hDate"
+            app:chipMinHeight="20dp"
+            app:chipMinTouchTargetSize="4dp"
+            android:layout_marginTop="2dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            tools:text="Category"/>
 
     </RelativeLayout>
 

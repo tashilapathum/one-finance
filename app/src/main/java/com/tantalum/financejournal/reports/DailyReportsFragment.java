@@ -124,7 +124,7 @@ public class DailyReportsFragment extends Fragment {
         String highestItem = null;
         for (int i = 0; i < transactionsList.size(); i++) {
             TransactionItem currentTransaction = transactionsList.get(i);
-            DateTimeHandler dateTimeHandler = new DateTimeHandler(currentTransaction.getUserDate());
+            DateTimeHandler dateTimeHandler = new DateTimeHandler(currentTransaction.getTimeInMillis());
             int transactionDate = dateTimeHandler.getDayOfYear();
             if (transactionDate == day) {
                 if (currentTransaction.getPrefix().equals("+"))
@@ -143,7 +143,7 @@ public class DailyReportsFragment extends Fragment {
         double expensesOLD = 0;
         for (int i = 0; i < transactionsList.size(); i++) {
             TransactionItem currentTransaction = transactionsList.get(i);
-            DateTimeHandler dateTimeHandler = new DateTimeHandler(currentTransaction.getUserDate());
+            DateTimeHandler dateTimeHandler = new DateTimeHandler(currentTransaction.getTimeInMillis());
             int transactionDate = dateTimeHandler.getDayOfYear();
             if (transactionDate == LocalDate.now().minusDays(dayCount + 1).getDayOfYear()) {
                 if (currentTransaction.getPrefix().equals("+"))

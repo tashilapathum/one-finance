@@ -430,7 +430,7 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
                         checkingList.add(filteredList.get(i));
 
                 for (TransactionItem item : checkingList) {
-                    DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
+                    DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getTimeInMillis());
                     if (dateTimeHandler.getDayOfYear() == LocalDate.now().getDayOfYear() && !containsItem(item))
                         filteredList.add(item);
                     if (dateTimeHandler.getDayOfYear() != LocalDate.now().getDayOfYear() && containsItem(item))
@@ -448,7 +448,7 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
                         checkingList.add(filteredList.get(i));
 
                 for (TransactionItem item : checkingList) {
-                    DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
+                    DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getTimeInMillis());
                     if (dateTimeHandler.getDayOfYear() == LocalDate.now().minusDays(1).getDayOfYear() && !containsItem(item))
                         filteredList.add(item);
                     if (dateTimeHandler.getDayOfYear() != LocalDate.now().minusDays(1).getDayOfYear() && containsItem(item))
@@ -466,7 +466,7 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
                         checkingList.add(filteredList.get(i));
 
                 for (TransactionItem item : checkingList) {
-                    DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
+                    DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getTimeInMillis());
                     if (dateTimeHandler.getWeekOfYear() == dateTimeHandler.getWeekOfYear(LocalDateTime.now()) && !containsItem(item))
                         filteredList.add(item);
                     if (dateTimeHandler.getWeekOfYear() != dateTimeHandler.getWeekOfYear(LocalDateTime.now()) && containsItem(item))
@@ -484,7 +484,7 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
                         checkingList.add(filteredList.get(i));
 
                 for (TransactionItem item : checkingList) {
-                    DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
+                    DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getTimeInMillis());
                     if (dateTimeHandler.getWeekOfYear() == dateTimeHandler.getWeekOfYear(LocalDateTime.now().minusDays(7)) && !containsItem(item))
                         filteredList.add(item);
                     if (dateTimeHandler.getWeekOfYear() != dateTimeHandler.getWeekOfYear(LocalDateTime.now().minusDays(7)) && containsItem(item))
@@ -563,14 +563,14 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
                     Collections.sort(filteredList, new Comparator<TransactionItem>() {
                         @Override
                         public int compare(TransactionItem o1, TransactionItem o2) {
-                            return Double.valueOf(o2.getUserDate()).compareTo(Double.valueOf(o1.getUserDate()));
+                            return Double.valueOf(o2.getTimeInMillis()).compareTo(Double.valueOf(o1.getTimeInMillis()));
                         }
                     });
                 else
                     Collections.sort(transactionsList, new Comparator<TransactionItem>() {
                         @Override
                         public int compare(TransactionItem o1, TransactionItem o2) {
-                            return Double.valueOf(o2.getUserDate()).compareTo(Double.valueOf(o1.getUserDate()));
+                            return Double.valueOf(o2.getTimeInMillis()).compareTo(Double.valueOf(o1.getTimeInMillis()));
                         }
                     });
 
@@ -581,14 +581,14 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
                     Collections.sort(filteredList, new Comparator<TransactionItem>() {
                         @Override
                         public int compare(TransactionItem o1, TransactionItem o2) {
-                            return Double.valueOf(o1.getUserDate()).compareTo(Double.valueOf(o2.getUserDate()));
+                            return Double.valueOf(o1.getTimeInMillis()).compareTo(Double.valueOf(o2.getTimeInMillis()));
                         }
                     });
                 else
                     Collections.sort(transactionsList, new Comparator<TransactionItem>() {
                         @Override
                         public int compare(TransactionItem o1, TransactionItem o2) {
-                            return Double.valueOf(o1.getUserDate()).compareTo(Double.valueOf(o2.getUserDate()));
+                            return Double.valueOf(o1.getTimeInMillis()).compareTo(Double.valueOf(o2.getTimeInMillis()));
                         }
                     });
 
@@ -648,7 +648,7 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
 
     public void filterByDate(int date) {
         for (TransactionItem item : transactionsList) {
-            DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getUserDate());
+            DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getTimeInMillis());
             if (dateTimeHandler.getDayOfYear() == date && !filteredList.contains(item))
                 filteredList.add(item);
         }

@@ -1,7 +1,9 @@
 package com.tantalum.financejournal;
 
 public class Constants {
-    public static final String SP_CATEGORIES = "CATEGORIES";
+    //shared preferences
+    public static final String SP_CATEGORIES = "categories";
+    public static final String SP_BALANCE = "balance";
 
     //free limits
     public static final int FREE_INVESTMENTS_LIMIT = 3;
@@ -15,3 +17,5 @@ public class Constants {
     public static final int TRANSFER = 0;
 
 }
+
+//TODO: make it only possible to add bank accounts with unique names

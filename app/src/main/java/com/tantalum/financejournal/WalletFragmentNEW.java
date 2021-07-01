@@ -9,11 +9,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.transition.MaterialSharedAxis;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 
 public class WalletFragmentNEW extends Fragment {
     private View view;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setExitTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, false));
+        setReenterTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, true));
+        setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, true));
+    }
 
     @Nullable
     @Override

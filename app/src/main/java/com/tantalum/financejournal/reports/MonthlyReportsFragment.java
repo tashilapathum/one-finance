@@ -114,7 +114,7 @@ public class MonthlyReportsFragment extends Fragment {
         List<TransactionItem> transactionsOfMonth = new ArrayList<>(); //to find the highest and lowest day
         for (int i = 0; i < transactionsList.size(); i++) {
             TransactionItem currentTransaction = transactionsList.get(i);
-            DateTimeHandler dateTimeHandler = new DateTimeHandler(currentTransaction.getUserDate());
+            DateTimeHandler dateTimeHandler = new DateTimeHandler(currentTransaction.getTimeInMillis());
             int transactionMonth = dateTimeHandler.getMonthValue();
             int transactionYear = dateTimeHandler.getYear();
             if (transactionMonth == month && transactionYear == year) {
@@ -141,7 +141,7 @@ public class MonthlyReportsFragment extends Fragment {
         double expensesOLD = 0;
         for (int i = 0; i < transactionsList.size(); i++) {
             TransactionItem currentTransaction = transactionsList.get(i);
-            DateTimeHandler dateTimeHandler = new DateTimeHandler(currentTransaction.getUserDate());
+            DateTimeHandler dateTimeHandler = new DateTimeHandler(currentTransaction.getTimeInMillis());
             int transactionMonth = dateTimeHandler.getMonthValue();
             int transactionYear = dateTimeHandler.getYear();
             if (transactionMonth == LocalDate.now().minusMonths(monthCount + 1 /*to get prev month*/).getMonthValue()
@@ -175,7 +175,7 @@ public class MonthlyReportsFragment extends Fragment {
         double tempMostExpense = 0;
         for (int i = 0; i < transactionsOfMonth.size(); i++) {
             TransactionItem currentTransaction = transactionsOfMonth.get(i);
-            if (new DateTimeHandler(currentTransaction.getUserDate()).getYear() == year) {
+            if (new DateTimeHandler(currentTransaction.getTimeInMillis()).getYear() == year) {
                 if (currentTransaction.getPrefix().equals("+") && currentTransaction.getAmountValue() > tempMostIncome) {
                     mostIncomeTransaction = currentTransaction;
                     tempMostIncome = currentTransaction.getAmountValue();
@@ -190,7 +190,7 @@ public class MonthlyReportsFragment extends Fragment {
         String mostIncomeDay = null;
         String mostExpenseDay = null;
         if (mostIncomeTransaction != null) {
-            DateTimeHandler dateTimeHandler = new DateTimeHandler(mostIncomeTransaction.getUserDate());
+            DateTimeHandler dateTimeHandler = new DateTimeHandler(mostIncomeTransaction.getTimeInMillis());
             mostIncomeDay = "" + dateTimeHandler.getDayOfMonth();
             String lastDigit = mostIncomeDay.substring(mostIncomeDay.length() - 1);
             if (dateTimeHandler.getDayOfMonth() != 11 && dateTimeHandler.getDayOfMonth() != 12 && dateTimeHandler.getDayOfMonth() != 13) {
@@ -217,7 +217,7 @@ public class MonthlyReportsFragment extends Fragment {
                     + " - " + mostIncomeTransaction.getDescription() + ")";
         }
         if (mostExpenseTransaction != null) {
-            DateTimeHandler dateTimeHandler = new DateTimeHandler(mostExpenseTransaction.getUserDate());
+            DateTimeHandler dateTimeHandler = new DateTimeHandler(mostExpenseTransaction.getTimeInMillis());
             mostExpenseDay = "" + dateTimeHandler.getDayOfMonth();
             String lastDigit = mostExpenseDay.substring(mostExpenseDay.length() - 1);
             if (dateTimeHandler.getDayOfMonth() != 11 && dateTimeHandler.getDayOfMonth() != 12 && dateTimeHandler.getDayOfMonth() != 13) {
