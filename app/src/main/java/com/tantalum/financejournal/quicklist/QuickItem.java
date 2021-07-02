@@ -11,10 +11,12 @@ public class QuickItem {
 
     private String itemName;
     private String itemPrice;
+    private String category;
 
-    public QuickItem(String itemName, String itemPrice) {
+    public QuickItem(String itemName, String itemPrice, String category) {
         this.itemName = itemName;
         this.itemPrice = itemPrice;
+        this.category = category;
     }
 
     public int getId() {
@@ -39,5 +41,13 @@ public class QuickItem {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

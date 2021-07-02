@@ -524,5 +524,7 @@
     <string name="categories">Categories</string>
     <string name="added">Added</string>
     <string name="transfer_to">Transfer to:</string>
+    <string name="acc_already_exists">Account already exists</string>
+    <string name="deposit_from_wallet_to">"Deposit from Wallet to "</string>
 
 </resources>

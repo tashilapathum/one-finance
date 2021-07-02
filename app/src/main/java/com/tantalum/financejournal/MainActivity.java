@@ -36,6 +36,7 @@ import com.tantalum.financejournal.reports.Reports;
 import com.tantalum.financejournal.settings.Settings;
 import com.tantalum.financejournal.transactions.TransactionHistory;
 import com.tantalum.financejournal.transactions.TransactionsFragment;
+import com.tantalum.financejournal.wallet.WalletFragmentNEW;
 
 import java.util.Calendar;
 import java.util.Locale;

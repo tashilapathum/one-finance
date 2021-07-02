@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -52,6 +54,7 @@ public class NewAccount extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
+        accountsViewModel = new AccountsViewModel(getApplication());
 
         //language
         language = sharedPref.getString("language", "english");
@@ -89,8 +92,6 @@ public class NewAccount extends AppCompatActivity {
         etAccountNumber = tilAccountNo.getEditText();
         etAdditional = tilAdditional.getEditText();
 
-        accountsViewModel = new AccountsViewModel(getApplication());
-
         isNewAccount = getIntent().getBooleanExtra("isNewAccount", false);
         updatingAccount = (Account) getIntent().getSerializableExtra("updatingAccount");
         if (updatingAccount != null) prepareForEditing(updatingAccount);
@@ -116,6 +117,12 @@ public class NewAccount extends AppCompatActivity {
 
     private boolean validateAccName() {
         String accNameInput = tilAccountName.getEditText().getText().toString();
+        List<Account> accountList = accountsViewModel.getAllAccounts();
+        for (Account account : accountList)
+            if (account.getAccName().equals(accNameInput)) {
+                tilAccountName.setError(getString(R.string.acc_already_exists));
+                return false;
+            }
         if (accNameInput.isEmpty()) {
             tilAccountName.setError(getString(R.string.required));
             return false;

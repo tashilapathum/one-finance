@@ -1,4 +1,4 @@
-package com.tantalum.financejournal;
+package com.tantalum.financejournal.wallet;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,6 +30,12 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.transition.MaterialSharedAxis;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
+import com.tantalum.financejournal.Amount;
+import com.tantalum.financejournal.CustomAutocompleteArrayAdapter;
+import com.tantalum.financejournal.DatePickerFragment;
+import com.tantalum.financejournal.DateTimeHandler;
+import com.tantalum.financejournal.DialogChooseAcc;
+import com.tantalum.financejournal.R;
 import com.tantalum.financejournal.accounts.Account;
 import com.tantalum.financejournal.accounts.AccountsViewModel;
 import com.tantalum.financejournal.quicklist.EditQuickList;
@@ -39,7 +45,6 @@ import com.tantalum.financejournal.reports.DailyReportsFragment;
 import com.tantalum.financejournal.reports.MonthlyReportsFragment;
 import com.tantalum.financejournal.reports.WeeklyReportsFragment;
 import com.tantalum.financejournal.settings.DialogWalletInput;
-import com.tantalum.financejournal.transactions.TransactionItem;
 import com.tantalum.financejournal.transactions.TransactionsFragment;
 import com.tantalum.financejournal.transactions.TransactionsViewModel;
 
@@ -492,7 +497,7 @@ public class WalletFragment extends Fragment {
         }
     }
 
-    void continueLongClickProcess() { //after returning from dialog
+    public void continueLongClickProcess() { //after returning from dialog
         handleData(viewId);
         sharedPref.edit().putInt("walletViewID", viewId).apply();
     }
@@ -749,7 +754,7 @@ public class WalletFragment extends Fragment {
         }
     }
 
-    void doBankStuff(Account account) {
+    public void doBankStuff(Account account) {
         if (account == null)
             account = getSelectedAccount();
         String amountStr = new Amount(getActivity(), amount).getAmountString();

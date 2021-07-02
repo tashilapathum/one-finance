@@ -18,4 +18,4 @@ public class Constants {
 
 }
 
-//TODO: make it only possible to add bank accounts with unique names
+//TODO: make it only possible to add unique bank account names

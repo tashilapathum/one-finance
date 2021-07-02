@@ -25,6 +25,7 @@ import com.tantalum.financejournal.loans.DialogAddLoan;
 import com.tantalum.financejournal.reports.Reports;
 import com.tantalum.financejournal.transactions.DialogTransactionEditor;
 import com.tantalum.financejournal.transactions.TransactionHistory;
+import com.tantalum.financejournal.wallet.DialogWalletInput;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
     public static final String TAG = "DatePickerFragment";

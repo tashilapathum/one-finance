@@ -145,6 +145,7 @@ public class EditQuickList extends AppCompatActivity {
         bundle.putInt("itemID", quickItem.getId());
         bundle.putString("itemName", quickItem.getItemName());
         bundle.putString("itemPrice", quickItem.getItemPrice());
+        bundle.putString("itemCategory", quickItem.getCategory());
         dialogAddQuickItem.setArguments(bundle);
         dialogAddQuickItem.show(getSupportFragmentManager(), "edit quick item");
     }

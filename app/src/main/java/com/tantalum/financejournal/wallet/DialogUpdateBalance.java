@@ -1,4 +1,4 @@
-package com.tantalum.financejournal;
+package com.tantalum.financejournal.wallet;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.tantalum.financejournal.R;
 
 import java.text.DecimalFormat;
 

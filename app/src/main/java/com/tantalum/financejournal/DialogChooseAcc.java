@@ -20,6 +20,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.tantalum.financejournal.accounts.Account;
 import com.tantalum.financejournal.accounts.AccountManager;
 import com.tantalum.financejournal.accounts.AccountsViewModel;
+import com.tantalum.financejournal.wallet.WalletFragment;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class DialogChooseAcc extends DialogFragment {
 
     private DialogInterface.OnDismissListener onDismissListener;
 
-    void setOnDismissListener(DialogInterface.OnDismissListener onDismissListener) {
+    public void setOnDismissListener(DialogInterface.OnDismissListener onDismissListener) {
         this.onDismissListener = onDismissListener;
     }
 

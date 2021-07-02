@@ -15,7 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tantalum.financejournal.R;
-import com.tantalum.financejournal.WalletFragment;
+import com.tantalum.financejournal.wallet.WalletFragment;
 
 public class DialogWalletInput extends BottomSheetDialogFragment {
     private BottomSheetDialog dialog;

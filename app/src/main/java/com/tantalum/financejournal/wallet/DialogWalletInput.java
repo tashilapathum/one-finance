@@ -1,4 +1,4 @@
-package com.tantalum.financejournal;
+package com.tantalum.financejournal.wallet;
 
 import android.app.Dialog;
 import android.content.SharedPreferences;
@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.StateSet;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -22,6 +21,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
+import com.tantalum.financejournal.Constants;
+import com.tantalum.financejournal.DatePickerFragment;
+import com.tantalum.financejournal.DateTimeHandler;
+import com.tantalum.financejournal.R;
 import com.tantalum.financejournal.accounts.Account;
 import com.tantalum.financejournal.accounts.AccountsViewModel;
 import com.tantalum.financejournal.transactions.TransactionItem;
@@ -210,10 +213,12 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
             else
                 date = String.valueOf(System.currentTimeMillis());
             String category = null;
+            double newBalance = 0;
 
             switch (transactionType) {
                 case Constants.INCOME: {
                     prefix = "+";
+                    newBalance = Double.parseDouble(balance) + Double.parseDouble(amount);
                     break;
                 }
                 case Constants.EXPENSE: {
@@ -222,6 +227,7 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
                     category = catChip.getText().toString()
                             + "###"
                             + catChip.getChipBackgroundColor().getDefaultColor();
+                    newBalance = Double.parseDouble(balance) - Double.parseDouble(amount);
                     break;
                 }
                 case Constants.TRANSFER: {
@@ -232,10 +238,14 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
                         if (accChip.getText().equals(account.getAccName()))
                             selectedAccount = account;
 
+                    description = getString(R.string.deposit_from_wallet_to) + selectedAccount.getAccName();
+
                     //update account
                     double finalBalance = Double.parseDouble(selectedAccount.getAccBalance()) + Double.parseDouble(amount);
                     selectedAccount.setAccBalance(String.valueOf(finalBalance));
                     accountsViewModel.update(selectedAccount);
+
+                    newBalance = Double.parseDouble(balance) - Double.parseDouble(amount);
 
                     break;
                 }
@@ -249,6 +259,7 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
 
             //show
             Toast.makeText(getActivity(), R.string.added, Toast.LENGTH_SHORT).show();
+            WalletFragmentNEW.getInstance().setNewBalance(String.valueOf(newBalance));
             dialog.dismiss();
 
         }

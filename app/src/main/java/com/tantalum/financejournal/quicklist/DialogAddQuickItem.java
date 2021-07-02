@@ -2,20 +2,30 @@ package com.tantalum.financejournal.quicklist;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
+import com.tantalum.financejournal.Constants;
 import com.tantalum.financejournal.R;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class DialogAddQuickItem extends DialogFragment {
     private TextInputLayout tilItem;
@@ -26,11 +36,14 @@ public class DialogAddQuickItem extends DialogFragment {
     private String price;
     private AlertDialog dialog;
     private Bundle bundle;
+    private View view;
+    private ChipGroup chipGroup;
+
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_quickitem, null);
+        view = getActivity().getLayoutInflater().inflate(R.layout.dialog_add_quickitem, null);
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
         bundle = this.getArguments();
         if (bundle == null) {
@@ -59,8 +72,11 @@ public class DialogAddQuickItem extends DialogFragment {
         etItem = tilItem.getEditText();
         tilPrice = view.findViewById(R.id.etPrice);
         etPrice = tilPrice.getEditText();
+        chipGroup = view.findViewById(R.id.chipGroup);
 
+        loadCategoryChips();
         fillDetails();
+
         return builder.create();
     }
 
@@ -99,11 +115,17 @@ public class DialogAddQuickItem extends DialogFragment {
     private void onClickAdd() {
         item = etItem.getText().toString();
         price = etPrice.getText().toString();
+        String category = null;
+        if (!chipGroup.getCheckedChipIds().isEmpty()) {
+            Chip chip = (Chip) chipGroup.findViewById(chipGroup.getCheckedChipId());
+            category = chip.getText().toString() + "###" + chip.getChipBackgroundColor().getDefaultColor();
+        }
+
         DecimalFormat df = new DecimalFormat("#.00");
         if (validateItem() & validatePrice()) {
             dialog.dismiss();
             price = df.format(Double.parseDouble(price));
-            QuickItem quickItem = new QuickItem(item, price);
+            QuickItem quickItem = new QuickItem(item, price, category);
             if (bundle == null)
                 ((EditQuickList) getActivity()).addItemNEW(quickItem);
             else {
@@ -118,6 +140,50 @@ public class DialogAddQuickItem extends DialogFragment {
         if (bundle != null) {
             etItem.setText(bundle.getString("itemName"));
             etPrice.setText(bundle.getString("itemPrice"));
+            String category = bundle.getString("itemCategory");
+            for (int i = 0; i <= chipGroup.getChildCount(); i++) {
+                Chip chip = (Chip) chipGroup.getChildAt(i);
+                if (chip.getText().toString().contains(category))
+                    chip.setChecked(true);
+            }
+        }
+    }
+
+    public void loadCategoryChips() {
+        String allCategories = getActivity().getSharedPreferences("myPref", MODE_PRIVATE)
+                .getString(Constants.SP_CATEGORIES, null);
+        List<String> categories = new ArrayList<>();
+        if (allCategories == null) { //for first time loading
+            //assign colors
+            categories.add("Food###" + (int) (Math.random() * 1000000000));
+            categories.add("Transport###" + (int) (Math.random() * 1000000000));
+            categories.add("Clothes###" + (int) (Math.random() * 1000000000));
+            categories.add("Education###" + (int) (Math.random() * 1000000000));
+            categories.add("Other###" + (int) (Math.random() * 1000000000));
+
+            //save
+            StringBuilder allCategoriesBuilder = new StringBuilder();
+            for (String category : categories)
+                allCategoriesBuilder.append(category).append("~~~");
+            getActivity().getSharedPreferences("myPref", MODE_PRIVATE).edit()
+                    .putString(Constants.SP_CATEGORIES, allCategoriesBuilder.toString()).apply();
+        } else
+            categories.addAll(Arrays.asList(allCategories.split("~~~")));
+
+        chipGroup = view.findViewById(R.id.chipGroup);
+        for (String categoryItem : categories) {
+            Chip chip = new Chip(getActivity());
+            chip.setText(categoryItem.split("###")[0]);
+            chip.setChipBackgroundColor(ColorStateList.valueOf(Integer.parseInt(categoryItem.split("###")[1])));
+            chip.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_Medium);
+            chip.setCheckable(true);
+            chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    chip.setChecked(isChecked);
+                }
+            });
+            chipGroup.addView(chip);
         }
     }
 
