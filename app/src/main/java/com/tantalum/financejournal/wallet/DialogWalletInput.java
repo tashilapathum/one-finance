@@ -21,6 +21,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.textfield.TextInputLayout;
+import com.tantalum.financejournal.Amount;
 import com.tantalum.financejournal.Constants;
 import com.tantalum.financejournal.DatePickerFragment;
 import com.tantalum.financejournal.DateTimeHandler;
@@ -52,6 +53,8 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
     private AccountsViewModel accountsViewModel;
     private List<Account> accountList;
     private BottomSheetDialog dialog;
+    private boolean sinhala;
+    private String currency;
 
     public DialogWalletInput(int transactionType) {
         this.transactionType = transactionType;
@@ -69,6 +72,7 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
         instance = this;
         accountsViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(getActivity().getApplication())).get(AccountsViewModel.class);
+        if (sharedPref.getString("language", "english").equalsIgnoreCase("සිංහල")) sinhala = true;
 
         dialog = new BottomSheetDialog(getActivity());
         tilAmount = view.findViewById(R.id.amount);
@@ -186,8 +190,7 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
                         if (isChecked) {
                             chip.setChipBackgroundColorResource(R.color.colorSelectedChip);
                             chip.setTextColor(getResources().getColor(R.color.colorWhite));
-                        }
-                        else {
+                        } else {
                             chip.setChipBackgroundColorResource(R.color.colorDeselectedChip);
                             chip.setTextColor(getResources().getColor(R.color.colorBlack));
                         }
@@ -214,6 +217,7 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
                 date = String.valueOf(System.currentTimeMillis());
             String category = null;
             double newBalance = 0;
+            boolean showNegativeWarning = false;
 
             switch (transactionType) {
                 case Constants.INCOME: {
@@ -223,11 +227,22 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
                 }
                 case Constants.EXPENSE: {
                     prefix = "-";
-                    Chip catChip = chipGroup.findViewById(chipGroup.getCheckedChipId());
-                    category = catChip.getText().toString()
-                            + "###"
-                            + catChip.getChipBackgroundColor().getDefaultColor();
+                    //category
+                    if (!chipGroup.getCheckedChipIds().isEmpty()) {
+                        Chip catChip = chipGroup.findViewById(chipGroup.getCheckedChipId());
+                        category = catChip.getText().toString()
+                                + "###"
+                                + catChip.getChipBackgroundColor().getDefaultColor();
+                    }
+                    else {
+                        Chip chip = new Chip(getActivity());
+                        category = getString(R.string.uncategorized) + "###" + chip.getChipBackgroundColor().getDefaultColor();
+                    }
+                    //balance
                     newBalance = Double.parseDouble(balance) - Double.parseDouble(amount);
+                    if (newBalance < 0)
+                        if (!sharedPref.getBoolean("negativeEnabled", false))
+                            showNegativeWarning = true;
                     break;
                 }
                 case Constants.TRANSFER: {
@@ -240,10 +255,20 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
 
                     description = getString(R.string.deposit_from_wallet_to) + selectedAccount.getAccName();
 
-                    //update account
+                    //update balance
                     double finalBalance = Double.parseDouble(selectedAccount.getAccBalance()) + Double.parseDouble(amount);
                     selectedAccount.setAccBalance(String.valueOf(finalBalance));
                     accountsViewModel.update(selectedAccount);
+
+                    //update transaction
+                    List<String> accHistory = selectedAccount.getActivities();
+                    String activity;
+                    if (sinhala)
+                        activity = new Amount(getActivity(), amount).getAmountString() + "ක් තැන්පත් කරන ලදී" + "###" + date;
+                    else
+                        activity = "Deposited " + new Amount(getActivity(), amount).getAmountString() + "###" + date;
+                    accHistory.add(0, activity);
+                    selectedAccount.setActivities(accHistory);
 
                     newBalance = Double.parseDouble(balance) - Double.parseDouble(amount);
 
@@ -251,16 +276,20 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
                 }
             }
 
-            //add transaction
-            TransactionItem transactionItem = new TransactionItem(balance, prefix, amount, description, date, category);
-            TransactionsViewModel transactionsViewModel = new ViewModelProvider(this, ViewModelProvider
-                    .AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(TransactionsViewModel.class);
-            transactionsViewModel.insert(transactionItem);
+            if (showNegativeWarning)
+                Toast.makeText(getActivity(), getResources().getString(R.string.spend_more_than_have), Toast.LENGTH_LONG).show();
+            else {
+                //add transaction
+                TransactionItem transactionItem = new TransactionItem(balance, prefix, amount, description, date, category);
+                TransactionsViewModel transactionsViewModel = new ViewModelProvider(this, ViewModelProvider
+                        .AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(TransactionsViewModel.class);
+                transactionsViewModel.insert(transactionItem);
 
-            //show
-            Toast.makeText(getActivity(), R.string.added, Toast.LENGTH_SHORT).show();
-            WalletFragmentNEW.getInstance().setNewBalance(String.valueOf(newBalance));
-            dialog.dismiss();
+                //show
+                Toast.makeText(getActivity(), R.string.added, Toast.LENGTH_SHORT).show();
+                WalletFragmentNEW.getInstance().setNewBalance(String.valueOf(newBalance));
+                dialog.dismiss();
+            }
 
         }
     }

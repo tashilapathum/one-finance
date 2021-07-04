@@ -1,4 +1,4 @@
-package com.tantalum.financejournal;
+package com.tantalum.financejournal.bank;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -17,6 +17,9 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.tantalum.financejournal.Amount;
+import com.tantalum.financejournal.DateTimeHandler;
+import com.tantalum.financejournal.R;
 import com.tantalum.financejournal.accounts.Account;
 import com.tantalum.financejournal.accounts.AccountManager;
 import com.tantalum.financejournal.accounts.AccountsViewModel;

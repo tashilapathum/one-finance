@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginEnd="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
     app:cardElevation="8dp">
 
     <RelativeLayout
@@ -19,39 +19,39 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:text="$0.00"
-            android:layout_marginHorizontal="4dp"
             android:layout_centerVertical="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+            android:layout_marginHorizontal="4dp"
+            android:text="$0.00"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <TextView
             android:id="@+id/hDescr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Description"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:maxLines="1"
-            android:layout_toStartOf="@+id/hAmount"
             android:layout_alignParentStart="true"
-            android:ellipsize="end"/>
+            android:layout_toStartOf="@+id/hAmount"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Description"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <TextView
             android:id="@+id/hDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/hDescr"
-            tools:text="Date"/>
+            tools:text="Date" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/hCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/hDate"
-            app:chipMinHeight="20dp"
-            app:chipMinTouchTargetSize="4dp"
             android:layout_marginTop="2dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-            tools:text="Category"/>
+            app:chipMinHeight="20dp"
+            app:chipMinTouchTargetSize="4dp"
+            tools:text="Category" />
 
     </RelativeLayout>
 

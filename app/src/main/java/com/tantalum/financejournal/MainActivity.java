@@ -25,12 +25,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.shreyaspatil.material.navigationview.MaterialNavigationView;
 import com.tantalum.financejournal.accounts.AccountManager;
+import com.tantalum.financejournal.bank.BankFragmentNEW;
 import com.tantalum.financejournal.investments.InvestmentsFragment;
 import com.tantalum.financejournal.reports.Reports;
 import com.tantalum.financejournal.settings.Settings;
@@ -123,18 +124,19 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
 
         //bottom navigation
         bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
+        bottomNav.setOnItemSelectedListener(navListener);
+        bottomNav.setOnItemReselectedListener(navReListener);
         String homeScreen = sharedPref.getString("homeScreen", "wallet");
 
         ////STARTUP////
         //when requested after applying settings
         if (sharedPref.getBoolean("reqOpenBank", false)) {
-            navigateScreens(new BankFragment(), "BankFragment", R.id.nav_bank);
+            navigateScreens(new BankFragmentNEW(), "BankFragment", R.id.nav_bank);
             sharedPref.edit().putBoolean("reqOpenBank", false).apply();
         }
         //when set as home screen (won't set it back to false)
         else if (homeScreen.equalsIgnoreCase("bank"))
-            navigateScreens(new BankFragment(), "BankFragment", R.id.nav_bank);
+            navigateScreens(new BankFragmentNEW(), "BankFragment", R.id.nav_bank);
         else if (homeScreen.equalsIgnoreCase("transactions"))
             navigateScreens(new TransactionsFragment(), "BillsFragment", R.id.nav_trans);
         else if (homeScreen.equalsIgnoreCase("investments"))
@@ -288,6 +290,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
             }
         }
         firebaseAnalytics.logEvent("used_feature", bundle);
+        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -367,8 +370,8 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
     }
 
     //bottom nav
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private NavigationBarView.OnItemSelectedListener navListener =
+            new NavigationBarView.OnItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = null;
@@ -380,7 +383,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
                             break;
                         }
                         case R.id.nav_bank: {
-                            selectedFragment = new BankFragment();
+                            selectedFragment = new BankFragmentNEW();
                             fragmentTag = "BankFragment";
                             break;
                         }
@@ -405,39 +408,39 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
                 }
             };
 
+    private NavigationBarView.OnItemReselectedListener navReListener = new NavigationBarView.OnItemReselectedListener() {
+        @Override
+        public void onNavigationItemReselected(@NonNull MenuItem item) {
+
+        }
+    };
+
     private void navigateScreens(Fragment selectedFragment, String fragmentTag, int itemId) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, selectedFragment, fragmentTag)
                 .commit();
-        Bundle bundle = new Bundle();
         switch (itemId) {
             case R.id.nav_wallet: {
                 bottomNav.getMenu().getItem(0).setChecked(true);
-                bundle.putString("feature", "Wallet");
                 break;
             }
             case R.id.nav_bank: {
                 bottomNav.getMenu().getItem(1).setChecked(true);
-                bundle.putString("feature", "Bank");
                 break;
             }
             case R.id.nav_trans: {
                 bottomNav.getMenu().getItem(2).setChecked(true);
-                bundle.putString("feature", "Transactions");
                 break;
             }
             case R.id.nav_invest: {
                 bottomNav.getMenu().getItem(3).setChecked(true);
-                bundle.putString("feature", "Cart");
                 break;
             }
             case R.id.nav_tools: {
                 bottomNav.getMenu().getItem(4).setChecked(true);
-                bundle.putString("feature", "Bills");
                 break;
             }
         }
-        firebaseAnalytics.logEvent("used_feature", bundle);
     }
 
     private void rateApp() {
@@ -453,7 +456,7 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
                         public void onClick(DialogInterface dialogInterface, int i) {
                             sharedPref.edit().putBoolean("alreadyRated", true).apply();
                             Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.tashila.mywalletfree"));
+                            intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.tantalum.financejournal"));
                             startActivity(intent);
                         }
                     })

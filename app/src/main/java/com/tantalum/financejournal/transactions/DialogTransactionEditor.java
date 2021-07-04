@@ -35,7 +35,6 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
     private EditText etDescription;
     private EditText etDate;
     private TransactionItem transactionItem;
-    private Context context;
     private BottomSheetDialog dialog;
     private static DialogTransactionEditor instance;
     private SharedPreferences sharedPref;
@@ -43,7 +42,7 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
     private RadioGroup radioGroup;
     private MaterialRadioButton rbExpense;
     private MaterialRadioButton rbIncome;
-    private boolean isFromTransactionsActivity;
+    private boolean isFromFragment;
     private TransactionsViewModel transactionsViewModel;
 
 
@@ -51,7 +50,7 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         instance = this;
-        sharedPref = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
+        sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         view = getActivity().getLayoutInflater().inflate(R.layout.dialog_edit_transaction, null);
         dialog = new BottomSheetDialog(getActivity());
         dialog.setContentView(view);
@@ -94,8 +93,8 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
         return dialog;
     }
 
-    public DialogTransactionEditor(Context context, TransactionItem transactionItem) {
-        this.context = context;
+    public DialogTransactionEditor(boolean isFromFragment, TransactionItem transactionItem) {
+        this.isFromFragment = isFromFragment;
         this.transactionItem = transactionItem;
     }
 
@@ -173,9 +172,10 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
             sharedPref.edit().putString("balance", newBalance).apply();
 
             //save changes
-            transactionsViewModel.update(transactionItem);
-            Toast.makeText(getActivity(), R.string.updated, Toast.LENGTH_SHORT).show();
-            TransactionsFragment.getInstance().reloadFragment();
+            if (isFromFragment)
+                TransactionsFragment.getInstance().updateTransaction(transactionItem);
+            else
+                ((TransactionHistory) getActivity()).updateTransaction(transactionItem);
             dialog.cancel();
         } else {
             TextView tvBottomNote = view.findViewById(R.id.bottomNote);

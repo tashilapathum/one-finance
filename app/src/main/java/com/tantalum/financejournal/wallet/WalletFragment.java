@@ -34,7 +34,7 @@ import com.tantalum.financejournal.Amount;
 import com.tantalum.financejournal.CustomAutocompleteArrayAdapter;
 import com.tantalum.financejournal.DatePickerFragment;
 import com.tantalum.financejournal.DateTimeHandler;
-import com.tantalum.financejournal.DialogChooseAcc;
+import com.tantalum.financejournal.bank.DialogChooseAcc;
 import com.tantalum.financejournal.R;
 import com.tantalum.financejournal.accounts.Account;
 import com.tantalum.financejournal.accounts.AccountsViewModel;

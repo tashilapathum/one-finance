@@ -1,6 +1,7 @@
 package com.tantalum.financejournal.wallet;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.transition.MaterialSharedAxis;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
@@ -26,6 +29,7 @@ import com.robinhood.ticker.TickerView;
 import com.tantalum.financejournal.Amount;
 import com.tantalum.financejournal.Constants;
 import com.tantalum.financejournal.R;
+import com.tantalum.financejournal.accounts.NewAccount;
 import com.tantalum.financejournal.quicklist.EditQuickList;
 import com.tantalum.financejournal.quicklist.QuickItem;
 import com.tantalum.financejournal.quicklist.QuickListViewModel;
@@ -51,6 +55,7 @@ public class WalletFragmentNEW extends Fragment {
     private final int THIS_WEEK_REPORT = R.id.thisWeekReport;
     private final int THIS_MONTH_REPORT = R.id.thisMonthReport;
     private static WalletFragmentNEW instance;
+    private boolean contentLoaded = false;
 
     public static WalletFragmentNEW getInstance() {
         return instance;
@@ -59,8 +64,6 @@ public class WalletFragmentNEW extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setExitTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, false));
-        setReenterTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, true));
         setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, true));
     }
 
@@ -110,19 +113,47 @@ public class WalletFragmentNEW extends Fragment {
                         break;
                     }
                     case R.id.add_transfer: {
-                        transactionType = Constants.TRANSFER;
+                        if (sharedPref.getBoolean("haveAccounts", false))
+                            transactionType = Constants.TRANSFER;
                         break;
                     }
                 }
-                new DialogWalletInput(transactionType).show(getChildFragmentManager(), "wallet input dialog");
-                fab.close();
+                if (transactionType != 0) {
+                    new DialogWalletInput(transactionType).show(getChildFragmentManager(), "wallet input dialog");
+                    fab.close();
+                } else {
+                    new MaterialAlertDialogBuilder(getActivity())
+                            .setTitle(R.string.acc_na)
+                            .setMessage(R.string.acc_na_des)
+                            .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    startActivity(new Intent(getActivity(), NewAccount.class));
+                                }
+                            })
+                            .setNegativeButton(R.string.cancel, null)
+                            .show();
+                }
                 return false;
             }
         });
 
-        loadContent();
-
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!contentLoaded) {
+            loadContent();
+            contentLoaded = true;
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        showNegativeWarning();
     }
 
     private void loadContent() {
@@ -228,6 +259,34 @@ public class WalletFragmentNEW extends Fragment {
         balance = new Amount(getActivity(), balance).getAmountStringWithoutCurrency();
         sharedPref.edit().putString("balance", balance).apply();
         tvBalance.setText(balance);
+
+        showNegativeWarning();
+    }
+
+    private void showNegativeWarning() {
+        String balance = sharedPref.getString("balance", "0.00");
+        ImageButton imWarning = view.findViewById(R.id.warning);
+        if (balance.contains("-")) {
+            tvBalance.setTextColor(getActivity().getResources().getColor(android.R.color.holo_red_light));
+            tvCurrency.setTextColor(getActivity().getResources().getColor(android.R.color.holo_red_light));
+            if (!sharedPref.getBoolean("negativeEnabled", false)) {
+                imWarning.setVisibility(View.VISIBLE);
+                imWarning.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new MaterialAlertDialogBuilder(getActivity())
+                                .setTitle(R.string.neg_balance)
+                                .setMessage(R.string.update_balance_des)
+                                .setPositiveButton(R.string.ok, null)
+                                .show();
+                    }
+                });
+            }
+        } else {
+            imWarning.setVisibility(View.GONE);
+            tvBalance.setTextColor(getActivity().getResources().getColor(android.R.color.holo_green_dark));
+            tvCurrency.setTextColor(getActivity().getResources().getColor(android.R.color.holo_green_dark));
+        }
     }
 
 }

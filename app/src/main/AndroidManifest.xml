@@ -3,9 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.tantalum.financejournal">
 
-    <uses-permission
-        android:name="android.permission.ACCESS_COARSE_LOCATION"
-        tools:node="remove" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -17,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeDark"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CategoriesActivity"></activity>
+        <activity android:name=".CategoriesActivity"/>
         <activity android:name=".WebViewActivity" />
 
         <meta-data
@@ -48,23 +45,14 @@
             android:label="@string/settings" />
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:hardwareAccelerated="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.adcolony.sdk.AdColonyInterstitialActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:hardwareAccelerated="true"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
-        <activity
-            android:name="com.adcolony.sdk.AdColonyAdViewActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:hardwareAccelerated="true"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
 
         <receiver android:name=".AlertReceiver" />
     </application>

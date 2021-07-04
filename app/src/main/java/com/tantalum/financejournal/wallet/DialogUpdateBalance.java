@@ -43,7 +43,7 @@ public class DialogUpdateBalance extends DialogFragment {
                         if (!newBalance.isEmpty()) {
                             DecimalFormat df = new DecimalFormat("#.00");
                             newBalance = df.format(Double.parseDouble(newBalance));
-                            WalletFragment.getInstance().updateBalance(newBalance);
+                            WalletFragmentNEW.getInstance().setNewBalance(newBalance);
                         }
                     }
                 })

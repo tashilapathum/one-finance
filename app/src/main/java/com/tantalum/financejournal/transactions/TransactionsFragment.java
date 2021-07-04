@@ -58,6 +58,8 @@ public class TransactionsFragment extends Fragment {
     List<TransactionItem> transactionsList;
     List<TransactionItem> filteredList;
     private static TransactionsFragment instance;
+    private int updatingPosition = 0;
+    private boolean animationShown = false;
 
     public static TransactionsFragment getInstance() {
         return instance;
@@ -66,8 +68,6 @@ public class TransactionsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setExitTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, false));
-        setReenterTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, true));
         setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, true));
     }
 
@@ -134,15 +134,19 @@ public class TransactionsFragment extends Fragment {
         transactionsViewModel.getAllTransactionItems().observe(getActivity(), new Observer<List<TransactionItem>>() {
             @Override
             public void onChanged(List<TransactionItem> transactionItems) {
+                if (!animationShown) { //to avoid showing when notifying adapter
+                    recyclerView.scheduleLayoutAnimation();
+                    animationShown = true;
+                }
                 transactionsAdapter.submitList(transactionItems);
-                recyclerView.scheduleLayoutAnimation();
             }
         });
 
         transactionsAdapter.setOnTransactionClickListener(new TransactionsAdapter.OnTransactionClickListener() {
             @Override
-            public void OnTransactionClick(TransactionItem transactionItem) {
-                DialogTransactionEditor transactionEditor = new DialogTransactionEditor(getActivity(), transactionItem);
+            public void OnTransactionClick(TransactionItem transactionItem, int position) {
+                updatingPosition = position;
+                DialogTransactionEditor transactionEditor = new DialogTransactionEditor(true, transactionItem);
                 transactionEditor.show(getChildFragmentManager(), "transaction editor dialog");
             }
         });
@@ -177,7 +181,7 @@ public class TransactionsFragment extends Fragment {
 
     public void updateTransaction(TransactionItem transactionItem) {
         transactionsViewModel.update(transactionItem);
-        transactionsAdapter.notifyDataSetChanged();
+        transactionsAdapter.notifyItemChanged(updatingPosition);
         Toast.makeText(getActivity(), R.string.updated, Toast.LENGTH_SHORT).show();
     }
 
@@ -193,7 +197,6 @@ public class TransactionsFragment extends Fragment {
         DecimalFormat df = new DecimalFormat("#.00");
         String newBalance = df.format(balance);
         sharedPref.edit().putString("balance", newBalance).apply();
-        transactionsAdapter.notifyDataSetChanged();
     }
 
     private void loadFilters() {
@@ -534,12 +537,6 @@ public class TransactionsFragment extends Fragment {
             transactionsAdapter.submitList(transactionsList);
             mLayoutManager.smoothScrollToPosition(recyclerView, null, 0);
         }
-    }
-
-    public void reloadFragment() {
-        Fragment walletFrag = getActivity().getSupportFragmentManager().findFragmentByTag("TransactionsFragment");
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        ft.detach(walletFrag).attach(walletFrag).commit();
     }
 
 }

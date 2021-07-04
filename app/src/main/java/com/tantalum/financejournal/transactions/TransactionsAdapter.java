@@ -94,9 +94,9 @@ public class TransactionsAdapter extends ListAdapter<TransactionItem, Transactio
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int position = getAdapterPosition();
+                    int position = getBindingAdapterPosition();
                     if (listener != null && position != RecyclerView.NO_POSITION)
-                        listener.OnTransactionClick(getItem(position));
+                        listener.OnTransactionClick(getItem(position), position);
                 }
             });
             mAmount = itemView.findViewById(R.id.hAmount);
@@ -107,7 +107,7 @@ public class TransactionsAdapter extends ListAdapter<TransactionItem, Transactio
     }
 
     public interface OnTransactionClickListener {
-        void OnTransactionClick(TransactionItem transactionItem);
+        void OnTransactionClick(TransactionItem transactionItem, int position);
     }
 
     public void setOnTransactionClickListener(OnTransactionClickListener listener) {

@@ -1,4 +1,4 @@
-package com.tantalum.financejournal;
+package com.tantalum.financejournal.bank;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,11 +22,12 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.transition.MaterialSharedAxis;
+import com.tantalum.financejournal.MainActivity;
+import com.tantalum.financejournal.R;
 import com.tantalum.financejournal.accounts.Account;
 import com.tantalum.financejournal.accounts.AccountDetails;
 import com.tantalum.financejournal.accounts.AccountsViewModel;
 import com.tantalum.financejournal.accounts.NewAccount;
-import com.tantalum.financejournal.transactions.TransactionItem;
 import com.tantalum.financejournal.transactions.TransactionsViewModel;
 
 import java.math.BigDecimal;
@@ -74,8 +75,6 @@ public class BankFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setExitTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, false));
-        setReenterTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, true));
         setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, true));
     }
 

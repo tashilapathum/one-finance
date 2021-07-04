@@ -5,7 +5,6 @@
     <string name="settings">සැකසුම්</string>
     <string name="get_pro">Pro සංස්කරණය</string>
     <string name="about">ඇප් එක ගැන</string>
-    <string name="my_wallet">My Wallet</string>
     <string name="developed_by_tashila_pathum">\nසැකසුම: Tantalum Technologies</string>
     <string name="balance">ශේෂය:</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -197,7 +196,7 @@
     <string name="total">එකතුව:</string>
     <string name="paid_date">ගෙවීම කළ දිනය</string>
     <string name="pay_due_date">ගෙවීම කළ යුතු දිනය</string>
-    <string name="edit_item">අයිතමය සංස්කරණය කිරීම</string>
+    <string name="edit_item">අයිතමය සංස්කරණය කිරීම</string>newac
     <string name="sure_delete_cart">ඔබට සාප්පු ලැයිස්තුව මකා දැමීමට අවශ්‍ය ද?</string>
     <string name="d_account_name">ගිණුමේ නම</string>
     <string name="c_item_name">අයිතමය</string>
@@ -474,4 +473,7 @@
     <string name="transfer_to">Transfer to:</string>
     <string name="acc_already_exists">Account already exists</string>
     <string name="deposit_from_wallet_to">"Deposit from Wallet to "</string>
+    <string name="acc_na">Accounts not available</string>
+    <string name="acc_na_des">Please add an bank account to transfer money.</string>
+    <string name="uncategorized">Uncategorized</string>
 </resources>

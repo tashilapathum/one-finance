@@ -69,6 +69,7 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
     List<TransactionItem> transactionsList;
     List<TransactionItem> filteredList;
     private MaterialNavigationView navigationView;
+    private int updatingPosition = 0;
 
 
     @Override
@@ -286,8 +287,9 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
 
         transactionsAdapter.setOnTransactionClickListener(new TransactionsAdapter.OnTransactionClickListener() {
             @Override
-            public void OnTransactionClick(TransactionItem transactionItem) {
-                DialogTransactionEditor transactionEditor = new DialogTransactionEditor(TransactionHistory.this, transactionItem);
+            public void OnTransactionClick(TransactionItem transactionItem, int position) {
+                updatingPosition = position;
+                DialogTransactionEditor transactionEditor = new DialogTransactionEditor(false, transactionItem);
                 transactionEditor.show(getSupportFragmentManager(), "transaction editor dialog");
             }
         });
@@ -318,6 +320,12 @@ public class TransactionHistory extends AppCompatActivity implements MaterialNav
                 transactionsAdapter.submitList(filteredList);
             }
         });
+    }
+
+    public void updateTransaction(TransactionItem transactionItem) {
+        transactionsViewModel.update(transactionItem);
+        transactionsAdapter.notifyItemChanged(updatingPosition);
+        Toast.makeText(this, R.string.updated, Toast.LENGTH_SHORT).show();
     }
 
     private void deleteTransaction(TransactionItem transactionItem) {

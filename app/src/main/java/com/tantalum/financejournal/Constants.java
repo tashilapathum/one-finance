@@ -14,7 +14,7 @@ public class Constants {
     //transaction types
     public static final int EXPENSE = 1;
     public static final int INCOME = 2;
-    public static final int TRANSFER = 0;
+    public static final int TRANSFER = 3;
 
 }
 

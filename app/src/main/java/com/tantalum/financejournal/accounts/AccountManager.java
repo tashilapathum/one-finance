@@ -118,6 +118,7 @@ public class AccountManager extends AppCompatActivity implements NavigationView.
         accountsViewModel.getAllAccountsLive().observe(this, new Observer<List<Account>>() {
             @Override
             public void onChanged(List<Account> accounts) {
+                recyclerView.scheduleLayoutAnimation();
                 accountsAdapter.submitList(accounts);
             }
         });

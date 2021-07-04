@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.tantalum.financejournal.DateTimeHandler;
 import com.tantalum.financejournal.MainActivity;
 import com.tantalum.financejournal.R;
 
@@ -177,8 +178,7 @@ public class NewAccount extends AppCompatActivity {
         String accountNumber = etAccountNumber.getText().toString();
         String additionalInfo = etAdditional.getText().toString();
         //created account activity
-        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-        String date = LocalDate.now().format(formatter);
+        String date = String.valueOf(System.currentTimeMillis());
         String activity;
         if (language.equalsIgnoreCase("සිංහල"))
             activity = "\"" + accountName + "\"" + " ගිණුම සාදන ලදී" + "###" + date;

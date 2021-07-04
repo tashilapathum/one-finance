@@ -117,8 +117,12 @@ public class DialogAddQuickItem extends DialogFragment {
         price = etPrice.getText().toString();
         String category = null;
         if (!chipGroup.getCheckedChipIds().isEmpty()) {
-            Chip chip = (Chip) chipGroup.findViewById(chipGroup.getCheckedChipId());
+            Chip chip = chipGroup.findViewById(chipGroup.getCheckedChipId());
             category = chip.getText().toString() + "###" + chip.getChipBackgroundColor().getDefaultColor();
+        }
+        else {
+            Chip chip = new Chip(getActivity());
+            category = getString(R.string.uncategorized) + "###" + chip.getChipBackgroundColor().getDefaultColor();
         }
 
         DecimalFormat df = new DecimalFormat("#.00");

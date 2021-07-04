@@ -7,7 +7,6 @@
     <string name="settings">Settings</string>
     <string name="get_pro">Get Pro</string>
     <string name="about">About</string>
-    <string name="my_wallet">My Wallet</string>
     <string name="developed_by_tashila_pathum">Developed by Tantalum Technologies</string>
     <string name="balance">Balance:</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -526,5 +525,8 @@
     <string name="transfer_to">Transfer to:</string>
     <string name="acc_already_exists">Account already exists</string>
     <string name="deposit_from_wallet_to">"Deposit from Wallet to "</string>
+    <string name="acc_na">Accounts not available</string>
+    <string name="acc_na_des">Please add an bank account to transfer money.</string>
+    <string name="uncategorized">Uncategorized</string>
 
 </resources>
