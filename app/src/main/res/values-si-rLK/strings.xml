@@ -476,4 +476,16 @@
     <string name="acc_na">Accounts not available</string>
     <string name="acc_na_des">Please add an bank account to transfer money.</string>
     <string name="uncategorized">Uncategorized</string>
+    <string name="pls_select_account">Please select an account to transfer money</string>
+    <string name="pay">Pay</string>
+    <string name="transfer_from_prefix">Transferred from</string>
+    <string name="transfer_suffix">huwamaru karana ladii</string>
+    <string name="transfer_to_prefix">"Transferred to "</string>
+    <string name="deposit_prefix">"Deposited "</string>
+    <string name="deposit_mid">" to "</string>
+    <string name="deposit_suffix" />
+    <string name="withdraw_prefix">\"Withdrew \"</string>
+    <string name="withdraw_mid">\" from \"</string>
+    <string name="withdraw_suffix" />
+    <string name="payment">Payment</string>
 </resources>

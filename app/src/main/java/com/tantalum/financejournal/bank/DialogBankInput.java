@@ -1,4 +1,4 @@
-package com.tantalum.financejournal.wallet;
+package com.tantalum.financejournal.bank;
 
 import android.app.Dialog;
 import android.content.SharedPreferences;
@@ -37,9 +37,10 @@ import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class DialogWalletInput extends BottomSheetDialogFragment {
+public class DialogBankInput extends BottomSheetDialogFragment {
     private View view;
     private int transactionType;
+    private Account selectedAccount;
     private SharedPreferences sharedPref;
     private TextInputLayout tilAmount;
     private TextInputLayout tilDescription;
@@ -49,18 +50,19 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
     private EditText etDate;
     private ChipGroup chipGroup;
     private String timeInMillis;
-    private static DialogWalletInput instance;
+    private static DialogBankInput instance;
     private AccountsViewModel accountsViewModel;
     private List<Account> accountList;
     private BottomSheetDialog dialog;
     private boolean sinhala;
     private String currency;
 
-    public DialogWalletInput(int transactionType) {
+    public DialogBankInput(int transactionType, Account selectedAccount) {
         this.transactionType = transactionType;
+        this.selectedAccount = selectedAccount;
     }
 
-    public static DialogWalletInput getInstance() {
+    public static DialogBankInput getInstance() {
         return instance;
     }
 
@@ -73,6 +75,7 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
         accountsViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(getActivity().getApplication())).get(AccountsViewModel.class);
         if (sharedPref.getString("language", "english").equalsIgnoreCase("සිංහල")) sinhala = true;
+        currency = sharedPref.getString("currency", "");
 
         dialog = new BottomSheetDialog(getActivity());
         tilAmount = view.findViewById(R.id.amount);
@@ -113,22 +116,29 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
         });
 
         switch (transactionType) {
-            case Constants.INCOME: {
-                imDialogIcon.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_wallet_income));
-                chipGroup.setVisibility(View.GONE);
+            case Constants.DEPOSIT: {
+                imDialogIcon.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_deposit));
+                btnAdd.setText(R.string.deposit);
                 break;
             }
-            case Constants.EXPENSE: {
-                imDialogIcon.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_wallet_expense));
-                loadCategoryChips();
+            case Constants.WITHDRAWAL: {
+                imDialogIcon.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_withdraw));
+                btnAdd.setText(R.string.withdraw);
+                tilDescription.setVisibility(View.GONE);
                 break;
             }
             case Constants.TRANSFER: {
-                imDialogIcon.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_wallet_transfer));
+                imDialogIcon.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_bank_transfer));
                 tilDescription.setVisibility(View.GONE);
                 view.findViewById(R.id.transferTo).setVisibility(View.VISIBLE);
                 btnAdd.setText(R.string.transfer);
                 loadAccountsChips();
+                break;
+            }
+            case Constants.PAYMENT: {
+                imDialogIcon.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_pay));
+                btnAdd.setText(R.string.pay);
+                loadCategoryChips();
                 break;
             }
         }
@@ -137,6 +147,144 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
 
         return dialog;
 
+    }
+
+    private void loadAccountsChips() {
+        accountList = accountsViewModel.getAllAccounts();
+        for (Account account : accountList) {
+            if (!account.getAccName().equals(selectedAccount.getAccName())) { //can transfer only to other accounts
+                Chip chip = (Chip) getActivity().getLayoutInflater().inflate(R.layout.sample_account_chip, null);
+                chip.setText(account.getAccName());
+                chip.setTextColor(getResources().getColor(R.color.colorBlack)); //because of visibility issue in dark mode
+                chip.setCheckedIconResource(R.drawable.ic_checked_box);
+                chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        chip.setChecked(isChecked);
+                        if (isChecked) {
+                            chip.setChipBackgroundColorResource(R.color.colorSelectedChip);
+                            chip.setTextColor(getResources().getColor(R.color.colorWhite));
+                        } else {
+                            chip.setChipBackgroundColorResource(R.color.colorDeselectedChip);
+                            chip.setTextColor(getResources().getColor(R.color.colorBlack));
+                        }
+                    }
+                });
+                chipGroup.addView(chip);
+                chipGroup.setSelectionRequired(true);
+            }
+        }
+    }
+
+    private void addTransaction() {
+        if (isAmountValid() && isDescriptionValid() && isAccountSelectionValid()) {
+            String selectedAccBalance = selectedAccount.getAccBalance();
+            String prefix = "";
+            String amount = new Amount(
+                    getActivity(), etAmount.getText().toString().replace(",", ".")
+            ).getAmountStringWithoutCurrency(); //comma decimal place countries fix
+            String description = etDescription.getText().toString();
+            String activity = null;
+            String date;
+            if (timeInMillis != null)
+                date = timeInMillis;
+            else
+                date = String.valueOf(System.currentTimeMillis());
+            String category = null;
+            double newBalance = 0;
+
+            switch (transactionType) {
+                case Constants.DEPOSIT: {
+                    newBalance = Double.parseDouble(selectedAccBalance) + Double.parseDouble(amount);
+                    if (description.isEmpty())
+                    activity = getString(R.string.deposit_prefix)
+                            + currency + amount
+                            + getString(R.string.deposit_mid)
+                            + selectedAccount.getAccName()
+                            + getString(R.string.deposit_suffix);
+                    else
+                        activity = description + " (" + currency + amount + getString(R.string.deposit) + ") " ;
+                    break;
+                }
+                case Constants.WITHDRAWAL: {
+                    newBalance = Double.parseDouble(selectedAccBalance) - Double.parseDouble(amount);
+                    activity = getString(R.string.withdraw_prefix)
+                            + currency + amount
+                            + getString(R.string.withdraw_mid)
+                            + selectedAccount.getAccName()
+                            + getString(R.string.withdraw_suffix);
+                    break;
+                }
+                case Constants.PAYMENT: {
+                    newBalance = Double.parseDouble(selectedAccBalance) - Double.parseDouble(amount);
+
+                    //category
+                    if (!chipGroup.getCheckedChipIds().isEmpty()) {
+                        Chip catChip = chipGroup.findViewById(chipGroup.getCheckedChipId());
+                        category = catChip.getText().toString()
+                                + "###"
+                                + catChip.getChipBackgroundColor().getDefaultColor();
+                    } else {
+                        Chip chip = new Chip(getActivity());
+                        category = getString(R.string.uncategorized) + "###" + chip.getChipBackgroundColor().getDefaultColor();
+                    }
+
+                    activity = description + " (" + currency + amount + getString(R.string.payment) + ") ";
+                    break;
+                }
+                case Constants.TRANSFER: {
+                    newBalance = Double.parseDouble(selectedAccBalance) - Double.parseDouble(amount);
+
+                    //find transferring account
+                    Chip accChip = chipGroup.findViewById(chipGroup.getCheckedChipId());
+                    Account transferringAccount = null;
+                    for (Account account : accountList)
+                        if (accChip.getText().equals(account.getAccName()))
+                            transferringAccount = account;
+
+                    //update balance
+                    double transferringAccBalance = Double.parseDouble(transferringAccount.getAccBalance()) + Double.parseDouble(amount);
+                    transferringAccount.setAccBalance(String.valueOf(transferringAccBalance));
+
+                    //add activity
+                    List<String> accHistory = transferringAccount.getActivities();
+                    String transferringAccActivity;
+                    transferringAccActivity =
+                            getString(R.string.transfer_from_prefix)
+                                    + selectedAccount.getAccName()
+                                    + getString(R.string.transfer_from_suffix)
+                                    + "###" + date;
+                    accHistory.add(0, transferringAccActivity);
+                    transferringAccount.setActivities(accHistory);
+
+                    accountsViewModel.update(transferringAccount);
+
+                    activity = getString(R.string.transfer_to_prefix)
+                            + selectedAccount.getAccName()
+                            + getString(R.string.transfer_to_suffix);
+                    break;
+                }
+            }
+
+            //add transaction
+            if (transactionType == Constants.PAYMENT) {
+                TransactionItem transactionItem = new TransactionItem(selectedAccBalance, prefix, amount, description, date, category);
+                TransactionsViewModel transactionsViewModel = new ViewModelProvider(this, ViewModelProvider
+                        .AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(TransactionsViewModel.class);
+                transactionsViewModel.insert(transactionItem);
+            }
+
+            //save
+            selectedAccount.setAccBalance(String.valueOf(newBalance));
+            List<String> selectedAccActivities = selectedAccount.getActivities();
+            selectedAccActivities.add(0, activity + "###" + date);
+            selectedAccount.setActivities(selectedAccActivities);
+            accountsViewModel.update(selectedAccount);
+
+            //show
+            Toast.makeText(getActivity(), R.string.added, Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+        }
     }
 
     public void loadCategoryChips() {
@@ -175,125 +323,6 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
         }
     }
 
-    private void loadAccountsChips() {
-        accountList = accountsViewModel.getAllAccounts();
-        if (!accountList.isEmpty()) {
-            for (Account account : accountList) {
-                Chip chip = (Chip) getActivity().getLayoutInflater().inflate(R.layout.sample_account_chip, null);
-                chip.setText(account.getAccName());
-                chip.setTextColor(getResources().getColor(R.color.colorBlack)); //because of visibility issue in dark mode
-                chip.setCheckedIconResource(R.drawable.ic_checked_box);
-                chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        chip.setChecked(isChecked);
-                        if (isChecked) {
-                            chip.setChipBackgroundColorResource(R.color.colorSelectedChip);
-                            chip.setTextColor(getResources().getColor(R.color.colorWhite));
-                        } else {
-                            chip.setChipBackgroundColorResource(R.color.colorDeselectedChip);
-                            chip.setTextColor(getResources().getColor(R.color.colorBlack));
-                        }
-                    }
-                });
-                if (account.getId() == accountList.get(0).getId()) //check first account of the list
-                    chip.setChecked(true);
-                chipGroup.addView(chip);
-                chipGroup.setSelectionRequired(true);
-            }
-        }
-    }
-
-    private void addTransaction() {
-        if (isAmountValid() && isDescriptionValid()) {
-            String balance = sharedPref.getString(Constants.SP_BALANCE, "0.00");
-            String prefix = "";
-            String amount = etAmount.getText().toString().replace(",", "."); //comma decimal place countries fix
-            String description = etDescription.getText().toString();
-            String date;
-            if (timeInMillis != null)
-                date = timeInMillis;
-            else
-                date = String.valueOf(System.currentTimeMillis());
-            String category = null;
-            double newBalance = 0;
-            boolean showNegativeWarning = false;
-
-            switch (transactionType) {
-                case Constants.INCOME: {
-                    prefix = "+";
-                    newBalance = Double.parseDouble(balance) + Double.parseDouble(amount);
-                    break;
-                }
-                case Constants.EXPENSE: {
-                    prefix = "-";
-                    //category
-                    if (!chipGroup.getCheckedChipIds().isEmpty()) {
-                        Chip catChip = chipGroup.findViewById(chipGroup.getCheckedChipId());
-                        category = catChip.getText().toString()
-                                + "###"
-                                + catChip.getChipBackgroundColor().getDefaultColor();
-                    }
-                    else {
-                        Chip chip = new Chip(getActivity());
-                        category = getString(R.string.uncategorized) + "###" + chip.getChipBackgroundColor().getDefaultColor();
-                    }
-                    //balance
-                    newBalance = Double.parseDouble(balance) - Double.parseDouble(amount);
-                    if (newBalance < 0)
-                        if (!sharedPref.getBoolean("negativeEnabled", false))
-                            showNegativeWarning = true;
-                    break;
-                }
-                case Constants.TRANSFER: {
-                    Chip accChip = chipGroup.findViewById(chipGroup.getCheckedChipId());
-                    //find selected account
-                    Account selectedAccount = null;
-                    for (Account account : accountList)
-                        if (accChip.getText().equals(account.getAccName()))
-                            selectedAccount = account;
-
-                    description = getString(R.string.deposit_from_wallet_to) + selectedAccount.getAccName();
-
-                    //update balance
-                    double finalBalance = Double.parseDouble(selectedAccount.getAccBalance()) + Double.parseDouble(amount);
-                    selectedAccount.setAccBalance(String.valueOf(finalBalance));
-                    accountsViewModel.update(selectedAccount);
-
-                    //update transaction
-                    List<String> accHistory = selectedAccount.getActivities();
-                    String activity;
-                    if (sinhala)
-                        activity = new Amount(getActivity(), amount).getAmountString() + "ක් තැන්පත් කරන ලදී" + "###" + date;
-                    else
-                        activity = "Deposited " + new Amount(getActivity(), amount).getAmountString() + "###" + date;
-                    accHistory.add(0, activity);
-                    selectedAccount.setActivities(accHistory);
-
-                    newBalance = Double.parseDouble(balance) - Double.parseDouble(amount);
-
-                    break;
-                }
-            }
-
-            if (showNegativeWarning)
-                Toast.makeText(getActivity(), getResources().getString(R.string.spend_more_than_have), Toast.LENGTH_LONG).show();
-            else {
-                //add transaction
-                TransactionItem transactionItem = new TransactionItem(balance, prefix, amount, description, date, category);
-                TransactionsViewModel transactionsViewModel = new ViewModelProvider(this, ViewModelProvider
-                        .AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(TransactionsViewModel.class);
-                transactionsViewModel.insert(transactionItem);
-
-                //show
-                Toast.makeText(getActivity(), R.string.added, Toast.LENGTH_SHORT).show();
-                WalletFragmentNEW.getInstance().setNewBalance(String.valueOf(newBalance));
-                dialog.dismiss();
-            }
-
-        }
-    }
-
     private boolean isAmountValid() {
         if (etAmount.getText().toString().isEmpty()) {
             tilAmount.setError(getString(R.string.required));
@@ -305,7 +334,7 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
     }
 
     private boolean isDescriptionValid() {
-        if (transactionType == Constants.TRANSFER)
+        if (transactionType != Constants.PAYMENT)
             return true;
         else {
             String text = etDescription.getText().toString();
@@ -322,6 +351,15 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
                 }
             }
         }
+    }
+
+    private boolean isAccountSelectionValid() {
+        if (transactionType != Constants.TRANSFER)
+            return true;
+        else if (chipGroup.getCheckedChipIds().isEmpty()) {
+            Toast.makeText(getActivity(), R.string.pls_select_account, Toast.LENGTH_SHORT).show();
+            return false;
+        } else return true;
     }
 
     public void setDate(String timeInMillis) {

@@ -1,6 +1,7 @@
 package com.tantalum.financejournal.bank;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,11 +21,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.transition.MaterialSharedAxis;
+import com.leinardi.android.speeddial.SpeedDialActionItem;
+import com.leinardi.android.speeddial.SpeedDialView;
+import com.tantalum.financejournal.Constants;
 import com.tantalum.financejournal.R;
 import com.tantalum.financejournal.accounts.Account;
 import com.tantalum.financejournal.accounts.AccountManager;
 import com.tantalum.financejournal.accounts.AccountsViewModel;
+import com.tantalum.financejournal.accounts.NewAccount;
+import com.tantalum.financejournal.wallet.DialogWalletInput;
 
 import java.util.List;
 
@@ -34,6 +41,7 @@ public class BankFragmentNEW extends Fragment {
     private List<Account> accountList;
     private ChipGroup chipGroup;
     private SharedPreferences sharedPref;
+    private Account selectedAccount;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +70,7 @@ public class BankFragmentNEW extends Fragment {
 
         loadAccountsChips();
         switchAccount();
+        setupFab();
 
         return view;
     }
@@ -98,7 +107,7 @@ public class BankFragmentNEW extends Fragment {
 
     private void switchAccount() {
         //find selected acc
-        Account selectedAccount = null;
+        selectedAccount = null;
         for (Account account : accountList)
             for (int i = 0; i < chipGroup.getChildCount(); i++)
                 if (((Chip) chipGroup.getChildAt(i)).getText().toString().equals(account.getAccName()))
@@ -118,8 +127,41 @@ public class BankFragmentNEW extends Fragment {
         recyclerView.setHasFixedSize(true);
         AccountActivitiesAdapter adapter = new AccountActivitiesAdapter();
         recyclerView.setAdapter(adapter);
+        recyclerView.scheduleLayoutAnimation();
         adapter.submitList(activityHistory);
 
+    }
+
+    private void setupFab() {
+        SpeedDialView fab = view.findViewById(R.id.fab);
+        fab.inflate(R.menu.bank_fab_menu);
+        fab.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
+            @Override
+            public boolean onActionSelected(SpeedDialActionItem actionItem) {
+                int transactionType = 0;
+                switch (actionItem.getId()) {
+                    case R.id.add_deposit: {
+                        transactionType = Constants.DEPOSIT;
+                        break;
+                    }
+                    case R.id.add_withdraw: {
+                        transactionType = Constants.WITHDRAWAL;
+                        break;
+                    }
+                    case R.id.add_transfer: {
+                        transactionType = Constants.TRANSFER;
+                        break;
+                    }
+                    case R.id.add_payment: {
+                        transactionType = Constants.PAYMENT;
+                        break;
+                    }
+                }
+                new DialogBankInput(transactionType, selectedAccount).show(getChildFragmentManager(), "bank input dialog");
+                fab.close();
+                return false;
+            }
+        });
     }
 
 }

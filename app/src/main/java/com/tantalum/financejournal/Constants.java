@@ -15,6 +15,9 @@ public class Constants {
     public static final int EXPENSE = 1;
     public static final int INCOME = 2;
     public static final int TRANSFER = 3;
+    public static final int DEPOSIT = 4;
+    public static final int WITHDRAWAL = 5;
+    public static final int PAYMENT = 6;
 
 }
 
