@@ -51,6 +51,20 @@ public class About extends AppCompatActivity {
         startActivity(new Intent(this, OssLicensesMenuActivity.class));
     }
 
+    public void openPrivacyPolicy(View view) {
+        Intent intent = new Intent(this, WebViewActivity.class);
+        intent.putExtra("title", "Privacy Policy");
+        intent.putExtra("url", "https://finance-journal.flycricket.io/privacy.html");
+        startActivity(intent);
+    }
+
+    public void openTC(View view) {
+        Intent intent = new Intent(this, WebViewActivity.class);
+        intent.putExtra("title", "Terms and Conditions");
+        intent.putExtra("url", "https://finance-journal.flycricket.io/terms.html");
+        startActivity(intent);
+    }
+
     public void showChangelog(View view) {
         DialogWhatsNew dialogWhatsNew = new DialogWhatsNew();
         dialogWhatsNew.show(getSupportFragmentManager(), "changelog dialog");

@@ -1,63 +1,90 @@
 package com.tantalum.financejournal;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
 import androidx.core.widget.TextViewCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.resources.TextAppearance;
 import com.google.android.material.resources.TextAppearanceConfig;
 import com.larswerkman.holocolorpicker.ColorPicker;
+import com.shreyaspatil.material.navigationview.MaterialNavigationView;
+import com.tantalum.financejournal.accounts.AccountManager;
+import com.tantalum.financejournal.reports.Reports;
+import com.tantalum.financejournal.settings.Settings;
+import com.tantalum.financejournal.transactions.TransactionHistory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-public class CategoriesActivity extends AppCompatActivity {
+public class CategoriesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private SharedPreferences sharedPref;
+    private DrawerLayout drawer;
+    private MaterialNavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
-        //sharedPref.edit().remove(Constants.SP_CATEGORIES).apply();
 
-        //language
-        String language = sharedPref.getString("language", "english");
-        if (language.equals("සිංහල")) {
-            Locale locale = new Locale("si");
-            Locale.setDefault(locale);
-            Configuration config = new Configuration();
-            config.setLocale(locale);
-            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-        }
-
-        //theme
+        /*------------------------------Essential for every activity------------------------------*/
+        Toolbar toolbar;
+        sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
         String theme = sharedPref.getString("theme", "light");
         if (theme.equalsIgnoreCase("dark")) {
+            setTheme(R.style.AppThemeDark);
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_categories);
-            View layout = findViewById(R.id.rootLayout);
+            View layout = findViewById(R.id.drawer_layout);
             layout.setBackground(ContextCompat.getDrawable(this, R.drawable.background_dark));
+            toolbar = findViewById(R.id.toolbar);
+            toolbar.setBackground(getDrawable(R.color.colorToolbarDark));
         } else {
             setTheme(R.style.AppTheme);
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_categories);
+            toolbar = findViewById(R.id.toolbar);
         }
+
+        setSupportActionBar(toolbar);
+        drawer = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        if (sharedPref.getBoolean("MyWalletPro", false)) {
+            View navHeader = navigationView.getHeaderView(0);
+            TextView tvAppName = navHeader.findViewById(R.id.appName);
+            tvAppName.setText(R.string.my_wallet_pro);
+        }
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_open);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        /*----------------------------------------------------------------------------------------*/
 
         loadCategoryChips();
     }
@@ -136,8 +163,101 @@ public class CategoriesActivity extends AppCompatActivity {
         chipGroup.addView(chip);
     }
 
-    public void goBack(View view) {
-        finish();
+    @Override //so the language change works with dark mode
+    public void applyOverrideConfiguration(Configuration overrideConfiguration) {
+        if (overrideConfiguration != null) {
+            int uiMode = overrideConfiguration.uiMode;
+            overrideConfiguration.setTo(getBaseContext().getResources().getConfiguration());
+            overrideConfiguration.uiMode = uiMode;
+        }
+        super.applyOverrideConfiguration(overrideConfiguration);
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_home: {
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_home)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, MainActivity.class);
+                    intent.putExtra("showPinScreen", false);
+                    startActivity(intent);
+                }
+                break;
+            }
+            case R.id.nav_recent_trans: {
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_recent_trans)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, TransactionHistory.class);
+                    startActivity(intent);
+                }
+                break;
+            }
+            case R.id.nav_reports: {
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_reports)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, Reports.class);
+                    startActivity(intent);
+                }
+                break;
+            }
+            case R.id.nav_settings: {
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_settings)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, Settings.class);
+                    startActivity(intent);
+                }
+                break;
+            }
+            case R.id.nav_get_pro: {
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_get_pro)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, UpgradeToPro.class);
+                    startActivity(intent);
+                }
+                break;
+            }
+            case R.id.nav_about: {
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_about)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    Intent intent = new Intent(this, About.class);
+                    startActivity(intent);
+                }
+                break;
+            }
+            case R.id.nav_exit: {
+                if (navigationView.getCheckedItem().getItemId() == R.id.nav_exit)
+                    drawer.closeDrawer(GravityCompat.START);
+                else {
+                    sharedPref.edit().putBoolean("exit", true).apply();
+                    finishAndRemoveTask();
+                }
+                break;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        navigationView.setCheckedItem(R.id.nav_recent_trans);
+        if (sharedPref.getBoolean("exit", false))
+            finishAndRemoveTask();
+    }
 }

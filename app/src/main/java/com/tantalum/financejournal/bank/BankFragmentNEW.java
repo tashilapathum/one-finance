@@ -35,7 +35,7 @@ import com.tantalum.financejournal.wallet.DialogWalletInput;
 
 import java.util.List;
 
-public class BankFragmentNEW extends Fragment {
+public class BankFragmentNEW extends Fragment implements DialogInterface.OnDismissListener {
     private View view;
     private AccountsViewModel accountsViewModel;
     private List<Account> accountList;
@@ -107,6 +107,7 @@ public class BankFragmentNEW extends Fragment {
 
     private void switchAccount() {
         //find selected acc
+        accountList = accountsViewModel.getAllAccounts();
         selectedAccount = null;
         for (Account account : accountList)
             for (int i = 0; i < chipGroup.getChildCount(); i++)
@@ -164,4 +165,13 @@ public class BankFragmentNEW extends Fragment {
         });
     }
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        //refresh selected account
+        for (int i=0; i<chipGroup.getChildCount(); i++) {
+            Chip chip = (Chip) chipGroup.getChildAt(i);
+            if (chip.getText().toString().equals(selectedAccount.getAccName()))
+                chip.performClick();
+        }
+    }
 }

@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeDark"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CategoriesActivity"/>
+        <activity
+            android:name=".CategoriesActivity"
+            android:label="@string/categories"/>
         <activity android:name=".WebViewActivity" />
 
         <meta-data

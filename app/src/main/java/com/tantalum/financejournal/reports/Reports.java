@@ -179,15 +179,6 @@ public class Reports extends AppCompatActivity implements MaterialNavigationView
                 }
                 break;
             }
-            case R.id.nav_accounts: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_accounts)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, AccountManager.class);
-                    startActivity(intent);
-                }
-                break;
-            }
             case R.id.nav_settings: {
                 if (navigationView.getCheckedItem().getItemId() == R.id.nav_settings)
                     drawer.closeDrawer(GravityCompat.START);

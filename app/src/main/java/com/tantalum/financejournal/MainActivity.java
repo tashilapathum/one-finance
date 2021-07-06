@@ -238,16 +238,6 @@ public class MainActivity extends AppCompatActivity implements MaterialNavigatio
                 }
                 break;
             }
-            case R.id.nav_accounts: {
-                bundle.putString("feature", "accounts");
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_accounts)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, AccountManager.class);
-                    startActivity(intent);
-                }
-                break;
-            }
             case R.id.nav_settings: {
                 bundle.putString("feature", "settings");
                 if (navigationView.getCheckedItem().getItemId() == R.id.nav_settings)

@@ -1,6 +1,7 @@
 package com.tantalum.financejournal.bank;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -208,6 +210,12 @@ public class DialogBankInput extends BottomSheetDialogFragment {
                 }
                 case Constants.WITHDRAWAL: {
                     newBalance = Double.parseDouble(selectedAccBalance) - Double.parseDouble(amount);
+
+                    //update wallet balance
+                    double currentBalance = Double.parseDouble(sharedPref.getString("balance", "0.00"));
+                    String newWalletBalance = String.valueOf(currentBalance + Double.parseDouble(amount));
+                    sharedPref.edit().putString("balance", newWalletBalance).apply();
+
                     activity = getString(R.string.withdraw_prefix)
                             + currency + amount
                             + getString(R.string.withdraw_mid)
@@ -229,7 +237,7 @@ public class DialogBankInput extends BottomSheetDialogFragment {
                         category = getString(R.string.uncategorized) + "###" + chip.getChipBackgroundColor().getDefaultColor();
                     }
 
-                    activity = description + " (" + currency + amount + getString(R.string.payment) + ") ";
+                    activity = description + " (" + currency + amount + getString(R.string.payment) + ")";
                     break;
                 }
                 case Constants.TRANSFER: {
@@ -251,16 +259,19 @@ public class DialogBankInput extends BottomSheetDialogFragment {
                     String transferringAccActivity;
                     transferringAccActivity =
                             getString(R.string.transfer_from_prefix)
+                                    + currency + amount
+                                    + getString(R.string.transfer_from_mid)
                                     + selectedAccount.getAccName()
                                     + getString(R.string.transfer_from_suffix)
                                     + "###" + date;
                     accHistory.add(0, transferringAccActivity);
                     transferringAccount.setActivities(accHistory);
-
                     accountsViewModel.update(transferringAccount);
 
                     activity = getString(R.string.transfer_to_prefix)
-                            + selectedAccount.getAccName()
+                            + currency + amount
+                            + getString(R.string.transfer_to_mid)
+                            + transferringAccount.getAccName()
                             + getString(R.string.transfer_to_suffix);
                     break;
                 }
@@ -282,7 +293,7 @@ public class DialogBankInput extends BottomSheetDialogFragment {
             accountsViewModel.update(selectedAccount);
 
             //show
-            Toast.makeText(getActivity(), R.string.added, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.updated, Toast.LENGTH_SHORT).show();
             dialog.dismiss();
         }
     }
@@ -367,4 +378,11 @@ public class DialogBankInput extends BottomSheetDialogFragment {
         etDate.setText(new DateTimeHandler(timeInMillis).getTimestamp());
     }
 
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        Fragment parentFragment = getParentFragment();
+        if (parentFragment instanceof DialogInterface.OnDismissListener)
+            ((DialogInterface.OnDismissListener) parentFragment).onDismiss(dialog);
+    }
 }

@@ -488,4 +488,6 @@
     <string name="withdraw_mid">\" from \"</string>
     <string name="withdraw_suffix" />
     <string name="payment">Payment</string>
+    <string name="transfer_from_mid">from</string>
+    <string name="transfer_to_mid">to</string>
 </resources>

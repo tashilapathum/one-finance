@@ -146,6 +146,24 @@
             android:text="Open source licenses" />
 
         <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="openTC"
+            android:paddingVertical="8dp"
+            android:text="Terms of Service" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="openPrivacyPolicy"
+            android:paddingVertical="8dp"
+            android:text="Privacy Policy" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/changelog"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
