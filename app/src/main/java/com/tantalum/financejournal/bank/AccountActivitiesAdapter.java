@@ -15,7 +15,7 @@ import com.tantalum.financejournal.R;
 
 public class AccountActivitiesAdapter extends ListAdapter<String, AccountActivitiesAdapter.PassBookViewHolder> {
 
-    protected AccountActivitiesAdapter() {
+    public AccountActivitiesAdapter() {
         super(DIFF_CALLBACK);
     }
 

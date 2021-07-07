@@ -28,6 +28,7 @@ import com.leinardi.android.speeddial.SpeedDialView;
 import com.tantalum.financejournal.Constants;
 import com.tantalum.financejournal.R;
 import com.tantalum.financejournal.accounts.Account;
+import com.tantalum.financejournal.accounts.AccountDetails;
 import com.tantalum.financejournal.accounts.AccountManager;
 import com.tantalum.financejournal.accounts.AccountsViewModel;
 import com.tantalum.financejournal.accounts.NewAccount;
@@ -65,6 +66,13 @@ public class BankFragmentNEW extends Fragment implements DialogInterface.OnDismi
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), AccountManager.class));
+            }
+        });
+
+        view.findViewById(R.id.accountName).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAccDetails();
             }
         });
 
@@ -116,6 +124,7 @@ public class BankFragmentNEW extends Fragment implements DialogInterface.OnDismi
                         selectedAccount = account;
         if (selectedAccount == null)
             selectedAccount = accountList.get(0);
+        selectedAccount.setSelected(true);
 
         //show acc
         ((TextView) view.findViewById(R.id.accountName)).setText(selectedAccount.getAccName());
@@ -163,6 +172,10 @@ public class BankFragmentNEW extends Fragment implements DialogInterface.OnDismi
                 return false;
             }
         });
+    }
+
+    private void showAccDetails() {
+        startActivity(new Intent(getActivity(), AccountDetails.class));
     }
 
     @Override

@@ -198,6 +198,7 @@ public class DialogBankInput extends BottomSheetDialogFragment {
             switch (transactionType) {
                 case Constants.DEPOSIT: {
                     newBalance = Double.parseDouble(selectedAccBalance) + Double.parseDouble(amount);
+
                     if (description.isEmpty())
                     activity = getString(R.string.deposit_prefix)
                             + currency + amount
@@ -266,6 +267,12 @@ public class DialogBankInput extends BottomSheetDialogFragment {
                                     + "###" + date;
                     accHistory.add(0, transferringAccActivity);
                     transferringAccount.setActivities(accHistory);
+
+                    //add to balance history
+                    List<String> balanceHistory = transferringAccount.getBalanceHistory();
+                    balanceHistory.add(String.valueOf(newBalance));
+                    transferringAccount.setBalanceHistory(balanceHistory);
+
                     accountsViewModel.update(transferringAccount);
 
                     activity = getString(R.string.transfer_to_prefix)
@@ -286,10 +293,17 @@ public class DialogBankInput extends BottomSheetDialogFragment {
             }
 
             //save
+            //balance
             selectedAccount.setAccBalance(String.valueOf(newBalance));
+            //activities
             List<String> selectedAccActivities = selectedAccount.getActivities();
             selectedAccActivities.add(0, activity + "###" + date);
             selectedAccount.setActivities(selectedAccActivities);
+            //balance history
+            List<String> balanceHistory = selectedAccount.getBalanceHistory();
+            balanceHistory.add(String.valueOf(newBalance));
+            selectedAccount.setBalanceHistory(balanceHistory);
+            //update
             accountsViewModel.update(selectedAccount);
 
             //show

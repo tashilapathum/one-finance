@@ -3,6 +3,8 @@ package com.tantalum.financejournal.accounts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -25,6 +27,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.tantalum.financejournal.R;
+import com.tantalum.financejournal.bank.AccountActivitiesAdapter;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -33,9 +36,8 @@ import java.util.Locale;
 
 public class AccountDetails extends AppCompatActivity {
     private SharedPreferences sharedPref;
-    private String currency;
     private AccountsViewModel accountsViewModel;
-    private Account account;
+    private Account selectedAccount;
     public static final String TAG = "AccountDetails";
 
     @Override
@@ -44,10 +46,7 @@ public class AccountDetails extends AppCompatActivity {
         accountsViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(getApplication())).get(AccountsViewModel.class);
 
-        account = (Account) getIntent().getSerializableExtra("neededAccount");
-        if (account == null)
-            account = getSelectedAccount();
-        currency = sharedPref.getString("currency", "");
+        selectedAccount = getSelectedAccount();
 
         //language
         String language = sharedPref.getString("language", "english");
@@ -100,59 +99,25 @@ public class AccountDetails extends AppCompatActivity {
     }
 
     private void setData() {
-        TextView tvAccName = findViewById(R.id.adAccName);
-        TextView tvBalance = findViewById(R.id.adBalance);
-        TextView tvBalHighest = findViewById(R.id.highestBal);
-        TextView tvBalLowest = findViewById(R.id.lowestBal);
-        TextView tvBalAverage = findViewById(R.id.averageBal);
-        TextView tvInterest = findViewById(R.id.adInterest);
-        TextView tvAccNumber = findViewById(R.id.adAccNumber);
-        TextView tvExDetails = findViewById(R.id.adExDetails);
-        TextView tvCreatedDate = findViewById(R.id.adCreatedDate);
-        TextView tvLastUpdated = findViewById(R.id.adLastUpdated);
+        TextView tvAccName = findViewById(R.id.accName);
+        TextView tvAccDetails = findViewById(R.id.accDetails);
 
-        tvAccName.setText(account.getAccName());
-        tvBalance.setText(currency + account.getAccBalance());
-        List<String> balanceList = account.getBalanceHistory();
-        double highest = 0;
-        double lowest = Double.parseDouble(balanceList.get(0));
-        double total = 0;
-        DecimalFormat df = new DecimalFormat("#.00");
-        Log.i(TAG, "balanceList: " + balanceList.size());
-        for (int i = 0; i < balanceList.size(); i++) {
-            double currentItem = Double.parseDouble(balanceList.get(i));
-            if (currentItem > highest)
-                highest = currentItem;
-            if (currentItem < lowest)
-                lowest = currentItem;
-            total = total + currentItem;
-        }
-        double average = total / balanceList.size();
-        tvBalHighest.append(currency + df.format(highest));
-        tvBalLowest.append(currency + df.format(lowest));
-        tvBalAverage.append(currency + df.format(average));
+        tvAccName.setText(selectedAccount.getAccName());
+        if (selectedAccount.getMoreDetails().isEmpty())
+            findViewById(R.id.imCopy).setVisibility(View.GONE);
+        else
+            tvAccDetails.setText(selectedAccount.getMoreDetails());
+
         createBalanceChart();
-        if (account.isMultiInterest()) {
-            String formattedInterests = "";
-            String[] interests = account.getInterestRate().split("~~~");
-            for (int i = 0; i < interests.length; i++) {
-                String interest = currency + interests[i].split("~")[0]
-                        + " - "
-                        + currency + interests[i].split("~")[1]
-                        + " -> "
-                        + interests[i].split("~")[2]
-                        + "\n";
-                formattedInterests = formattedInterests + interest;
-            }
-            tvInterest.setText(formattedInterests);
-        } else
-            tvInterest.setText(account.getInterestRate());
-        tvAccNumber.setText(account.getAccNumber());
-        tvExDetails.setText(account.getMoreDetails());
-        String createdDate = account.getActivities().get(0).split("###")[1];
-        String lastUpdated = account.getActivities().get(account.getActivities().size() - 1).split("###")[1];
-        tvCreatedDate.setText(createdDate);
-        tvLastUpdated.setText(lastUpdated);
+
+        List<String> activityHistory = selectedAccount.getActivities();
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+        AccountActivitiesAdapter adapter = new AccountActivitiesAdapter();
+        recyclerView.setAdapter(adapter);
+        recyclerView.scheduleLayoutAnimation();
+        adapter.submitList(activityHistory);
     }
 
     public void goBack(View view) {
@@ -163,7 +128,7 @@ public class AccountDetails extends AppCompatActivity {
     private void createBalanceChart() {
         LineChart lineChart = findViewById(R.id.AccBalanceChart);
         List<Entry> values = new ArrayList<>();
-        List<String> balanceList = account.getBalanceHistory();
+        List<String> balanceList = selectedAccount.getBalanceHistory();
         for (int x = 0; x < balanceList.size(); x++) {
             Entry entry = new Entry((float) x, Float.parseFloat(balanceList.get(x)));
             values.add(entry);
@@ -200,13 +165,13 @@ public class AccountDetails extends AppCompatActivity {
     public void editAccount(View view) {
         Intent intent = new Intent(this, NewAccount.class);
         intent.putExtra("isNewAccount", false);
-        intent.putExtra("updatingAccount", account);
+        intent.putExtra("updatingAccount", selectedAccount);
         startActivity(intent);
     }
 
     public void copy(View view) {
         ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clipData = ClipData.newPlainText("extraDetails", ((TextView) findViewById(R.id.adExDetails)).getText());
+        ClipData clipData = ClipData.newPlainText("extraDetails", ((TextView) findViewById(R.id.accDetails)).getText());
         clipboardManager.setPrimaryClip(clipData);
         Toast.makeText(this, getString(R.string.copied), Toast.LENGTH_SHORT).show();
     }

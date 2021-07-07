@@ -1,288 +1,114 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:background="@drawable/background"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/title_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        app:cardCornerRadius="0dp"
+        app:cardElevation="4dp">
 
-        <com.google.android.material.card.MaterialCardView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="0dp">
+            android:layout_height="wrap_content">
 
-            <RelativeLayout
+            <ImageButton
+                android:id="@+id/back_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:contentDescription="go back"
+                android:onClick="goBack"
+                android:padding="8dp"
+                android:src="?attr/homeAsUpIndicator" />
+
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="6dp"
+                android:layout_toEndOf="@id/back_arrow"
+                android:padding="8dp"
+                android:text="@string/account_details"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textColor="@color/colorAccent" />
 
-                <ImageButton
-                    android:id="@+id/back_arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:background="?android:selectableItemBackgroundBorderless"
-                    android:contentDescription="go back"
-                    android:onClick="goBack"
-                    android:padding="8dp"
-                    android:src="?attr/homeAsUpIndicator" />
+            <ImageButton
+                android:id="@+id/editAcc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:contentDescription="edit account"
+                android:onClick="editAccount"
+                android:padding="16dp"
+                android:src="@drawable/ic_edit" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="6dp"
-                    android:layout_toEndOf="@id/back_arrow"
-                    android:padding="8dp"
-                    android:text="@string/account_details"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                    android:textColor="@color/colorAccent" />
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-                <ImageButton
-                    android:id="@+id/editAcc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"
-                    android:background="?android:selectableItemBackgroundBorderless"
-                    android:contentDescription="edit account"
-                    android:onClick="editAccount"
-                    android:padding="16dp"
-                    android:src="@drawable/ic_edit" />
-
-            </RelativeLayout>
-        </com.google.android.material.card.MaterialCardView>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_card">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="16dp">
 
-            <androidx.cardview.widget.CardView
+            <TextView
+                android:id="@+id/accName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                tools:text="Commercial" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/accDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true"
+                    tools:text="Account no: 89899801\nPIN: 9191\nSome additional details such as debit card number" />
+
+                <ImageButton
+                    android:id="@+id/imCopy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="16dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:onClick="copy"
+                    android:src="@drawable/ic_copy" />
+
+            </LinearLayout>
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/AccBalanceChart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                android:layout_marginVertical="16dp"
+                android:layoutAnimation="@anim/cascade_anim" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/d_account_name"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-
-                    <TextView
-                        android:id="@+id/adAccName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:text="account name goes here" />
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/ad_balance"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-
-                    <TextView
-                        android:id="@+id/adBalance"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:text="$10,000" />
-
-                    <com.github.mikephil.charting.charts.LineChart
-                        android:id="@+id/AccBalanceChart"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"/>
-
-                    <TextView
-                        android:id="@+id/highestBal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/bd_highest"/>
-
-                    <TextView
-                        android:id="@+id/lowestBal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/bd_lowest"/>
-
-                    <TextView
-                        android:id="@+id/averageBal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/bd_average"/>
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/ad_interest_rate_s"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-
-                    <TextView
-                        android:id="@+id/adInterest"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:text="interest rate go here\nor\nmultiple\nrates" />
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/account_number"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-
-                    <TextView
-                        android:id="@+id/adAccNumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:text="10001245698"
-                        android:textIsSelectable="true" />
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:id="@+id/txtExDetails"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/additional_information"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-
-                    <TextView
-                        android:id="@+id/adExDetails"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/txtExDetails"
-                        tools:text="varous other account details go here"
-                        android:textIsSelectable="true"/>
-
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginHorizontal="6dp"
-                        android:onClick="copy"
-                        android:src="@drawable/ic_copy"
-                        android:background="?android:attr/selectableItemBackgroundBorderless"/>
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/created_date"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-
-                    <TextView
-                        android:id="@+id/adCreatedDate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:text="29/04/2020" />
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/last_updated"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-
-                    <TextView
-                        android:id="@+id/adLastUpdated"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:text="30/04/2020" />
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
         </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</RelativeLayout>
