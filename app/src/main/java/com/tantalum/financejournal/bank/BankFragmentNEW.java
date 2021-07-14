@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
@@ -43,6 +44,8 @@ public class BankFragmentNEW extends Fragment implements DialogInterface.OnDismi
     private ChipGroup chipGroup;
     private SharedPreferences sharedPref;
     private Account selectedAccount;
+    private SpeedDialView fab;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +64,7 @@ public class BankFragmentNEW extends Fragment implements DialogInterface.OnDismi
         accountList = accountsViewModel.getAllAccounts();
         chipGroup = view.findViewById(R.id.chipGroup);
         ((TextView) view.findViewById(R.id.currency)).setText(sharedPref.getString("currency", ""));
+        fab = view.findViewById(R.id.fab);
 
         view.findViewById(R.id.accounts).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,11 +80,50 @@ public class BankFragmentNEW extends Fragment implements DialogInterface.OnDismi
             }
         });
 
-        loadAccountsChips();
-        switchAccount();
-        setupFab();
+        if (accountList.isEmpty())
+            showPlaceholder();
+        else {
+            loadAccountsChips();
+            switchAccount();
+            setupFab();
+        }
 
         return view;
+    }
+
+    private void showPlaceholder() {
+        //placeholder
+        view.findViewById(R.id.placeholder_layout).setVisibility(View.VISIBLE);
+
+        //add acc button
+        view.findViewById(R.id.addAccount).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), NewAccount.class);
+                intent.putExtra("isNewAccount", true);
+                startActivity(intent);
+            }
+        });
+
+        //mod fab msg
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new MaterialAlertDialogBuilder(getActivity())
+                        .setTitle(R.string.acc_na)
+                        .setMessage(R.string.acc_na_des)
+                        .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(getActivity(), NewAccount.class);
+                                intent.putExtra("isNewAccount", true);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, null)
+                        .show();
+            }
+        });
     }
 
     private void loadAccountsChips() {
@@ -143,7 +186,6 @@ public class BankFragmentNEW extends Fragment implements DialogInterface.OnDismi
     }
 
     private void setupFab() {
-        SpeedDialView fab = view.findViewById(R.id.fab);
         fab.inflate(R.menu.bank_fab_menu);
         fab.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
             @Override
@@ -181,7 +223,7 @@ public class BankFragmentNEW extends Fragment implements DialogInterface.OnDismi
     @Override
     public void onDismiss(DialogInterface dialog) {
         //refresh selected account
-        for (int i=0; i<chipGroup.getChildCount(); i++) {
+        for (int i = 0; i < chipGroup.getChildCount(); i++) {
             Chip chip = (Chip) chipGroup.getChildAt(i);
             if (chip.getText().toString().equals(selectedAccount.getAccName()))
                 chip.performClick();

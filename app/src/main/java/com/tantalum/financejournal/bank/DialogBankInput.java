@@ -217,6 +217,8 @@ public class DialogBankInput extends BottomSheetDialogFragment {
                     String newWalletBalance = String.valueOf(currentBalance + Double.parseDouble(amount));
                     sharedPref.edit().putString("balance", newWalletBalance).apply();
 
+                    category = getString(R.string.withdrawal);
+
                     activity = getString(R.string.withdraw_prefix)
                             + currency + amount
                             + getString(R.string.withdraw_mid)

@@ -490,4 +490,7 @@
     <string name="payment">Payment</string>
     <string name="transfer_from_mid">from</string>
     <string name="transfer_to_mid">to</string>
+    <string name="bank_des">You can use this feature to manage your bank accounts, credit cards and online accounts - all in one place.</string>
+    <string name="withdrawal">Withdrawal</string>
+    <string name="acc_transfer">Account transfer</string>
 </resources>

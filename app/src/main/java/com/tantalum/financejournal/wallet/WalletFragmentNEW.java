@@ -128,7 +128,9 @@ public class WalletFragmentNEW extends Fragment {
                             .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    startActivity(new Intent(getActivity(), NewAccount.class));
+                                    Intent intent = new Intent(getActivity(), NewAccount.class);
+                                    intent.putExtra("isNewAccount", true);
+                                    startActivity(intent);
                                 }
                             })
                             .setNegativeButton(R.string.cancel, null)

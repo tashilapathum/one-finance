@@ -222,6 +222,7 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
             switch (transactionType) {
                 case Constants.INCOME: {
                     prefix = "+";
+                    category = getString(R.string.income);
                     newBalance = Double.parseDouble(balance) + Double.parseDouble(amount);
                     break;
                 }
@@ -254,6 +255,8 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
                             selectedAccount = account;
 
                     description = getString(R.string.deposit_from_wallet_to) + selectedAccount.getAccName();
+
+                    category = getString(R.string.acc_transfer);
 
                     //update balance
                     double finalBalance = Double.parseDouble(selectedAccount.getAccBalance()) + Double.parseDouble(amount);

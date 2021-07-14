@@ -525,7 +525,7 @@
     <string name="transfer_to">Transfer to:</string>
     <string name="acc_already_exists">Account already exists</string>
     <string name="deposit_from_wallet_to">"Deposit from Wallet to "</string>
-    <string name="acc_na">Accounts not available</string>
+    <string name="acc_na">No accounts</string>
     <string name="acc_na_des">Please add an bank account to transfer money.</string>
     <string name="uncategorized">Uncategorized</string>
     <string name="pls_select_account">Please select an account to transfer money</string>
@@ -542,5 +542,12 @@
     <string name="payment">Payment</string>
     <string name="transfer_from_mid">&#160;from&#160;</string>
     <string name="transfer_to_mid">&#160;to&#160;</string>
+    <string name="bank_des">
+        You can use this feature to manage your bank accounts,
+        credit cards and online accounts - all in one place.\n\n
+        Tap the button below to add your first account. You can add more accounts from the account manager page.
+    </string>
+    <string name="withdrawal">Withdrawal</string>
+    <string name="acc_transfer">Account transfer</string>
 
 </resources>

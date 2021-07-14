@@ -70,10 +70,12 @@ public class TransactionsAdapter extends ListAdapter<TransactionItem, Transactio
         //category
         Chip categoryChip = holder.mCategory;
         if (currentItem.getCategory() != null) {
-            categoryChip.setText(currentItem.getCategory().split("###")[0]);
-            categoryChip.setChipBackgroundColor(ColorStateList.valueOf(Integer.parseInt(currentItem.getCategory().split("###")[1])));
-        }
-        else categoryChip.setVisibility(View.GONE);
+            if (currentItem.getCategory().contains("###")) { //if there's a color
+                categoryChip.setText(currentItem.getCategory().split("###")[0]);
+                categoryChip.setChipBackgroundColor(ColorStateList.valueOf(Integer.parseInt(currentItem.getCategory().split("###")[1])));
+            }
+            else categoryChip.setText(currentItem.getCategory()); //set only text (for account transfers)
+        } else categoryChip.setText(R.string.uncategorized);
 
         //date
         holder.mDate.setText(new DateTimeHandler(currentItem.getTimeInMillis()).getTimestamp());
