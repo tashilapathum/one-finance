@@ -7,13 +7,14 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical"
-    tools:context=".UpgradeToPro">
+    tools:context=".UpgradeToProActivity">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="0dp"
-        app:cardElevation="8dp">
+        app:cardElevation="8dp"
+        app:strokeWidth="0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -93,19 +94,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="@string/loading"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-                    <TextView
-                        android:id="@+id/priceSub"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="16dp"
-                        android:text="@string/purchase_once_keep_forever"
-                        android:textAlignment="center"
-                        android:textStyle="italic"
-                        android:visibility="gone"
-                        tools:visibility="visible" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
 
@@ -114,8 +104,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                tools:visibility="gone">
+                android:layout_margin="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -153,7 +142,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp">
+                android:layout_margin="8dp"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -205,7 +195,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="16dp"
-                        android:onClick="showAd"
                         android:text="@string/loading" />
 
                 </LinearLayout>

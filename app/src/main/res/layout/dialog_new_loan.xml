@@ -23,20 +23,20 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.radiobutton.MaterialRadioButton
-                    android:id="@+id/lent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="@string/lent"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-
-                <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/borrowed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
                     android:text="@string/borrowed"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/lent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="@string/lent"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
             </RadioGroup>
 
             <com.google.android.material.textfield.TextInputLayout

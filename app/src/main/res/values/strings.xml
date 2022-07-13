@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name" translatable="false">Finance Journal</string>
-    <string name="my_wallet_pro" translatable="false">Finance Journal Premium</string>
-    <string name="version" translatable="false">Version 0.5.1</string>
+    <string name="app_name" translatable="false">One Finance</string>
+    <string name="my_wallet_pro" translatable="false">One Finance</string>
+    <string name="version" translatable="false">Version 1.1.4</string>
     <string name="recent_transactions">Transactions</string>
     <string name="reports">Reports</string>
     <string name="settings">Settings</string>
@@ -32,7 +32,7 @@
     <string name="weekly_and_daily_budgets_will_be_calculated_based_on_this">Weekly and daily budgets will be calculated based on this.</string>
     <string name="eg_500">Eg:- 500</string>
     <string name="both_amt_and_des">Please fill both \'Amount\' and \'Description\'</string>
-    <string name="one_time_setup">One-time Setup</string>
+    <string name="one_time_setup">Welcome to One Finance</string>
     <string name="all_fields_are_optional_you_can_change_these_settings_later">All fields are optional. You can change these settings later.</string>
     <string name="choose_language">Choose language:</string>
     <string name="set_currency">Set currency:</string>
@@ -60,7 +60,7 @@
     <string name="pro_feature">Pro feature</string>
     <string name="pro" translatable="false">Pro</string>
     <string name="entered_incorrectly">You\'ve entered data incorrectly</string>
-    <string name="thank_you">Thank you for downloading My Wallet! \nDon\'t forget to rate the app, leave your feedback or request features on Google Play reviews.</string>
+    <string name="thank_you">Thank you for downloading One Finance! \nDon\'t forget to rate the app, leave your feedback or request features on Google Play reviews.</string>
     <string name="rate_app">Rate app!</string>
     <string name="contact_the_developer_problems">Contact the developer if you encounter ANY problem with the app:</string>
     <string name="budget_left">Budget left:&#160;</string>
@@ -78,7 +78,7 @@
     <string name="buy_pro_for_this">Buy the Pro version to unlock this feature!</string>
     <string name="buy">Buy Now</string>
     <string name="trans_notify_title">Did you add the transactions you made today?</string>
-    <string name="notification_msg">Tap here to open My Wallet</string>
+    <string name="notification_msg">Tap here to open One Finance</string>
     <string name="predate">Predate</string>
     <string name="predate_description">Long-tap to add a previous date to the transaction</string>
     <string name="search_description">You can search by either description or date</string>
@@ -124,6 +124,7 @@
     <string name="upgrade_to_pro">Upgrade to Pro</string>
     <string name="loading">Loading…</string>
     <string name="thank_u_for_pro">Thank you for purchasing the Pro version!\nTap \'OK\' to apply changes.</string>
+    <string name="billing_license" translatable="false">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgKVo1y6iSjVnp9/gAkJngKUDV681C4kbi7WVsQufL7XQIizHjzY1mswuEbrUc0vM/bZqtJUOBjOsjxkCI1TbJGV7wZ0NUsjfwHM26I+5C3WFNQaHwPsz0PL+kHeU/iuwFnFwjRfRhEZHT5CmwcvjuJNojcAQUnD+gWZEZUKvH42SYMAQDx339g51c6xR/qnJ5SRwbfLmY44++QV72gytKWns6k2dQOGs4lzyEOgaYfYpH+SFDPd52RLlpJOkG/fhUW9dxBt/BrlHC2dGSIdszsfXZjfoLODQVyNj9RX+VvkjcHHYexwaWeYiZCmnVoTwD/ZGtWNC+WWKZs13cw4yFwIDAQAB</string>
     <string name="loans">Loans</string>
     <string name="bills">Bills</string>
     <string name="light">Light</string>
@@ -149,7 +150,7 @@
     <string name="cleared">Cleared</string>
     <string name="select_theme">Select theme</string>
     <string name="home_screen">Home screen</string>
-    <string name="change_the_screen_which_shows_up_when_starting_the_app">Pick Wallet, Bank, Shopping cart or Bills as the starting page</string>
+    <string name="change_the_screen_which_shows_up_when_starting_the_app">Pick Wallet, Bank, Transactions, Investments or Tools as the starting page</string>
     <string name="current">Current:&#160;</string>
     <string name="highest">Highest:&#160;</string>
     <string name="lowest">Lowest:&#160;</string>
@@ -186,7 +187,7 @@
     <string name="exit_confirmation">Exit confirmation</string>
     <string name="show_confirm_dialog_when_trying_to_exit_the_app">Show a confirmation dialog when trying to exit the app</string>
     <string name="enjoying_the_app">Enjoying the app?</string>
-    <string name="rate_description">If you like \"My Wallet\", would you mind rating the app 5 stars on PlayStore? \n\nAlso if you have any problem with the app or want to request a new feature, please let me know in the review so I can help you. I read every review :)</string>
+    <string name="rate_description">If you like \"One Finance\", would you mind rating the app 5 stars on PlayStore? \n\nAlso if you have any problem with the app or want to request a new feature, please let me know in the review so I can help you. I read every review :)</string>
     <string name="add_quick_list_item">Add quick list item</string>
     <string name="item_name">Item(s)</string>
     <string name="price">Price</string>
@@ -389,8 +390,7 @@
     <string name="purchase_once_keep_forever">Purchase once, keep forever\n(Includes all future updates and features)</string>
     <string name="you_can_add_your_frequent_expenses_to_the_quick_list">
         ● You can add your frequent expenses to the quick list.\n\n
-        ● Quick list items can be shown on Wallet page and you can add expenses with 1-tap using them.\n\n
-        ● Item names from quick list will be suggested when typing the description, too. (See general settings -> Suggestions)
+        ● Quick list items can be shown on Wallet page and you can add expenses with 1-tap using them.
     </string>
     <string name="watch_ad">Watch ad</string>
     <string name="removed_ads">Removed ads for 5 more days!</string>
@@ -458,66 +458,22 @@
 
 
     <string name="pro_features">
-        &#160;\u2713 Unlimited quick list items (free limit is 5)\n
-        \u2713 Dark mode option\n
-        \u2713 Change notification reminder time\n
-        \u2713 Add an unlimited number of bank accounts (free limit is 1)\n
-        <!-- - Backup all settings and data\n-->
-        \u2713 Change the default home screen\n
-        \u2713 Access unlimited history in reports (free limits are 4 days, 3 weeks, 2 months)\n
-        \u2713 Protect the app with a PIN\n
+        &#160;\u2713 Multiple bank accounts (free limit is 1)\n
         \u2713 Add an unlimited number of investments (free limit is 3)\n
-        \u2713 More customization options\n
-        \u2713 No ads\n
+        \u2713 Unlimited quick list items (free limit is 5)\n
+        \u2713 Remove ads\n
+        \u2713 Includes all upcoming features\n
+        \u2713 Pay once, keep forever\n
         \u2713 Support the developer! ❤\n
     </string>
     <string name="what_s_new_in_version" translatable="false">What\'s new</string>
     <string name="whats_new_descr" translatable="false">
-        \nv0.4.3\n
-        - Fixed crash when using commas instead of period in amounts\n
-        - Added Investments details screen\n
-        - Minor fixes and improvements\n
-
-        \nv0.4.1\n
-        - [Added] Investments feature to track progress, profits and timeline of your projects or investments\n
-        - [Added] Loan Manager and Basic Calculator as Tools\n
-        - [Added] Transaction History to the bottom navigation\n
-        - [Added] option to add new bills to your calendar (also available for loans)\n
-        - Moved Shopping Cart and Bill Manager to the Tools page\n
-        - UI changes to improve user experience\n
-        - Fixed bugs and improved performance\n
-
-        \nv0.3.2\n
-        - [Fixed] Crash when opening the Reports page\n
-        - Library updates\n
-
-        \nv0.3.1\n
-        - Redesigned the quick list so now more items can be shown using less space on screen. <i>(You can switch to the old style from settings)</i>\n
-        - Now you can choose to show transaction history on Wallet page <i>(See \'Wallet page content\' setting)</i>\n
-        - [Fixed] several crashes on some devices\n
-        - [Fixed] daily data chart in monthly reports wasn\'t visible properly in dark mode\n
-        - [Fixed] transactions weren\'t saved when the app was closed unexpectedly\n
-        - UI improvements\n
-
-        \nv0.3.0\n
-        - Added the ability to directly transfer money between accounts\n
-        - [Fixed] account balance history chart\n
-        - [Fixed] misaligned buttons on some devices\n
-        - [Pro] Added option to protect app with a PIN <i>(See general settings)</i>\n
-
-        \nv0.2.9\n
-        - Added more detailed daily, weekly and monthly reports\n
-        - Now you can set daily, weekly and monthly reports to show on Wallet page\n
-        - Moved account manager from settings to navigation drawer\n
-        - [Pro] Option to show multiple reports on Wallet page\n
-        - [Fixed] crash when adding quick list items\n
-
-        \nv0.2.8\n
-        - Added Account details section\n
-        - Added Filters for recent transactions\n
-        - Added Option to add multiple interests for accounts\n
-        - Added Autocomplete when typing transaction details\n
-        - [Fixed] crash in Wallet screen\n
+        \nv1.1.0\n
+        - Unlocked most of the pro features for free!\n
+        - Removed all ads\n
+        - Added support for Android 12\n
+        \nv1.0.0\n
+        - Initial release\n
     </string>
     <string name="copied">Copied</string>
     <string name="categories">Categories</string>
@@ -539,7 +495,7 @@
     <string name="withdraw_prefix">Withdrew&#160;</string>
     <string name="withdraw_mid">&#160;from&#160;</string>
     <string name="withdraw_suffix" />
-    <string name="payment">Payment</string>
+    <string name="payment">&#160;Payment</string>
     <string name="transfer_from_mid">&#160;from&#160;</string>
     <string name="transfer_to_mid">&#160;to&#160;</string>
     <string name="bank_des">
@@ -549,5 +505,14 @@
     </string>
     <string name="withdrawal">Withdrawal</string>
     <string name="acc_transfer">Account transfer</string>
+    <string name="category_name">Category name</string>
+    <string name="color">Color</string>
+    <string name="opacity_cannot_be_changed_due_to_visibility_issues">Category name might not be visible if you change opacity</string>
+    <string name="_invested_amount">&#160;- Invested amount</string>
+    <string name="_profit">&#160;- Profit</string>
+    <string name="_time_period">&#160;- Time period</string>
+    <string name="invested_">Invested&#160;</string>
+    <string name="earned_">Earned&#160;</string>
+    <string name="share">Share</string>
 
 </resources>

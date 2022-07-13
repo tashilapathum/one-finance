@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.tantalum.financejournal">
+    package="com.tantalum.onefinance">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.android.vending.BILLING" />
 
@@ -15,40 +16,41 @@
         android:theme="@style/AppThemeDark"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".CategoriesActivity"
+            android:name="com.tantalum.onefinance.CategoriesActivity"
             android:label="@string/categories"/>
-        <activity android:name=".WebViewActivity" />
+        <activity android:name="com.tantalum.onefinance.WebViewActivity" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8303071997891278~7113367134" />
 
-        <activity android:name=".EnterPIN" />
-        <activity android:name=".Insights" />
-        <activity android:name=".About" />
+        <activity android:name="com.tantalum.onefinance.EnterPIN" />
+        <activity android:name="com.tantalum.onefinance.Insights" />
+        <activity android:name="com.tantalum.onefinance.AboutActivity" />
         <activity
-            android:name=".accounts.AccountManager"
+            android:name="com.tantalum.onefinance.accounts.AccountManager"
             android:label="Account Manager" />
-        <activity android:name=".UpgradeToPro" />
-        <activity android:name=".accounts.AccountDetails" />
-        <activity android:name=".accounts.NewAccount" />
-        <activity android:name=".InitialSetup" />
+        <activity android:name="com.tantalum.onefinance.UpgradeToProActivity" />
+        <activity android:name="com.tantalum.onefinance.accounts.AccountDetails" />
+        <activity android:name="com.tantalum.onefinance.accounts.NewAccount" />
+        <activity android:name="com.tantalum.onefinance.InitialSetupActivity" />
         <activity
-            android:name=".reports.Reports"
+            android:name="com.tantalum.onefinance.reports.ReportsActivity"
             android:label="@string/reports" />
         <activity
-            android:name=".quicklist.EditQuickList"
+            android:name="com.tantalum.onefinance.quicklist.QuickListActivity"
             android:label="@string/settings_quick_list" />
         <activity
-            android:name=".transactions.TransactionHistory"
+            android:name="com.tantalum.onefinance.transactions.TransactionsActivity"
             android:label="@string/recent_transactions" />
         <activity
-            android:name=".settings.Settings"
+            android:name="com.tantalum.onefinance.settings.SettingsActivity"
             android:label="@string/settings" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.tantalum.onefinance.MainActivity"
             android:windowSoftInputMode="adjustResize"
-            android:hardwareAccelerated="true">
+            android:hardwareAccelerated="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -56,7 +58,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".AlertReceiver" />
+        <receiver android:name="com.tantalum.onefinance.AlertReceiver" />
     </application>
 
 </manifest>

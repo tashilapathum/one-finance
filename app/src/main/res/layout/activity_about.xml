@@ -7,7 +7,10 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/titleCard"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="2dp"
+        app:strokeWidth="0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"

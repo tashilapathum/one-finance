@@ -11,7 +11,8 @@
     android:animateLayoutChanges="true"
     android:clickable="true"
     android:focusable="true"
-    app:cardElevation="8dp">
+    app:cardElevation="8dp"
+    app:strokeWidth="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -5,6 +5,80 @@
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
     </configurations>
   </component>
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/drawable/ic_checked_box.xml" value="0.2185" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/activity_about.xml" value="0.35025641025641024" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/activity_account_details.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/activity_account_manager.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/activity_categories.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/activity_edit_quicklist.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/activity_enter_pin.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/activity_initial_setup.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/activity_insights.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/activity_main.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/activity_new_account.xml" value="0.3490740740740741" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/activity_reports.xml" value="0.3490740740740741" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/activity_trans_history.xml" value="0.35025641025641024" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/activity_upgrade_to_pro.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/activity_webview.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/dialog_add_category.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/dialog_add_investment.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/dialog_add_quickitem.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/dialog_new_loan.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/frag_bank.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/frag_bills.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/frag_borrowed.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/frag_cart.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/frag_due.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/frag_investments.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/frag_lent.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/frag_loans.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/frag_paid.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/frag_tools.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/frag_wallet.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/fragment_bank.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/fragment_daily_reports.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/fragment_investment_view.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/fragment_monthly_reports.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/fragment_reports_overview.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/fragment_transactions.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/fragment_wallet.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/fragment_weekly_reports.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/nav_header.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/sample_acc_activity_item.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/sample_acc_switch.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/sample_account.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/sample_account_chip.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/sample_bill.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/sample_cart_item.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/sample_daily_report.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/sample_daily_report_2.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/sample_investment.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/sample_loan.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/sample_monthly_report.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/sample_quick_item.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/sample_quicklist_item.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/sample_recent_activity.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/sample_transaction_item.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/sample_weekly_report.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/sample_weekly_report_2.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/layout/wallet_input.xml" value="0.35572916666666665" />
+        <entry key="..\:/Android Projects/FinanceJournal/app/src/main/res/menu/drawer_menu.xml" value="0.35572916666666665" />
+        <entry key="..\:/Users/tashi/AndroidStudioProjects/FinanceJournal/app/src/main/res/layout/activity_about.xml" value="0.209375" />
+        <entry key="..\:/Users/tashi/AndroidStudioProjects/FinanceJournal/app/src/main/res/layout/activity_categories.xml" value="0.209375" />
+        <entry key="..\:/Users/tashi/AndroidStudioProjects/FinanceJournal/app/src/main/res/layout/activity_edit_quicklist.xml" value="0.209375" />
+        <entry key="..\:/Users/tashi/AndroidStudioProjects/FinanceJournal/app/src/main/res/layout/activity_initial_setup.xml" value="0.22" />
+        <entry key="..\:/Users/tashi/AndroidStudioProjects/FinanceJournal/app/src/main/res/layout/activity_main.xml" value="0.209375" />
+        <entry key="..\:/Users/tashi/AndroidStudioProjects/FinanceJournal/app/src/main/res/layout/activity_settings.xml" value="0.209375" />
+        <entry key="..\:/Users/tashi/AndroidStudioProjects/FinanceJournal/app/src/main/res/layout/dialog_add_category.xml" value="0.209375" />
+        <entry key="..\:/Users/tashi/AndroidStudioProjects/FinanceJournal/app/src/main/res/layout/frag_investments.xml" value="0.209375" />
+        <entry key="..\:/Users/tashi/AndroidStudioProjects/FinanceJournal/app/src/main/res/menu/drawer_menu.xml" value="0.209375" />
+        <entry key="..\:/Users/tashi/AndroidStudioProjects/FinanceJournal/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="org.jetbrains.annotations.Nullable" />
     <option name="myDefaultNotNull" value="androidx.annotation.NonNull" />
@@ -31,7 +105,7 @@
     </option>
     <option name="myNotNulls">
       <value>
-        <list size="14">
+        <list size="15">
           <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.NotNull" />
           <item index="1" class="java.lang.String" itemvalue="javax.annotation.Nonnull" />
           <item index="2" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.NonNull" />
@@ -46,11 +120,12 @@
           <item index="11" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.NonNull" />
           <item index="12" class="java.lang.String" itemvalue="io.reactivex.annotations.NonNull" />
           <item index="13" class="java.lang.String" itemvalue="io.reactivex.rxjava3.annotations.NonNull" />
+          <item index="14" class="java.lang.String" itemvalue="lombok.NonNull" />
         </list>
       </value>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

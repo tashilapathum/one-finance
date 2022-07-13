@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:padding="16dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chipGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:layout_toStartOf="@id/accounts"
         android:animateLayoutChanges="true"
         android:paddingBottom="4dp"
@@ -26,7 +26,7 @@
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:contentDescription="account manager"
         android:padding="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_margin="16dp"
         android:src="@drawable/ic_accounts"
         android:textAllCaps="false" />
 
@@ -34,6 +34,8 @@
         android:id="@+id/acc_name_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
         android:layout_below="@id/chipGroup"
         android:orientation="horizontal">
 
@@ -64,6 +66,7 @@
         android:id="@+id/balance_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_below="@id/acc_name_layout"
         android:orientation="horizontal">
 
@@ -101,7 +104,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/balance_layout"
-        android:layout_marginVertical="16dp"
+        android:padding="16dp"
         android:layoutAnimation="@anim/cascade_anim"/>
 
     <com.leinardi.android.speeddial.SpeedDialView

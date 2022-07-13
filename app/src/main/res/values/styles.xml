@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.Material3.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorAccent</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -19,7 +19,7 @@
         <item name="textInputStyle">@style/TextInputLayoutTheme</item>
     </style>
 
-    <style name="AppThemeDark" parent="Theme.MaterialComponents.DayNight">
+    <style name="AppThemeDark" parent="Theme.Material3.Dark">
         <item name="colorPrimary">@color/colorAccent</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorSecondary">@color/colorAccent</item>

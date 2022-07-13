@@ -8,7 +8,7 @@
     android:animateLayoutChanges="true"
     android:background="@drawable/background"
     android:fitsSystemWindows="true"
-    tools:context=".transactions.TransactionHistory">
+    tools:context=".transactions.TransactionsActivity">
 
     <LinearLayout
         android:layout_width="0px"
@@ -72,6 +72,7 @@
             android:visibility="gone"
             app:cardCornerRadius="0dp"
             app:cardElevation="4dp"
+            app:strokeWidth="0dp"
             tools:visibility="visible">
 
             <HorizontalScrollView
@@ -110,8 +111,8 @@
             android:id="@+id/THRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            android:layoutAnimation="@anim/cascade_anim"/>
+            android:layoutAnimation="@anim/cascade_anim"
+            android:scrollbars="vertical" />
 
     </LinearLayout>
 

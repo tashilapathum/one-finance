@@ -183,7 +183,7 @@
     <string name="exit_confirmation">පිටවීම තහවුරු කිරීම</string>
     <string name="show_confirm_dialog_when_trying_to_exit_the_app">ඇප් එකෙන් පිටවීමේ දී තහවුරු කිරීමට විමසීම</string>
     <string name="enjoying_the_app">ඇප් එක ප්‍රයෝජනවත් ද?</string>
-    <string name="rate_description">ඔබට \'මයි වොලට්\' ඇප් එක ප්‍රයෝජනවත් නම් PlayStore හි තරු 5ක් ලබාදී Rate කිරීම මහත් සහයකි. \n\nතව ද ඇප් එක සම්බන්ධ ව ගැටලුවක් ඇත්නම් හෝ නව අංගයක් ඉල්ලීමට අවශ්‍ය නම් එය ද සඳහන් කිරීමට අමතක නොකරන්න :)</string>
+    <string name="rate_description">ඔබට \'වන් ෆයිනෑන්ස්\' ඇප් එක ප්‍රයෝජනවත් නම් PlayStore හි තරු 5ක් ලබාදී Rate කිරීම මහත් සහයකි. \n\nතව ද ඇප් එක සම්බන්ධ ව ගැටලුවක් ඇත්නම් හෝ නව අංගයක් ඉල්ලීමට අවශ්‍ය නම් එය ද සඳහන් කිරීමට අමතක නොකරන්න :)</string>
     <string name="add_quick_list_item">අයිතමයක් එක් කරන්න</string>
     <string name="item_name">අයිතම(ය)</string>
     <string name="price">මිල</string>
@@ -385,8 +385,7 @@
     <string name="purchase_once_keep_forever">එක් වරක් ගෙවූ පසු වෙනත් කිසිම අයකිරීමක් නැත</string>
     <string name="you_can_add_your_frequent_expenses_to_the_quick_list">
         ● නිතර සිදුකරන වියදම් ක්ෂණික ලැයිස්තුවට ඇතුලත් කළ හැක.\n\n
-        ● මෙමගින් ඔබට එක් වරක් පමණක් ටච් කිරීමෙන් ගනුදෙනු ඇතුලත් කළ හැකි ය.\n\n
-        ● ගනුදෙනුවක විස්තරය ඇතුලත් කරන විට මෙම ලයිස්තුවේ ඇති අයිතම පහලින් පෙන්වයි. (සැකසුම් -> වචන සහය)
+        ● මෙමගින් ඔබට එක් වරක් පමණක් ටච් කිරීමෙන් ගනුදෙනු ඇතුලත් කළ හැකි ය.
     </string>
     <string name="watch_ad">වෙළෙඳ දැන්වීමක් නරඹන්න</string>
     <string name="removed_ads">තවත් දින 5කට වෙළෙඳ දැන්වීම් ඉවත් කරන ලදී</string>
@@ -467,30 +466,39 @@
         \u2713 වෙළෙඳ දැන්වීම් නොමැත\n
         \u2713 ඇප් එකෙහි ඉදිරි වැඩිදියුණු කටයුතු වලට සහයක් වීම ❤\n
     </string>
-    <string name="copied">Copied</string>
-    <string name="categories">Categories</string>
-    <string name="added">Added</string>
-    <string name="transfer_to">Transfer to:</string>
-    <string name="acc_already_exists">Account already exists</string>
-    <string name="deposit_from_wallet_to">"Deposit from Wallet to "</string>
-    <string name="acc_na">Accounts not available</string>
-    <string name="acc_na_des">Please add an bank account to transfer money.</string>
-    <string name="uncategorized">Uncategorized</string>
-    <string name="pls_select_account">Please select an account to transfer money</string>
-    <string name="pay">Pay</string>
-    <string name="transfer_from_prefix">Transferred from</string>
-    <string name="transfer_suffix">huwamaru karana ladii</string>
-    <string name="transfer_to_prefix">"Transferred to "</string>
-    <string name="deposit_prefix">"Deposited "</string>
-    <string name="deposit_mid">" to "</string>
-    <string name="deposit_suffix" />
-    <string name="withdraw_prefix">\"Withdrew \"</string>
-    <string name="withdraw_mid">\" from \"</string>
-    <string name="withdraw_suffix" />
-    <string name="payment">Payment</string>
-    <string name="transfer_from_mid">from</string>
-    <string name="transfer_to_mid">to</string>
-    <string name="bank_des">You can use this feature to manage your bank accounts, credit cards and online accounts - all in one place.</string>
-    <string name="withdrawal">Withdrawal</string>
-    <string name="acc_transfer">Account transfer</string>
+    <string name="copied">පිටපත් කරන ලදී</string>
+    <string name="categories">වර්ගීකරණ</string>
+    <string name="added">එකතු කරන ලදි</string>
+    <string name="transfer_to">මාරු කරන ගිණුම:</string>
+    <string name="acc_already_exists">ගිණුම දැනටමත් පවතී</string>
+    <string name="deposit_from_wallet_to">පසුම්බියෙන් ->&#160;</string>
+    <string name="acc_na">ගිණුම් නොමැත</string>
+    <string name="acc_na_des">මුදල් යැවීම සඳහා කරුණාකර බැංකු ගිණුමක් එක් කරන්න.</string>
+    <string name="uncategorized">වර්ගීකරණය නොකළ</string>
+    <string name="pls_select_account">මුදල් යැවීම සඳහා කරුණාකර ගිණුමක් තෝරන්න</string>
+    <string name="pay">ගෙවන්න</string>
+    <string name="transfer_from_prefix"></string>
+    <string name="transfer_suffix">න් මාරු කරන ලදී</string>
+    <string name="transfer_to_prefix"></string>
+    <string name="deposit_prefix"></string>
+    <string name="deposit_mid">&#160;ක්&#160;</string>
+    <string name="deposit_suffix" >&#160; ගිණුමට තැන්පත් කරන ලදී</string>
+    <string name="withdraw_prefix"></string>
+    <string name="withdraw_mid">&#160;ක්&#160;</string>
+    <string name="withdraw_suffix">&#160;න් ආපසු ගන්නා ලදී</string>
+    <string name="payment">ගෙවීම</string>
+    <string name="transfer_from_mid">&#160;ක්&#160;</string>
+    <string name="transfer_to_mid">&#160;ක්&#160;</string>
+    <string name="bank_des">ඔබේ බැංකු ගිණුම්, ක්‍රෙඩිට් කාඩ් සහ මාර්ගගත ගිණුම් සියල්ල එකම ස්ථානයක කලමනාකරණය කරගැනීමට මෙම විශේෂාංගය භාවිතා කළ හැකිය.</string>
+    <string name="withdrawal">මුදල් ආපසු ගැනීම</string>
+    <string name="acc_transfer">ගිණුම අතර මාරු කිරීම</string>
+    <string name="category_name">වර්ගීකරණයේ නම</string>
+    <string name="color">වර්ණය</string>
+    <string name="opacity_cannot_be_changed_due_to_visibility_issues">Opacity cannot be changed due to visibility issues</string>
+    <string name="_invested_amount">&#160;- ආයෝජනය කළ මුදල</string>
+    <string name="_profit">&#160;- ලාභය</string>
+    <string name="_time_period">&#160;- කාල පරාසය</string>
+    <string name="invested_"/>
+    <string name="earned_"/>
+    <string name="share">බෙදාගන්න</string>
 </resources>

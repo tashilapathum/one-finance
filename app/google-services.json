@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "20417559859",
-    "project_id": "finance-journal-b859b",
-    "storage_bucket": "finance-journal-b859b.appspot.com"
+    "project_number": "146552326220",
+    "project_id": "one-finance-49033",
+    "storage_bucket": "one-finance-49033.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:20417559859:android:57acc935fed3bf39e31246",
+        "mobilesdk_app_id": "1:146552326220:android:72a5332227be1b17becce9",
         "android_client_info": {
-          "package_name": "com.tantalum.financejournal"
+          "package_name": "com.tantalum.onefinance"
         }
       },
       "oauth_client": [
         {
-          "client_id": "20417559859-h3cbc8clqk0e4v48qk9moejcnnrilha0.apps.googleusercontent.com",
+          "client_id": "146552326220-ma5hbr61vf874bc6ns59fdfmkmrtjgd9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDF8qPzI3qugTyLw8gNJuKcTriBW0LRZdg"
+          "current_key": "AIzaSyCh1UxMtMSOjKMFcTr-CugofvffDPlcPtA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "20417559859-h3cbc8clqk0e4v48qk9moejcnnrilha0.apps.googleusercontent.com",
+              "client_id": "146552326220-ma5hbr61vf874bc6ns59fdfmkmrtjgd9.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -36,27 +36,27 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:20417559859:android:87ae8cc29e6ab16de31246",
+        "mobilesdk_app_id": "1:146552326220:android:b3552be31f07dc92becce9",
         "android_client_info": {
-          "package_name": "com.tantalum.financejournal.debug"
+          "package_name": "com.tantalum.onefinance.debug"
         }
       },
       "oauth_client": [
         {
-          "client_id": "20417559859-h3cbc8clqk0e4v48qk9moejcnnrilha0.apps.googleusercontent.com",
+          "client_id": "146552326220-ma5hbr61vf874bc6ns59fdfmkmrtjgd9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDF8qPzI3qugTyLw8gNJuKcTriBW0LRZdg"
+          "current_key": "AIzaSyCh1UxMtMSOjKMFcTr-CugofvffDPlcPtA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "20417559859-h3cbc8clqk0e4v48qk9moejcnnrilha0.apps.googleusercontent.com",
+              "client_id": "146552326220-ma5hbr61vf874bc6ns59fdfmkmrtjgd9.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

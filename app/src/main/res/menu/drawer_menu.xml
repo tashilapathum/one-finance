@@ -25,15 +25,19 @@
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings"
             android:title="@string/settings" />
+        <item
+            android:id="@+id/nav_pro"
+            android:icon="@drawable/ic_get_pro"
+            android:title="@string/upgrade_to_pro" />
     </group>
 
     <group
         android:id="@+id/bottom_group"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_get_pro"
-            android:icon="@drawable/ic_get_pro"
-            android:title="@string/get_pro" />
+            android:id="@+id/nav_share"
+            android:icon="@drawable/ic_share"
+            android:title="@string/share" />
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_about"

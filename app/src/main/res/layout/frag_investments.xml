@@ -26,7 +26,8 @@
                 android:layout_height="wrap_content"
                 android:checkable="true"
                 android:text="@string/recently_added"
-                app:chipBackgroundColor="@color/colorAccentTransparent" />
+                app:chipBackgroundColor="@color/colorAccentTransparent"
+                app:checkedIcon="@drawable/ic_checked_box"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/profitChip"
@@ -99,21 +100,21 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" - Invested amount"
+            android:text="@string/_invested_amount"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             app:drawableStartCompat="@drawable/ic_invest" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" - Profit"
+            android:text="@string/_profit"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             app:drawableStartCompat="@drawable/ic_profit" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" - Time period"
+            android:text="@string/_time_period"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             app:drawableStartCompat="@drawable/ic_time" />
 

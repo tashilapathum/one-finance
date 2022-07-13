@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/tv1"
         android:alpha="0.7"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
         android:fontFamily="sans-serif-condensed"
