@@ -48,11 +48,23 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@mipmap/ic_launcher_round" />
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:cardCornerRadius="40dp"
+            app:strokeWidth="0dp"
+            app:cardElevation="4dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="20dp"
+            android:layout_gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:contentDescription="icon"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_launcher_round" />
+        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"

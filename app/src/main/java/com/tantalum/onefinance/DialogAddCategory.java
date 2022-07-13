@@ -34,9 +34,9 @@ public class DialogAddCategory extends DialogFragment {
 
         EditText etColor = view.findViewById(R.id.etColor);
         ColorPicker colorPicker = view.findViewById(R.id.colorPicker);
-        //set opacity value low due to visibility issues
+        //set opacity value low due to text visibility issues
         OpacityBar opacityPicker = view.findViewById(R.id.opacityPicker);
-        opacityPicker.setOpacity(100);
+        opacityPicker.setOpacity(200);
         colorPicker.addOpacityBar(opacityPicker);
 
         colorPicker.setColor((int) (Math.random() * 1000000000));

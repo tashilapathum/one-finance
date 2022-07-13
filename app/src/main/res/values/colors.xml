@@ -35,5 +35,6 @@
     <color name="colorDeselectedChip">#ECF7FF</color>
     <color name="colorSelectedChip">#125495</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorWhiteTransparent">#2CFFFFFF</color>
     <color name="colorBlack">#000000</color>
 </resources>

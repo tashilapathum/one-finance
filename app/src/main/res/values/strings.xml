@@ -62,7 +62,7 @@
     <string name="entered_incorrectly">You\'ve entered data incorrectly</string>
     <string name="thank_you">Thank you for downloading One Finance! \nDon\'t forget to rate the app, leave your feedback or request features on Google Play reviews.</string>
     <string name="rate_app">Rate app!</string>
-    <string name="contact_the_developer_problems">Contact the developer if you encounter ANY problem with the app:</string>
+    <string name="contact_the_developer_problems">Contact the developer if you encounter any problem with the app:</string>
     <string name="budget_left">Budget left:&#160;</string>
     <string name="r_income">Income:&#160;</string>
     <string name="r_spent">Spent:&#160;</string>
@@ -468,6 +468,10 @@
     </string>
     <string name="what_s_new_in_version" translatable="false">What\'s new</string>
     <string name="whats_new_descr" translatable="false">
+        \nv1.1.4\n
+        - [Fixed] Account not saving after editing\n
+        - [Fixed] \'Uncategorized\' label visibility issue in light mode\n
+        - Increased category colors default opacity\n
         \nv1.1.0\n
         - Unlocked most of the pro features for free!\n
         - Removed all ads\n

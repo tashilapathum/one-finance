@@ -75,7 +75,7 @@ public class TransactionsAdapter extends ListAdapter<TransactionItem, Transactio
                 categoryChip.setChipBackgroundColor(ColorStateList.valueOf(Integer.parseInt(currentItem.getCategory().split("###")[1])));
             }
             else categoryChip.setText(currentItem.getCategory()); //set only text (for account transfers)
-        } else categoryChip.setText(R.string.uncategorized);
+        }
 
         //date
         holder.mDate.setText(new DateTimeHandler(currentItem.getTimeInMillis()).getTimestamp());

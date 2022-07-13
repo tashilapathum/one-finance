@@ -51,7 +51,8 @@
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             app:chipMinHeight="20dp"
             app:chipMinTouchTargetSize="4dp"
-            tools:text="Category" />
+            android:text="Uncategorized"
+            app:chipBackgroundColor="@color/colorWhiteTransparent"/>
 
     </RelativeLayout>
 

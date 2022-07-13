@@ -39,7 +39,7 @@ public class InvestmentsFragment extends Fragment {
     private InvestmentsAdapter investmentsAdapter;
     private SharedPreferences sharedPref;
     private LinearLayout inv_instructions;
-
+    private FloatingActionButton invFAB;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class InvestmentsFragment extends Fragment {
         context = getActivity();
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
 
-        FloatingActionButton invFAB = view.findViewById(R.id.fab);
+        invFAB = view.findViewById(R.id.fab);
         invFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,8 +173,7 @@ public class InvestmentsFragment extends Fragment {
         if (UpgradeHandler.isProActive(context) || investmentsAdapter.getItemCount() < Constants.FREE_INVESTMENTS_LIMIT) {
             DialogAddInvestment dialogAddInvestment = new DialogAddInvestment(null);
             dialogAddInvestment.show(getChildFragmentManager(), "add investments dialog");
-        }
-        else {
+        } else {
             new MaterialAlertDialogBuilder(getActivity())
                     .setTitle(R.string.reached_free_limit)
                     .setMessage(R.string.unlimited_inv_descr)
@@ -200,6 +199,7 @@ public class InvestmentsFragment extends Fragment {
                     .replace(R.id.fragment_container, new InvestmentView(investment), "InvestmentView")
                     .addToBackStack(null)
                     .commit();
+            invFAB.hide();
         }
     }
 

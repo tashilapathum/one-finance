@@ -239,7 +239,7 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
                     }
                     else {
                         Chip chip = new Chip(getActivity());
-                        category = getString(R.string.uncategorized) + "###" + chip.getChipBackgroundColor().getDefaultColor();
+                        category = getString(R.string.uncategorized);
                     }
                     //balance
                     newBalance = Double.parseDouble(balance) - Double.parseDouble(amount);
