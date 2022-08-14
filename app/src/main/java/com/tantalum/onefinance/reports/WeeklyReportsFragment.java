@@ -91,21 +91,30 @@ public class WeeklyReportsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         calculateWeeklyReport(week, year);
         if (!isFromWallet) {
-            calculateWeeklyReport(week, year);
-            calculateWeeklyReport(week, year);
+            loadMultipleReports();
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
                     if (!recyclerView.canScrollVertically(1))
-                        if (sharedPref.getBoolean("MyWalletPro", false))
-                            calculateWeeklyReport(week, year);
-                        else
-                            purchaseProForThis();
+                        loadMultipleReports();
                 }
             });
         }
         return view;
+    }
+
+    private void loadMultipleReports() {
+        calculateWeeklyReport(week, year);
+        calculateWeeklyReport(week, year);
+        calculateWeeklyReport(week, year);
+        calculateWeeklyReport(week, year);
+        calculateWeeklyReport(week, year);
+        calculateWeeklyReport(week, year);
+        calculateWeeklyReport(week, year);
+        calculateWeeklyReport(week, year);
+        calculateWeeklyReport(week, year);
+        calculateWeeklyReport(week, year);
     }
 
     private void calculateWeeklyReport(int week, int year) {
@@ -380,5 +389,3 @@ public class WeeklyReportsFragment extends Fragment {
                 .show();
     }
 }
-
-//TODO: fix daily data thing

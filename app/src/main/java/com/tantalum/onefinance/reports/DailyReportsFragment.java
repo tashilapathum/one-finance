@@ -76,22 +76,30 @@ public class DailyReportsFragment extends Fragment {
 
         calculateDailyReport(day); //show only 1 if from wallet
         if (!isFromWallet) {
-            calculateDailyReport(day);
-            calculateDailyReport(day);
-            calculateDailyReport(day);
+            loadMultipleReports();
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
                     if (!recyclerView.canScrollVertically(1))
-                        if (sharedPref.getBoolean("MyWalletPro", false))
-                            calculateDailyReport(day);
-                        else
-                            purchaseProForThis();
+                        loadMultipleReports();
                 }
             });
         }
         return view;
+    }
+
+    private void loadMultipleReports() {
+        calculateDailyReport(day);
+        calculateDailyReport(day);
+        calculateDailyReport(day);
+        calculateDailyReport(day);
+        calculateDailyReport(day);
+        calculateDailyReport(day);
+        calculateDailyReport(day);
+        calculateDailyReport(day);
+        calculateDailyReport(day);
+        calculateDailyReport(day);
     }
 
     private void calculateDailyReport(int day) {

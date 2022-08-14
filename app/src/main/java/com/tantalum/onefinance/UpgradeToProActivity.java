@@ -149,10 +149,7 @@ public class UpgradeToProActivity extends AppCompatActivity implements BillingPr
     private void onClickRestore() {
         sharedPref.edit().putBoolean("fromRestore", true).apply();
         TextView price = findViewById(R.id.tvProPrice);
-        if (price.getText().toString().contains("…"))
-            Toast.makeText(this, getString(R.string.check_internet), Toast.LENGTH_SHORT).show();
-        else
-            continueBuyOrRestore();
+        continueBuyOrRestore();
     }
 
     private void continueBuyOrRestore() {

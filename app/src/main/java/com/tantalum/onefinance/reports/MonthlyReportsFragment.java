@@ -81,20 +81,29 @@ public class MonthlyReportsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         calculateMonthlyReport(month, year);
         if (!isFromWallet) {
-            calculateMonthlyReport(month, year);
             recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
                     if (!recyclerView.canScrollVertically(1))
-                        if (sharedPref.getBoolean("MyWalletPro", false))
-                            calculateMonthlyReport(month, year);
-                        else
-                            purchaseProForThis();
+                        loadMultipleReports();
                 }
             });
         }
         return view;
+    }
+
+    private void loadMultipleReports() {
+        calculateMonthlyReport(month, year);
+        calculateMonthlyReport(month, year);
+        calculateMonthlyReport(month, year);
+        calculateMonthlyReport(month, year);
+        calculateMonthlyReport(month, year);
+        calculateMonthlyReport(month, year);
+        calculateMonthlyReport(month, year);
+        calculateMonthlyReport(month, year);
+        calculateMonthlyReport(month, year);
+        calculateMonthlyReport(month, year);
     }
 
     private void calculateMonthlyReport(int month, int year) {

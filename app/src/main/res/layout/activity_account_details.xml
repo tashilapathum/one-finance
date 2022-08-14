@@ -78,6 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="4dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
@@ -85,7 +86,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textIsSelectable="true"
-                    tools:text="Account no: 89899801\nPIN: 9191\nSome additional details such as debit card number" />
+                    tools:text="additional details such as debit card number" />
 
                 <ImageButton
                     android:id="@+id/imCopy"
