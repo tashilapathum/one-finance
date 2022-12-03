@@ -12,7 +12,9 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        CaocConfig.Builder.create().errorDrawable(R.drawable.ic_bug).apply();
+        CaocConfig.Builder.create()
+                .errorDrawable(R.drawable.ic_bug)
+                .apply();
         FirebaseApp.initializeApp(getApplicationContext());
     }
 }

@@ -29,8 +29,7 @@ import java.util.Locale;
 
 public class UpgradeToProActivity extends AppCompatActivity implements BillingProcessor.IBillingHandler {
     private Context context;
-    SharedPreferences sharedPref;
-    private TextView tvProPrice;
+    private SharedPreferences sharedPref;
     public static final String TAG = "UpgradeToProActivity";
     public static final String PRODUCT_ID = "one_finance_pro_v2";
     private BillingProcessor bp;
@@ -70,7 +69,6 @@ public class UpgradeToProActivity extends AppCompatActivity implements BillingPr
 
         /*----------------------------------------------------------------------------------------*/
 
-        tvProPrice = findViewById(R.id.tvProPrice);
         btnBuy = findViewById(R.id.btnBuy);
         btnBuy.setText(R.string.loading);
         btnBuy.setOnClickListener(new View.OnClickListener() {
@@ -209,133 +207,6 @@ public class UpgradeToProActivity extends AppCompatActivity implements BillingPr
     public void onPurchaseHistoryRestored() {
 
     }
-
-    /*@Override
-    public void onPurchasesUpdated(BillingResult billingResult, @Nullable List<Purchase> list) {
-        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && list != null)
-            for (Purchase purchase : list)
-                handlePurchase(purchase);
-        else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED)
-            Toast.makeText(this, R.string.p_cancelled, Toast.LENGTH_SHORT).show();
-        else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
-            boolean fromRestore = sharedPref.getBoolean("fromRestore", false);
-            if (!fromRestore)
-                Toast.makeText(this, R.string.p_already, Toast.LENGTH_SHORT).show();
-            else {
-                //sharedPref.edit().putBoolean("MyWalletPro", true).apply();
-                UpgradeHandler.activatePro(context);
-                Toast.makeText(this, R.string.p_restored, Toast.LENGTH_LONG).show();
-                new MaterialAlertDialogBuilder(this)
-                        .setTitle(R.string.p_restored)
-                        .setMessage(R.string.thank_u_for_pro)
-                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                startActivity(new Intent(UpgradeToProActivity.this, MainActivity.class));
-                            }
-                        })
-                        .setCancelable(false)
-                        .show();
-                sharedPref.edit().putBoolean("fromRestore", false).apply();
-            }
-        } else Toast.makeText(this, R.string.p_failed, Toast.LENGTH_SHORT).show();
-    }
-
-    private void handlePurchase(Purchase purchase) {
-        if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
-            //sharedPref.edit().putBoolean("MyWalletPro", true).apply();
-            UpgradeHandler.activatePro(context);
-        }
-
-        if (!purchase.isAcknowledged()) {
-            AcknowledgePurchaseParams params = AcknowledgePurchaseParams.newBuilder()
-                    .setPurchaseToken(purchase.getPurchaseToken())
-                    .build();
-            billingClient.acknowledgePurchase(params, new AcknowledgePurchaseResponseListener() {
-                @Override
-                public void onAcknowledgePurchaseResponse(@NonNull BillingResult billingResult) {
-                    new MaterialAlertDialogBuilder(UpgradeToProActivity.this)
-                            .setTitle(R.string.p_success)
-                            .setMessage(R.string.thank_u_for_pro)
-                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    startActivity(new Intent(UpgradeToProActivity.this, MainActivity.class));
-                                }
-                            })
-                            .setCancelable(false)
-                            .show();
-                }
-            });
-        }
-    }
-
-    @Override
-    public void onBillingSetupFinished(BillingResult billingResult) {
-        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-            Log.i(TAG, "Billing Response OK!");
-            querySkuDetails();
-            queryPurchases();
-        }
-    }
-
-    @Override
-    public void onBillingServiceDisconnected() {
-        if (!isFinishing()) {
-            new MaterialAlertDialogBuilder(UpgradeToProActivity.this)
-                    .setTitle(R.string.connection_problem)
-                    .setMessage(R.string.failed_gplay)
-                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            recreate();
-                        }
-                    })
-                    .show();
-        }
-    }
-
-    public void querySkuDetails() {
-        List<String> skuList = new ArrayList<>();
-        skuList.add("one_finance_pro");
-
-        SkuDetailsParams params = SkuDetailsParams.newBuilder()
-                .setType(BillingClient.SkuType.INAPP)
-                .setSkusList(skuList)
-                .build();
-
-        Log.i(TAG, "querySkuDetailsAsync");
-        billingClient.querySkuDetailsAsync(params, new SkuDetailsResponseListener() {
-            @Override
-            public void onSkuDetailsResponse(@NonNull BillingResult billingResult, List<SkuDetails> list) {
-                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && list != null) {
-                    for (SkuDetails skuDetails : list) {
-                        String sku = skuDetails.getSku();
-                        String price = skuDetails.getPrice();
-                        String proVersionPrice = null;
-                        if ("one_finance_pro".equals(sku))
-                            proVersionPrice = price;
-                        tvProPrice.setText(proVersionPrice); //show price
-                        flowParams = BillingFlowParams.newBuilder()
-                                .setSkuDetails(skuDetails)
-                                .build();
-                    }
-                }
-            }
-        });
-    }
-
-    public void queryPurchases() {
-        if (!billingClient.isReady()) {
-            Log.e(TAG, "queryPurchases: BillingClient is not ready");
-        }
-        billingClient.queryPurchasesAsync(BillingClient.SkuType.INAPP, new PurchasesResponseListener() {
-            @Override
-            public void onQueryPurchasesResponse(@NonNull BillingResult billingResult, @NonNull List<Purchase> list) {
-
-            }
-        });
-    }*/
 
 }
 

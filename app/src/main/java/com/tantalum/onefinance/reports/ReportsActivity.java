@@ -26,8 +26,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
-import com.shreyaspatil.material.navigationview.MaterialNavigationView;
 import com.tantalum.onefinance.AboutActivity;
 import com.tantalum.onefinance.CategoriesActivity;
 import com.tantalum.onefinance.DatePickerFragment;
@@ -40,13 +40,13 @@ import com.tantalum.onefinance.UpgradeToProActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReportsActivity extends AppCompatActivity implements MaterialNavigationView.OnNavigationItemSelectedListener {
+public class ReportsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     SharedPreferences sharedPref;
     private DrawerLayout drawer;
     public static final String TAG = "Reports";
     private ViewPager viewPager;
     private ViewPagerAdapter viewPagerAdapter;
-    private MaterialNavigationView navigationView;
+    private NavigationView navigationView;
 
 
     @SuppressLint("WrongConstant")

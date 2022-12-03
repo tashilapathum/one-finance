@@ -23,7 +23,6 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
-import com.shreyaspatil.material.navigationview.MaterialNavigationView;
 import com.tantalum.onefinance.reports.ReportsActivity;
 import com.tantalum.onefinance.settings.SettingsActivity;
 import com.tantalum.onefinance.transactions.TransactionsActivity;
@@ -35,7 +34,7 @@ import java.util.List;
 public class CategoriesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private SharedPreferences sharedPref;
     private DrawerLayout drawer;
-    private MaterialNavigationView navigationView;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -267,7 +266,7 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
     @Override
     protected void onResume() {
         super.onResume();
-        navigationView.setCheckedItem(R.id.nav_recent_trans);
+        navigationView.setCheckedItem(R.id.nav_categories);
         if (sharedPref.getBoolean("exit", false))
             finishAndRemoveTask();
     }

@@ -29,8 +29,8 @@ import android.widget.Toast;
 
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.shreyaspatil.material.navigationview.MaterialNavigationView;
 import com.tantalum.onefinance.AboutActivity;
 import com.tantalum.onefinance.CategoriesActivity;
 import com.tantalum.onefinance.CustomFilterArrayAdapter;
@@ -51,7 +51,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 
-public class TransactionsActivity extends AppCompatActivity implements MaterialNavigationView.OnNavigationItemSelectedListener {
+public class TransactionsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
     public static final String TAG = "TransactionsActivity";
     private SharedPreferences sharedPref;
@@ -68,7 +68,7 @@ public class TransactionsActivity extends AppCompatActivity implements MaterialN
     private int sort;
     List<TransactionItem> transactionsList;
     List<TransactionItem> filteredList;
-    private MaterialNavigationView navigationView;
+    private NavigationView navigationView;
     private int updatingPosition = 0;
 
 

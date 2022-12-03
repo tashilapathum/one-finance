@@ -28,9 +28,9 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.android.material.materialswitch.MaterialSwitch;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.shreyaspatil.material.navigationview.MaterialNavigationView;
 import com.tantalum.onefinance.AboutActivity;
 import com.tantalum.onefinance.AlertReceiver;
 import com.tantalum.onefinance.CategoriesActivity;
@@ -48,15 +48,15 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity
-        implements MaterialNavigationView.OnNavigationItemSelectedListener, TimePickerDialog.OnTimeSetListener {
+        implements NavigationView.OnNavigationItemSelectedListener, TimePickerDialog.OnTimeSetListener {
     public static final String TAG = "SettingsActivity";
     SharedPreferences sharedPref;
     private DrawerLayout drawer;
     String timeString;
-    private SwitchMaterial exitCheckBox;
-    private SwitchMaterial negativeCheckBox;
+    private MaterialSwitch exitCheckBox;
+    private MaterialSwitch negativeCheckBox;
     private FirebaseAnalytics firebaseAnalytics;
-    private MaterialNavigationView navigationView;
+    private NavigationView navigationView;
     private boolean isMyWalletPro;
     private final String HOME_OPTION_WALLET = "Wallet";
     private final String HOME_OPTION_BANK = "Bank";

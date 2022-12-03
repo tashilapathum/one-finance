@@ -27,8 +27,8 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.shreyaspatil.material.navigationview.MaterialNavigationView;
 import com.tantalum.onefinance.bank.BankFragmentNEW;
 import com.tantalum.onefinance.investments.InvestmentsFragment;
 import com.tantalum.onefinance.reports.ReportsActivity;
@@ -40,13 +40,13 @@ import com.tantalum.onefinance.wallet.WalletFragmentNEW;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements MaterialNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String TAG = "MainActivity";
     private DrawerLayout drawer;
     private SharedPreferences sharedPref;
     private BottomNavigationView bottomNav;
     private FirebaseAnalytics firebaseAnalytics;
-    private MaterialNavigationView navigationView;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
