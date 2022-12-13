@@ -5,6 +5,8 @@ apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 
 android {
     compileSdkVersion 33
+    namespace 'com.tantalum.onefinance'
+
     defaultConfig {
         applicationId "com.tantalum.onefinance"
         minSdkVersion 21
@@ -19,8 +21,7 @@ android {
             versionNameSuffix '-DEBUG'
         }
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -35,7 +36,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
         coreLibraryDesugaringEnabled true
     }
-    namespace 'com.tantalum.onefinance'
 }
 
 dependencies {
@@ -52,11 +52,14 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
     implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
     implementation 'androidx.work:work-runtime:2.7.1'
+    implementation 'androidx.annotation:annotation:1.5.0'
 
+    //firebase
     implementation platform('com.google.firebase:firebase-bom:28.4.1')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-crashlytics'
 
+    //room
     implementation "androidx.room:room-runtime:2.4.3"
     annotationProcessor "androidx.room:room-compiler:2.4.3"
     testImplementation "androidx.room:room-testing:2.4.3"
@@ -66,7 +69,6 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.6'
     implementation 'com.andrognito.pinlockview:pinlockview:2.1.0'
-    implementation 'androidx.annotation:annotation:1.5.0'
     implementation 'com.robinhood.ticker:ticker:2.0.2'
     implementation 'com.airbnb.android:lottie:3.7.0'
     implementation 'com.maltaisn:calcdialog:2.2.1'

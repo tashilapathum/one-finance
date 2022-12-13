@@ -178,19 +178,6 @@
                     android:textColor="@color/colorBlack"/>
 
                 <Button
-                    android:id="@+id/lkr"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
-                    android:backgroundTint="@color/colorAccent"
-                    android:minWidth="2dp"
-                    android:minHeight="2dp"
-                    android:onClick="setQuickCurrency"
-                    android:text="LKR"
-                    android:textColor="@color/colorBlack" />
-
-                <Button
                     android:id="@+id/more"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"

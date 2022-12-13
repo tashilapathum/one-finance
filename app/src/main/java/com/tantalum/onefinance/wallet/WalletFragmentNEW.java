@@ -211,7 +211,8 @@ public class WalletFragmentNEW extends Fragment {
                 chip.setElevation(8f);
                 chip.setHint(fullQuickList.get(i).getCategory());
                 chip.setChipStrokeWidth(4f);
-                chip.setChipStrokeColorResource(R.color.colorAccent);
+                chip.setChipCornerRadius(64f);
+                chip.setChipStrokeColorResource(R.color.colorAccentTransparent);
                 chip.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -257,7 +258,7 @@ public class WalletFragmentNEW extends Fragment {
     }
 
     public void setNewBalance(String balance) {
-        balance = new Amount(getActivity(), balance).getAmountStringWithoutCurrency();
+        balance = new Amount(requireContext(), balance).getAmountStringWithoutCurrency();
         sharedPref.edit().putString("balance", balance).apply();
         tvBalance.setText(balance);
 

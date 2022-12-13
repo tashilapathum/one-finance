@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -186,25 +187,17 @@ public class InitialSetupActivity extends AppCompatActivity {
                 currency = "Rs.";
                 break;
             }
-            case R.id.lkr: {
-                currency = "LKR";
-                break;
-            }
         }
         etCurrency.setText(currency);
     }
 
     public void openPrivacyPolicy(View view) {
-        Intent intent = new Intent(this, WebViewActivity.class);
-        intent.putExtra("title", "Privacy Policy");
-        intent.putExtra("url", "https://finance-journal.flycricket.io/privacy.html");
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://tantalumtech.net/one-finance-app-privacy-policy/"));
         startActivity(intent);
     }
 
     public void openTC(View view) {
-        Intent intent = new Intent(this, WebViewActivity.class);
-        intent.putExtra("title", "Terms and Conditions");
-        intent.putExtra("url", "https://finance-journal.flycricket.io/terms.html");
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://tantalumtech.net/one-finance-app-terms-of-service/"));
         startActivity(intent);
     }
 

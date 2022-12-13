@@ -60,7 +60,7 @@ public class DialogNewCartItem extends BottomSheetDialogFragment {
     }
 
     private void addItem() {
-        String itemName = etItemName.getText().toString();
+        String itemName = etItemName.getText().toString().trim();
         String itemPrice = etItemPrice.getText().toString();
         String strQuantity = etQuantity.getText().toString();
         int quantity = 1;
@@ -91,7 +91,7 @@ public class DialogNewCartItem extends BottomSheetDialogFragment {
         String oldItemPrice = bundle.getString("cart itemPrice");
         int oldQuantity = bundle.getInt("cart quantity");
         boolean isChecked = bundle.getBoolean("cart isChecked");
-        String itemName = etItemName.getText().toString();
+        String itemName = etItemName.getText().toString().trim();
         String newItemPrice = etItemPrice.getText().toString();
         String strQuantity = etQuantity.getText().toString();
         int newQuantity;

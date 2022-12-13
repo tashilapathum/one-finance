@@ -4,29 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="8dp"
-    app:cardElevation="0dp"
     android:layout_margin="8dp"
-    app:cardBackgroundColor="@android:color/transparent"
-    app:strokeWidth="2dp"
-    app:strokeColor="@color/colorAccent"
-    app:cardCornerRadius="16dp">
+    app:cardCornerRadius="32dp"
+    app:cardElevation="8dp"
+    app:strokeWidth="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/week"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:fontFamily="sans-serif-condensed-medium"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            tools:text="Today (28/09/2020)"
-            android:layout_marginBottom="4dp"/>
+            tools:text="Today (28/09/2020)" />
 
         <TextView
             style="@style/ReportsSubtitleTextViewStyle"

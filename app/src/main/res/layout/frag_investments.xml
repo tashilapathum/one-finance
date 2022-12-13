@@ -27,7 +27,8 @@
                 android:checkable="true"
                 android:text="@string/recently_added"
                 app:chipBackgroundColor="@color/colorAccentTransparent"
-                app:checkedIcon="@drawable/ic_checked_box"/>
+                app:checkedIconEnabled="true"
+                app:checkedIconVisible="true"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/profitChip"
@@ -35,7 +36,9 @@
                 android:layout_height="wrap_content"
                 android:checkable="true"
                 android:text="@string/most_profitable"
-                app:chipBackgroundColor="@color/colorAccentTransparent" />
+                app:chipBackgroundColor="@color/colorAccentTransparent"
+                app:checkedIconEnabled="true"
+                app:checkedIconVisible="true" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/returnChip"
@@ -43,7 +46,9 @@
                 android:layout_height="wrap_content"
                 android:checkable="true"
                 android:text="@string/most_return"
-                app:chipBackgroundColor="@color/colorAccentTransparent" />
+                app:chipBackgroundColor="@color/colorAccentTransparent"
+                app:checkedIconEnabled="true"
+                app:checkedIconVisible="true" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/timeChip"
@@ -51,7 +56,9 @@
                 android:layout_height="wrap_content"
                 android:checkable="true"
                 android:text="@string/longest_time_period"
-                app:chipBackgroundColor="@color/colorAccentTransparent" />
+                app:chipBackgroundColor="@color/colorAccentTransparent"
+                app:checkedIconEnabled="true"
+                app:checkedIconVisible="true" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/investChip"
@@ -60,7 +67,9 @@
                 android:layout_marginEnd="16dp"
                 android:checkable="true"
                 android:text="@string/highest_investment"
-                app:chipBackgroundColor="@color/colorAccentTransparent" />
+                app:chipBackgroundColor="@color/colorAccentTransparent"
+                app:checkedIconEnabled="true"
+                app:checkedIconVisible="true" />
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
 

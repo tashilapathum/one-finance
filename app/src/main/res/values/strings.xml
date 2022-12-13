@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">One Finance</string>
     <string name="my_wallet_pro" translatable="false">One Finance</string>
-    <string name="version" translatable="false">Version 1.1.4</string>
+    <string name="version" translatable="false">Version 1.1.6</string>
     <string name="recent_transactions">Transactions</string>
     <string name="reports">Reports</string>
     <string name="settings">Settings</string>
@@ -60,7 +60,7 @@
     <string name="pro_feature">Pro feature</string>
     <string name="pro" translatable="false">Pro</string>
     <string name="entered_incorrectly">You\'ve entered data incorrectly</string>
-    <string name="thank_you">Thank you for downloading One Finance! \nDon\'t forget to rate the app, leave your feedback or request features on Google Play reviews.</string>
+    <string name="thank_you">Thank you for downloading One Finance! \n\nOne Finance is a personal finance app designed to use on-the-go. You can add your daily incomes, expenses and other transactions with just a few clicks.</string>
     <string name="rate_app">Rate app!</string>
     <string name="contact_the_developer_problems">Contact the developer if you encounter any problem with the app:</string>
     <string name="budget_left">Budget left:&#160;</string>
@@ -182,7 +182,7 @@
     <string name="add_acc_first">You must add an account first</string>
     <string name="deposited_to">Deposited to&#160;</string>
     <string name="cart">Cart</string>
-    <string name="more_apps">More apps</string>
+    <string name="more_apps">More apps by us</string>
     <string name="exit_confirm">Are you sure you want to exit the app?</string>
     <string name="exit_confirmation">Exit confirmation</string>
     <string name="show_confirm_dialog_when_trying_to_exit_the_app">Show a confirmation dialog when trying to exit the app</string>
@@ -455,30 +455,6 @@
     <string name="unlimited_inv_descr">Upgrade to the Pro version to add unlimited investments!</string>
     <string name="you_can_use_this_feature_to_track">You can use this feature to track progress, profits and timeline of your projects or investments\n</string>
     <string name="bank_account_notice">Important: This account is not connected to your real bank account in any way. So you have to update everything manually. The purpose of this virtual account is just to keep track of the activities of your real-world bank account.</string>
-
-
-    <string name="pro_features">
-        &#160;\u2713 Multiple bank accounts (free limit is 1)\n
-        \u2713 Add an unlimited number of investments (free limit is 3)\n
-        \u2713 Unlimited quick list items (free limit is 5)\n
-        \u2713 Remove ads\n
-        \u2713 Includes all upcoming features\n
-        \u2713 Pay once, keep forever\n
-        \u2713 Support the developer! ❤\n
-    </string>
-    <string name="what_s_new_in_version" translatable="false">What\'s new</string>
-    <string name="whats_new_descr" translatable="false">
-        \nv1.1.4\n
-        - [Fixed] Account not saving after editing\n
-        - [Fixed] \'Uncategorized\' label visibility issue in light mode\n
-        - Increased category colors default opacity\n
-        \nv1.1.0\n
-        - Unlocked most of the pro features for free!\n
-        - Removed all ads\n
-        - Added support for Android 12\n
-        \nv1.0.0\n
-        - Initial release\n
-    </string>
     <string name="copied">Copied</string>
     <string name="categories">Categories</string>
     <string name="added">Added</string>
@@ -519,4 +495,31 @@
     <string name="earned_">Earned&#160;</string>
     <string name="share">Share</string>
 
+
+    <string name="pro_features">
+        &#160;\u2713 Multiple bank accounts (free limit is 1)\n
+        \u2713 Add an unlimited number of investments (free limit is 3)\n
+        \u2713 Unlimited quick list items (free limit is 5)\n
+        \u2713 Remove ads\n
+        \u2713 Includes all upcoming features\n
+        \u2713 Pay once, keep forever\n
+        \u2713 Support the developer! ❤\n
+    </string>
+    <string name="what_s_new_in_version" translatable="false">What\'s new</string>
+    <string name="whats_new_descr" translatable="false">
+        \nv1.1.5\n
+        - Added support for Android 13\n
+        - UI and performance improvements\n
+        - [Fixed] crash when starting app\n
+        \nv1.1.4\n
+        - [Fixed] Account not saving after editing\n
+        - [Fixed] \'Uncategorized\' label visibility issue in light mode\n
+        - Increased category colors default opacity\n
+        \nv1.1.0\n
+        - Unlocked most of the pro features for free!\n
+        - Removed all ads\n
+        - Added support for Android 12\n
+        \nv1.0.0\n
+        - Initial release\n
+    </string>
 </resources>

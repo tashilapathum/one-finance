@@ -131,8 +131,8 @@ public class BankFragmentNEW extends Fragment implements DialogInterface.OnDismi
                 Chip chip = (Chip) getActivity().getLayoutInflater().inflate(R.layout.sample_account_chip, null);
                 chip.setText(account.getAccName());
                 chip.setTextColor(getResources().getColor(R.color.colorBlack)); //because of visibility issue in dark mode
-                chip.setCheckedIconResource(R.drawable.ic_checked_box);
                 chip.setCheckedIconTintResource(R.color.colorAccentLightest);
+                chip.setCheckedIconVisible(true);
                 chip.setElevation(8f);
                 chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -152,6 +152,7 @@ public class BankFragmentNEW extends Fragment implements DialogInterface.OnDismi
                     chip.setChecked(true);
                 chipGroup.addView(chip);
                 chipGroup.setSelectionRequired(true);
+                chipGroup.setSingleSelection(true);
             }
         }
     }

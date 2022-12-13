@@ -52,16 +52,12 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     public void openPrivacyPolicy(View view) {
-        Intent intent = new Intent(this, WebViewActivity.class);
-        intent.putExtra("title", "Privacy Policy");
-        intent.putExtra("url", "https://one-finance.flycricket.io/privacy.html");
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://tantalumtech.net/one-finance-app-privacy-policy/"));
         startActivity(intent);
     }
 
     public void openTC(View view) {
-        Intent intent = new Intent(this, WebViewActivity.class);
-        intent.putExtra("title", "Terms and Conditions");
-        intent.putExtra("url", "https://one-finance.flycricket.io/terms.html");
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://tantalumtech.net/one-finance-app-terms-of-service/"));
         startActivity(intent);
     }
 

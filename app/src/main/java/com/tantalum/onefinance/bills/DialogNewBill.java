@@ -48,7 +48,7 @@ public class DialogNewBill extends BottomSheetDialogFragment {
     private Bill editingBill;
     private CheckBox cbMonthly;
     private CheckBox cbCalendar;
-    private boolean addToCalendar = true;
+    private boolean addToCalendar = false;
     private SharedPreferences sharedPref;
     private long dateInMillis;
     private long dateEndInMillis;
@@ -159,7 +159,7 @@ public class DialogNewBill extends BottomSheetDialogFragment {
 
     private void onClickAddOrEdit() {
         if (validateTitle() && validateAmount()) {
-            String title = etTitle.getText().toString();
+            String title = etTitle.getText().toString().trim();
             String amount = etAmount.getText().toString().replace(",", ".");
             String paidDate = null;
             String dueDate = null;
@@ -200,7 +200,7 @@ public class DialogNewBill extends BottomSheetDialogFragment {
     }
 
     private boolean validateTitle() {
-        if (etTitle.getText().toString().isEmpty()) {
+        if (etTitle.getText().toString().trim().isEmpty()) {
             tilTitle.setError(getActivity().getResources().getString(R.string.required));
             return false;
         } else {

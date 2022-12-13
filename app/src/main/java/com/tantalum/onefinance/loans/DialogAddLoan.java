@@ -47,7 +47,7 @@ public class DialogAddLoan extends BottomSheetDialogFragment {
     private static DialogAddLoan instance;
     private Loan editingLoan;
     private final boolean isBorrowing;
-    private boolean addToCalendar = true;
+    private boolean addToCalendar = false;
     private SharedPreferences sharedPref;
     private long dateInMillis;
     private long dateEndInMillis;
@@ -154,10 +154,10 @@ public class DialogAddLoan extends BottomSheetDialogFragment {
 
     private void onClickAddOrEdit() {
         if (validatePerson() && validateAmount()) {
-            String person = etPerson.getText().toString();
+            String person = etPerson.getText().toString().trim();
             String amount = etAmount.getText().toString().replace(",", ".");
             String lentDate = etDate.getText().toString();
-            String details = etDetails.getText().toString();
+            String details = etDetails.getText().toString().trim();
 
             Loan loan = new Loan(isLent, !isLent, false, person, amount, null, lentDate, null, details);
             if (editingLoan != null) {

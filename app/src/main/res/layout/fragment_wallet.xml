@@ -6,62 +6,69 @@
     android:layout_height="match_parent"
     android:transitionGroup="true">
 
-    <RelativeLayout
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/balance_strip"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp">
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-16dp"
+        android:layout_marginEnd="-16dp"
+        app:cardCornerRadius="48dp"
+        app:cardElevation="16dp"
+        app:strokeWidth="0dp">
 
-        <ImageView
-            android:id="@+id/txtBalance"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginHorizontal="5dp"
-            android:layout_marginTop="2dp"
-            android:src="@drawable/ic_balance" />
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/currency"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/txtBalance"
-            android:fontFamily="@font/quicksand_medium"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            android:textColor="@android:color/holo_green_dark"
-            tools:text="$" />
+            <ImageView
+                android:id="@+id/txtBalance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginTop="2dp"
+                android:src="@drawable/ic_balance" />
 
-        <com.robinhood.ticker.TickerView
-            android:id="@+id/balance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/currency"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:focusable="true"
-            android:fontFamily="@font/quicksand_medium"
-            android:gravity="start"
-            android:text="@string/_0_00"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-            android:textColor="@android:color/holo_green_dark"
-            app:ticker_animationDuration="1000" />
+            <TextView
+                android:id="@+id/currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand_medium"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textColor="@android:color/holo_green_dark"
+                tools:text="$" />
 
-        <ImageButton
-            android:id="@+id/warning"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginHorizontal="8dp"
-            android:layout_toEndOf="@id/balance"
-            android:background="?android:selectableItemBackgroundBorderless"
-            android:contentDescription="negative balance warning"
-            android:src="@drawable/ic_warning"
-            android:visibility="gone"
-            tools:visibility="visible" />
-    </RelativeLayout>
+            <com.robinhood.ticker.TickerView
+                android:id="@+id/balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/quicksand_medium"
+                android:gravity="start"
+                android:text="@string/_0_00"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+                android:textColor="@android:color/holo_green_dark"
+                app:ticker_animationDuration="1000" />
+
+            <ImageButton
+                android:id="@+id/warning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:contentDescription="negative balance warning"
+                android:src="@drawable/ic_warning"
+                android:visibility="gone" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -80,7 +87,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="8dp"
-                android:padding="6dp">
+                app:chipSpacingVertical="0dp"
+                android:padding="6dp"
+                android:clipToPadding="false">
                 <!--quick list items are added here-->
             </com.google.android.material.chip.ChipGroup>
 

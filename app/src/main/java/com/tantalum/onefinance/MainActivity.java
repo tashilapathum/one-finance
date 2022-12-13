@@ -1,5 +1,7 @@
 package com.tantalum.onefinance;
 
+import static com.tantalum.onefinance.UpgradeHandler.ONE_FINANCE_PRO;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
@@ -161,7 +163,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             sharedPref.edit().putBoolean("isNotificationSet", true).apply();
         }
 
-        sharedPref.edit().putBoolean("MyWalletPro", true).apply(); //TODO
+        sharedPref.edit().putBoolean("MyWalletPro", true).apply();
+        if (getPackageName().contains("debug"))
+            sharedPref.edit().putBoolean(ONE_FINANCE_PRO, true).apply();
     }
 
     @Override //so the language change works with dark mode
