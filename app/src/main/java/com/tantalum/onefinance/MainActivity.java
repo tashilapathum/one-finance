@@ -374,48 +374,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //bottom nav
     private NavigationBarView.OnItemSelectedListener navListener =
-            new NavigationBarView.OnItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
-                    String fragmentTag = null;
-                    switch (item.getItemId()) {
-                        case R.id.nav_wallet: {
-                            selectedFragment = new WalletFragmentNEW();
-                            fragmentTag = "WalletFragment";
-                            break;
-                        }
-                        case R.id.nav_bank: {
-                            selectedFragment = new BankFragmentNEW();
-                            fragmentTag = "BankFragment";
-                            break;
-                        }
-                        case R.id.nav_trans: {
-                            selectedFragment = new TransactionsFragment();
-                            fragmentTag = "TransactionsFragment";
-                            break;
-                        }
-                        case R.id.nav_invest: {
-                            selectedFragment = new InvestmentsFragment();
-                            fragmentTag = "InvestmentsFragment";
-                            break;
-                        }
-                        case R.id.nav_tools: {
-                            selectedFragment = new ToolsFragment();
-                            fragmentTag = "ToolsFragment";
-                            break;
-                        }
+            item -> {
+                Fragment selectedFragment = null;
+                String fragmentTag = null;
+                switch (item.getItemId()) {
+                    case R.id.nav_wallet: {
+                        selectedFragment = new WalletFragmentNEW();
+                        fragmentTag = "WalletFragment";
+                        break;
                     }
-                    navigateScreens(selectedFragment, fragmentTag, item.getItemId());
-                    return true;
+                    case R.id.nav_bank: {
+                        selectedFragment = new BankFragmentNEW();
+                        fragmentTag = "BankFragment";
+                        break;
+                    }
+                    case R.id.nav_trans: {
+                        selectedFragment = new TransactionsFragment();
+                        fragmentTag = "TransactionsFragment";
+                        break;
+                    }
+                    case R.id.nav_invest: {
+                        selectedFragment = new InvestmentsFragment();
+                        fragmentTag = "InvestmentsFragment";
+                        break;
+                    }
+                    case R.id.nav_tools: {
+                        selectedFragment = new ToolsFragment();
+                        fragmentTag = "ToolsFragment";
+                        break;
+                    }
                 }
+                navigateScreens(selectedFragment, fragmentTag, item.getItemId());
+                return true;
             };
 
-    private NavigationBarView.OnItemReselectedListener navReListener = new NavigationBarView.OnItemReselectedListener() {
-        @Override
-        public void onNavigationItemReselected(@NonNull MenuItem item) {
+    private final NavigationBarView.OnItemReselectedListener navReListener = item -> {
 
-        }
     };
 
     private void navigateScreens(Fragment selectedFragment, String fragmentTag, int itemId) {
@@ -451,36 +445,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int actionCount = sharedPref.getInt("actionCount", 0);
         sharedPref.edit().putInt("actionCount", actionCount + 1).apply();
         if (!alreadyRated & (actionCount % 14 == 0)) {
-            new AlertDialog.Builder(MainActivity.this)
+            new MaterialAlertDialogBuilder(MainActivity.this)
                     .setTitle(R.string.enjoying_the_app)
                     .setMessage(R.string.rate_description)
-                    .setPositiveButton("Rate", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            sharedPref.edit().putBoolean("alreadyRated", true).apply();
-                            Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.tantalum.onefinance"));
-                            startActivity(intent);
-                        }
+                    .setPositiveButton("Rate", (dialogInterface, i) -> {
+                        sharedPref.edit().putBoolean("alreadyRated", true).apply();
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.tantalum.onefinance"));
+                        startActivity(intent);
                     })
-                    .setNegativeButton("Later", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            sharedPref.edit().putInt("actionCount", 0).apply();
-                        }
-                    })
-                    .setNeutralButton("Never", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            sharedPref.edit().putBoolean("alreadyRated", true).apply();
-                        }
-                    })
-                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialogInterface) {
-                            sharedPref.edit().putInt("actionCount", 0).apply();
-                        }
-                    })
+                    .setNegativeButton("Later", (dialogInterface, i) -> sharedPref.edit().putInt("actionCount", 1).apply())
+                    .setNeutralButton("Never", (dialogInterface, i) -> sharedPref.edit().putBoolean("alreadyRated", true).apply())
+                    .setOnDismissListener(dialogInterface -> sharedPref.edit().putInt("actionCount", 0).apply())
                     .show();
         }
     }

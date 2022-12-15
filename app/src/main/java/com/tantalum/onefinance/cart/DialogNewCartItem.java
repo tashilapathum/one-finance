@@ -2,22 +2,35 @@ package com.tantalum.onefinance.cart;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.tantalum.onefinance.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.DialogFragment;
 
 public class DialogNewCartItem extends BottomSheetDialogFragment {
     private BottomSheetDialog dialog = null;
     private EditText etItemName;
     private EditText etItemPrice;
     private EditText etQuantity;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
     @NonNull
     @Override
@@ -32,29 +45,14 @@ public class DialogNewCartItem extends BottomSheetDialogFragment {
         dialog.setContentView(view);
 
         if (getActivity().getSupportFragmentManager().findFragmentByTag("edit cart item dialog") == null) {
-            btnAdd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    addItem();
-                }
-            });
+            btnAdd.setOnClickListener(view1 -> addItem());
         }
         else {
-            btnAdd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    editItem();
-                }
-            });
+            btnAdd.setOnClickListener(view12 -> editItem());
             btnAdd.setText(R.string.save);
             fillDetails();
         }
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.cancel();
-            }
-        });
+        btnCancel.setOnClickListener(view13 -> dialog.cancel());
 
         return dialog;
     }

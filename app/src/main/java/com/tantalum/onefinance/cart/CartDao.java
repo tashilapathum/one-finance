@@ -24,6 +24,6 @@ public interface CartDao {
     @Query("DELETE FROM cart_items_table")
     void deleteAllCartItems();
 
-    @Query("SELECT * FROM cart_items_table ORDER BY isChecked ASC")
+    @Query("SELECT * FROM cart_items_table ORDER BY isChecked ASC, id DESC")
     LiveData<List<CartItem>> getAllCartItems();
 }

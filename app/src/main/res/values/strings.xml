@@ -522,4 +522,7 @@
         \nv1.0.0\n
         - Initial release\n
     </string>
+    <string name="add_cat_trans_to_see_them_in_chart">Add some categorized transactions to see them in the chart</string>
+    <string name="start_here">Start here</string>
+    <string name="tap_plus_or_minus">Tap here and then tap + to add an income or - for an expense</string>
 </resources>

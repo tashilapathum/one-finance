@@ -64,12 +64,7 @@ public class CartFragment extends Fragment {
         currency = sharedPref.getString("currency", "");
 
         cartFAB = view.findViewById(R.id.cartFAB);
-        cartFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addToList();
-            }
-        });
+        cartFAB.setOnClickListener(view -> addToList());
         cart_instructions = view.findViewById(R.id.cart_instructions);
         tvItemCount = view.findViewById(R.id.itemCount);
         tvTotal = view.findViewById(R.id.cartTotal);
@@ -90,13 +85,10 @@ public class CartFragment extends Fragment {
         recyclerView.setAdapter(cartAdapter);
 
         cartViewModel = new ViewModelProvider(getActivity(), ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(CartViewModel.class);
-        cartViewModel.getAllCartItems().observe(getActivity(), new Observer<List<CartItem>>() {
-            @Override
-            public void onChanged(List<CartItem> cartItems) {
-                cartAdapter.submitList(cartItems);
-                showItemCount(cartItems.size());
-                toggleInsVisibility(cartItems.size());
-            }
+        cartViewModel.getAllCartItems().observe(getActivity(), cartItems -> {
+            cartAdapter.submitList(cartItems);
+            showItemCount(cartItems.size());
+            toggleInsVisibility(cartItems.size());
         });
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -109,12 +101,7 @@ public class CartFragment extends Fragment {
             public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
                 final CartItem cartItem = cartAdapter.getCartItemAt(viewHolder.getAdapterPosition());
                 Snackbar snackbar = Snackbar.make(recyclerView, R.string.deleted, Snackbar.LENGTH_SHORT)
-                        .setAction(R.string.undo, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                cartAdapter.notifyDataSetChanged();
-                            }
-                        })
+                        .setAction(R.string.undo, view -> cartAdapter.notifyDataSetChanged())
                         .addCallback(new Snackbar.Callback() {
                             @Override
                             public void onDismissed(Snackbar transientBottomBar, int event) {

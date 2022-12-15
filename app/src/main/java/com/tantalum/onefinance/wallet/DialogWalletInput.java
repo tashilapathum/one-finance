@@ -160,20 +160,22 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
             categories.addAll(Arrays.asList(allCategories.split("~~~")));
 
         for (String categoryItem : categories) {
-            Chip chip = new Chip(getActivity());
-            chip.setText(categoryItem.split("###")[0]);
-            chip.setChipBackgroundColor(ColorStateList.valueOf(Integer.parseInt(categoryItem.split("###")[1])));
-            chip.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_Medium);
-            chip.setCheckable(true);
-            chip.setCheckedIconResource(R.drawable.ic_checked_box);
-            chip.setCheckedIconVisible(true);
-            chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    chip.setChecked(isChecked);
-                }
-            });
-            chipGroup.addView(chip);
+            if (!categoryItem.trim().isEmpty()) {
+                Chip chip = new Chip(getActivity());
+                chip.setText(categoryItem.split("###")[0]);
+                chip.setChipBackgroundColor(ColorStateList.valueOf(Integer.parseInt(categoryItem.split("###")[1])));
+                chip.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_Medium);
+                chip.setCheckable(true);
+                chip.setCheckedIconResource(R.drawable.ic_checked_box);
+                chip.setCheckedIconVisible(true);
+                chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        chip.setChecked(isChecked);
+                    }
+                });
+                chipGroup.addView(chip);
+            }
         }
     }
 

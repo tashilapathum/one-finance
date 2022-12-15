@@ -18,6 +18,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.elconfidencial.bubbleshowcase.BubbleShowCase;
+import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -41,6 +43,7 @@ import com.tantalum.onefinance.transactions.TransactionsViewModel;
 
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Objects;
 
 public class WalletFragmentNEW extends Fragment {
     private View view;
@@ -55,6 +58,7 @@ public class WalletFragmentNEW extends Fragment {
     private final int THIS_MONTH_REPORT = 3;
     private static WalletFragmentNEW instance;
     private boolean contentLoaded = false;
+    private SpeedDialView fab;
 
     public static WalletFragmentNEW getInstance() {
         return instance;
@@ -96,7 +100,7 @@ public class WalletFragmentNEW extends Fragment {
         sharedPref.edit().putInt("reports_week", 0).apply();
         sharedPref.edit().putInt("reports_day", 0).apply();
 
-        SpeedDialView fab = view.findViewById(R.id.fab);
+        fab = view.findViewById(R.id.fab);
         fab.inflate(R.menu.wallet_fab_menu);
         fab.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
             @Override
@@ -148,6 +152,7 @@ public class WalletFragmentNEW extends Fragment {
         if (!contentLoaded) {
             loadContent();
             contentLoaded = true;
+            showInstruction();
         }
     }
 
@@ -155,6 +160,18 @@ public class WalletFragmentNEW extends Fragment {
     public void onResume() {
         super.onResume();
         showNegativeWarning();
+    }
+
+    private void showInstruction() {
+        if (!sharedPref.getBoolean("insWalletShown", false)) {
+            new BubbleShowCaseBuilder(requireActivity())
+                    .title(getString(R.string.start_here))
+                    .description(getString(R.string.tap_plus_or_minus))
+                    .targetView(fab)
+                    .highlightMode(BubbleShowCase.HighlightMode.VIEW_SURFACE)
+                    .show();
+            sharedPref.edit().putBoolean("insWalletShown", true).apply();
+        }
     }
 
     private void loadContent() {
