@@ -29,7 +29,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.tantalum.onefinance.AboutActivity;
-import com.tantalum.onefinance.CategoriesActivity;
+import com.tantalum.onefinance.categories.CategoriesActivity;
 import com.tantalum.onefinance.DatePickerFragment;
 import com.tantalum.onefinance.MainActivity;
 import com.tantalum.onefinance.R;

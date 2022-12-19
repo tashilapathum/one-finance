@@ -6,7 +6,6 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -28,18 +27,16 @@ import com.tantalum.onefinance.DateTimeHandler;
 import com.tantalum.onefinance.R;
 import com.tantalum.onefinance.accounts.Account;
 import com.tantalum.onefinance.accounts.AccountsViewModel;
+import com.tantalum.onefinance.categories.CategoriesManager;
 import com.tantalum.onefinance.transactions.TransactionItem;
 import com.tantalum.onefinance.transactions.TransactionsViewModel;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class DialogWalletInput extends BottomSheetDialogFragment {
-    private View view;
-    private int transactionType;
+    private final int transactionType;
     private SharedPreferences sharedPref;
     private TextInputLayout tilAmount;
     private TextInputLayout tilDescription;
@@ -54,7 +51,6 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
     private List<Account> accountList;
     private BottomSheetDialog dialog;
     private boolean sinhala;
-    private String currency;
 
     public DialogWalletInput(int transactionType) {
         this.transactionType = transactionType;
@@ -67,7 +63,7 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        view = getActivity().getLayoutInflater().inflate(R.layout.dialog_wallet_input, null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_wallet_input, null);
         sharedPref = getActivity().getSharedPreferences("myPref", MODE_PRIVATE);
         instance = this;
         accountsViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
@@ -81,15 +77,12 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
         etAmount = tilAmount.getEditText();
         etDescription = tilDescription.getEditText();
         etDate = tilDate.getEditText();
-        etDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("pickDate", "fromWalletInput");
-                DatePickerFragment datePicker = new DatePickerFragment();
-                datePicker.setArguments(bundle);
-                datePicker.show(getChildFragmentManager(), "date picker dialog");
-            }
+        etDate.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("pickDate", "fromWalletInput");
+            DatePickerFragment datePicker = new DatePickerFragment();
+            datePicker.setArguments(bundle);
+            datePicker.show(getChildFragmentManager(), "date picker dialog");
         });
         setDate(String.valueOf(System.currentTimeMillis()));
         chipGroup = view.findViewById(R.id.chipGroup);
@@ -98,19 +91,9 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
 
         ImageView imDialogIcon = view.findViewById(R.id.icon);
         Button btnCancel = view.findViewById(R.id.cancel);
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
         Button btnAdd = view.findViewById(R.id.add);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addTransaction();
-            }
-        });
+        btnAdd.setOnClickListener(v -> addTransaction());
 
         switch (transactionType) {
             case Constants.INCOME: {
@@ -140,24 +123,7 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
     }
 
     public void loadCategoryChips() {
-        String allCategories = sharedPref.getString(Constants.SP_CATEGORIES, null);
-        List<String> categories = new ArrayList<>();
-        if (allCategories == null) { //for first time loading
-            //assign colors
-            categories.add("Food###" + (int) (Math.random() * 1000000000));
-            categories.add("Transport###" + (int) (Math.random() * 1000000000));
-            categories.add("Clothes###" + (int) (Math.random() * 1000000000));
-            categories.add("Education###" + (int) (Math.random() * 1000000000));
-            categories.add("Other###" + (int) (Math.random() * 1000000000));
-
-            //save
-            StringBuilder allCategoriesBuilder = new StringBuilder();
-            for (String category : categories)
-                allCategoriesBuilder.append(category).append("~~~");
-            getActivity().getSharedPreferences("myPref", MODE_PRIVATE).edit()
-                    .putString(Constants.SP_CATEGORIES, allCategoriesBuilder.toString()).apply();
-        } else
-            categories.addAll(Arrays.asList(allCategories.split("~~~")));
+        List<String> categories = new CategoriesManager(requireContext()).getCategoryItems();
 
         for (String categoryItem : categories) {
             if (!categoryItem.trim().isEmpty()) {
@@ -166,14 +132,8 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
                 chip.setChipBackgroundColor(ColorStateList.valueOf(Integer.parseInt(categoryItem.split("###")[1])));
                 chip.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_Medium);
                 chip.setCheckable(true);
-                chip.setCheckedIconResource(R.drawable.ic_checked_box);
                 chip.setCheckedIconVisible(true);
-                chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        chip.setChecked(isChecked);
-                    }
-                });
+                chip.setOnCheckedChangeListener((buttonView, isChecked) -> chip.setChecked(isChecked));
                 chipGroup.addView(chip);
             }
         }
@@ -187,17 +147,14 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
                 chip.setText(account.getAccName());
                 chip.setTextColor(getResources().getColor(R.color.colorBlack)); //because of visibility issue in dark mode
                 chip.setCheckedIconResource(R.drawable.ic_checked_box);
-                chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        chip.setChecked(isChecked);
-                        if (isChecked) {
-                            chip.setChipBackgroundColorResource(R.color.colorSelectedChip);
-                            chip.setTextColor(getResources().getColor(R.color.colorWhite));
-                        } else {
-                            chip.setChipBackgroundColorResource(R.color.colorDeselectedChip);
-                            chip.setTextColor(getResources().getColor(R.color.colorBlack));
-                        }
+                chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    chip.setChecked(isChecked);
+                    if (isChecked) {
+                        chip.setChipBackgroundColorResource(R.color.colorSelectedChip);
+                        chip.setTextColor(getResources().getColor(R.color.colorWhite));
+                    } else {
+                        chip.setChipBackgroundColorResource(R.color.colorDeselectedChip);
+                        chip.setTextColor(getResources().getColor(R.color.colorBlack));
                     }
                 });
                 if (account.getId() == accountList.get(0).getId()) //check first account of the list

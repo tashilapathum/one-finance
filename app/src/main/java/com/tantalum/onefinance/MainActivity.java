@@ -4,7 +4,6 @@ import static com.tantalum.onefinance.UpgradeHandler.ONE_FINANCE_PRO;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
@@ -32,6 +31,7 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.tantalum.onefinance.bank.BankFragmentNEW;
+import com.tantalum.onefinance.categories.CategoriesActivity;
 import com.tantalum.onefinance.investments.InvestmentsFragment;
 import com.tantalum.onefinance.reports.ReportsActivity;
 import com.tantalum.onefinance.settings.SettingsActivity;

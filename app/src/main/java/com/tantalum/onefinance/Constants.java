@@ -2,6 +2,7 @@ package com.tantalum.onefinance;
 
 public class Constants {
     //shared preferences
+    public static final String SHARED_PREF = "myPref";
     public static final String SP_CATEGORIES = "categories";
     public static final String SP_BALANCE = "balance";
 

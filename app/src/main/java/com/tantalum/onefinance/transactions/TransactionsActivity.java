@@ -7,7 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +18,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,12 +32,13 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.tantalum.onefinance.AboutActivity;
-import com.tantalum.onefinance.CategoriesActivity;
+import com.tantalum.onefinance.categories.CategoriesActivity;
 import com.tantalum.onefinance.CustomFilterArrayAdapter;
 import com.tantalum.onefinance.DateTimeHandler;
 import com.tantalum.onefinance.MainActivity;
 import com.tantalum.onefinance.R;
 import com.tantalum.onefinance.UpgradeToProActivity;
+import com.tantalum.onefinance.categories.CategoriesManager;
 import com.tantalum.onefinance.reports.ReportsActivity;
 import com.tantalum.onefinance.settings.SettingsActivity;
 
@@ -51,7 +52,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 
-public class TransactionsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class TransactionsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
     private DrawerLayout drawer;
     public static final String TAG = "TransactionsActivity";
     private SharedPreferences sharedPref;
@@ -63,14 +64,16 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
     private Spinner dateSpinner;
     private Spinner typeSpinner;
     private Spinner sortSpinner;
+    private Spinner categorySpinner;
     private int date;
     private int type;
     private int sort;
+    private int category;
     List<TransactionItem> transactionsList;
     List<TransactionItem> filteredList;
     private NavigationView navigationView;
     private int updatingPosition = 0;
-
+    private String[] categoriesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +111,7 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         /*----------------------------------------------------------------------------------------*/
-        String currency = sharedPref.getString("currency", "");
+
         loadItems();
         loadFilters();
         etSearch = findViewById(R.id.etSearch);
@@ -124,12 +127,7 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
             public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
                 final TransactionItem transactionItem = transactionsAdapter.getTransactionItemAt(viewHolder.getAdapterPosition());
                 Snackbar snackbar = Snackbar.make(recyclerView, R.string.deleted, Snackbar.LENGTH_SHORT)
-                        .setAction(R.string.undo, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                transactionsAdapter.notifyDataSetChanged();
-                            }
-                        })
+                        .setAction(R.string.undo, view -> transactionsAdapter.notifyDataSetChanged())
                         .addCallback(new Snackbar.Callback() {
                             @Override
                             public void onDismissed(Snackbar transientBottomBar, int event) {
@@ -290,20 +288,11 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
         recyclerView.setAdapter(transactionsAdapter);
 
         transactionsViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(TransactionsViewModel.class);
-        transactionsViewModel.getAllTransactionItems().observe(this, new Observer<List<TransactionItem>>() {
-            @Override
-            public void onChanged(List<TransactionItem> transactionItems) {
-                transactionsAdapter.submitList(transactionItems);
-            }
-        });
-
-        transactionsAdapter.setOnTransactionClickListener(new TransactionsAdapter.OnTransactionClickListener() {
-            @Override
-            public void OnTransactionClick(TransactionItem transactionItem, int position) {
-                updatingPosition = position;
-                DialogTransactionEditor transactionEditor = new DialogTransactionEditor(false, transactionItem);
-                transactionEditor.show(getSupportFragmentManager(), "transaction editor dialog");
-            }
+        transactionsViewModel.getAllTransactionItems().observe(this, transactionItems -> transactionsAdapter.submitList(transactionItems));
+        transactionsAdapter.setOnTransactionClickListener((transactionItem, position) -> {
+            updatingPosition = position;
+            DialogTransactionEditor transactionEditor = new DialogTransactionEditor(false, transactionItem);
+            transactionEditor.show(getSupportFragmentManager(), "transaction editor dialog");
         });
     }
 
@@ -322,14 +311,24 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
             @Override
             public void afterTextChanged(Editable editable) {
                 String text = editable.toString();
-                List<TransactionItem> fullList = transactionsViewModel.getTransactionsList();
-                ArrayList<TransactionItem> filteredList = new ArrayList<>();
-                for (TransactionItem item : fullList) {
-                    if (item.getDescription().toLowerCase().contains(text.toLowerCase()) || item.getAmount().toLowerCase().contains(text.toLowerCase())) {
-                        filteredList.add(item);
-                    }
+                List<TransactionItem> fullList;
+                if (filteredList == null || filtersNotApplied()) {
+                    transactionsList = transactionsViewModel.getTransactionsList();
+                    fullList = transactionsList;
                 }
-                transactionsAdapter.submitList(filteredList);
+                else fullList = filteredList;
+
+                if (text.isEmpty())
+                    transactionsAdapter.submitList(fullList);
+                else {
+                    ArrayList<TransactionItem> searchFilteredList = new ArrayList<>();
+                    for (TransactionItem item : fullList) {
+                        if (item.getDescription().toLowerCase().contains(text.toLowerCase()) || item.getAmount().toLowerCase().contains(text.toLowerCase())) {
+                            searchFilteredList.add(item);
+                        }
+                    }
+                    transactionsAdapter.submitList(searchFilteredList);
+                }
             }
         });
     }
@@ -359,95 +358,55 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
         dateSpinner = findViewById(R.id.date_spinner);
         typeSpinner = findViewById(R.id.type_spinner);
         sortSpinner = findViewById(R.id.sort_spinner);
+        categorySpinner = findViewById(R.id.category_spinner);
 
         //date
         String[] dateList = getResources().getStringArray(R.array.date_list);
         CustomFilterArrayAdapter dateAdapter = new CustomFilterArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, dateList);
         dateSpinner.setAdapter(dateAdapter);
-        dateSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position > 0) {
-                    try {
-                        filter();
-                    } catch (ConcurrentModificationException e) {
-                        Toast.makeText(TransactionsActivity.this, "Process interrupted", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        dateSpinner.setOnItemSelectedListener(this);
 
         //type
         String[] typeList = getResources().getStringArray(R.array.type_list);
         CustomFilterArrayAdapter typeAdapter = new CustomFilterArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, typeList);
         typeSpinner.setAdapter(typeAdapter);
-        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position > 0) {
-                    try {
-                        filter();
-                    } catch (ConcurrentModificationException e) {
-                        Toast.makeText(TransactionsActivity.this, "Process interrupted", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        typeSpinner.setOnItemSelectedListener(this);
 
         //sort
         String[] sortList = getResources().getStringArray(R.array.sort_list);
         CustomFilterArrayAdapter sortAdapter = new CustomFilterArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, sortList);
         sortSpinner.setAdapter(sortAdapter);
-        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position > 0) {
-                    try {
-                        filter();
-                    } catch (ConcurrentModificationException e) {
-                        Toast.makeText(TransactionsActivity.this, "Process interrupted", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
+        sortSpinner.setOnItemSelectedListener(this);
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        //category
+        List<String> categories = new CategoriesManager(this).getCategoryNames();
+        categories.add(0, getString(R.string.any_category));
+        categories.add(0, getString(R.string.category));
+        categoriesList = categories.toArray(new String[0]);
+        CustomFilterArrayAdapter categoryAdapter = new CustomFilterArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, categoriesList);
+        categorySpinner.setAdapter(categoryAdapter);
+        categorySpinner.setOnItemSelectedListener(this);
     }
 
     private void filter() {
         date = dateSpinner.getSelectedItemPosition();
         type = typeSpinner.getSelectedItemPosition();
         sort = sortSpinner.getSelectedItemPosition();
+        category = categorySpinner.getSelectedItemPosition();
 
         transactionsList = transactionsViewModel.getTransactionsList();
         filteredList = new ArrayList<>();
         switch (date) {
             case 1: { //all
-                if (filteredList.isEmpty())
-                    filteredList.addAll(transactionsList);
+                filteredList.addAll(transactionsList);
                 break;
             }
             case 2: { //today
                 List<TransactionItem> checkingList = new ArrayList<>();
                 if (filteredList.isEmpty())
-                    for (int i = 0; i < transactionsList.size(); i++)
-                        checkingList.add(transactionsList.get(i));
+                    checkingList.addAll(transactionsList);
                 else
-                    for (int i = 0; i < filteredList.size(); i++)
-                        checkingList.add(filteredList.get(i));
+                    checkingList.addAll(filteredList);
 
                 for (TransactionItem item : checkingList) {
                     DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getTimeInMillis());
@@ -461,11 +420,9 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
             case 3: { //yesterday
                 List<TransactionItem> checkingList = new ArrayList<>();
                 if (filteredList.isEmpty())
-                    for (int i = 0; i < transactionsList.size(); i++)
-                        checkingList.add(transactionsList.get(i));
+                    checkingList.addAll(transactionsList);
                 else
-                    for (int i = 0; i < filteredList.size(); i++)
-                        checkingList.add(filteredList.get(i));
+                    checkingList.addAll(filteredList);
 
                 for (TransactionItem item : checkingList) {
                     DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getTimeInMillis());
@@ -479,11 +436,9 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
             case 4: { //this week
                 List<TransactionItem> checkingList = new ArrayList<>();
                 if (filteredList.isEmpty())
-                    for (int i = 0; i < transactionsList.size(); i++)
-                        checkingList.add(transactionsList.get(i));
+                    checkingList.addAll(transactionsList);
                 else
-                    for (int i = 0; i < filteredList.size(); i++)
-                        checkingList.add(filteredList.get(i));
+                    checkingList.addAll(filteredList);
 
                 for (TransactionItem item : checkingList) {
                     DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getTimeInMillis());
@@ -497,11 +452,9 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
             case 5: { //last week
                 List<TransactionItem> checkingList = new ArrayList<>();
                 if (filteredList.isEmpty())
-                    for (int i = 0; i < transactionsList.size(); i++)
-                        checkingList.add(transactionsList.get(i));
+                    checkingList.addAll(transactionsList);
                 else
-                    for (int i = 0; i < filteredList.size(); i++)
-                        checkingList.add(filteredList.get(i));
+                    checkingList.addAll(filteredList);
 
                 for (TransactionItem item : checkingList) {
                     DateTimeHandler dateTimeHandler = new DateTimeHandler(item.getTimeInMillis());
@@ -531,11 +484,9 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
             case 2: { //incomes
                 List<TransactionItem> checkingList = new ArrayList<>();
                 if (filteredList.isEmpty())
-                    for (int i = 0; i < transactionsList.size(); i++)
-                        checkingList.add(transactionsList.get(i));
+                    checkingList.addAll(transactionsList);
                 else
-                    for (int i = 0; i < filteredList.size(); i++)
-                        checkingList.add(filteredList.get(i));
+                    checkingList.addAll(filteredList);
 
                 for (TransactionItem item : checkingList) {
                     if (item.getPrefix().equals("+") && !containsItem(item))
@@ -548,11 +499,9 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
             case 3: { //expenses
                 List<TransactionItem> checkingList = new ArrayList<>();
                 if (filteredList.isEmpty())
-                    for (int i = 0; i < transactionsList.size(); i++)
-                        checkingList.add(transactionsList.get(i));
+                    checkingList.addAll(transactionsList);
                 else
-                    for (int i = 0; i < filteredList.size(); i++)
-                        checkingList.add(filteredList.get(i));
+                    checkingList.addAll(filteredList);
 
                 for (TransactionItem item : checkingList) {
                     if (item.getPrefix().equals("-") && !containsItem(item))
@@ -580,75 +529,58 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
             }
             case 2: { //date - descending
                 if (!filteredList.isEmpty())
-                    Collections.sort(filteredList, new Comparator<TransactionItem>() {
-                        @Override
-                        public int compare(TransactionItem o1, TransactionItem o2) {
-                            return Double.valueOf(o2.getTimeInMillis()).compareTo(Double.valueOf(o1.getTimeInMillis()));
-                        }
-                    });
+                    Collections.sort(filteredList, (o1, o2) -> Double.valueOf(o2.getTimeInMillis()).compareTo(Double.valueOf(o1.getTimeInMillis())));
                 else
-                    Collections.sort(transactionsList, new Comparator<TransactionItem>() {
-                        @Override
-                        public int compare(TransactionItem o1, TransactionItem o2) {
-                            return Double.valueOf(o2.getTimeInMillis()).compareTo(Double.valueOf(o1.getTimeInMillis()));
-                        }
-                    });
+                    Collections.sort(transactionsList, (o1, o2) -> Double.valueOf(o2.getTimeInMillis()).compareTo(Double.valueOf(o1.getTimeInMillis())));
 
                 break;
             }
             case 3: { //date - ascending
                 if (!filteredList.isEmpty())
-                    Collections.sort(filteredList, new Comparator<TransactionItem>() {
-                        @Override
-                        public int compare(TransactionItem o1, TransactionItem o2) {
-                            return Double.valueOf(o1.getTimeInMillis()).compareTo(Double.valueOf(o2.getTimeInMillis()));
-                        }
-                    });
+                    Collections.sort(filteredList, Comparator.comparing(o -> Double.valueOf(o.getTimeInMillis())));
                 else
-                    Collections.sort(transactionsList, new Comparator<TransactionItem>() {
-                        @Override
-                        public int compare(TransactionItem o1, TransactionItem o2) {
-                            return Double.valueOf(o1.getTimeInMillis()).compareTo(Double.valueOf(o2.getTimeInMillis()));
-                        }
-                    });
+                    Collections.sort(transactionsList, Comparator.comparing(o -> Double.valueOf(o.getTimeInMillis())));
 
                 break;
             }
             case 4: { //amount - descending
                 if (!filteredList.isEmpty())
-                    Collections.sort(filteredList, new Comparator<TransactionItem>() {
-                        @Override
-                        public int compare(TransactionItem o1, TransactionItem o2) {
-                            return Double.valueOf(o2.getAmount()).compareTo(Double.valueOf(o1.getAmount()));
-                        }
-                    });
+                    Collections.sort(filteredList, (o1, o2) -> Double.valueOf(o2.getAmount()).compareTo(Double.valueOf(o1.getAmount())));
                 else
-                    Collections.sort(transactionsList, new Comparator<TransactionItem>() {
-                        @Override
-                        public int compare(TransactionItem o1, TransactionItem o2) {
-                            return Double.valueOf(o2.getAmount()).compareTo(Double.valueOf(o1.getAmount()));
-                        }
-                    });
+                    Collections.sort(transactionsList, (o1, o2) -> Double.valueOf(o2.getAmount()).compareTo(Double.valueOf(o1.getAmount())));
                 break;
             }
             case 5: { //amount - ascending
                 if (!filteredList.isEmpty())
-                    Collections.sort(filteredList, new Comparator<TransactionItem>() {
-                        @Override
-                        public int compare(TransactionItem o1, TransactionItem o2) {
-                            return Double.valueOf(o1.getAmount()).compareTo(Double.valueOf(o2.getAmount()));
-                        }
-                    });
+                    Collections.sort(filteredList, Comparator.comparing(o -> Double.valueOf(o.getAmount())));
                 else
-                    Collections.sort(transactionsList, new Comparator<TransactionItem>() {
-                        @Override
-                        public int compare(TransactionItem o1, TransactionItem o2) {
-                            return Double.valueOf(o1.getAmount()).compareTo(Double.valueOf(o2.getAmount()));
-                        }
-                    });
+                    Collections.sort(transactionsList, Comparator.comparing(o -> Double.valueOf(o.getAmount())));
                 break;
             }
         }
+
+        //match category
+        if (category > 0) { //unselected
+            if (category == 1) { //any category
+                if (filteredList.isEmpty())
+                    filteredList.addAll(transactionsList);
+            } else {
+                List<TransactionItem> checkingList = new ArrayList<>();
+                if (filtersNotApplied())
+                    checkingList.addAll(transactionsList);
+                else
+                    checkingList.addAll(filteredList);
+
+                for (TransactionItem item : checkingList) {
+                    if (item.getCategory().split("###")[0].equals(categoriesList[category]) && !containsItem(item))
+                        filteredList.add(item);
+                    if (!item.getCategory().split("###")[0].equals(categoriesList[category]) && containsItem(item))
+                        remove(item);
+                }
+            }
+        }
+
+        Log.d(TAG, "Date: " + date + " / Type: " + type + " / Sort: " + sort + " / Category: " + category);
 
         //if (date != 6)
         showResults();
@@ -678,6 +610,7 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
     private void showResults() {
         transactionsAdapter.submitList(filteredList);
         mLayoutManager.smoothScrollToPosition(recyclerView, null, 0);
+        etSearch.setText(null);
     }
 
     public void toggleFilters(View view) {
@@ -691,9 +624,31 @@ public class TransactionsActivity extends AppCompatActivity implements Navigatio
             dateSpinner.setSelection(0);
             typeSpinner.setSelection(0);
             sortSpinner.setSelection(0);
+            categorySpinner.setSelection(0);
+            category = 0;
             transactionsList = transactionsViewModel.getTransactionsList();
             transactionsAdapter.submitList(transactionsList);
             mLayoutManager.smoothScrollToPosition(recyclerView, null, 0);
         }
+    }
+
+    private boolean filtersNotApplied() {
+        return filteredList.isEmpty() && date == 0 && type == 0;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (position > 0) {
+            try {
+                filter();
+            } catch (ConcurrentModificationException e) {
+                Toast.makeText(TransactionsActivity.this, "Process interrupted", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

@@ -14,6 +14,7 @@ import androidx.fragment.app.DialogFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.larswerkman.holocolorpicker.ColorPicker;
 import com.larswerkman.holocolorpicker.OpacityBar;
+import com.tantalum.onefinance.categories.CategoriesActivity;
 
 import java.util.List;
 

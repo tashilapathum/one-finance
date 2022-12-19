@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
     <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
@@ -15,7 +17,7 @@
         android:theme="@style/AppThemeDark"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name="com.tantalum.onefinance.CategoriesActivity"
+            android:name="com.tantalum.onefinance.categories.CategoriesActivity"
             android:label="@string/categories"/>
         <activity android:name="com.tantalum.onefinance.WebViewActivity" />
 

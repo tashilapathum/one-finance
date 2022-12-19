@@ -33,7 +33,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.tantalum.onefinance.AboutActivity;
 import com.tantalum.onefinance.AlertReceiver;
-import com.tantalum.onefinance.CategoriesActivity;
+import com.tantalum.onefinance.categories.CategoriesActivity;
 import com.tantalum.onefinance.quicklist.QuickListActivity;
 import com.tantalum.onefinance.EnterPIN;
 import com.tantalum.onefinance.MainActivity;

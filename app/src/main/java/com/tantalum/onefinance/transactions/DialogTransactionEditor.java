@@ -2,6 +2,7 @@ package com.tantalum.onefinance.transactions;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -12,13 +13,16 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tantalum.onefinance.DatePickerFragment;
 import com.tantalum.onefinance.DateTimeHandler;
 import com.tantalum.onefinance.R;
+import com.tantalum.onefinance.categories.CategoriesManager;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,20 +33,21 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
     private View view;
     private TextInputLayout tilAmount;
     private TextInputLayout tilDescription;
+    private TextInputLayout tilCategory;
     private TextInputLayout tilDate;
     private EditText etAmount;
     private EditText etDescription;
+    private EditText etCategory;
     private EditText etDate;
     private TransactionItem transactionItem;
     private BottomSheetDialog dialog;
     private static DialogTransactionEditor instance;
     private SharedPreferences sharedPref;
     private String dateInMillis;
-    private RadioGroup radioGroup;
-    private MaterialRadioButton rbExpense;
     private MaterialRadioButton rbIncome;
     private boolean isFromFragment;
     private TransactionsViewModel transactionsViewModel;
+    private CategoriesManager categoriesManager;
 
 
     @NonNull
@@ -55,39 +60,26 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
         dialog.setContentView(view);
         transactionsViewModel = new ViewModelProvider(getActivity(), ViewModelProvider.AndroidViewModelFactory
                 .getInstance(getActivity().getApplication())).get(TransactionsViewModel.class);
+        categoriesManager = new CategoriesManager(requireContext());
 
         Button btnSave = view.findViewById(R.id.save);
         Button btnCancel = view.findViewById(R.id.cancel);
         tilAmount = view.findViewById(R.id.amount);
         tilDescription = view.findViewById(R.id.description);
+        tilCategory = view.findViewById(R.id.category);
         tilDate = view.findViewById(R.id.date);
         etAmount = tilAmount.getEditText();
         etDescription = tilDescription.getEditText();
+        etCategory = tilCategory.getEditText();
         etDate = tilDate.getEditText();
-        radioGroup = view.findViewById(R.id.radioGroup);
-        rbExpense = view.findViewById(R.id.expense);
         rbIncome = view.findViewById(R.id.income);
 
         fillDetails();
 
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                save();
-            }
-        });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.cancel();
-            }
-        });
-        etDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDatePicker();
-            }
-        });
+        btnSave.setOnClickListener(view -> save());
+        btnCancel.setOnClickListener(view -> dialog.cancel());
+        etCategory.setOnClickListener(view -> showCategoryPicker());
+        etDate.setOnClickListener(view -> showDatePicker());
 
         return dialog;
     }
@@ -124,6 +116,7 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
     private void fillDetails() {
         etAmount.setText(transactionItem.getAmount());
         etDescription.setText(transactionItem.getDescription());
+        etCategory.setText(transactionItem.getCategory().split("###")[0]);
         String date = new DateTimeHandler(transactionItem.getTimeInMillis()).getTimestamp();
         etDate.setText(date);
         etDate.setFocusable(false);
@@ -137,11 +130,11 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
         if (validateAmount() & validateDescription()) {
             String oldAmountStr = transactionItem.getAmount();
             String newAmountStr = etAmount.getText().toString().replace(",", ".");
-            String description = etDescription.getText().toString();
-            if (!transactionItem.getAmount().equals(df.format(Double.parseDouble(newAmountStr))))
-                transactionItem.setAmount(df.format(Double.parseDouble(newAmountStr)));
-            if (!transactionItem.getDescription().equals(description))
-                transactionItem.setDescription(description);
+            String description = etDescription.getText().toString().trim();
+            String category = etCategory.getText().toString();
+            transactionItem.setAmount(df.format(Double.parseDouble(newAmountStr)));
+            transactionItem.setDescription(description);
+            transactionItem.setCategory(category);
 
             if (dateInMillis != null) {
                 if (new DateTimeHandler(transactionItem.getTimeInMillis()).getDayOfYear() != new DateTimeHandler(dateInMillis).getDayOfYear())
@@ -180,6 +173,30 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
             TextView tvBottomNote = view.findViewById(R.id.bottomNote);
             tvBottomNote.setVisibility(View.VISIBLE);
         }
+    }
+
+    /**Show only category names in the dialog but set the full category item to the transaction when selected*/
+    private void showCategoryPicker() {
+        List<String> categories = categoriesManager.getCategoryItems();
+        List<String> categoryNames = categoriesManager.getCategoryNames();
+
+        //find selected category index
+        int selectedIndex = -1;
+        for (int i = 0; i < categories.size(); i++)
+            if (etCategory.getText().toString().equals(categoryNames.get(i))) {
+                selectedIndex = i;
+                break;
+            }
+
+        //show dialog
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.category)
+                .setSingleChoiceItems(categoryNames.toArray(new String[0]), selectedIndex, (dialog, which) -> {
+                    etCategory.setText(categoryNames.get(which));
+                    transactionItem.setCategory(categories.get(which));
+                    dialog.dismiss();
+                })
+                .show();
     }
 
     private void showDatePicker() {

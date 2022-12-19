@@ -525,4 +525,9 @@
     <string name="add_cat_trans_to_see_them_in_chart">Add some categorized transactions to see them in the chart</string>
     <string name="start_here">Start here</string>
     <string name="tap_plus_or_minus">Tap here and then tap + to add an income or - for an expense</string>
+    <string name="category">Category</string>
+    <string name="any_category">Any category (Default)</string>
+    <string name="notification_permission_reason">One Finance needs notification permission to send you the daily reminder. Grant notification permission?</string>
+    <string name="notifications_enabled">Notifications enabled</string>
+    <string name="notifications_enabled_description">The daily reminder notification to add your transactions was enabled. You can customize the time from settings. If you aren\'t receiving the notification, please whitelist One Finance from the battery savers</string>
 </resources>

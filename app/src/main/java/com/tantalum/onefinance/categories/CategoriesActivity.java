@@ -1,4 +1,4 @@
-package com.tantalum.onefinance;
+package com.tantalum.onefinance.categories;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -9,14 +9,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -34,8 +31,13 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.crashlytics.internal.common.CrashlyticsCore;
-import com.google.firebase.crashlytics.internal.model.CrashlyticsReport;
+import com.tantalum.onefinance.AboutActivity;
+import com.tantalum.onefinance.Amount;
+import com.tantalum.onefinance.Constants;
+import com.tantalum.onefinance.DialogAddCategory;
+import com.tantalum.onefinance.MainActivity;
+import com.tantalum.onefinance.R;
+import com.tantalum.onefinance.UpgradeToProActivity;
 import com.tantalum.onefinance.reports.ReportsActivity;
 import com.tantalum.onefinance.settings.SettingsActivity;
 import com.tantalum.onefinance.transactions.TransactionItem;
@@ -43,7 +45,6 @@ import com.tantalum.onefinance.transactions.TransactionsActivity;
 import com.tantalum.onefinance.transactions.TransactionsViewModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CategoriesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -101,24 +102,7 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
         ChipGroup chipGroup = findViewById(R.id.chipGroup);
         chipGroup.removeAllViews();
 
-        String allCategories = sharedPref.getString(Constants.SP_CATEGORIES, null);
-        categories = new ArrayList<>();
-        if (allCategories == null) { //for first time loading
-            //assign colors
-            categories.add("Food###" + (int) (Math.random() * 1000000000));
-            categories.add("Transport###" + (int) (Math.random() * 1000000000));
-            categories.add("Clothes###" + (int) (Math.random() * 1000000000));
-            categories.add("Education###" + (int) (Math.random() * 1000000000));
-            categories.add("Other###" + (int) (Math.random() * 1000000000));
-
-            //save
-            StringBuilder allCategoriesBuilder = new StringBuilder();
-            for (String category : categories)
-                allCategoriesBuilder.append(category).append("~~~");
-            getSharedPreferences("myPref", MODE_PRIVATE).edit()
-                    .putString(Constants.SP_CATEGORIES, allCategoriesBuilder.toString()).apply();
-        } else
-            categories.addAll(Arrays.asList(allCategories.split("~~~")));
+        categories = new CategoriesManager(this).getCategoryItems();
 
         for (String categoryItem : categories) {
                 Chip chip = new Chip(this);
