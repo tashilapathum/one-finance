@@ -1,9 +1,11 @@
 package com.tantalum.onefinance.wallet;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -26,6 +29,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.transition.MaterialSharedAxis;
 import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
+import com.permissionx.guolindev.PermissionX;
+import com.permissionx.guolindev.callback.ExplainReasonCallback;
+import com.permissionx.guolindev.callback.RequestCallback;
+import com.permissionx.guolindev.request.ExplainScope;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
 import com.tantalum.onefinance.Amount;
@@ -85,12 +92,9 @@ public class WalletFragmentNEW extends Fragment {
         tvBalance.setCharacterLists(TickerUtils.provideNumberList());
         tvBalance.setAnimationInterpolator(new DecelerateInterpolator());
         tvBalance.setPreferredScrollingDirection(TickerView.ScrollingDirection.ANY);
-        tvBalance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogUpdateBalance dialogUpdateBalance = new DialogUpdateBalance(getActivity());
-                dialogUpdateBalance.show(getActivity().getSupportFragmentManager(), "update balance dialog");
-            }
+        tvBalance.setOnClickListener(view -> {
+            DialogUpdateBalance dialogUpdateBalance = new DialogUpdateBalance(getActivity());
+            dialogUpdateBalance.show(getActivity().getSupportFragmentManager(), "update balance dialog");
         });
         tvBalance.setText(sharedPref.getString("balance", "0.00"));
 
@@ -102,45 +106,39 @@ public class WalletFragmentNEW extends Fragment {
 
         fab = view.findViewById(R.id.fab);
         fab.inflate(R.menu.wallet_fab_menu);
-        fab.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
-            @Override
-            public boolean onActionSelected(SpeedDialActionItem actionItem) {
-                int transactionType = 0;
-                switch (actionItem.getId()) {
-                    case R.id.add_expense: {
-                        transactionType = Constants.EXPENSE;
-                        break;
-                    }
-                    case R.id.add_income: {
-                        transactionType = Constants.INCOME;
-                        break;
-                    }
-                    case R.id.add_transfer: {
-                        if (sharedPref.getBoolean("haveAccounts", false))
-                            transactionType = Constants.TRANSFER;
-                        break;
-                    }
+        fab.setOnActionSelectedListener(actionItem -> {
+            int transactionType = 0;
+            switch (actionItem.getId()) {
+                case R.id.add_expense: {
+                    transactionType = Constants.EXPENSE;
+                    break;
                 }
-                if (transactionType != 0) {
-                    new DialogWalletInput(transactionType).show(getChildFragmentManager(), "wallet input dialog");
-                    fab.close();
-                } else {
-                    new MaterialAlertDialogBuilder(getActivity())
-                            .setTitle(R.string.acc_na)
-                            .setMessage(R.string.acc_na_des)
-                            .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(getActivity(), NewAccount.class);
-                                    intent.putExtra("isNewAccount", true);
-                                    startActivity(intent);
-                                }
-                            })
-                            .setNegativeButton(R.string.cancel, null)
-                            .show();
+                case R.id.add_income: {
+                    transactionType = Constants.INCOME;
+                    break;
                 }
-                return false;
+                case R.id.add_transfer: {
+                    if (sharedPref.getBoolean("haveAccounts", false))
+                        transactionType = Constants.TRANSFER;
+                    break;
+                }
             }
+            if (transactionType != 0) {
+                new DialogWalletInput(transactionType).show(getChildFragmentManager(), "wallet input dialog");
+                fab.close();
+            } else {
+                new MaterialAlertDialogBuilder(getActivity())
+                        .setTitle(R.string.acc_na)
+                        .setMessage(R.string.acc_na_des)
+                        .setPositiveButton(R.string.add, (dialog, which) -> {
+                            Intent intent = new Intent(getActivity(), NewAccount.class);
+                            intent.putExtra("isNewAccount", true);
+                            startActivity(intent);
+                        })
+                        .setNegativeButton(R.string.cancel, null)
+                        .show();
+            }
+            return false;
         });
 
         return view;
@@ -230,18 +228,13 @@ public class WalletFragmentNEW extends Fragment {
                 chip.setChipStrokeWidth(4f);
                 chip.setChipCornerRadius(64f);
                 chip.setChipStrokeColorResource(R.color.colorAccentTransparent);
-                chip.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        addExpense(
-                                chip.getText().toString().split("\\(")[0], //item name
-                                chip.getText().toString().split("\\(")[1]
-                                        .replace(currency, "")
-                                        .replace(")", ""), //price
-                                chip.getHint().toString() //category + color (previously set as hint)
-                        );
-                    }
-                });
+                chip.setOnClickListener(view -> addExpense(
+                        chip.getText().toString().split("\\(")[0], //item name
+                        chip.getText().toString().split("\\(")[1]
+                                .replace(currency, "")
+                                .replace(")", ""), //price
+                        chip.getHint().toString() //category + color (previously set as hint)
+                ));
                 chipGroup.addView(chip, i, params);
             }
         } else {
@@ -252,12 +245,7 @@ public class WalletFragmentNEW extends Fragment {
             chip.setElevation(8f);
             chip.setChipStrokeWidth(4f);
             chip.setChipStrokeColorResource(R.color.colorAccent);
-            chip.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startActivity(new Intent(getActivity(), QuickListActivity.class));
-                }
-            });
+            chip.setOnClickListener(view -> startActivity(new Intent(getActivity(), QuickListActivity.class)));
             chipGroup.addView(chip, 0, params);
         }
     }
@@ -280,6 +268,8 @@ public class WalletFragmentNEW extends Fragment {
         tvBalance.setText(balance);
 
         showNegativeWarning();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            requestNotificationPermission();
     }
 
     private void showNegativeWarning() {
@@ -290,22 +280,40 @@ public class WalletFragmentNEW extends Fragment {
             tvCurrency.setTextColor(getActivity().getResources().getColor(android.R.color.holo_red_light));
             if (!sharedPref.getBoolean("negativeEnabled", false)) {
                 imWarning.setVisibility(View.VISIBLE);
-                imWarning.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        new MaterialAlertDialogBuilder(getActivity())
-                                .setTitle(R.string.neg_balance)
-                                .setMessage(R.string.update_balance_des)
-                                .setPositiveButton(R.string.ok, null)
-                                .show();
-                    }
-                });
+                imWarning.setOnClickListener(view -> new MaterialAlertDialogBuilder(getActivity())
+                        .setTitle(R.string.neg_balance)
+                        .setMessage(R.string.update_balance_des)
+                        .setPositiveButton(R.string.ok, null)
+                        .show());
             }
         } else {
             imWarning.setVisibility(View.GONE);
             tvBalance.setTextColor(getActivity().getResources().getColor(android.R.color.holo_green_dark));
             tvCurrency.setTextColor(getActivity().getResources().getColor(android.R.color.holo_green_dark));
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+    private void requestNotificationPermission() {
+        if (!PermissionX.areNotificationsEnabled(requireContext()))
+            PermissionX.init(this)
+                    .permissions(Manifest.permission.POST_NOTIFICATIONS)
+                    .onExplainRequestReason((scope, deniedList) ->
+                            scope.showRequestReasonDialog(
+                                    deniedList,
+                                    getString(R.string.notification_permission_reason),
+                                    getString(R.string.yes),
+                                    getString(R.string.no)
+                            ))
+                    .request((allGranted, grantedList, deniedList) -> {
+                                if (!allGranted)
+                                    new MaterialAlertDialogBuilder(requireContext())
+                                            .setTitle(R.string.notifications_enabled)
+                                            .setMessage(R.string.notifications_enabled_description)
+                                            .setPositiveButton(R.string.ok, null)
+                                            .show();
+                            }
+                    );
     }
 
 }
