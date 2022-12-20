@@ -503,4 +503,7 @@
     <string name="notification_permission_reason">One Finance needs notification permission to send you the daily reminder. Grant notification permission?</string>
     <string name="notifications_enabled">Notifications enabled</string>
     <string name="notifications_enabled_description">The daily reminder notification to add your transactions was enabled. You can customize the time from settings. If you aren\'t receiving the notification, please whitelist One Finance from the battery savers</string>
+    <string name="add_account">Add account</string>
+    <string name="reached_categories_limit">You\'ve reached categories limit</string>
+    <string name="remove_categories_or_upgrade">Remove some categories before adding new ones or upgrade to pro to add unlimited categories</string>
 </resources>

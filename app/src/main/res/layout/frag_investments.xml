@@ -28,7 +28,8 @@
                 android:text="@string/recently_added"
                 app:chipBackgroundColor="@color/colorAccentTransparent"
                 app:checkedIconEnabled="true"
-                app:checkedIconVisible="true"/>
+                app:checkedIconVisible="true"
+                app:chipStrokeWidth="0dp"/>
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/profitChip"
@@ -38,7 +39,8 @@
                 android:text="@string/most_profitable"
                 app:chipBackgroundColor="@color/colorAccentTransparent"
                 app:checkedIconEnabled="true"
-                app:checkedIconVisible="true" />
+                app:checkedIconVisible="true"
+                app:chipStrokeWidth="0dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/returnChip"
@@ -48,7 +50,8 @@
                 android:text="@string/most_return"
                 app:chipBackgroundColor="@color/colorAccentTransparent"
                 app:checkedIconEnabled="true"
-                app:checkedIconVisible="true" />
+                app:checkedIconVisible="true"
+                app:chipStrokeWidth="0dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/timeChip"
@@ -58,7 +61,8 @@
                 android:text="@string/longest_time_period"
                 app:chipBackgroundColor="@color/colorAccentTransparent"
                 app:checkedIconEnabled="true"
-                app:checkedIconVisible="true" />
+                app:checkedIconVisible="true"
+                app:chipStrokeWidth="0dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/investChip"
@@ -69,7 +73,8 @@
                 android:text="@string/highest_investment"
                 app:chipBackgroundColor="@color/colorAccentTransparent"
                 app:checkedIconEnabled="true"
-                app:checkedIconVisible="true" />
+                app:checkedIconVisible="true"
+                app:chipStrokeWidth="0dp" />
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
 

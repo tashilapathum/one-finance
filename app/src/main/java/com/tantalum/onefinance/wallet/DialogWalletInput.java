@@ -133,6 +133,7 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
                 chip.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_Medium);
                 chip.setCheckable(true);
                 chip.setCheckedIconVisible(true);
+                chip.setChipStrokeWidth(0f);
                 chip.setOnCheckedChangeListener((buttonView, isChecked) -> chip.setChecked(isChecked));
                 chipGroup.addView(chip);
             }
@@ -147,6 +148,7 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
                 chip.setText(account.getAccName());
                 chip.setTextColor(getResources().getColor(R.color.colorBlack)); //because of visibility issue in dark mode
                 chip.setCheckedIconResource(R.drawable.ic_checked_box);
+                chip.setChipStrokeWidth(0f);
                 chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
                     chip.setChecked(isChecked);
                     if (isChecked) {

@@ -9,6 +9,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -37,7 +38,9 @@ import com.tantalum.onefinance.Constants;
 import com.tantalum.onefinance.DialogAddCategory;
 import com.tantalum.onefinance.MainActivity;
 import com.tantalum.onefinance.R;
+import com.tantalum.onefinance.UpgradeHandler;
 import com.tantalum.onefinance.UpgradeToProActivity;
+import com.tantalum.onefinance.accounts.AccountManager;
 import com.tantalum.onefinance.reports.ReportsActivity;
 import com.tantalum.onefinance.settings.SettingsActivity;
 import com.tantalum.onefinance.transactions.TransactionItem;
@@ -110,6 +113,7 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
                 chip.setChipBackgroundColor(ColorStateList.valueOf(Integer.parseInt(categoryItem.split("###")[1])));
                 chip.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_Medium);
                 chip.setCloseIconVisible(true);
+                chip.setChipStrokeWidth(0f);
                 chip.setOnCloseIconClickListener(v -> new MaterialAlertDialogBuilder(CategoriesActivity.this)
                         .setTitle(getString(R.string.confirm))
                         .setMessage(getString(R.string.confirm_item_delete))
@@ -145,7 +149,21 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
         chip.setText(getString(R.string.add));
         chip.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_Medium);
         chip.setTextColor(getResources().getColor(R.color.colorAccent));
-        chip.setOnClickListener(v -> new DialogAddCategory(categories).show(getSupportFragmentManager(), "add category dialog"));
+        chip.setChipStrokeWidth(0f);
+        chip.setOnClickListener(v -> {
+            if (UpgradeHandler.isProActive(this) || categories.size() < 5)
+                new DialogAddCategory(categories).show(getSupportFragmentManager(), "add category dialog");
+            else
+                new MaterialAlertDialogBuilder(this)
+                        .setTitle(R.string.reached_categories_limit)
+                        .setMessage(R.string.remove_categories_or_upgrade)
+                        .setPositiveButton(R.string.upgrade_to_pro, (dialog, which) -> {
+                            Intent intent = new Intent(this, UpgradeToProActivity.class);
+                            startActivity(intent);
+                        })
+                        .setNegativeButton(R.string.cancel, null)
+                        .show();
+        });
         chipGroup.addView(chip);
     }
 
@@ -157,6 +175,8 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
         pieChart.getDescription().setEnabled(false);
         pieChart.setCenterTextSizePixels(48);
         pieChart.setDrawEntryLabels(false);
+        pieChart.setHoleColor(getResources().getColor(R.color.colorWhiteTransparent));
+        pieChart.setCenterTextColor(getResources().getColor(R.color.colorDivider));
         pieChart.animateY(1000, Easing.EaseOutCirc);
 
         //prepare data

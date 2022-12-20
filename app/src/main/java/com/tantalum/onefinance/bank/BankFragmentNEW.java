@@ -41,10 +41,8 @@ public class BankFragmentNEW extends Fragment implements DialogInterface.OnDismi
     private AccountsViewModel accountsViewModel;
     private List<Account> accountList;
     private ChipGroup chipGroup;
-    private SharedPreferences sharedPref;
     private Account selectedAccount;
     private SpeedDialView fab;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,32 +50,19 @@ public class BankFragmentNEW extends Fragment implements DialogInterface.OnDismi
         setEnterTransition(new MaterialSharedAxis(MaterialSharedAxis.Y, true));
     }
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_bank, container, false);
         context = getActivity();
-        sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         accountsViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(getActivity().getApplication())).get(AccountsViewModel.class);
         accountList = accountsViewModel.getAllAccounts();
         chipGroup = view.findViewById(R.id.chipGroup);
         fab = view.findViewById(R.id.fab);
 
-        view.findViewById(R.id.accounts).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AccountManager.class));
-            }
-        });
-
-        view.findViewById(R.id.accountName).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showAccDetails();
-            }
-        });
+        view.findViewById(R.id.accounts).setOnClickListener(v -> startActivity(new Intent(getActivity(), AccountManager.class)));
+        view.findViewById(R.id.accountName).setOnClickListener(v -> showAccDetails());
 
         if (accountList.isEmpty())
             showPlaceholder();
@@ -95,34 +80,24 @@ public class BankFragmentNEW extends Fragment implements DialogInterface.OnDismi
         view.findViewById(R.id.placeholder_layout).setVisibility(View.VISIBLE);
 
         //add acc button
-        view.findViewById(R.id.addAccount).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), NewAccount.class);
-                intent.putExtra("isNewAccount", true);
-                startActivity(intent);
-            }
+        view.findViewById(R.id.addAccount).setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), NewAccount.class);
+            intent.putExtra("isNewAccount", true);
+            startActivity(intent);
         });
 
         //mod fab msg
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new MaterialAlertDialogBuilder(getActivity())
+        fab.setOnClickListener(view ->
+                new MaterialAlertDialogBuilder(requireActivity())
                         .setTitle(R.string.acc_na)
                         .setMessage(R.string.acc_na_des)
-                        .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(getActivity(), NewAccount.class);
-                                intent.putExtra("isNewAccount", true);
-                                startActivity(intent);
-                            }
+                        .setPositiveButton(R.string.add, (dialog, which) -> {
+                            Intent intent = new Intent(getActivity(), NewAccount.class);
+                            intent.putExtra("isNewAccount", true);
+                            startActivity(intent);
                         })
                         .setNegativeButton(R.string.cancel, null)
-                        .show();
-            }
-        });
+                        .show());
     }
 
     private void loadAccountsChips() {
@@ -134,19 +109,16 @@ public class BankFragmentNEW extends Fragment implements DialogInterface.OnDismi
                 chip.setCheckedIconTintResource(R.color.colorAccentLightest);
                 chip.setCheckedIconVisible(true);
                 chip.setElevation(8f);
-                chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        chip.setChecked(isChecked);
-                        if (isChecked) {
-                            chip.setChipBackgroundColorResource(R.color.colorSelectedChip);
-                            chip.setTextColor(getResources().getColor(R.color.colorWhite));
-                        } else {
-                            chip.setChipBackgroundColorResource(R.color.colorDeselectedChip);
-                            chip.setTextColor(getResources().getColor(R.color.colorBlack));
-                        }
-                        switchAccount();
+                chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    chip.setChecked(isChecked);
+                    if (isChecked) {
+                        chip.setChipBackgroundColorResource(R.color.colorSelectedChip);
+                        chip.setTextColor(getResources().getColor(R.color.colorWhite));
+                    } else {
+                        chip.setChipBackgroundColorResource(R.color.colorDeselectedChip);
+                        chip.setTextColor(getResources().getColor(R.color.colorBlack));
                     }
+                    switchAccount();
                 });
                 if (account.getId() == accountList.get(0).getId()) //check first account of the list
                     chip.setChecked(true);
@@ -187,32 +159,29 @@ public class BankFragmentNEW extends Fragment implements DialogInterface.OnDismi
 
     private void setupFab() {
         fab.inflate(R.menu.bank_fab_menu);
-        fab.setOnActionSelectedListener(new SpeedDialView.OnActionSelectedListener() {
-            @Override
-            public boolean onActionSelected(SpeedDialActionItem actionItem) {
-                int transactionType = 0;
-                switch (actionItem.getId()) {
-                    case R.id.add_deposit: {
-                        transactionType = Constants.DEPOSIT;
-                        break;
-                    }
-                    case R.id.add_withdraw: {
-                        transactionType = Constants.WITHDRAWAL;
-                        break;
-                    }
-                    case R.id.add_transfer: {
-                        transactionType = Constants.TRANSFER;
-                        break;
-                    }
-                    case R.id.add_payment: {
-                        transactionType = Constants.PAYMENT;
-                        break;
-                    }
+        fab.setOnActionSelectedListener(actionItem -> {
+            int transactionType = 0;
+            switch (actionItem.getId()) {
+                case R.id.add_deposit: {
+                    transactionType = Constants.DEPOSIT;
+                    break;
                 }
-                new DialogBankInput(transactionType, selectedAccount).show(getChildFragmentManager(), "bank input dialog");
-                fab.close();
-                return false;
+                case R.id.add_withdraw: {
+                    transactionType = Constants.WITHDRAWAL;
+                    break;
+                }
+                case R.id.add_transfer: {
+                    transactionType = Constants.TRANSFER;
+                    break;
+                }
+                case R.id.add_payment: {
+                    transactionType = Constants.PAYMENT;
+                    break;
+                }
             }
+            new DialogBankInput(transactionType, selectedAccount).show(getChildFragmentManager(), "bank input dialog");
+            fab.close();
+            return false;
         });
     }
 

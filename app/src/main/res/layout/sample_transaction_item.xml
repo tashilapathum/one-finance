@@ -52,6 +52,7 @@
             app:chipMinHeight="20dp"
             app:chipMinTouchTargetSize="4dp"
             android:text="Uncategorized"
+            app:chipStrokeWidth="0dp"
             app:chipBackgroundColor="@color/colorWhiteTransparent"/>
 
     </RelativeLayout>

@@ -224,8 +224,8 @@ public class WalletFragmentNEW extends Fragment {
                 Chip chip = new Chip(getActivity());
                 chip.setText(fullQuickList.get(i).getItemName() + " (" + currency + fullQuickList.get(i).getItemPrice() + ")");
                 chip.setElevation(8f);
+                chip.setChipStrokeWidth(0f);
                 chip.setHint(fullQuickList.get(i).getCategory());
-                chip.setChipStrokeWidth(4f);
                 chip.setChipCornerRadius(64f);
                 chip.setChipStrokeColorResource(R.color.colorAccentTransparent);
                 chip.setOnClickListener(view -> addExpense(
@@ -243,7 +243,7 @@ public class WalletFragmentNEW extends Fragment {
             Chip chip = new Chip(getActivity());
             chip.setText(R.string.example_quick_item_text);
             chip.setElevation(8f);
-            chip.setChipStrokeWidth(4f);
+            chip.setChipStrokeWidth(0f);
             chip.setChipStrokeColorResource(R.color.colorAccent);
             chip.setOnClickListener(view -> startActivity(new Intent(getActivity(), QuickListActivity.class)));
             chipGroup.addView(chip, 0, params);

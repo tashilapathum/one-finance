@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="8dp"
     android:layout_marginBottom="8dp"
-    app:strokeWidth="0dp"
-    app:cardElevation="2dp">
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,14 +33,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
-                android:elevation="0dp"
-                app:chipMinTouchTargetSize="0dp"
-                app:chipMinHeight="24dp"
                 android:clickable="false"
+                android:elevation="0dp"
                 android:focusable="false"
                 android:text="Business tag"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                app:chipBackgroundColor="@color/colorAccentTransparent" />
+                app:chipBackgroundColor="@color/colorAccentTransparent"
+                app:chipMinHeight="24dp"
+                app:chipMinTouchTargetSize="0dp"
+                app:chipStrokeWidth="0dp"
+                app:chipCornerRadius="32dp"/>
 
         </LinearLayout>
 
@@ -48,8 +50,8 @@
             android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLines="2"
             android:ellipsize="end"
+            android:maxLines="2"
             android:text="Some details about this investment item such as relevant details about this investment item such as dates and other noteworthy stuff." />
 
         <LinearLayout
