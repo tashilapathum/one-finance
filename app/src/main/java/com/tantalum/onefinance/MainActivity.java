@@ -175,9 +175,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             sharedPref.edit().putBoolean("isNotificationSet", true).apply();
         }
 
-        sharedPref.edit().putBoolean("MyWalletPro", true).apply();
+        sharedPref.edit().putBoolean("MyWalletPro", false).apply();
         if (getPackageName().contains("debug"))
-            sharedPref.edit().putBoolean(ONE_FINANCE_PRO, true).apply();
+            sharedPref.edit().putBoolean(ONE_FINANCE_PRO, false).apply();
 
         //updates
         UpdateManager updateManager = new UpdateManager(this);

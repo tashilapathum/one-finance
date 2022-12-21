@@ -532,6 +532,8 @@
     <string name="after_bank_transaction_ad_id" translatable="false">ca-app-pub-8303071997891278/4866910808</string>
     <string name="after_investment_ad" translatable="false">ca-app-pub-8303071997891278/9073749123</string>
     <string name="after_cart_items_ad" translatable="false">ca-app-pub-8303071997891278/7808768919</string>
+    <string name="after_bill_ad" translatable="false">ca-app-pub-8303071997891278/7769240467</string>
+    <string name="after_loan_ad" translatable="false">ca-app-pub-8303071997891278/2265632347</string>
 
     <string name="add_cat_trans_to_see_them_in_chart">Add some categorized transactions to see them in the chart</string>
     <string name="start_here">Start here</string>

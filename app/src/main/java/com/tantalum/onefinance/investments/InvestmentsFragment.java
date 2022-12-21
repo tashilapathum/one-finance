@@ -123,7 +123,8 @@ public class InvestmentsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        loadAd();
+        if (!UpgradeHandler.isProActive(requireContext()))
+            loadAd();
     }
 
     @Override
