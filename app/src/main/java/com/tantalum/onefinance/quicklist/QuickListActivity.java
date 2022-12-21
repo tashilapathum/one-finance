@@ -23,8 +23,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tantalum.onefinance.Constants;
 import com.tantalum.onefinance.R;
-import com.tantalum.onefinance.UpgradeHandler;
-import com.tantalum.onefinance.UpgradeToProActivity;
+import com.tantalum.onefinance.pro.UpgradeHandler;
+import com.tantalum.onefinance.pro.UpgradeToProActivity;
 
 import java.util.List;
 

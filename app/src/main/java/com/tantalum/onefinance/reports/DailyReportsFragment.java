@@ -21,7 +21,7 @@ import com.tantalum.onefinance.Amount;
 import com.tantalum.onefinance.AnimationHandler;
 import com.tantalum.onefinance.DateTimeHandler;
 import com.tantalum.onefinance.R;
-import com.tantalum.onefinance.UpgradeToProActivity;
+import com.tantalum.onefinance.pro.UpgradeToProActivity;
 import com.tantalum.onefinance.transactions.TransactionItem;
 import com.tantalum.onefinance.transactions.TransactionsViewModel;
 

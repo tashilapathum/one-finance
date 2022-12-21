@@ -1,6 +1,6 @@
 package com.tantalum.onefinance;
 
-import static com.tantalum.onefinance.UpgradeHandler.ONE_FINANCE_PRO;
+import static com.tantalum.onefinance.pro.UpgradeHandler.ONE_FINANCE_PRO;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -24,6 +24,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.RequestConfiguration;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -33,17 +39,22 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.tantalum.onefinance.bank.BankFragmentNEW;
 import com.tantalum.onefinance.categories.CategoriesActivity;
 import com.tantalum.onefinance.investments.InvestmentsFragment;
+import com.tantalum.onefinance.pro.UpgradeHandler;
+import com.tantalum.onefinance.pro.UpgradeToProActivity;
 import com.tantalum.onefinance.reports.ReportsActivity;
 import com.tantalum.onefinance.settings.SettingsActivity;
 import com.tantalum.onefinance.transactions.TransactionsActivity;
 import com.tantalum.onefinance.transactions.TransactionsFragment;
 import com.tantalum.onefinance.wallet.WalletFragmentNEW;
 
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String TAG = "MainActivity";
+    private Context context;
     private DrawerLayout drawer;
     private SharedPreferences sharedPref;
     private BottomNavigationView bottomNav;
@@ -52,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        context = this;
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
 
         //to exit the app
@@ -165,11 +177,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         sharedPref.edit().putBoolean("MyWalletPro", true).apply();
         if (getPackageName().contains("debug"))
-            sharedPref.edit().putBoolean(ONE_FINANCE_PRO, true).apply();
+            sharedPref.edit().putBoolean(ONE_FINANCE_PRO, false).apply();
 
         //updates
         UpdateManager updateManager = new UpdateManager(this);
         updateManager.checkForUpdates();
+
+        loadAd();
     }
 
     @Override //so the language change works with dark mode
@@ -438,6 +452,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             }
         }
+    }
+
+    private void loadAd() {
+        if (!UpgradeHandler.isProActive(this))
+            MobileAds.initialize(this, initializationStatus -> {
+                AdView adView = findViewById(R.id.adView);
+                adView.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdLoaded() {
+                        super.onAdLoaded();
+                        adView.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onAdClosed() {
+                        super.onAdClosed();
+                        UpgradeHandler.showPrompt(context);
+                    }
+                });
+                AdRequest adRequest = new AdRequest.Builder().build();
+                adView.loadAd(adRequest);
+            });
     }
 
     private void rateApp() {

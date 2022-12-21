@@ -37,7 +37,7 @@ import com.tantalum.onefinance.CustomFilterArrayAdapter;
 import com.tantalum.onefinance.DateTimeHandler;
 import com.tantalum.onefinance.MainActivity;
 import com.tantalum.onefinance.R;
-import com.tantalum.onefinance.UpgradeToProActivity;
+import com.tantalum.onefinance.pro.UpgradeToProActivity;
 import com.tantalum.onefinance.categories.CategoriesManager;
 import com.tantalum.onefinance.reports.ReportsActivity;
 import com.tantalum.onefinance.settings.SettingsActivity;

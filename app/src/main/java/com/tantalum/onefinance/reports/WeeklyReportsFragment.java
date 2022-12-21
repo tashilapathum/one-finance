@@ -24,7 +24,7 @@ import com.tantalum.onefinance.DateTimeHandler;
 import com.tantalum.onefinance.R;
 import com.tantalum.onefinance.transactions.TransactionItem;
 import com.tantalum.onefinance.transactions.TransactionsViewModel;
-import com.tantalum.onefinance.UpgradeToProActivity;
+import com.tantalum.onefinance.pro.UpgradeToProActivity;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;

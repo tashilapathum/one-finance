@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical"
-    tools:context=".UpgradeToProActivity">
+    tools:context=".pro.UpgradeToProActivity">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"

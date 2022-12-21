@@ -41,7 +41,7 @@ import com.tantalum.onefinance.R;
 import com.tantalum.onefinance.reports.ReportsActivity;
 import com.tantalum.onefinance.TimePickerFrag;
 import com.tantalum.onefinance.transactions.TransactionsActivity;
-import com.tantalum.onefinance.UpgradeToProActivity;
+import com.tantalum.onefinance.pro.UpgradeToProActivity;
 
 import java.text.DateFormat;
 import java.util.Calendar;

@@ -1,4 +1,4 @@
-package com.tantalum.onefinance;
+package com.tantalum.onefinance.pro;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.tantalum.onefinance.MainActivity;
+import com.tantalum.onefinance.R;
 
 public class UpgradeHandler {
     public static final String ONE_FINANCE_PRO = "one_finance_pro";
@@ -31,6 +33,21 @@ public class UpgradeHandler {
                     }
                 })
                 .setCancelable(false)
+                .show();
+    }
+
+    public static void showPrompt(Context context) {
+        new MaterialAlertDialogBuilder(context)
+                .setTitle("Remove ads?")
+                .setMessage(
+                        "Upgrade to pro version for a small one-time fee, to remove ads forever plus many more extended features!"
+                                + "\n\n"
+                                + context.getString(R.string.pro_features)
+                )
+                .setPositiveButton(R.string.upgrade_to_pro, (dialog, which) -> {
+                    context.startActivity(new Intent(context, UpgradeToProActivity.class));
+                })
+                .setNegativeButton(android.R.string.cancel, null)
                 .show();
     }
 }

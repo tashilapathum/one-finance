@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_banner_ad_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="after_wallet_transaction_ad_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="after_bank_transaction_ad_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="after_investment_ad" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="after_cart_items_ad" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+</resources>

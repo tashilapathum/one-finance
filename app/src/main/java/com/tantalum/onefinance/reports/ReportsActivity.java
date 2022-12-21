@@ -35,7 +35,7 @@ import com.tantalum.onefinance.MainActivity;
 import com.tantalum.onefinance.R;
 import com.tantalum.onefinance.settings.SettingsActivity;
 import com.tantalum.onefinance.transactions.TransactionsActivity;
-import com.tantalum.onefinance.UpgradeToProActivity;
+import com.tantalum.onefinance.pro.UpgradeToProActivity;
 
 import java.util.ArrayList;
 import java.util.List;

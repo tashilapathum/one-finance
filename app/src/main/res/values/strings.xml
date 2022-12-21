@@ -495,7 +495,7 @@
     <string name="earned_">Earned&#160;</string>
     <string name="share">Share</string>
 
-
+    <!-- PRO FEATURES -->
     <string name="pro_features">
         &#160;\u2713 Multiple bank accounts (free limit is 1)\n
         \u2713 Unlimited investments (free limit is 3)\n
@@ -507,6 +507,8 @@
         \u2713 Support the developer! ❤\n
     </string>
     <string name="what_s_new_in_version" translatable="false">What\'s new</string>
+
+    <!-- WHAT'S NEW -->
     <string name="whats_new_descr" translatable="false">
         \nv1.1.5\n
         - Added support for Android 13\n
@@ -523,6 +525,14 @@
         \nv1.0.0\n
         - Initial release\n
     </string>
+
+    <!-- AD IDS -->
+    <string name="main_banner_ad_id" translatable="false">ca-app-pub-8303071997891278/7633740605</string>
+    <string name="after_wallet_transaction_ad_id" translatable="false">ca-app-pub-8303071997891278/6973650652</string>
+    <string name="after_bank_transaction_ad_id" translatable="false">ca-app-pub-8303071997891278/4866910808</string>
+    <string name="after_investment_ad" translatable="false">ca-app-pub-8303071997891278/9073749123</string>
+    <string name="after_cart_items_ad" translatable="false">ca-app-pub-8303071997891278/7808768919</string>
+
     <string name="add_cat_trans_to_see_them_in_chart">Add some categorized transactions to see them in the chart</string>
     <string name="start_here">Start here</string>
     <string name="tap_plus_or_minus">Tap here and then tap + to add an income or - for an expense</string>

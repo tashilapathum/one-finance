@@ -1,4 +1,4 @@
-package com.tantalum.onefinance;
+package com.tantalum.onefinance.pro;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.PurchaseInfo;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.tantalum.onefinance.R;
 
 import java.util.Locale;
 

@@ -23,7 +23,7 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8303071997891278~7113367134" />
+            android:value="ca-app-pub-8303071997891278~8246601230" />
 
         <activity android:name="com.tantalum.onefinance.EnterPIN" />
         <activity android:name="com.tantalum.onefinance.Insights" />
@@ -31,7 +31,7 @@
         <activity
             android:name="com.tantalum.onefinance.accounts.AccountManager"
             android:label="Account Manager" />
-        <activity android:name="com.tantalum.onefinance.UpgradeToProActivity" />
+        <activity android:name="com.tantalum.onefinance.pro.UpgradeToProActivity" />
         <activity android:name="com.tantalum.onefinance.accounts.AccountDetails" />
         <activity android:name="com.tantalum.onefinance.accounts.NewAccount" />
         <activity android:name="com.tantalum.onefinance.InitialSetupActivity" />

@@ -2,7 +2,6 @@ package com.tantalum.onefinance.wallet;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -23,22 +22,25 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.elconfidencial.bubbleshowcase.BubbleShowCase;
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.transition.MaterialSharedAxis;
-import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 import com.permissionx.guolindev.PermissionX;
-import com.permissionx.guolindev.callback.ExplainReasonCallback;
-import com.permissionx.guolindev.callback.RequestCallback;
-import com.permissionx.guolindev.request.ExplainScope;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
 import com.tantalum.onefinance.Amount;
 import com.tantalum.onefinance.Constants;
 import com.tantalum.onefinance.R;
 import com.tantalum.onefinance.accounts.NewAccount;
+import com.tantalum.onefinance.pro.UpgradeHandler;
 import com.tantalum.onefinance.quicklist.QuickListActivity;
 import com.tantalum.onefinance.quicklist.QuickItem;
 import com.tantalum.onefinance.quicklist.QuickListViewModel;
@@ -50,7 +52,6 @@ import com.tantalum.onefinance.transactions.TransactionsViewModel;
 
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Objects;
 
 public class WalletFragmentNEW extends Fragment {
     private View view;
@@ -66,6 +67,9 @@ public class WalletFragmentNEW extends Fragment {
     private static WalletFragmentNEW instance;
     private boolean contentLoaded = false;
     private SpeedDialView fab;
+
+    private InterstitialAd mInterstitialAd;
+    private int beforeInterstitialCount = 0;
 
     public static WalletFragmentNEW getInstance() {
         return instance;
@@ -152,6 +156,7 @@ public class WalletFragmentNEW extends Fragment {
             contentLoaded = true;
             showInstruction();
         }
+        loadAd();
     }
 
     @Override
@@ -270,6 +275,9 @@ public class WalletFragmentNEW extends Fragment {
         showNegativeWarning();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             requestNotificationPermission();
+
+        if (!UpgradeHandler.isProActive(requireContext()))
+            showInterstitial();
     }
 
     private void showNegativeWarning() {
@@ -291,6 +299,41 @@ public class WalletFragmentNEW extends Fragment {
             tvBalance.setTextColor(getActivity().getResources().getColor(android.R.color.holo_green_dark));
             tvCurrency.setTextColor(getActivity().getResources().getColor(android.R.color.holo_green_dark));
         }
+    }
+
+    private void loadAd() {
+        if (!UpgradeHandler.isProActive(requireContext()))
+            MobileAds.initialize(requireContext(), initializationStatus -> {
+                AdRequest adRequest = new AdRequest.Builder().build();
+
+                InterstitialAd.load(requireContext(), getString(R.string.after_wallet_transaction_ad_id), adRequest,
+                        new InterstitialAdLoadCallback() {
+                            @Override
+                            public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                                mInterstitialAd = interstitialAd;
+                            }
+
+                            @Override
+                            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                                mInterstitialAd = null;
+                            }
+                        });
+            });
+    }
+
+    private void showInterstitial() {
+        if (beforeInterstitialCount >= 3 && mInterstitialAd != null) {
+            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                @Override
+                public void onAdDismissedFullScreenContent() {
+                    super.onAdDismissedFullScreenContent();
+                    beforeInterstitialCount = 0;
+                    UpgradeHandler.showPrompt(requireContext());
+                }
+            });
+            mInterstitialAd.show(requireActivity());
+        } else
+            beforeInterstitialCount++;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)

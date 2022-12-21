@@ -11,11 +11,18 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.transition.MaterialSharedAxis;
 import com.tantalum.onefinance.R;
+import com.tantalum.onefinance.pro.UpgradeHandler;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -47,6 +54,9 @@ public class CartFragment extends Fragment {
     private String theme;
     private CartAdapter cartAdapter;
 
+    private InterstitialAd mInterstitialAd;
+    private int beforeInterstitialCount = 0;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,12 +79,7 @@ public class CartFragment extends Fragment {
         tvItemCount = view.findViewById(R.id.itemCount);
         tvTotal = view.findViewById(R.id.cartTotal);
         imDeleteCart = view.findViewById(R.id.cart_delete);
-        imDeleteCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clearCart();
-            }
-        });
+        imDeleteCart.setOnClickListener(view -> clearCart());
         itemCount = sharedPref.getInt("cartItemCount", 0);
         total = Double.parseDouble(sharedPref.getString("cartTotal", "0"));
 
@@ -116,30 +121,33 @@ public class CartFragment extends Fragment {
         }).attachToRecyclerView(recyclerView);
 
 
-        cartAdapter.setOnCartItemClickListener(new CartAdapter.OnCartItemClickListener() {
-            @Override
-            public void OnCartItemClick(CartItem cartItem) {
-                int dbID = cartItem.getId();
-                String itemName = cartItem.getItemName();
-                String oldItemPrice = cartItem.getItemPrice();
-                int oldQuantity = cartItem.getQuantity();
-                boolean isChecked = cartItem.isChecked();
-                Bundle bundle = new Bundle();
-                bundle.putInt("cart dbID", dbID);
-                bundle.putString("cart itemName", itemName);
-                bundle.putString("cart itemPrice", oldItemPrice);
-                bundle.putInt("cart quantity", oldQuantity);
-                bundle.putBoolean("cart isChecked", isChecked);
+        cartAdapter.setOnCartItemClickListener(cartItem -> {
+            int dbID = cartItem.getId();
+            String itemName = cartItem.getItemName();
+            String oldItemPrice = cartItem.getItemPrice();
+            int oldQuantity = cartItem.getQuantity();
+            boolean isChecked = cartItem.isChecked();
+            Bundle bundle = new Bundle();
+            bundle.putInt("cart dbID", dbID);
+            bundle.putString("cart itemName", itemName);
+            bundle.putString("cart itemPrice", oldItemPrice);
+            bundle.putInt("cart quantity", oldQuantity);
+            bundle.putBoolean("cart isChecked", isChecked);
 
-                DialogNewCartItem dialogNewCartItem = new DialogNewCartItem();
-                dialogNewCartItem.setArguments(bundle);
-                dialogNewCartItem.show(getActivity().getSupportFragmentManager(), "edit cart item dialog");
+            DialogNewCartItem dialogNewCartItem = new DialogNewCartItem();
+            dialogNewCartItem.setArguments(bundle);
+            dialogNewCartItem.show(getActivity().getSupportFragmentManager(), "edit cart item dialog");
 
-            }
         });
 
         loadItemCountAndTotal();
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadAd();
     }
 
     public static CartFragment getInstance() {
@@ -155,6 +163,7 @@ public class CartFragment extends Fragment {
         String itemTotal = getItemTotal(itemPrice, quantity);
         CartItem cartItem = new CartItem(itemName, itemPrice, quantity, itemTotal, false);
         cartViewModel.insert(cartItem);
+        recyclerView.smoothScrollToPosition(0);
 
         //update total
         if (!itemPrice.isEmpty()) {
@@ -162,6 +171,8 @@ public class CartFragment extends Fragment {
             showTotal(total);
             sharedPref.edit().putString("cartTotal", String.valueOf(total)).apply();
         }
+
+        showInterstitial();
     }
 
     public void updateItem(int dbID, String itemName, String oldItemPrice, String newItemPrice, int oldQuantity, int newQuantity, boolean isChecked) {
@@ -175,6 +186,8 @@ public class CartFragment extends Fragment {
         total = total - oldPrice * oldQuantity + newPrice * newQuantity;
         showTotal(total);
         sharedPref.edit().putString("cartTotal", String.valueOf(total)).apply();
+
+        showInterstitial();
     }
 
     private void removeItem(CartItem cartItem) {
@@ -199,14 +212,12 @@ public class CartFragment extends Fragment {
         new MaterialAlertDialogBuilder(getActivity())
                 .setTitle(R.string.confirm)
                 .setMessage(R.string.sure_delete_cart)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        cartViewModel.deleteAllCartItems();
-                        showTotal(0);
-                        total = 0;
-                        sharedPref.edit().putString("cartTotal", "0.00").apply();
-                    }
+                .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
+                    cartViewModel.deleteAllCartItems();
+                    showTotal(0);
+                    total = 0;
+                    sharedPref.edit().putString("cartTotal", "0.00").apply();
+                    showInterstitial();
                 })
                 .setNegativeButton(R.string.no, null)
                 .show();
@@ -254,5 +265,39 @@ public class CartFragment extends Fragment {
             cart_instructions.setVisibility(View.VISIBLE);
     }
 
+    private void loadAd() {
+        if (!UpgradeHandler.isProActive(requireContext()))
+            MobileAds.initialize(requireContext(), initializationStatus -> {
+                AdRequest adRequest = new AdRequest.Builder().build();
+
+                InterstitialAd.load(requireContext(), getString(R.string.after_cart_items_ad), adRequest,
+                        new InterstitialAdLoadCallback() {
+                            @Override
+                            public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                                mInterstitialAd = interstitialAd;
+                            }
+
+                            @Override
+                            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                                mInterstitialAd = null;
+                            }
+                        });
+            });
+    }
+
+    private void showInterstitial() {
+        if (!UpgradeHandler.isProActive(requireContext()) && beforeInterstitialCount >= 5 && mInterstitialAd != null) {
+            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                @Override
+                public void onAdDismissedFullScreenContent() {
+                    super.onAdDismissedFullScreenContent();
+                    beforeInterstitialCount = 0;
+                    UpgradeHandler.showPrompt(requireContext());
+                }
+            });
+            mInterstitialAd.show(requireActivity());
+        } else
+            beforeInterstitialCount++;
+    }
 
 }
