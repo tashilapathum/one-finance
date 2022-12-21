@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">One Finance</string>
     <string name="my_wallet_pro" translatable="false">One Finance</string>
-    <string name="version" translatable="false">Version 1.1.6</string>
+    <string name="version" translatable="false">Version 1.1.7</string>
     <string name="recent_transactions">Transactions</string>
     <string name="reports">Reports</string>
     <string name="settings">Settings</string>
@@ -462,7 +462,7 @@
     <string name="acc_already_exists">Account already exists</string>
     <string name="deposit_from_wallet_to">"Deposit from Wallet to "</string>
     <string name="acc_na">No accounts</string>
-    <string name="acc_na_des">Please add an bank account to transfer money.</string>
+    <string name="acc_na_des">Please add a bank account to transfer money.</string>
     <string name="uncategorized">Uncategorized</string>
     <string name="pls_select_account">Please select an account to transfer money</string>
     <string name="pay">Pay</string>
@@ -494,6 +494,17 @@
     <string name="invested_">Invested&#160;</string>
     <string name="earned_">Earned&#160;</string>
     <string name="share">Share</string>
+    <string name="add_cat_trans_to_see_them_in_chart">Add some categorized transactions to see them in the chart</string>
+    <string name="start_here">Start here</string>
+    <string name="tap_plus_or_minus">Tap here and then tap + to add an income or - for an expense</string>
+    <string name="category">Category</string>
+    <string name="any_category">Any category (Default)</string>
+    <string name="notification_permission_reason">One Finance needs notification permission to send you the daily reminder. Grant notification permission?</string>
+    <string name="notifications_enabled">Notifications enabled</string>
+    <string name="notifications_enabled_description">The daily reminder notification to add your transactions was enabled. You can customize the time from settings. If you aren\'t receiving the notification, please whitelist One Finance from the battery savers</string>
+    <string name="add_account">Add account</string>
+    <string name="reached_categories_limit">You\'ve reached categories limit</string>
+    <string name="remove_categories_or_upgrade">Remove some categories before adding new ones or upgrade to pro to add unlimited categories</string>
 
     <!-- PRO FEATURES -->
     <string name="pro_features">
@@ -510,6 +521,13 @@
 
     <!-- WHAT'S NEW -->
     <string name="whats_new_descr" translatable="false">
+        \nv1.1.7\n
+        - [New] Categorized chart in categories page\n
+        - [New] Filter transactions by category\n
+        - [New] Edit the category after adding a transaction\n
+        - [Fixed] Daily reminder notification on Android 12 &amp; 13\n
+        - [Fixed] Crash when all categories were deleted\n
+        - UI/UX improvements\n
         \nv1.1.5\n
         - Added support for Android 13\n
         - UI and performance improvements\n
@@ -520,7 +538,6 @@
         - Increased category colors default opacity\n
         \nv1.1.0\n
         - Unlocked most of the pro features for free!\n
-        - Removed all ads\n
         - Added support for Android 12\n
         \nv1.0.0\n
         - Initial release\n
@@ -535,15 +552,4 @@
     <string name="after_bill_ad" translatable="false">ca-app-pub-8303071997891278/7769240467</string>
     <string name="after_loan_ad" translatable="false">ca-app-pub-8303071997891278/2265632347</string>
 
-    <string name="add_cat_trans_to_see_them_in_chart">Add some categorized transactions to see them in the chart</string>
-    <string name="start_here">Start here</string>
-    <string name="tap_plus_or_minus">Tap here and then tap + to add an income or - for an expense</string>
-    <string name="category">Category</string>
-    <string name="any_category">Any category (Default)</string>
-    <string name="notification_permission_reason">One Finance needs notification permission to send you the daily reminder. Grant notification permission?</string>
-    <string name="notifications_enabled">Notifications enabled</string>
-    <string name="notifications_enabled_description">The daily reminder notification to add your transactions was enabled. You can customize the time from settings. If you aren\'t receiving the notification, please whitelist One Finance from the battery savers</string>
-    <string name="add_account">Add account</string>
-    <string name="reached_categories_limit">You\'ve reached categories limit</string>
-    <string name="remove_categories_or_upgrade">Remove some categories before adding new ones or upgrade to pro to add unlimited categories</string>
 </resources>

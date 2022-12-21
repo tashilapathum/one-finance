@@ -495,15 +495,15 @@
     <string name="invested_"/>
     <string name="earned_"/>
     <string name="share">බෙදාගන්න</string>
-    <string name="add_cat_trans_to_see_them_in_chart">Add some categorized transactions to see them in the chart</string>
-    <string name="start_here">Start here</string>
-    <string name="tap_plus_or_minus">Tap here and then tap + to add an income or - for an expense</string>
-    <string name="category">Category</string>
-    <string name="any_category">Any category (Default)</string>
-    <string name="notification_permission_reason">One Finance needs notification permission to send you the daily reminder. Grant notification permission?</string>
-    <string name="notifications_enabled">Notifications enabled</string>
-    <string name="notifications_enabled_description">The daily reminder notification to add your transactions was enabled. You can customize the time from settings. If you aren\'t receiving the notification, please whitelist One Finance from the battery savers</string>
-    <string name="add_account">Add account</string>
-    <string name="reached_categories_limit">You\'ve reached categories limit</string>
-    <string name="remove_categories_or_upgrade">Remove some categories before adding new ones or upgrade to pro to add unlimited categories</string>
+    <string name="add_cat_trans_to_see_them_in_chart">ප්‍රස්ථාරය බැලීමට වර්ගීකරණය කළ ගනුදෙනු කිහිපයක් එක් කරන්න</string>
+    <string name="start_here">මෙතනින් පටන්ගන්න</string>
+    <string name="tap_plus_or_minus">මෙතැන තට්ටු කර, ආදායමක් එක් කිරීමට හෝ + වියදමක් සඳහා - තට්ටු කරන්න</string>
+    <string name="category">කාණ්ඩය</string>
+    <string name="any_category">ඕනෑම කාණ්ඩයක්</string>
+    <string name="notification_permission_reason">ඔබට දෛනික ආදායම් වියදම් එක් කිරීම මතක් කිරීමට අවසරය (notification permission) අවශ්‍යයි. අවසරය ලබා දෙනවා ද?</string>
+    <string name="notifications_enabled">දැනුම්දීම් සබල කර ඇත</string>
+    <string name="notifications_enabled_description">ඔබේ ගනුදෙනු එක් කිරීමට දෛනික සිහි කැඳවීම් දැනුම්දීම (notification) සබල කර ඇත. ඔබට සැකසුම් වලින් දැනුම්දීම ලැබෙන කාලය වෙනස් කළ හැකිය. ඔබට දැනුම්දීම නොලැබෙන්නේ නම්, කරුණාකර බැටරි සේවර්ස් වලින් One Finance ඉවත් කරන්න</string>
+    <string name="add_account">ගිණුමක් එක් කරන්න</string>
+    <string name="reached_categories_limit">ඔබ වර්ගීකරණ සීමාව ඉක්මවා ඇත</string>
+    <string name="remove_categories_or_upgrade">නව වර්ගීකරණ එක් කිරීමට පෙර වෙනත් වර්ගීකරණ ඉවත් කරන්න හෝ අසීමිත වර්ගීකරණ ප්‍රමාණයක් එක් කිරීමට pro වෙත උසස් කරන්න</string>
 </resources>
