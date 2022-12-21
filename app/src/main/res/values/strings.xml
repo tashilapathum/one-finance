@@ -522,9 +522,9 @@
     <!-- WHAT'S NEW -->
     <string name="whats_new_descr" translatable="false">
         \nv1.1.7\n
-        - [New] Categorized chart in categories page\n
-        - [New] Filter transactions by category\n
-        - [New] Edit the category after adding a transaction\n
+        - [Added] Categorized chart in categories page\n
+        - [Added] Filter transactions by category\n
+        - [Added] Edit the category after adding a transaction\n
         - [Fixed] Daily reminder notification on Android 12 &amp; 13\n
         - [Fixed] Crash when all categories were deleted\n
         - UI/UX improvements\n

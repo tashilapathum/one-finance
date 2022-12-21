@@ -84,13 +84,13 @@
                     android:layout_marginHorizontal="4dp" />
 
                 <Spinner
-                    android:id="@+id/sort_spinner"
+                    android:id="@+id/category_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="4dp" />
 
                 <Spinner
-                    android:id="@+id/category_spinner"
+                    android:id="@+id/sort_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="4dp" />

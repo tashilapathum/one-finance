@@ -40,6 +40,8 @@ public class UpdateManager {
                                                 String url = update.getUrl();
                                                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                                                 context.startActivity(intent);
+                                                if (update.getMandatory())
+                                                    ((MainActivity) context).finish();
                                             })
                                             .setNegativeButton("Cancel", (dialogInterface, i) -> {
                                                 if (update.getMandatory())
