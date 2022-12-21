@@ -158,7 +158,9 @@ public class DialogBankInput extends BottomSheetDialogFragment {
                 Chip chip = (Chip) getActivity().getLayoutInflater().inflate(R.layout.sample_account_chip, null);
                 chip.setText(account.getAccName());
                 chip.setTextColor(getResources().getColor(R.color.colorBlack)); //because of visibility issue in dark mode
-                chip.setCheckedIconResource(R.drawable.ic_checked_box);
+                chip.setCheckable(true);
+                chip.setCheckedIconVisible(true);
+                chip.setChipStrokeWidth(0f);
                 chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -340,6 +342,8 @@ public class DialogBankInput extends BottomSheetDialogFragment {
             chip.setChipBackgroundColor(ColorStateList.valueOf(Integer.parseInt(categoryItem.split("###")[1])));
             chip.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_Medium);
             chip.setCheckable(true);
+            chip.setCheckedIconVisible(true);
+            chip.setChipStrokeWidth(0f);
             chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
