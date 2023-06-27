@@ -22,7 +22,7 @@
             android:layout_height="80dp"
             android:contentDescription="icon"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher_round" />
+            android:src="@mipmap/ic_launcher" />
     </com.google.android.material.card.MaterialCardView>
 
     <TextView

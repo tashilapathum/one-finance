@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
     <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
@@ -16,42 +16,54 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeDark"
         tools:ignore="GoogleAppIndexingWarning">
+        <receiver
+            android:name=".widget.OpenAppWidget"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/open_app_widget_info" />
+        </receiver>
+
         <activity
-            android:name="com.tantalum.onefinance.categories.CategoriesActivity"
-            android:label="@string/categories"/>
-        <activity android:name="com.tantalum.onefinance.WebViewActivity" />
+            android:name=".categories.CategoriesActivity"
+            android:label="@string/categories" />
+        <activity android:name=".WebViewActivity" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8303071997891278~8246601230" />
 
-        <activity android:name="com.tantalum.onefinance.EnterPIN" />
-        <activity android:name="com.tantalum.onefinance.Insights" />
-        <activity android:name="com.tantalum.onefinance.AboutActivity" />
+        <activity android:name=".EnterPIN" />
+        <activity android:name=".Insights" />
+        <activity android:name=".AboutActivity" />
         <activity
-            android:name="com.tantalum.onefinance.accounts.AccountManager"
+            android:name=".accounts.AccountManager"
             android:label="Account Manager" />
-        <activity android:name="com.tantalum.onefinance.pro.UpgradeToProActivity" />
-        <activity android:name="com.tantalum.onefinance.accounts.AccountDetails" />
-        <activity android:name="com.tantalum.onefinance.accounts.NewAccount" />
-        <activity android:name="com.tantalum.onefinance.InitialSetupActivity" />
+        <activity android:name=".pro.UpgradeToProActivity" />
+        <activity android:name=".accounts.AccountDetails" />
+        <activity android:name=".accounts.NewAccount" />
+        <activity android:name=".InitialSetupActivity" />
         <activity
-            android:name="com.tantalum.onefinance.reports.ReportsActivity"
+            android:name=".reports.ReportsActivity"
             android:label="@string/reports" />
         <activity
-            android:name="com.tantalum.onefinance.quicklist.QuickListActivity"
+            android:name=".quicklist.QuickListActivity"
             android:label="@string/settings_quick_list" />
         <activity
-            android:name="com.tantalum.onefinance.transactions.TransactionsActivity"
+            android:name=".transactions.TransactionsActivity"
             android:label="@string/recent_transactions" />
         <activity
-            android:name="com.tantalum.onefinance.settings.SettingsActivity"
+            android:name=".settings.SettingsActivity"
             android:label="@string/settings" />
         <activity
-            android:name="com.tantalum.onefinance.MainActivity"
-            android:windowSoftInputMode="adjustResize"
+            android:name=".MainActivity"
+            android:exported="true"
             android:hardwareAccelerated="true"
-            android:exported="true">
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -59,7 +71,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="com.tantalum.onefinance.AlertReceiver" />
+        <receiver android:name=".AlertReceiver" />
     </application>
 
 </manifest>
