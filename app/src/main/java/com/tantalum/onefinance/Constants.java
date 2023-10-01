@@ -5,6 +5,7 @@ public class Constants {
     public static final String SHARED_PREF = "myPref";
     public static final String SP_CATEGORIES = "categories";
     public static final String SP_BALANCE = "balance";
+    public static final String SP_HOME_SCREEN = "homeScreen";
 
     //free limits
     public static final int FREE_BANK_ACCOUNTS_LIMIT = 1;

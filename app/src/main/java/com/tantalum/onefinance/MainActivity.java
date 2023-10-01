@@ -1,5 +1,6 @@
 package com.tantalum.onefinance;
 
+import static com.tantalum.onefinance.Constants.SP_HOME_SCREEN;
 import static com.tantalum.onefinance.pro.UpgradeHandler.ONE_FINANCE_PRO;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -135,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnItemSelectedListener(navListener);
         bottomNav.setOnItemReselectedListener(navReListener);
-        String homeScreen = sharedPref.getString("homeScreen", "wallet");
+        String homeScreen = sharedPref.getString(SP_HOME_SCREEN, "wallet");
 
         ////STARTUP////
         //when requested after applying settings
@@ -152,8 +154,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigateScreens(new InvestmentsFragment(), "BillsFragment", R.id.nav_invest);
         else if (homeScreen.equalsIgnoreCase("tools"))
             navigateScreens(new ToolsFragment(), "BillsFragment", R.id.nav_tools);
-            //when starting the app normally
-        else
+        else //when starting the app normally
             navigateScreens(new WalletFragmentNEW(), "WalletFragment", R.id.nav_wallet);
 
         //set notification
@@ -167,10 +168,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent notifyIntent = new Intent(this, AlertReceiver.class);
             PendingIntent pendingIntent = null;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                 pendingIntent = PendingIntent.getBroadcast(this, 1, notifyIntent, PendingIntent.FLAG_IMMUTABLE);
             else
                 pendingIntent = PendingIntent.getBroadcast(this, 1, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+                alarmManager.canScheduleExactAlarms();
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
             sharedPref.edit().putBoolean("isNotificationSet", true).apply();
         }
@@ -357,25 +361,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onResume() {
         super.onResume();
         navigationView.setCheckedItem(R.id.nav_home);
-        if (sharedPref.getBoolean("exit", false)) {
+        if (sharedPref.getBoolean("exit", false))
             finishAndRemoveTask();
-        }
-        //ads
-        else {
-            if (adsEnabled()) {
-                //TODO: show ads
-            }
-        }
-    }
-
-    private boolean adsEnabled() {
-        int today = new DateTimeHandler().getDayOfYear();
-        int adsDeadline = sharedPref.getInt("adsDeadline", 0);
-        boolean adsRemoved = false;
-        if (adsDeadline != 0)
-            adsRemoved = today <= adsDeadline;
-
-        return !sharedPref.getBoolean("MyWalletPro", false) && !adsRemoved;
     }
 
     @Override
@@ -387,7 +374,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //bottom nav
-    private NavigationBarView.OnItemSelectedListener navListener =
+    private final NavigationBarView.OnItemSelectedListener navListener =
             item -> {
                 Fragment selectedFragment = null;
                 String fragmentTag = null;

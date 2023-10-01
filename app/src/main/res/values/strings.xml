@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">One Finance</string>
     <string name="my_wallet_pro" translatable="false">One Finance</string>
-    <string name="version" translatable="false">Version 1.1.7</string>
+    <string name="version" translatable="false">Version 1.2.0</string>
     <string name="recent_transactions">Transactions</string>
     <string name="reports">Reports</string>
     <string name="settings">Settings</string>
@@ -467,7 +467,7 @@
     <string name="pls_select_account">Please select an account to transfer money</string>
     <string name="pay">Pay</string>
     <string name="transfer_from_prefix">Transferred&#160;</string>
-    <string name="transfer_suffix"/>
+    <string name="transfer_suffix" />
     <string name="transfer_to_prefix">Transferred&#160;</string>
     <string name="deposit_prefix">Deposited&#160;</string>
     <string name="deposit_mid">&#160;to&#160;</string>
@@ -551,5 +551,8 @@
     <string name="after_cart_items_ad" translatable="false">ca-app-pub-8303071997891278/7808768919</string>
     <string name="after_bill_ad" translatable="false">ca-app-pub-8303071997891278/7769240467</string>
     <string name="after_loan_ad" translatable="false">ca-app-pub-8303071997891278/2265632347</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an app widget description</string>
 
 </resources>

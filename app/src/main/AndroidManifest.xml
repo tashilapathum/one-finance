@@ -18,6 +18,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <receiver
             android:name=".widget.OpenAppWidget"
+            android:theme="@style/AppThemeDark"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
