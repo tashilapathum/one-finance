@@ -61,11 +61,11 @@
     <string name="rate_app">ගූගල් ප්ලේ</string>
     <string name="contact_the_developer_problems">ඇප් එක සම්බන්ධ ඕනෑම ගැටලුවක් විමසීම සඳහා ඊමේල් ලිපිනය:</string>
     <string name="budget_left">වෙන් කළ මුදලෙන් ඉතිරිය:&#160;</string>
-    <string name="r_today">අද</string>
+    <string name="today">අද</string>
     <string name="r_spent">වියදම්:&#160;</string>
     <string name="r_income">ආදායම්:&#160;</string>
     <string name="r_budget">වෙන් කර ඇති මුදල:&#160;</string>
-    <string name="r_yesterday">ඊයේ දිනය</string>
+    <string name="yesterday">ඊයේ දිනය</string>
     <string name="r_this_week">මෙම සතිය</string>
     <string name="r_last_week">පසුගිය සතිය</string>
     <string name="r_this_month">මෙම මාසය</string>

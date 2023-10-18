@@ -53,7 +53,6 @@ public class WeeklyReportsFragment extends Fragment {
     private WeekFields weekFields;
     private int pickedWeek;
     private int pickedYear;
-    //TODO: disable daily data if not fixed
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -126,7 +125,7 @@ public class WeeklyReportsFragment extends Fragment {
 
         //card title
         weekTitle = getString(R.string.week) + week
-                + " ("
+                + "\n"
                 + LocalDate.now()
                 .minusYears(yearCount)
                 .with(IsoFields.WEEK_OF_WEEK_BASED_YEAR, week)
@@ -138,8 +137,7 @@ public class WeeklyReportsFragment extends Fragment {
                 .with(IsoFields.WEEK_OF_WEEK_BASED_YEAR, week)
                 .with(TemporalAdjusters.previousOrSame(weekFields.getFirstDayOfWeek()))
                 .plusDays(6)
-                .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))
-                + ")";
+                .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
         if (week == LocalDate.now().get(weekFields.weekOfWeekBasedYear()) && year == LocalDate.now().getYear())
             weekTitle = getString(R.string.re_this_week) + weekTitle.replace((getString(R.string.week) + week), "");
         if (week == LocalDate.now().minusWeeks(1).get(weekFields.weekOfWeekBasedYear()) && year == LocalDate.now().getYear())
@@ -184,6 +182,19 @@ public class WeeklyReportsFragment extends Fragment {
                         }
                     }
                 }
+
+                /*for (int d = 0; d < 7; d++) {
+                    if (d + 1 == transactionDay) {
+                        if (currentTransaction.getPrefix().equals("+")) {
+                            double dailyTotal = Double.parseDouble(dailyIncomes.get(d)) + currentTransaction.getAmountValue();
+                            dailyIncomes.set(d, String.valueOf(dailyTotal)); // Use set to update the value
+                        } else {
+                            double dailyTotal = Double.parseDouble(dailyExpenses.get(d)) + currentTransaction.getAmountValue();
+                            dailyExpenses.set(d, String.valueOf(dailyTotal)); // Use set to update the value
+                        }
+                    }
+                }*/
+
             }
         }
 
@@ -211,7 +222,7 @@ public class WeeklyReportsFragment extends Fragment {
         String monthlyBudgetStr = sharedPref.getString("monthlyBudget", "N/A");
         DecimalFormat df = new DecimalFormat("#.00");
         double monthlyBudget = 0;
-        if (monthlyBudgetStr != null && !monthlyBudgetStr.equals("N/A")) {
+        if (!monthlyBudgetStr.equals("N/A")) {
             monthlyBudget = Double.parseDouble(monthlyBudgetStr);
         }
 
@@ -288,19 +299,19 @@ public class WeeklyReportsFragment extends Fragment {
     }
 
     static class WeeklyReport {
-        private String week;
-        private String income;
-        private String expenses;
-        private String budget;
-        private String budgetLeft;
-        private String highestExpense;
-        private String highestItem;
-        private String incomeDiff;
-        private String expensesDiff;
-        private List<String> dailyIncomes;
-        private List<String> dailyExpenses;
-        private String mostIncomeDay;
-        private String mostExpenseDay;
+        private final String week;
+        private final String income;
+        private final String expenses;
+        private final String budget;
+        private final String budgetLeft;
+        private final String highestExpense;
+        private final String highestItem;
+        private final String incomeDiff;
+        private final String expensesDiff;
+        private final List<String> dailyIncomes;
+        private final List<String> dailyExpenses;
+        private final String mostIncomeDay;
+        private final String mostExpenseDay;
 
         public WeeklyReport(String week, String income, String expenses, String budget, String budgetLeft,
                             String highestExpense, String highestItem, String incomeDiff, String expensesDiff,

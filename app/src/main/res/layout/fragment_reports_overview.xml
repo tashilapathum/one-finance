@@ -29,7 +29,7 @@
                         android:id="@+id/today"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/r_today"
+                        android:text="@string/today"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                     <TextView
@@ -92,7 +92,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingTop="16dp"
-                        android:text="@string/r_yesterday"
+                        android:text="@string/yesterday"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                     <TextView

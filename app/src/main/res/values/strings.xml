@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">One Finance</string>
     <string name="my_wallet_pro" translatable="false">One Finance</string>
-    <string name="version" translatable="false">Version 1.2.0</string>
+    <string name="version" translatable="false">Version 1.1.9</string>
     <string name="recent_transactions">Transactions</string>
     <string name="reports">Reports</string>
     <string name="settings">Settings</string>
@@ -67,8 +67,8 @@
     <string name="r_income">Income:&#160;</string>
     <string name="r_spent">Spent:&#160;</string>
     <string name="r_budget">Budget:&#160;</string>
-    <string name="r_today">Today</string>
-    <string name="r_yesterday">Yesterday</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
     <string name="r_this_week">This week</string>
     <string name="r_last_week">Last week</string>
     <string name="r_this_month">This month</string>
@@ -521,6 +521,8 @@
 
     <!-- WHAT'S NEW -->
     <string name="whats_new_descr" translatable="false">
+        \nv1.1.9\n
+        - UI/UX improvements\n
         \nv1.1.7\n
         - [Added] Categorized chart in categories page\n
         - [Added] Filter transactions by category\n

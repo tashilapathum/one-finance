@@ -17,19 +17,25 @@
 
         <TextView
             android:id="@+id/date"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="16dp"
             android:fontFamily="sans-serif-condensed-medium"
-            android:textAlignment="center"
+            android:textAlignment="textEnd"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            tools:text="Today (28/09/2020)" />
+            android:layout_gravity="end"
+            tools:text="Today\n28/09/2020"
+            app:drawableEndCompat="@drawable/ic_day"
+            android:drawablePadding="12dp"/>
 
         <TextView
             style="@style/ReportsSubtitleTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cash_flow" />
+            android:text="@string/cash_flow"
+            android:drawablePadding="8dp"
+            app:drawableStartCompat="@drawable/ic_cash"
+            app:drawableTint="@color/colorAccent" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -93,7 +99,10 @@
             style="@style/ReportsSubtitleTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/re_budget" />
+            android:text="@string/re_budget"
+            android:drawablePadding="8dp"
+            app:drawableStartCompat="@drawable/ic_budget"
+            app:drawableTint="@color/colorAccent"/>
 
         <LinearLayout
             android:layout_width="match_parent"

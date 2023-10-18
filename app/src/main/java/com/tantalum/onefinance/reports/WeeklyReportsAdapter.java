@@ -111,14 +111,8 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
                 holder.tvExpensesDiff.setTextColor(context.getResources().getColor(android.R.color.holo_red_light));
         } else
             holder.tvExpensesDiff.setVisibility(View.GONE);
-        if (weeklyReport.getMostIncomeDay() != null)
-            holder.tvMostIncome.setText(weeklyReport.getMostIncomeDay());
-        else
-            holder.tvMostIncome.setText(null);
-        if (weeklyReport.getMostExpenseDay() != null)
-            holder.tvMostExpense.setText(weeklyReport.getMostExpenseDay());
-        else
-            holder.tvMostExpense.setText(null);
+        holder.tvMostIncome.setText(weeklyReport.getMostIncomeDay().replace("null", "N/A"));
+        holder.tvMostExpense.setText(weeklyReport.getMostExpenseDay().replace("null", "N/A"));
 
         //charts
         if (weeklyReport.getIncome() != null || weeklyReport.getExpenses() != null)
@@ -259,21 +253,21 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
     }
 
     static class ReportHolder extends RecyclerView.ViewHolder {
-        private TextView tvWeek;
-        private TextView tvIncome;
-        private TextView tvExpenses;
-        private TextView tvBudget;
-        private TextView tvBudgetLeft;
-        private TextView tvHighestExpense;
-        private TextView tvHighestItem;
-        private TextView tvIncomeDiff;
-        private TextView tvExpensesDiff;
-        private HorizontalBarChart chartInEx;
-        private HorizontalBarChart chartBudget;
-        private TextView tvMostIncome;
-        private TextView tvMostExpense;
-        private BarChart chartDaily;
-        private LinearLayout daily_data_layout;
+        private final TextView tvWeek;
+        private final TextView tvIncome;
+        private final TextView tvExpenses;
+        private final TextView tvBudget;
+        private final TextView tvBudgetLeft;
+        private final TextView tvHighestExpense;
+        private final TextView tvHighestItem;
+        private final TextView tvIncomeDiff;
+        private final TextView tvExpensesDiff;
+        private final HorizontalBarChart chartInEx;
+        private final HorizontalBarChart chartBudget;
+        private final TextView tvMostIncome;
+        private final TextView tvMostExpense;
+        private final BarChart chartDaily;
+        private final LinearLayout daily_data_layout;
 
         public ReportHolder(@NonNull View itemView) {
             super(itemView);

@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemeDark"
         tools:ignore="GoogleAppIndexingWarning">
-        <receiver
+        <!--<receiver
             android:name=".widget.OpenAppWidget"
             android:theme="@style/AppThemeDark"
             android:exported="false">
@@ -27,7 +27,7 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/open_app_widget_info" />
-        </receiver>
+        </receiver>-->
 
         <activity
             android:name=".categories.CategoriesActivity"

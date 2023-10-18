@@ -36,7 +36,6 @@ import java.util.List;
 public class DailyReportsFragment extends Fragment {
     public static final String TAG = "DailyReportsFragment";
     private SharedPreferences sharedPref;
-    private String currency;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private DailyReportsAdapter adapter;
@@ -114,18 +113,16 @@ public class DailyReportsFragment extends Fragment {
             day = 1;
             pickedYear--;
         }
-        currency = sharedPref.getString("currency", "");
         TransactionsViewModel transactionsViewModel = new ViewModelProvider(getActivity(),
                 ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(TransactionsViewModel.class);
         List<TransactionItem> transactionsList = transactionsViewModel.getTransactionsList();
-        String date;
 
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
-        date = formatter.format(LocalDate.ofYearDay(pickedYear, day));
+        String date = formatter.format(LocalDate.ofYearDay(pickedYear, day));
         if (day == LocalDate.now().getDayOfYear())
-            date = getString(R.string.re_today) + date + ")";
+            date = getString(R.string.today) + "\n" + date;
         if (day == LocalDate.now().getDayOfYear() - 1)
-            date = getString(R.string.re_yesterday) + date + ")";
+            date = getString(R.string.yesterday) + "\n" + date;
         double income = 0;
         double expenses = 0;
         double highestExpense = 0;
@@ -166,7 +163,7 @@ public class DailyReportsFragment extends Fragment {
         String monthlyBudgetStr = sharedPref.getString("monthlyBudget", "N/A");
         DecimalFormat df = new DecimalFormat("#.00");
         double monthlyBudget = 0;
-        if (monthlyBudgetStr != null && !monthlyBudgetStr.equals("N/A")) {
+        if (!monthlyBudgetStr.equals("N/A")) {
             monthlyBudget = Double.parseDouble(monthlyBudgetStr);
         }
         double budget = monthlyBudget / YearMonth.now().lengthOfMonth();
@@ -216,15 +213,15 @@ public class DailyReportsFragment extends Fragment {
     }
 
     static class DailyReport {
-        private String date;
-        private String income;
-        private String expenses;
-        private String budget;
-        private String budgetLeft;
-        private String highestExpense;
-        private String highestItem;
-        private String incomeDiff;
-        private String expensesDiff;
+        final private String date;
+        final private String income;
+        final private String expenses;
+        final private String budget;
+        final private String budgetLeft;
+        final private String highestExpense;
+        final private String highestItem;
+        final private String incomeDiff;
+        final private String expensesDiff;
 
         public DailyReport(String date, String income, String expenses, String budget, String budgetLeft,
                            String highestExpense, String highestItem, String incomeDiff, String expensesDiff) {
