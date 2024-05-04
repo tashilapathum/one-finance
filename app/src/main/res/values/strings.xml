@@ -522,6 +522,7 @@
     <!-- WHAT'S NEW -->
     <string name="whats_new_descr" translatable="false">
         \nv1.1.9\n
+        - [Added] Monochrome icon\n
         - UI/UX improvements\n
         \nv1.1.7\n
         - [Added] Categorized chart in categories page\n

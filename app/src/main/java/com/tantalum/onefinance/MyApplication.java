@@ -13,7 +13,7 @@ public class MyApplication extends Application {
         super.onCreate();
 
         CaocConfig.Builder.create()
-                .errorDrawable(R.drawable.ic_bug)
+                .errorDrawable(R.drawable.customactivityoncrash_error_image)
                 .apply();
         FirebaseApp.initializeApp(getApplicationContext());
     }
