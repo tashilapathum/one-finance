@@ -410,7 +410,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             };
 
     private final NavigationBarView.OnItemReselectedListener navReListener = item -> {
-
+        if (item.getItemId() == R.id.nav_tools) {
+            Fragment selectedFragment = new ToolsFragment();
+            String fragmentTag = "ToolsFragment";
+            navigateScreens(selectedFragment, fragmentTag, item.getItemId());
+        }
     };
 
     private void navigateScreens(Fragment selectedFragment, String fragmentTag, int itemId) {

@@ -1,5 +1,6 @@
 package com.tantalum.onefinance;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.transition.MaterialSharedAxis;
@@ -38,40 +41,35 @@ public class ToolsFragment extends Fragment {
         view = inflater.inflate(R.layout.frag_tools, container, false);
         instance = this;
 
+        //theme
+        String theme = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("theme", "light");
+        if (theme.equalsIgnoreCase("dark")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            view.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.background_dark));
+        }
+
         final Fragment[] fragment = new Fragment[1];
         final String[] fragmentTag = new String[1];
 
-        view.findViewById(R.id.cart).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragment[0] = new CartFragment();
-                fragmentTag[0] = "CartFragment";
-                openPage(fragment[0], fragmentTag[0]);
-            }
+        view.findViewById(R.id.cart).setOnClickListener(v -> {
+            fragment[0] = new CartFragment();
+            fragmentTag[0] = "CartFragment";
+            openPage(fragment[0], fragmentTag[0]);
         });
-        view.findViewById(R.id.bills).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragment[0] = new BillsFragment();
-                fragmentTag[0] = "BillsFragment";
-                openPage(fragment[0], fragmentTag[0]);
-            }
+        view.findViewById(R.id.bills).setOnClickListener(v -> {
+            fragment[0] = new BillsFragment();
+            fragmentTag[0] = "BillsFragment";
+            openPage(fragment[0], fragmentTag[0]);
         });
-        view.findViewById(R.id.loans).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fragment[0] = new LoansFragment();
-                fragmentTag[0] = "LoansFragment";
-                openPage(fragment[0], fragmentTag[0]);
-            }
+        view.findViewById(R.id.loans).setOnClickListener(v -> {
+            fragment[0] = new LoansFragment();
+            fragmentTag[0] = "LoansFragment";
+            openPage(fragment[0], fragmentTag[0]);
         });
-        view.findViewById(R.id.calc).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CalcDialog calcDialog = new CalcDialog();
-                calcDialog.getSettings().setExpressionShown(true);
-                calcDialog.show(getChildFragmentManager(), "calculator dialog");
-            }
+        view.findViewById(R.id.calc).setOnClickListener(v -> {
+            CalcDialog calcDialog = new CalcDialog();
+            calcDialog.getSettings().setExpressionShown(true);
+            calcDialog.show(getChildFragmentManager(), "calculator dialog");
         });
 
         return view;
