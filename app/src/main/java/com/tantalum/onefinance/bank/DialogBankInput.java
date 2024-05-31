@@ -90,7 +90,7 @@ public class DialogBankInput extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("pickDate", "fromWalletInput");
+                bundle.putString("pickDate", "fromBankInput");
                 DatePickerFragment datePicker = new DatePickerFragment();
                 datePicker.setArguments(bundle);
                 datePicker.show(getChildFragmentManager(), "date picker dialog");
