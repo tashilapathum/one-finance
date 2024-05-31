@@ -253,7 +253,7 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
 
                 //show
                 Toast.makeText(getActivity(), R.string.added, Toast.LENGTH_SHORT).show();
-                WalletFragmentNEW.getInstance().setNewBalance(String.valueOf(newBalance));
+                WalletFragment.getInstance().setNewBalance(String.valueOf(newBalance));
                 dialog.dismiss();
             }
 

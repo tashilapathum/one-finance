@@ -53,7 +53,7 @@ import com.tantalum.onefinance.transactions.TransactionsViewModel;
 import java.text.DecimalFormat;
 import java.util.List;
 
-public class WalletFragmentNEW extends Fragment {
+public class WalletFragment extends Fragment {
     private View view;
     private TickerView tvBalance;
     private TextView tvCurrency;
@@ -64,14 +64,14 @@ public class WalletFragmentNEW extends Fragment {
     private final int TODAY_REPORT = 1;
     private final int THIS_WEEK_REPORT = 2;
     private final int THIS_MONTH_REPORT = 3;
-    private static WalletFragmentNEW instance;
+    private static WalletFragment instance;
     private boolean contentLoaded = false;
     private SpeedDialView fab;
 
     private InterstitialAd mInterstitialAd;
     private int beforeInterstitialCount = 0;
 
-    public static WalletFragmentNEW getInstance() {
+    public static WalletFragment getInstance() {
         return instance;
     }
 

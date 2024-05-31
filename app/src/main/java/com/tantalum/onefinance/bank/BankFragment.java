@@ -3,12 +3,10 @@ package com.tantalum.onefinance.bank;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,7 +26,6 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.transition.MaterialSharedAxis;
-import com.leinardi.android.speeddial.SpeedDialActionItem;
 import com.leinardi.android.speeddial.SpeedDialView;
 import com.tantalum.onefinance.Amount;
 import com.tantalum.onefinance.Constants;
@@ -42,7 +39,7 @@ import com.tantalum.onefinance.pro.UpgradeHandler;
 
 import java.util.List;
 
-public class BankFragmentNEW extends Fragment implements DialogInterface.OnDismissListener {
+public class BankFragment extends Fragment implements DialogInterface.OnDismissListener {
     private Context context;
     private View view;
     private AccountsViewModel accountsViewModel;

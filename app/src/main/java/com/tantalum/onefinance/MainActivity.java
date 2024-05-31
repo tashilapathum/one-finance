@@ -29,16 +29,14 @@ import android.view.View;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.RequestConfiguration;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.tantalum.onefinance.bank.BankFragmentNEW;
+import com.tantalum.onefinance.bank.BankFragment;
 import com.tantalum.onefinance.categories.CategoriesActivity;
 import com.tantalum.onefinance.investments.InvestmentsFragment;
 import com.tantalum.onefinance.pro.UpgradeHandler;
@@ -47,11 +45,9 @@ import com.tantalum.onefinance.reports.ReportsActivity;
 import com.tantalum.onefinance.settings.SettingsActivity;
 import com.tantalum.onefinance.transactions.TransactionsActivity;
 import com.tantalum.onefinance.transactions.TransactionsFragment;
-import com.tantalum.onefinance.wallet.WalletFragmentNEW;
+import com.tantalum.onefinance.wallet.WalletFragment;
 
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -142,12 +138,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ////STARTUP////
         //when requested after applying settings
         if (sharedPref.getBoolean("reqOpenBank", false)) {
-            navigateScreens(new BankFragmentNEW(), "BankFragment", R.id.nav_bank);
+            navigateScreens(new BankFragment(), "BankFragment", R.id.nav_bank);
             sharedPref.edit().putBoolean("reqOpenBank", false).apply();
         }
         //when set as home screen (won't set it back to false)
         else if (homeScreen.equalsIgnoreCase("bank"))
-            navigateScreens(new BankFragmentNEW(), "BankFragment", R.id.nav_bank);
+            navigateScreens(new BankFragment(), "BankFragment", R.id.nav_bank);
         else if (homeScreen.equalsIgnoreCase("transactions"))
             navigateScreens(new TransactionsFragment(), "BillsFragment", R.id.nav_trans);
         else if (homeScreen.equalsIgnoreCase("investments"))
@@ -155,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if (homeScreen.equalsIgnoreCase("tools"))
             navigateScreens(new ToolsFragment(), "BillsFragment", R.id.nav_tools);
         else //when starting the app normally
-            navigateScreens(new WalletFragmentNEW(), "WalletFragment", R.id.nav_wallet);
+            navigateScreens(new WalletFragment(), "WalletFragment", R.id.nav_wallet);
 
         //set notification
         boolean isNotificationSet = sharedPref.getBoolean("isNotificationSet", false);
@@ -380,12 +376,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 String fragmentTag = null;
                 switch (item.getItemId()) {
                     case R.id.nav_wallet: {
-                        selectedFragment = new WalletFragmentNEW();
+                        selectedFragment = new WalletFragment();
                         fragmentTag = "WalletFragment";
                         break;
                     }
                     case R.id.nav_bank: {
-                        selectedFragment = new BankFragmentNEW();
+                        selectedFragment = new BankFragment();
                         fragmentTag = "BankFragment";
                         break;
                     }
