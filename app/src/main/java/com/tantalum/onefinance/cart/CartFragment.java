@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,6 +96,7 @@ public class CartFragment extends Fragment {
             cartAdapter.submitList(cartItems);
             showItemCount(cartItems.size());
             toggleInsVisibility(cartItems.size());
+            new Handler(Looper.getMainLooper()).post(() -> recyclerView.smoothScrollToPosition(0));
         });
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -163,7 +166,6 @@ public class CartFragment extends Fragment {
         String itemTotal = getItemTotal(itemPrice, quantity);
         CartItem cartItem = new CartItem(itemName, itemPrice, quantity, itemTotal, false);
         cartViewModel.insert(cartItem);
-        recyclerView.smoothScrollToPosition(0);
 
         //update total
         if (!itemPrice.isEmpty()) {
