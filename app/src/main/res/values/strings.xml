@@ -554,5 +554,6 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">This is an app widget description</string>
+    <string name="no_transactions_go_to_the_wallet_page_to_add_your_first_transaction">No transactions. Go to the Wallet page and tap [ ^ ] to add your first transaction.</string>
 
 </resources>

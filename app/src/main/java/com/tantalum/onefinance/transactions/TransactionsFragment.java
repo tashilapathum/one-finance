@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -128,15 +129,13 @@ public class TransactionsFragment extends Fragment implements AdapterView.OnItem
 
         transactionsViewModel = new ViewModelProvider(this,
                 ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(TransactionsViewModel.class);
-        transactionsViewModel.getAllTransactionItems().observe(getActivity(), new Observer<List<TransactionItem>>() {
-            @Override
-            public void onChanged(List<TransactionItem> transactionItems) {
-                if (!animationShown) { //to avoid showing when notifying adapter
-                    recyclerView.scheduleLayoutAnimation();
-                    animationShown = true;
-                }
-                transactionsAdapter.submitList(transactionItems);
+        transactionsViewModel.getAllTransactionItems().observe(getActivity(), transactionItems -> {
+            if (!animationShown) { //to avoid showing when notifying adapter
+                recyclerView.scheduleLayoutAnimation();
+                animationShown = true;
             }
+            transactionsAdapter.submitList(transactionItems);
+            toggleInsVisibility(transactionItems.size());
         });
 
         transactionsAdapter.setOnTransactionClickListener(new TransactionsAdapter.OnTransactionClickListener() {
@@ -476,6 +475,15 @@ public class TransactionsFragment extends Fragment implements AdapterView.OnItem
 
     private boolean filtersNotApplied() {
         return filteredList.isEmpty() && date == 0 && type == 0;
+    }
+
+    private void toggleInsVisibility(int itemCount) {
+        LinearLayout inv_instructions = view.findViewById(R.id.inv_instructions);
+        inv_instructions.setAlpha(0.5f);
+        if (itemCount > 0)
+            inv_instructions.setVisibility(View.GONE);
+        else
+            inv_instructions.setVisibility(View.VISIBLE);
     }
 
     @Override

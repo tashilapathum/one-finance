@@ -99,6 +99,31 @@
         </HorizontalScrollView>
     </com.google.android.material.card.MaterialCardView>
 
+    <LinearLayout
+        android:id="@+id/inv_instructions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/filtersCard"
+        android:layout_margin="32dp"
+        android:alpha="0.5"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="42dp">
+
+        <ImageView
+            android:layout_width="77dp"
+            android:layout_height="77dp"
+            android:layout_marginBottom="24dp"
+            android:src="@drawable/ic_transactions" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_transactions_go_to_the_wallet_page_to_add_your_first_transaction"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
