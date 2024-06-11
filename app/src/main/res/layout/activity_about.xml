@@ -107,7 +107,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tantalum Technologies (Pvt) Ltd" />
+                    android:text="Tashila Pathum" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -119,14 +119,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Contact us"
+                    android:text="Contact me"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:textColor="@color/colorAccent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Email: tantalumtech@gmail.com\nWhatsApp: +94 72 300 4420" />
+                    android:text="tantalumtech@gmail.com"
+                    autolink="email"/>
 
             </LinearLayout>
 
