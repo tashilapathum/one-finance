@@ -15,12 +15,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.FullScreenContentCallback;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -40,7 +34,6 @@ public class LoansFragment extends Fragment {
     private static LoansFragment instance;
     private LoansViewModel loansViewModel;
     private ViewPager viewPager;
-    private InterstitialAd mInterstitialAd;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,13 +73,6 @@ public class LoansFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (!UpgradeHandler.isProActive(requireContext()))
-            loadAd();
-    }
-
     public static LoansFragment getInstance() {
         return instance;
     }
@@ -100,8 +86,6 @@ public class LoansFragment extends Fragment {
     public void addLoan(Loan loan) {
         loansViewModel.insert(loan);
         Toast.makeText(getActivity(), R.string.added, Toast.LENGTH_SHORT).show();
-        if (!UpgradeHandler.isProActive(requireContext()))
-            showInterstitial();
     }
 
     public void toggleSettled(Loan loan, boolean isSettled) {
@@ -135,40 +119,6 @@ public class LoansFragment extends Fragment {
                 .setNegativeButton(R.string.no, null)
                 .show();
     }
-
-    private void loadAd() {
-        if (!UpgradeHandler.isProActive(requireContext()))
-            MobileAds.initialize(requireContext(), initializationStatus -> {
-                AdRequest adRequest = new AdRequest.Builder().build();
-
-                InterstitialAd.load(requireContext(), getString(R.string.after_loan_ad), adRequest,
-                        new InterstitialAdLoadCallback() {
-                            @Override
-                            public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                                mInterstitialAd = interstitialAd;
-                            }
-
-                            @Override
-                            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                                mInterstitialAd = null;
-                            }
-                        });
-            });
-    }
-
-    private void showInterstitial() {
-        if (mInterstitialAd != null) {
-            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                @Override
-                public void onAdDismissedFullScreenContent() {
-                    super.onAdDismissedFullScreenContent();
-                    UpgradeHandler.showPrompt(requireContext());
-                }
-            });
-            mInterstitialAd.show(requireActivity());
-        }
-    }
-
 
     //------------------------------- for tabbed layout ----------------------------------//
 

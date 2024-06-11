@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +23,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.elconfidencial.bubbleshowcase.BubbleShowCase;
 import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.FullScreenContentCallback;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import com.elconfidencial.bubbleshowcase.BubbleShowCaseListener;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -40,7 +36,6 @@ import com.tantalum.onefinance.Amount;
 import com.tantalum.onefinance.Constants;
 import com.tantalum.onefinance.R;
 import com.tantalum.onefinance.accounts.NewAccount;
-import com.tantalum.onefinance.pro.UpgradeHandler;
 import com.tantalum.onefinance.quicklist.QuickListActivity;
 import com.tantalum.onefinance.quicklist.QuickItem;
 import com.tantalum.onefinance.quicklist.QuickListViewModel;
@@ -67,9 +62,6 @@ public class WalletFragment extends Fragment {
     private static WalletFragment instance;
     private boolean contentLoaded = false;
     private SpeedDialView fab;
-
-    private InterstitialAd mInterstitialAd;
-    private int beforeInterstitialCount = 0;
 
     public static WalletFragment getInstance() {
         return instance;
@@ -156,7 +148,6 @@ public class WalletFragment extends Fragment {
             contentLoaded = true;
             showInstruction();
         }
-        loadAd();
     }
 
     @Override
@@ -173,7 +164,6 @@ public class WalletFragment extends Fragment {
                     .targetView(fab)
                     .highlightMode(BubbleShowCase.HighlightMode.VIEW_SURFACE)
                     .show();
-            sharedPref.edit().putBoolean("insWalletShown", true).apply();
         }
     }
 
@@ -275,9 +265,6 @@ public class WalletFragment extends Fragment {
         showNegativeWarning();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             requestNotificationPermission();
-
-        if (!UpgradeHandler.isProActive(requireContext()))
-            showInterstitial();
     }
 
     private void showNegativeWarning() {
@@ -299,41 +286,6 @@ public class WalletFragment extends Fragment {
             tvBalance.setTextColor(getActivity().getResources().getColor(android.R.color.holo_green_dark));
             tvCurrency.setTextColor(getActivity().getResources().getColor(android.R.color.holo_green_dark));
         }
-    }
-
-    private void loadAd() {
-        if (!UpgradeHandler.isProActive(requireContext()))
-            MobileAds.initialize(requireContext(), initializationStatus -> {
-                AdRequest adRequest = new AdRequest.Builder().build();
-
-                InterstitialAd.load(requireContext(), getString(R.string.after_wallet_transaction_ad_id), adRequest,
-                        new InterstitialAdLoadCallback() {
-                            @Override
-                            public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                                mInterstitialAd = interstitialAd;
-                            }
-
-                            @Override
-                            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                                mInterstitialAd = null;
-                            }
-                        });
-            });
-    }
-
-    private void showInterstitial() {
-        if (beforeInterstitialCount >= 3 && mInterstitialAd != null) {
-            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                @Override
-                public void onAdDismissedFullScreenContent() {
-                    super.onAdDismissedFullScreenContent();
-                    beforeInterstitialCount = 0;
-                    UpgradeHandler.showPrompt(requireContext());
-                }
-            });
-            mInterstitialAd.show(requireActivity());
-        } else
-            beforeInterstitialCount++;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)

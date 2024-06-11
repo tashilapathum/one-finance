@@ -26,10 +26,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -182,8 +178,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //updates
         UpdateManager updateManager = new UpdateManager(this);
         updateManager.checkForUpdates();
-
-        loadAd();
     }
 
     @Override //so the language change works with dark mode
@@ -439,28 +433,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             }
         }
-    }
-
-    private void loadAd() {
-        if (!UpgradeHandler.isProActive(this))
-            MobileAds.initialize(this, initializationStatus -> {
-                AdView adView = findViewById(R.id.adView);
-                adView.setAdListener(new AdListener() {
-                    @Override
-                    public void onAdLoaded() {
-                        super.onAdLoaded();
-                        adView.setVisibility(View.VISIBLE);
-                    }
-
-                    @Override
-                    public void onAdClosed() {
-                        super.onAdClosed();
-                        UpgradeHandler.showPrompt(context);
-                    }
-                });
-                AdRequest adRequest = new AdRequest.Builder().build();
-                adView.loadAd(adRequest);
-            });
     }
 
     private void rateApp() {

@@ -8,12 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.FullScreenContentCallback;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -40,7 +34,6 @@ public class BillsFragment extends Fragment {
     View view;
     private static BillsFragment instance;
     private BillsViewModel billsViewModel;
-    private InterstitialAd mInterstitialAd;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,13 +72,6 @@ public class BillsFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (!UpgradeHandler.isProActive(requireContext()))
-            loadAd();
-    }
-
     public static BillsFragment getInstance() {
         return instance;
     }
@@ -97,8 +83,6 @@ public class BillsFragment extends Fragment {
 
     public void addBill(Bill bill) {
         billsViewModel.insert(bill);
-        if (!UpgradeHandler.isProActive(requireContext()))
-            showInterstitial();
     }
 
     public void markAsPaid(Bill bill) {
@@ -141,40 +125,6 @@ public class BillsFragment extends Fragment {
                 .setNegativeButton(R.string.no, null)
                 .show();
     }
-
-    private void loadAd() {
-        if (!UpgradeHandler.isProActive(requireContext()))
-            MobileAds.initialize(requireContext(), initializationStatus -> {
-                AdRequest adRequest = new AdRequest.Builder().build();
-
-                InterstitialAd.load(requireContext(), getString(R.string.after_bill_ad), adRequest,
-                        new InterstitialAdLoadCallback() {
-                            @Override
-                            public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                                mInterstitialAd = interstitialAd;
-                            }
-
-                            @Override
-                            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                                mInterstitialAd = null;
-                            }
-                        });
-            });
-    }
-
-    private void showInterstitial() {
-        if (mInterstitialAd != null) {
-            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                @Override
-                public void onAdDismissedFullScreenContent() {
-                    super.onAdDismissedFullScreenContent();
-                    UpgradeHandler.showPrompt(requireContext());
-                }
-            });
-            mInterstitialAd.show(requireActivity());
-        }
-    }
-
 
     //------------------------------- for tabbed layout ----------------------------------//
 

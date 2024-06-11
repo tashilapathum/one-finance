@@ -17,12 +17,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.FullScreenContentCallback;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -38,11 +32,8 @@ public class InvestmentsFragment extends Fragment {
     private static InvestmentsFragment instance;
     private InvestmentsViewModel investmentsViewModel;
     private InvestmentsAdapter investmentsAdapter;
-    private SharedPreferences sharedPref;
     private LinearLayout inv_instructions;
     private FloatingActionButton invFAB;
-
-    private InterstitialAd mInterstitialAd;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,7 +50,6 @@ public class InvestmentsFragment extends Fragment {
         View view = inflater.inflate(R.layout.frag_investments, container, false);
         instance = this;
         context = getActivity();
-        sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
 
         invFAB = view.findViewById(R.id.fab);
         invFAB.setOnClickListener(view1 -> onClickFAB());
@@ -121,13 +111,6 @@ public class InvestmentsFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        if (!UpgradeHandler.isProActive(requireContext()))
-            loadAd();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         invFAB.show();
@@ -160,8 +143,6 @@ public class InvestmentsFragment extends Fragment {
 
     public void addInvestment(Investment investment) {
         investmentsViewModel.insert(investment);
-        if (!UpgradeHandler.isProActive(requireContext()))
-            showInterstitial();
     }
 
     public void openInvestment(Investment investment) {
@@ -185,39 +166,6 @@ public class InvestmentsFragment extends Fragment {
             inv_instructions.setVisibility(View.GONE);
         else
             inv_instructions.setVisibility(View.VISIBLE);
-    }
-
-    private void loadAd() {
-        if (!UpgradeHandler.isProActive(requireContext()))
-            MobileAds.initialize(requireContext(), initializationStatus -> {
-                AdRequest adRequest = new AdRequest.Builder().build();
-
-                InterstitialAd.load(requireContext(), getString(R.string.after_investment_ad), adRequest,
-                        new InterstitialAdLoadCallback() {
-                            @Override
-                            public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                                mInterstitialAd = interstitialAd;
-                            }
-
-                            @Override
-                            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                                mInterstitialAd = null;
-                            }
-                        });
-            });
-    }
-
-    private void showInterstitial() {
-        if (mInterstitialAd != null) {
-            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                @Override
-                public void onAdDismissedFullScreenContent() {
-                    super.onAdDismissedFullScreenContent();
-                    UpgradeHandler.showPrompt(requireContext());
-                }
-            });
-            mInterstitialAd.show(requireActivity());
-        }
     }
 
 }

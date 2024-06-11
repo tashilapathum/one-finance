@@ -13,12 +13,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.FullScreenContentCallback;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -44,7 +38,6 @@ public class CartFragment extends Fragment {
     private static CartFragment instance;
     FloatingActionButton cartFAB;
     private TextView tvItemCount;
-    private int itemCount;
     private TextView tvTotal;
     private double total;
     private String currency;
@@ -53,11 +46,7 @@ public class CartFragment extends Fragment {
     private ImageButton imDeleteCart;
     private RecyclerView recyclerView;
     private LinearLayout cart_instructions;
-    private String theme;
     private CartAdapter cartAdapter;
-
-    private InterstitialAd mInterstitialAd;
-    private int beforeInterstitialCount = 0;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,7 +61,6 @@ public class CartFragment extends Fragment {
         instance = this;
         view = inflater.inflate(R.layout.frag_cart, container, false);
         sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
-        theme = sharedPref.getString("theme", "light");
         currency = sharedPref.getString("currency", "");
 
         cartFAB = view.findViewById(R.id.cartFAB);
@@ -82,7 +70,6 @@ public class CartFragment extends Fragment {
         tvTotal = view.findViewById(R.id.cartTotal);
         imDeleteCart = view.findViewById(R.id.cart_delete);
         imDeleteCart.setOnClickListener(view -> clearCart());
-        itemCount = sharedPref.getInt("cartItemCount", 0);
         total = Double.parseDouble(sharedPref.getString("cartTotal", "0"));
 
         recyclerView = view.findViewById(R.id.cart_recyclerview);
@@ -147,12 +134,6 @@ public class CartFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        loadAd();
-    }
-
     public static CartFragment getInstance() {
         return instance;
     }
@@ -173,8 +154,6 @@ public class CartFragment extends Fragment {
             showTotal(total);
             sharedPref.edit().putString("cartTotal", String.valueOf(total)).apply();
         }
-
-        showInterstitial();
     }
 
     public void updateItem(int dbID, String itemName, String oldItemPrice, String newItemPrice, int oldQuantity, int newQuantity, boolean isChecked) {
@@ -188,8 +167,6 @@ public class CartFragment extends Fragment {
         total = total - oldPrice * oldQuantity + newPrice * newQuantity;
         showTotal(total);
         sharedPref.edit().putString("cartTotal", String.valueOf(total)).apply();
-
-        showInterstitial();
     }
 
     private void removeItem(CartItem cartItem) {
@@ -219,7 +196,6 @@ public class CartFragment extends Fragment {
                     showTotal(0);
                     total = 0;
                     sharedPref.edit().putString("cartTotal", "0.00").apply();
-                    showInterstitial();
                 })
                 .setNegativeButton(R.string.no, null)
                 .show();
@@ -265,41 +241,6 @@ public class CartFragment extends Fragment {
             cart_instructions.setVisibility(View.GONE);
         else
             cart_instructions.setVisibility(View.VISIBLE);
-    }
-
-    private void loadAd() {
-        if (!UpgradeHandler.isProActive(requireContext()))
-            MobileAds.initialize(requireContext(), initializationStatus -> {
-                AdRequest adRequest = new AdRequest.Builder().build();
-
-                InterstitialAd.load(requireContext(), getString(R.string.after_cart_items_ad), adRequest,
-                        new InterstitialAdLoadCallback() {
-                            @Override
-                            public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                                mInterstitialAd = interstitialAd;
-                            }
-
-                            @Override
-                            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                                mInterstitialAd = null;
-                            }
-                        });
-            });
-    }
-
-    private void showInterstitial() {
-        if (!UpgradeHandler.isProActive(requireContext()) && beforeInterstitialCount >= 5 && mInterstitialAd != null) {
-            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                @Override
-                public void onAdDismissedFullScreenContent() {
-                    super.onAdDismissedFullScreenContent();
-                    beforeInterstitialCount = 0;
-                    UpgradeHandler.showPrompt(requireContext());
-                }
-            });
-            mInterstitialAd.show(requireActivity());
-        } else
-            beforeInterstitialCount++;
     }
 
 }

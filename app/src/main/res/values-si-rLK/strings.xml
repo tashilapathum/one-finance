@@ -487,7 +487,7 @@
     <string name="share">බෙදාගන්න</string>
     <string name="add_cat_trans_to_see_them_in_chart">ප්‍රස්ථාරය බැලීමට වර්ගීකරණය කළ ගනුදෙනු කිහිපයක් එක් කරන්න</string>
     <string name="start_here">මෙතනින් පටන්ගන්න</string>
-    <string name="tap_plus_or_minus">මෙතැන තට්ටු කර, ආදායමක් එක් කිරීමට හෝ + වියදමක් සඳහා - තට්ටු කරන්න</string>
+    <string name="tap_plus_or_minus">මෙතැන තට්ටු කර, ආදායමක් එක් කිරීමට හෝ [ + ] වියදමක් සඳහා [ - ] තට්ටු කරන්න</string>
     <string name="category">කාණ්ඩය</string>
     <string name="any_category">ඕනෑම කාණ්ඩයක්</string>
     <string name="notification_permission_reason">ඔබට දෛනික ආදායම් වියදම් එක් කිරීම මතක් කිරීමට අවසරය (notification permission) අවශ්‍යයි. අවසරය ලබා දෙනවා ද?</string>
