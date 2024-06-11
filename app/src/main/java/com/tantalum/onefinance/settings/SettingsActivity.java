@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.tantalum.onefinance.AboutActivity;
 import com.tantalum.onefinance.AlertReceiver;
@@ -39,16 +40,17 @@ import com.tantalum.onefinance.EnterPIN;
 import com.tantalum.onefinance.MainActivity;
 import com.tantalum.onefinance.R;
 import com.tantalum.onefinance.reports.ReportsActivity;
-import com.tantalum.onefinance.TimePickerFrag;
 import com.tantalum.onefinance.transactions.TransactionsActivity;
 import com.tantalum.onefinance.pro.UpgradeToProActivity;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
-public class SettingsActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, TimePickerDialog.OnTimeSetListener {
+public class SettingsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String TAG = "SettingsActivity";
     SharedPreferences sharedPref;
     private DrawerLayout drawer;
@@ -334,21 +336,27 @@ public class SettingsActivity extends AppCompatActivity
         Bundle bundle = new Bundle();
         bundle.putString("setting", "edit_notify_time");
         firebaseAnalytics.logEvent("used_setting", bundle);
-        if (isMyWalletPro) {
-            DialogFragment timePicker = new TimePickerFrag();
-            timePicker.show(getSupportFragmentManager(), "time picker");
-        } else purchaseProForThis();
+        if (isMyWalletPro) showTimePicker();
+        else purchaseProForThis();
     }
 
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-        c.set(Calendar.MINUTE, minute);
-        c.set(Calendar.SECOND, 0);
+    private void showTimePicker() {
+        MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
+                .setTitleText("Select reminder time")
+                .build();
+        timePicker.addOnPositiveButtonClickListener(dialog -> {
+            int hourOfDay = timePicker.getHour();
+            int minute = timePicker.getMinute();
 
-        saveTime(c);
-        startAlarm(c);
+            Calendar c = Calendar.getInstance();
+            c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            c.set(Calendar.MINUTE, minute);
+            c.set(Calendar.SECOND, 0);
+
+            saveTime(c);
+            startAlarm(c);
+        });
+        timePicker.show(getSupportFragmentManager(), "time picker");
     }
 
     public void saveTime(Calendar c) {
@@ -360,12 +368,17 @@ public class SettingsActivity extends AppCompatActivity
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
         int reqCode = (int) System.currentTimeMillis();
-        PendingIntent pendingIntent = null;
+        PendingIntent pendingIntent;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M)
             pendingIntent = PendingIntent.getBroadcast(this, reqCode, intent, PendingIntent.FLAG_IMMUTABLE);
         else
             pendingIntent = PendingIntent.getBroadcast(this, reqCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+        alarmManager.setInexactRepeating(
+                AlarmManager.RTC_WAKEUP,
+                c.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY,
+                pendingIntent
+        );
 
         Toast.makeText(this, getString(R.string.notification_set_at) + timeString + getString(R.string.everydayy), Toast.LENGTH_LONG).show();
     }
