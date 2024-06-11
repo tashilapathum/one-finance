@@ -512,7 +512,6 @@
         \u2713 Unlimited investments (free limit is 3)\n
         \u2713 Unlimited quick list items (free limit is 5)\n
         \u2713 Unlimited categories (free limit is 5)\n
-        \u2713 Remove ads\n
         \u2713 Includes all upcoming features\n
         \u2713 Pay once, keep forever\n
         \u2713 Support the developer! ❤\n
@@ -521,6 +520,12 @@
 
     <!-- WHAT'S NEW -->
     <string name="whats_new_descr" translatable="false">
+        \nv1.1.11\n
+        - Removed all ads thanks to AdMob restriction\n
+        - Updated date and time pickers look and feel\n
+        - [Fixed] Crash when picking date for bank transactions\n
+        - [Fixed] Daily reminder notification again on Android 14 and 15\n
+        - UI/UX improvements\n
         \nv1.1.9\n
         - [Added] Monochrome icon\n
         - UI/UX improvements\n
@@ -546,7 +551,6 @@
         - Initial release\n
     </string>
 
-    <!-- AD IDS -->
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">This is an app widget description</string>

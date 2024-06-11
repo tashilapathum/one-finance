@@ -62,8 +62,10 @@ public class BankFragment extends Fragment implements DialogInterface.OnDismissL
         view.findViewById(R.id.accounts).setOnClickListener(v -> startActivity(new Intent(getActivity(), AccountManager.class)));
         view.findViewById(R.id.accountName).setOnClickListener(v -> showAccDetails());
 
-        if (accountList.isEmpty())
+        if (accountList.isEmpty()) {
             showPlaceholder();
+            fab.getMainFab().setOnClickListener(view -> showNoAccount());
+        }
         else {
             loadAccountsChips();
             switchAccount();
@@ -74,28 +76,24 @@ public class BankFragment extends Fragment implements DialogInterface.OnDismissL
     }
 
     private void showPlaceholder() {
-        //placeholder
         view.findViewById(R.id.placeholder_layout).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.addAccount).setOnClickListener(view -> showNewAccount());
+        fab.setOnClickListener(view -> showNoAccount() );
+    }
 
-        //add acc button
-        view.findViewById(R.id.addAccount).setOnClickListener(view -> {
-            Intent intent = new Intent(getActivity(), NewAccount.class);
-            intent.putExtra("isNewAccount", true);
-            startActivity(intent);
-        });
+    private void showNoAccount() {
+        new MaterialAlertDialogBuilder(requireActivity())
+                .setTitle(R.string.acc_na)
+                .setMessage(R.string.acc_na_des)
+                .setPositiveButton(R.string.add, (dialog, which) -> showNewAccount())
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+    }
 
-        //mod fab msg
-        fab.setOnClickListener(view ->
-                new MaterialAlertDialogBuilder(requireActivity())
-                        .setTitle(R.string.acc_na)
-                        .setMessage(R.string.acc_na_des)
-                        .setPositiveButton(R.string.add, (dialog, which) -> {
-                            Intent intent = new Intent(getActivity(), NewAccount.class);
-                            intent.putExtra("isNewAccount", true);
-                            startActivity(intent);
-                        })
-                        .setNegativeButton(R.string.cancel, null)
-                        .show());
+    private void showNewAccount() {
+        Intent intent = new Intent(getActivity(), NewAccount.class);
+        intent.putExtra("isNewAccount", true);
+        startActivity(intent);
     }
 
     private void loadAccountsChips() {
