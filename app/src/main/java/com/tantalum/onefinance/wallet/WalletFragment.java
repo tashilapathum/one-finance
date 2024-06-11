@@ -163,6 +163,26 @@ public class WalletFragment extends Fragment {
                     .description(getString(R.string.tap_plus_or_minus))
                     .targetView(fab)
                     .highlightMode(BubbleShowCase.HighlightMode.VIEW_SURFACE)
+                    .listener(new BubbleShowCaseListener() {
+                        @Override
+                        public void onTargetClick(@NonNull BubbleShowCase bubbleShowCase) {
+                            
+                        }
+
+                        @Override
+                        public void onCloseActionImageClick(@NonNull BubbleShowCase bubbleShowCase) {
+                            sharedPref.edit().putBoolean("insWalletShown", true).apply();
+                        }
+
+                        @Override
+                        public void onBackgroundDimClick(@NonNull BubbleShowCase bubbleShowCase) {
+                        }
+
+                        @Override
+                        public void onBubbleClick(@NonNull BubbleShowCase bubbleShowCase) {
+
+                        }
+                    })
                     .show();
         }
     }
