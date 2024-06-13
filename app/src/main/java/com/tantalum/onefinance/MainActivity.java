@@ -160,11 +160,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent notifyIntent = new Intent(this, AlertReceiver.class);
             PendingIntent pendingIntent = null;
+            int requestCode = 1;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                pendingIntent = PendingIntent.getBroadcast(this, 1, notifyIntent, PendingIntent.FLAG_IMMUTABLE);
+                pendingIntent = PendingIntent.getBroadcast(this, requestCode, notifyIntent, PendingIntent.FLAG_IMMUTABLE);
             else
-                pendingIntent = PendingIntent.getBroadcast(this, 1, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                pendingIntent = PendingIntent.getBroadcast(this, requestCode, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+            alarmManager.cancel(pendingIntent);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
                 alarmManager.canScheduleExactAlarms();
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);

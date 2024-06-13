@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">One Finance</string>
     <string name="my_wallet_pro" translatable="false">One Finance</string>
-    <string name="version" translatable="false">Version 1.1.11</string>
+    <string name="version" translatable="false">Version 1.1.12</string>
     <string name="recent_transactions">Transactions</string>
     <string name="reports">Reports</string>
     <string name="settings">Settings</string>
@@ -547,7 +547,6 @@
         - Increased category colors default opacity\n
         \nv1.1.0\n
         - Unlocked most of the pro features for free!\n
-        - Added support for Android 12\n
         \nv1.0.0\n
         - Initial release\n
     </string>
