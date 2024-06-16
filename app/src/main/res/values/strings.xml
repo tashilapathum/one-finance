@@ -77,7 +77,7 @@
     <string name="everydayy">&#160;everyday</string>
     <string name="buy_pro_for_this">Buy the Pro version to unlock this feature!</string>
     <string name="buy">Buy Now</string>
-    <string name="trans_notify_title">Did you add the transactions you made today?</string>
+    <string name="trans_notify_title">Did you add today\'s transactions?</string>
     <string name="notification_msg">Tap here to open One Finance</string>
     <string name="predate">Predate</string>
     <string name="predate_description">Long-tap to add a previous date to the transaction</string>

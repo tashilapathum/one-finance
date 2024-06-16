@@ -373,6 +373,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
             pendingIntent = PendingIntent.getBroadcast(this, reqCode, intent, PendingIntent.FLAG_IMMUTABLE);
         else
             pendingIntent = PendingIntent.getBroadcast(this, reqCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.cancel(pendingIntent);
         alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
                 c.getTimeInMillis(),

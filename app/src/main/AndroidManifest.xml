@@ -4,10 +4,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
     <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
@@ -33,10 +31,6 @@
             android:name=".categories.CategoriesActivity"
             android:label="@string/categories" />
         <activity android:name=".WebViewActivity" />
-
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8303071997891278~8246601230" />
 
         <activity android:name=".EnterPIN" />
         <activity android:name=".Insights" />

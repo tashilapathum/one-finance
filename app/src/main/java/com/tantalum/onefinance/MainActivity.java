@@ -149,30 +149,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else //when starting the app normally
             navigateScreens(new WalletFragment(), "WalletFragment", R.id.nav_wallet);
 
-        //set notification
-        boolean isNotificationSet = sharedPref.getBoolean("isNotificationSet", false);
-        if (!isNotificationSet) {
-            Calendar c = Calendar.getInstance();
-            c.set(Calendar.HOUR_OF_DAY, 20); //20 means default is at 8
-            c.set(Calendar.MINUTE, 0);
-            c.set(Calendar.SECOND, 0);
-
-            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            Intent notifyIntent = new Intent(this, AlertReceiver.class);
-            PendingIntent pendingIntent = null;
-            int requestCode = 1;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                pendingIntent = PendingIntent.getBroadcast(this, requestCode, notifyIntent, PendingIntent.FLAG_IMMUTABLE);
-            else
-                pendingIntent = PendingIntent.getBroadcast(this, requestCode, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            alarmManager.cancel(pendingIntent);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-                alarmManager.canScheduleExactAlarms();
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
-            sharedPref.edit().putBoolean("isNotificationSet", true).apply();
-        }
-
         sharedPref.edit().putBoolean("MyWalletPro", true).apply(); //DO NOT CHANGE
         if (getPackageName().contains("debug"))
             sharedPref.edit().putBoolean(ONE_FINANCE_PRO, true).apply();
@@ -197,7 +173,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //init setup
         Intent intent = new Intent(this, InitialSetupActivity.class);
         boolean alreadyDid = sharedPref.getBoolean("alreadyDidInitSetup", false);
-        if (!alreadyDid) startActivity(intent);
+        if (!alreadyDid)
+            startActivity(intent);
         else {
             //what's new
             if (!sharedPref.getBoolean("whatsNewShown" + getString(R.string.version), false)) {
@@ -205,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 dialogWhatsNew.show(getSupportFragmentManager(), "whats new dialog");
                 sharedPref.edit().putBoolean("whatsNewShown" + getString(R.string.version), true).apply();
             }
+            setNotification();
         }
         rateApp(); //to make counts
     }
@@ -329,6 +307,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 childFm.popBackStack();
             else processExit();
         } else processExit();
+    }
+
+    private void setNotification() {
+        boolean isNotificationSet = sharedPref.getBoolean("isNotificationSet", false);
+        if (!isNotificationSet) {
+            Calendar c = Calendar.getInstance();
+            c.set(Calendar.HOUR_OF_DAY, 20); //20 means default is at 8
+            c.set(Calendar.MINUTE, 0);
+            c.set(Calendar.SECOND, 0);
+
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            Intent notifyIntent = new Intent(this, AlertReceiver.class);
+            PendingIntent pendingIntent = null;
+            int requestCode = 1;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                pendingIntent = PendingIntent.getBroadcast(this, requestCode, notifyIntent, PendingIntent.FLAG_IMMUTABLE);
+            else
+                pendingIntent = PendingIntent.getBroadcast(this, requestCode, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            alarmManager.cancel(pendingIntent);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+            sharedPref.edit().putBoolean("isNotificationSet", true).apply();
+        }
     }
 
     private void processExit() {
