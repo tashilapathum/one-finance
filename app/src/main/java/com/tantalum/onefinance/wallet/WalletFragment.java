@@ -21,14 +21,14 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.elconfidencial.bubbleshowcase.BubbleShowCase;
-import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder;
-import com.elconfidencial.bubbleshowcase.BubbleShowCaseListener;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.transition.MaterialSharedAxis;
 import com.leinardi.android.speeddial.SpeedDialView;
+import com.nmssalman.bubbleshowcasenew.BubbleShowCase;
+import com.nmssalman.bubbleshowcasenew.BubbleShowCaseBuilder;
+import com.nmssalman.bubbleshowcasenew.BubbleShowCaseListener;
 import com.permissionx.guolindev.PermissionX;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
