@@ -192,12 +192,12 @@ public class InitialSetupActivity extends AppCompatActivity {
     }
 
     public void openPrivacyPolicy(View view) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://tantalumtech.net/one-finance-app-privacy-policy/"));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.tashila.me/projects/one-finance/privacy"));
         startActivity(intent);
     }
 
     public void openTC(View view) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://tantalumtech.net/one-finance-app-terms-of-service/"));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.tashila.me/projects/one-finance/terms"));
         startActivity(intent);
     }
 

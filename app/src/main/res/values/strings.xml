@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">One Finance</string>
     <string name="my_wallet_pro" translatable="false">One Finance</string>
-    <string name="version" translatable="false">Version 1.1.12</string>
+    <string name="version" translatable="false">Version 1.1.14</string>
     <string name="recent_transactions">Transactions</string>
     <string name="reports">Reports</string>
     <string name="settings">Settings</string>
