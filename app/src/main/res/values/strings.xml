@@ -520,6 +520,9 @@
 
     <!-- WHAT'S NEW -->
     <string name="whats_new_descr" translatable="false">
+        \nv1.1.14\n
+        - Added support for Android 14 and 15\n
+        - UI/UX improvements\n
         \nv1.1.11\n
         - Removed all ads thanks to AdMob restriction\n
         - Allow multiline transaction descriptions\n
