@@ -45,7 +45,6 @@ public class ToolsFragment extends Fragment {
         String theme = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE).getString("theme", "light");
         if (theme.equalsIgnoreCase("dark")) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            view.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.background_dark));
         }
 
         final Fragment[] fragment = new Fragment[1];

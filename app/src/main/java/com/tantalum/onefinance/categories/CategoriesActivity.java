@@ -67,8 +67,6 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
             setTheme(R.style.AppThemeDark);
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_categories);
-            View layout = findViewById(R.id.drawer_layout);
-            layout.setBackground(ContextCompat.getDrawable(this, R.drawable.background_dark));
             toolbar = findViewById(R.id.toolbar);
             toolbar.setBackground(getDrawable(R.color.colorToolbarDark));
         } else {

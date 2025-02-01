@@ -59,11 +59,7 @@ public class WeeklyReportsAdapter extends ListAdapter<WeeklyReportsFragment.Week
     @NonNull
     @Override
     public ReportHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView;
-        if (isFromWallet)
-            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_weekly_report_2, parent, false);
-        else
-            itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_weekly_report, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_weekly_report, parent, false);
         return new ReportHolder(itemView);
     }
 

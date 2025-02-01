@@ -61,8 +61,6 @@ public class ReportsActivity extends AppCompatActivity implements NavigationView
             setTheme(R.style.AppThemeDark);
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_reports);
-            View layout = findViewById(R.id.drawer_layout);
-            layout.setBackground(ContextCompat.getDrawable(this, R.drawable.background_dark));
             toolbar = findViewById(R.id.toolbar);
             toolbar.setBackground(getDrawable(R.color.colorToolbarDark));
         } else {

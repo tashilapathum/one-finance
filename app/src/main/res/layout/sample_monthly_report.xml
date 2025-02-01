@@ -4,38 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="8dp"
-    android:layout_marginVertical="16dp"
-    app:cardElevation="4dp"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="32dp"
+    app:cardElevation="8dp"
     app:strokeWidth="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/month"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginBottom="16dp"
+            android:drawablePadding="12dp"
             android:fontFamily="sans-serif-condensed-medium"
-            android:paddingHorizontal="4dp"
             android:textAlignment="textEnd"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            app:drawableEndCompat="@drawable/ic_month"
             tools:text="October" />
 
         <TextView
             style="@style/ReportsSubtitleTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cash_flow" />
+            android:drawablePadding="8dp"
+            android:text="@string/cash_flow"
+            app:drawableStartCompat="@drawable/ic_cash"
+            app:drawableTint="@color/colorAccent" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <TextView
                 style="@style/ReportsItemTitleTextViewStyle"
@@ -43,25 +47,31 @@
                 android:layout_height="wrap_content"
                 android:text="@string/r_income" />
 
-            <TextView
-                android:id="@+id/income"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="$120.00" />
+                android:layout_alignParentEnd="true"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/incomeDiff"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                tools:text="(-50)"
-                tools:textColor="@android:color/holo_red_light" />
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/income"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="$120.00" />
 
-        <LinearLayout
+                <TextView
+                    android:id="@+id/incomeDiff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    tools:text="(-50)"
+                    tools:textColor="@android:color/holo_red_light" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <TextView
                 style="@style/ReportsItemTitleTextViewStyle"
@@ -69,20 +79,27 @@
                 android:layout_height="wrap_content"
                 android:text="@string/r_expenses" />
 
-            <TextView
-                android:id="@+id/expenses"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="$43.00" />
+                android:layout_alignParentEnd="true"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/expensesDiff"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                tools:text="(-25)"
-                tools:textColor="@android:color/holo_green_dark" />
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/expenses"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="$43.00" />
+
+                <TextView
+                    android:id="@+id/expensesDiff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    tools:text="(-25)"
+                    tools:textColor="@android:color/holo_green_dark" />
+            </LinearLayout>
+        </RelativeLayout>
 
         <com.github.mikephil.charting.charts.HorizontalBarChart
             android:id="@+id/chartInEx"
@@ -94,12 +111,14 @@
             style="@style/ReportsSubtitleTextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Budget" />
+            android:drawablePadding="8dp"
+            android:text="Budget"
+            app:drawableStartCompat="@drawable/ic_budget"
+            app:drawableTint="@color/colorAccent" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <TextView
                 style="@style/ReportsItemTitleTextViewStyle"
@@ -111,13 +130,13 @@
                 android:id="@+id/budget"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 tools:text="$120.00" />
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <TextView
                 style="@style/ReportsItemTitleTextViewStyle"
@@ -129,13 +148,13 @@
                 android:id="@+id/budgetLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 tools:text="$43.00" />
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <TextView
                 style="@style/ReportsItemTitleTextViewStyle"
@@ -147,13 +166,13 @@
                 android:id="@+id/highestExpense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 tools:text="$7.25" />
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <TextView
                 style="@style/ReportsItemTitleTextViewStyle"
@@ -165,8 +184,9 @@
                 android:id="@+id/highestItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 tools:text="Pizza" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <com.github.mikephil.charting.charts.HorizontalBarChart
             android:id="@+id/chartBudget"
@@ -189,10 +209,9 @@
             android:layout_height="wrap_content"
             android:text="@string/average_of" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -206,14 +225,14 @@
                 android:id="@+id/avIncome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 tools:text="$34.73" />
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:orientation="horizontal">
+            android:layout_marginBottom="4dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -227,8 +246,9 @@
                 android:id="@+id/avExpense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 tools:text="$12.55" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <TextView
             style="@style/ReportsItemTitleTextViewStyle"
@@ -236,10 +256,9 @@
             android:layout_height="wrap_content"
             android:text="@string/the_day_with_highest" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -253,13 +272,13 @@
                 android:id="@+id/mostIncome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 tools:text="Monday" />
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -273,8 +292,9 @@
                 android:id="@+id/mostExpense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 tools:text="Saturday" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/chartDaily"

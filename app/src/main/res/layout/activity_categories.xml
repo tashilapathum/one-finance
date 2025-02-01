@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
     android:fitsSystemWindows="true"
-    android:background="@drawable/background"
     tools:context=".categories.CategoriesActivity">
 
     <RelativeLayout

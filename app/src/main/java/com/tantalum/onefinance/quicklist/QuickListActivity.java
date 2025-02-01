@@ -45,8 +45,6 @@ public class QuickListActivity extends AppCompatActivity {
         if (theme.equalsIgnoreCase("dark")) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_edit_quicklist);
-            View layout = findViewById(R.id.rootLayout);
-            layout.setBackground(ContextCompat.getDrawable(this, R.drawable.background_dark));
             toolbar = findViewById(R.id.toolbar);
             toolbar.setBackground(getDrawable(R.color.colorToolbarDark));
         } else {

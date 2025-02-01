@@ -57,16 +57,11 @@ public class UpgradeToProActivity extends AppCompatActivity implements BillingPr
 
         //theme
         String theme = sharedPref.getString("theme", "light");
-        if (theme.equalsIgnoreCase("dark")) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_upgrade_to_pro);
-            View layout = findViewById(R.id.root_layout);
-            layout.setBackground(ContextCompat.getDrawable(this, R.drawable.background_dark));
-        } else {
+        if (!theme.equalsIgnoreCase("dark")) {
             setTheme(R.style.AppTheme);
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_upgrade_to_pro);
         }
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_upgrade_to_pro);
 
         /*----------------------------------------------------------------------------------------*/
 

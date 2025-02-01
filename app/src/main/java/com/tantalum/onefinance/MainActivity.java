@@ -98,8 +98,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
-            View layout = findViewById(R.id.drawer_layout);
-            layout.setBackground(ContextCompat.getDrawable(this, R.drawable.background_dark));
             toolbar = findViewById(R.id.toolbar);
             toolbar.setBackground(getDrawable(R.color.colorToolbarDark));
         } else {

@@ -44,16 +44,11 @@ public class AccountManager extends AppCompatActivity {
 
         //theme
         String theme = sharedPref.getString("theme", "light");
-        if (theme.equalsIgnoreCase("dark")) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_account_manager);
-            View layout = findViewById(R.id.rootLayout);
-            layout.setBackground(ContextCompat.getDrawable(this, R.drawable.background_dark));
-        } else {
+        if (!theme.equalsIgnoreCase("dark")) {
             setTheme(R.style.AppTheme);
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_account_manager);
         }
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_account_manager);
 
         //Button button;
         FloatingActionButton actionButton = findViewById(R.id.actionButton);
