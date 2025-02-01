@@ -47,6 +47,7 @@ import com.tantalum.onefinance.transactions.TransactionsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CategoriesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String TAG = "CategoriesActivity";
@@ -62,6 +63,20 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
         /*------------------------------Essential for every activity------------------------------*/
         Toolbar toolbar;
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
+
+        //language
+        String language = sharedPref.getString("language", "english");
+        Locale locale;
+        if (language.equals("සිංහල"))
+            locale = new Locale("si");
+        else
+            locale = new Locale("en");
+
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
         String theme = sharedPref.getString("theme", "light");
         if (theme.equalsIgnoreCase("dark")) {
             setTheme(R.style.AppThemeDark);
