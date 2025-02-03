@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?android:colorBackground">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,64 +11,53 @@
         android:animateLayoutChanges="true"
         android:orientation="vertical">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/titleCard"
+        <RelativeLayout
+            android:id="@+id/title_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
             android:animateLayoutChanges="true"
-            app:cardCornerRadius="0dp"
-            app:cardElevation="8dp"
-            app:strokeWidth="0dp">
+            android:padding="8dp">
 
-            <RelativeLayout
-                android:id="@+id/title_layout"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                android:padding="8dp">
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/cart_delete"
+                android:orientation="vertical"
+                android:paddingHorizontal="8dp">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tvListName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@id/cart_delete"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="8dp">
+                    android:text="@string/shopping_list"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
-                    <TextView
-                        android:id="@+id/tvListName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/shopping_list"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
-
-                    <TextView
-                        android:id="@+id/itemCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0 items" />
-                </LinearLayout>
-
-                <ImageButton
-                    android:id="@+id/cart_delete"
+                <TextView
+                    android:id="@+id/itemCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="?android:selectableItemBackgroundBorderless"
-                    android:contentDescription="delete cart"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_delete" />
-            </RelativeLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    android:text="0 items" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/cart_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:contentDescription="delete cart"
+                android:padding="8dp"
+                android:src="@drawable/ic_delete" />
+        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cart_recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/totalCard"
-            android:layout_below="@id/titleCard"
+            android:layout_height="match_parent"
+            android:layout_above="@id/total_layout"
+            android:layout_below="@id/title_layout"
             android:layoutAnimation="@anim/cascade_anim"
             tools:listitem="@layout/sample_cart_item"
             tools:visibility="gone">
@@ -82,30 +70,30 @@
             android:id="@+id/cart_instructions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@id/totalCard"
-            android:layout_below="@id/titleCard"
-            android:alpha="0.5"
+            android:layout_centerInParent="true"
             android:layout_margin="32dp"
+            android:alpha="0.5"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
                 android:layout_width="77dp"
                 android:layout_height="77dp"
-                android:src="@drawable/ic_cart"
-                android:layout_marginBottom="24dp"/>
+                android:layout_marginBottom="24dp"
+                android:src="@drawable/ic_cart" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/you_can_quickly_jot_down_your_shopping_lists_here_n"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <ImageView
                     android:id="@+id/cartIcon"
                     android:layout_width="wrap_content"
@@ -116,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/add_items_to_the_list"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
             </LinearLayout>
 
             <TextView
@@ -124,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/swipe_to_delete_items_ntap_to_edit_them"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         </LinearLayout>
 
@@ -132,50 +120,41 @@
             android:id="@+id/cartFAB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@id/totalCard"
+            android:layout_above="@id/total_layout"
             android:layout_alignParentEnd="true"
             android:layout_margin="16dp"
             android:backgroundTint="@color/colorCartFAB"
+            android:contentDescription="add item to cart"
             android:src="@drawable/ic_add_to_cart"
             app:borderWidth="0dp" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/totalCard"
+        <RelativeLayout
+            android:id="@+id/total_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:animateLayoutChanges="true"
-            app:cardCornerRadius="0dp"
-            app:cardElevation="8dp"
-            app:strokeWidth="0dp">
+            android:paddingHorizontal="8dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/lblTotal"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                android:paddingHorizontal="8dp">
+                android:layout_centerVertical="true"
+                android:fontFamily="sans-serif"
+                android:padding="8dp"
+                android:text="@string/total"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
-                <TextView
-                    android:id="@+id/lblTotal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:fontFamily="sans-serif"
-                    android:padding="8dp"
-                    android:text="@string/total"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
-
-                <TextView
-                    android:id="@+id/cartTotal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:fontFamily="sans-serif"
-                    android:padding="16dp"
-                    android:text="@string/_0_00"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
-            </RelativeLayout>
-        </com.google.android.material.card.MaterialCardView>
-
+            <TextView
+                android:id="@+id/cartTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:fontFamily="sans-serif"
+                android:padding="16dp"
+                android:text="@string/_0_00"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+        </RelativeLayout>
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

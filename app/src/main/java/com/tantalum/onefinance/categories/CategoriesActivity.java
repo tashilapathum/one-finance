@@ -1,12 +1,10 @@
 package com.tantalum.onefinance.categories;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -14,9 +12,6 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -30,30 +25,22 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.navigation.NavigationView;
-import com.tantalum.onefinance.AboutActivity;
 import com.tantalum.onefinance.Amount;
 import com.tantalum.onefinance.Constants;
 import com.tantalum.onefinance.DialogAddCategory;
-import com.tantalum.onefinance.MainActivity;
 import com.tantalum.onefinance.R;
 import com.tantalum.onefinance.pro.UpgradeHandler;
 import com.tantalum.onefinance.pro.UpgradeToProActivity;
-import com.tantalum.onefinance.reports.ReportsActivity;
-import com.tantalum.onefinance.settings.SettingsActivity;
 import com.tantalum.onefinance.transactions.TransactionItem;
-import com.tantalum.onefinance.transactions.TransactionsActivity;
 import com.tantalum.onefinance.transactions.TransactionsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class CategoriesActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class CategoriesActivity extends AppCompatActivity {
     public static final String TAG = "CategoriesActivity";
     private SharedPreferences sharedPref;
-    private DrawerLayout drawer;
-    private NavigationView navigationView;
     private List<String> categories;
 
     @Override
@@ -61,7 +48,6 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
 
         /*------------------------------Essential for every activity------------------------------*/
-        Toolbar toolbar;
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
 
         //language
@@ -80,31 +66,20 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
         String theme = sharedPref.getString("theme", "light");
         if (theme.equalsIgnoreCase("dark")) {
             setTheme(R.style.AppThemeDark);
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_categories);
-            toolbar = findViewById(R.id.toolbar);
-            toolbar.setBackground(getDrawable(R.color.colorToolbarDark));
         } else {
             setTheme(R.style.AppTheme);
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_categories);
-            toolbar = findViewById(R.id.toolbar);
         }
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_categories);
+        EdgeToEdge.enable(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root_layout), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
-        setSupportActionBar(toolbar);
-        drawer = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        if (sharedPref.getBoolean("MyWalletPro", false)) {
-            View navHeader = navigationView.getHeaderView(0);
-            TextView tvAppName = navHeader.findViewById(R.id.appName);
-            tvAppName.setText(R.string.my_wallet_pro);
-        }
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_open);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
         /*----------------------------------------------------------------------------------------*/
 
         loadCategoryChips();
@@ -262,110 +237,8 @@ public class CategoriesActivity extends AppCompatActivity implements NavigationV
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_home: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_home)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, MainActivity.class);
-                    intent.putExtra("showPinScreen", false);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_recent_trans: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_recent_trans)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, TransactionsActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_categories: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_categories)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, CategoriesActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_reports: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_reports)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, ReportsActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_settings: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_settings)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, SettingsActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_pro: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_pro)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, UpgradeToProActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_share: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_share)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("text/plain");
-                    intent.putExtra(Intent.EXTRA_SUBJECT, "Share One Finance");
-                    intent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.tantalum.onefinance");
-                    startActivity(Intent.createChooser(intent, "Share One Finance"));
-                }
-                break;
-            }
-            case R.id.nav_about: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_about)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, AboutActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_exit: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_exit)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    sharedPref.edit().putBoolean("exit", true).apply();
-                    finishAndRemoveTask();
-                }
-                break;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
-        navigationView.setCheckedItem(R.id.nav_categories);
         if (sharedPref.getBoolean("exit", false))
             finishAndRemoveTask();
     }

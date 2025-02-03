@@ -10,10 +10,6 @@
             android:icon="@drawable/ic_home"
             android:title="@string/home" />
         <item
-            android:id="@+id/nav_recent_trans"
-            android:icon="@drawable/ic_transactions"
-            android:title="@string/recent_transactions" />
-        <item
             android:id="@+id/nav_categories"
             android:icon="@drawable/ic_categories"
             android:title="@string/categories" />

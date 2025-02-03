@@ -1,7 +1,6 @@
 package com.tantalum.onefinance.investments;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.InputType;
@@ -36,7 +35,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class InvestmentView extends Fragment {
+public class InvestmentViewFragment extends Fragment {
     public static final String TAG = "InvestmentView";
     private View view;
     private Investment investment;
@@ -49,14 +48,14 @@ public class InvestmentView extends Fragment {
     private TextView tvTimePeriod;
     private TextView tvDate;
     private Chip tagChip;
-    private static InvestmentView instance;
+    private static InvestmentViewFragment instance;
     private ListView timeline;
 
-    public static InvestmentView getInstance() {
+    public static InvestmentViewFragment getInstance() {
         return instance;
     }
 
-    public InvestmentView(Investment investment) {
+    public InvestmentViewFragment(Investment investment) {
         this.investment = investment;
     }
 
@@ -78,91 +77,59 @@ public class InvestmentView extends Fragment {
         investmentsViewModel = new ViewModelProvider(getActivity(), ViewModelProvider.AndroidViewModelFactory.
                 getInstance(getActivity().getApplication())).get(InvestmentsViewModel.class);
 
-        view.findViewById(R.id.editInvestment).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editInvestment(investment);
-            }
-        });
+        view.findViewById(R.id.editInvestment).setOnClickListener(v -> editInvestment(investment));
+        view.findViewById(R.id.deleteInvestment).setOnClickListener(v -> deleteInvestment(investment));
+        view.findViewById(R.id.addNote).setOnClickListener(v -> addNote());
+        view.findViewById(R.id.addFunds).setOnClickListener(v -> new InputTextDialog(
+                getString(R.string.amount),
+                InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_CLASS_NUMBER,
+                inputText -> {
+                    if (!inputText.isEmpty()) {
+                        //update value
+                        double amount = investment.getInvestValue();
+                        amount = amount + Double.parseDouble(inputText);
+                        investment.setInvestValue(amount);
 
-        view.findViewById(R.id.deleteInvestment).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteInvestment(investment);
-            }
-        });
-        view.findViewById(R.id.addNote).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addNote();
-            }
-        });
-        view.findViewById(R.id.addFunds).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new InputTextDialog(
-                        getString(R.string.amount),
-                        InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_CLASS_NUMBER,
-                        new InputTextDialog.OnClickAddListener() {
-                            @Override
-                            public void onClickAdd(String inputText) {
-                                if (!inputText.isEmpty()) {
-                                    //update value
-                                    double amount = investment.getInvestValue();
-                                    amount = amount + Double.parseDouble(inputText);
-                                    investment.setInvestValue(amount);
+                        //update timeline
+                        String timelineItem = getString(R.string.invested_)
+                                + new Amount(getActivity(), amount).getAmountString()
+                                + getString(R.string.invested_suffix_si)
+                                + "###" + System.currentTimeMillis();
+                        List<String> history = investment.getHistory();
+                        history.add(timelineItem);
+                        investment.setHistory(history);
 
-                                    //update timeline
-                                    String timelineItem = getString(R.string.invested_)
-                                            + new Amount(getActivity(), amount).getAmountString()
-                                            + getString(R.string.invested_suffix_si)
-                                            + "###" + System.currentTimeMillis();
-                                    List<String> history = investment.getHistory();
-                                    history.add(timelineItem);
-                                    investment.setHistory(history);
+                        investmentsViewModel.update(investment);
+                        showDetails(null);
+                        updateTimeline();
+                    }
+                })
+                .show(getChildFragmentManager(), "input text dialog"));
+        view.findViewById(R.id.addReturns).setOnClickListener(v -> new InputTextDialog(
+                getString(R.string.amount),
+                InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_CLASS_NUMBER,
+                inputText -> {
+                    if (!inputText.isEmpty()) {
+                        //update amount
+                        double amount = investment.getReturnValue();
+                        amount = amount + Double.parseDouble(inputText);
+                        investment.setReturnValue(amount);
 
-                                    investmentsViewModel.update(investment);
-                                    showDetails(null);
-                                    updateTimeline();
-                                }
-                            }
-                        })
-                        .show(getChildFragmentManager(), "input text dialog");
-            }
-        });
-        view.findViewById(R.id.addReturns).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new InputTextDialog(
-                        getString(R.string.amount),
-                        InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_CLASS_NUMBER,
-                        new InputTextDialog.OnClickAddListener() {
-                            @Override
-                            public void onClickAdd(String inputText) {
-                                if (!inputText.isEmpty()) {
-                                    //update amount
-                                    double amount = investment.getReturnValue();
-                                    amount = amount + Double.parseDouble(inputText);
-                                    investment.setReturnValue(amount);
+                        //update timeline
+                        String timelineItem = getString(R.string.earned_)
+                                + new Amount(getActivity(), amount).getAmountString()
+                                + getString(R.string.returned_suffix_si)
+                                + "###" + System.currentTimeMillis();
+                        List<String> history = investment.getHistory();
+                        history.add(timelineItem);
+                        investment.setHistory(history);
 
-                                    //update timeline
-                                    String timelineItem = getString(R.string.earned_)
-                                            + new Amount(getActivity(), amount).getAmountString()
-                                            + getString(R.string.returned_suffix_si)
-                                            + "###" + System.currentTimeMillis();
-                                    List<String> history = investment.getHistory();
-                                    history.add(timelineItem);
-                                    investment.setHistory(history);
-
-                                    investmentsViewModel.update(investment);
-                                    showDetails(null);
-                                    updateTimeline();
-                                }
-                            }
-                        })
-                        .show(getChildFragmentManager(), "input text dialog");
-            }
-        });
+                        investmentsViewModel.update(investment);
+                        showDetails(null);
+                        updateTimeline();
+                    }
+                })
+                .show(getChildFragmentManager(), "input text dialog"));
 
         tvTitle = view.findViewById(R.id.title);
         tvDescription = view.findViewById(R.id.description);
@@ -173,24 +140,9 @@ public class InvestmentView extends Fragment {
         tvDate = view.findViewById(R.id.date);
         tagChip = view.findViewById(R.id.tag);
 
-        /*LinearLayout collapsingLayout = view.findViewById(R.id.collapsing_layout);
-        view.findViewById(R.id.expandHistory).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                view.animate().rotationBy(180f);
-                if (collapsingLayout.getVisibility() == View.VISIBLE)
-                    collapsingLayout.setVisibility(View.GONE);
-                else
-                    collapsingLayout.setVisibility(View.VISIBLE);
-            }
-        });*/
-
-        view.findViewById(R.id.expandHistory).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogTimeline dialogTimeline = new DialogTimeline(investment);
-                dialogTimeline.show(getChildFragmentManager(), "timeline dialog");
-            }
+        view.findViewById(R.id.expandHistory).setOnClickListener(view -> {
+            DialogTimeline dialogTimeline = new DialogTimeline(investment);
+            dialogTimeline.show(getChildFragmentManager(), "timeline dialog");
         });
 
         //basic details
@@ -214,12 +166,9 @@ public class InvestmentView extends Fragment {
         new MaterialAlertDialogBuilder(getActivity())
                 .setTitle(R.string.confirm)
                 .setMessage(R.string.delete_inv_confirm)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        investmentsViewModel.delete(investment);
-                        getActivity().onBackPressed();
-                    }
+                .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
+                    investmentsViewModel.delete(investment);
+                    getActivity().onBackPressed();
                 })
                 .setNegativeButton(R.string.no, null)
                 .show();
@@ -229,12 +178,9 @@ public class InvestmentView extends Fragment {
         new InputTextDialog(
                 getString(R.string.note),
                 InputType.TYPE_TEXT_FLAG_CAP_SENTENCES | InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE,
-                new InputTextDialog.OnClickAddListener() {
-                    @Override
-                    public void onClickAdd(String inputText) {
-                        if (!inputText.isEmpty())
-                            saveNote(inputText);
-                    }
+                inputText -> {
+                    if (!inputText.isEmpty())
+                        saveNote(inputText);
                 }).show(getChildFragmentManager(), "input text dialog");
     }
 

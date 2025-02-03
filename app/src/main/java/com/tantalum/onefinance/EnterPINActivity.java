@@ -1,10 +1,16 @@
 package com.tantalum.onefinance;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,7 +18,9 @@ import android.widget.Toast;
 import com.andrognito.pinlockview.PinLockListener;
 import com.andrognito.pinlockview.PinLockView;
 
-public class EnterPIN extends AppCompatActivity {
+import java.util.Locale;
+
+public class EnterPINActivity extends AppCompatActivity {
     private PinLockView pinLockView;
     private boolean newPin;
     private boolean validate;
@@ -21,9 +29,40 @@ public class EnterPIN extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /*------------------------------Essential for every activity------------------------------*/
+        sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
+
+        //language
+        String language = sharedPref.getString("language", "english");
+        Locale locale;
+        if (language.equals("සිංහල"))
+            locale = new Locale("si");
+        else
+            locale = new Locale("en");
+
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
+        String theme = sharedPref.getString("theme", "light");
+        if (theme.equalsIgnoreCase("dark")) {
+            setTheme(R.style.AppThemeDark);
+        } else {
+            setTheme(R.style.AppTheme);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enter_pin);
-        sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
+        EdgeToEdge.enable(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root_layout), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setTitle(null);
+        /*----------------------------------------------------------------------------------------*/
 
         pinLockView = findViewById(R.id.pin_lock_view);
         pinLockView.setPinLockListener(pinLockListener);
@@ -50,12 +89,21 @@ public class EnterPIN extends AppCompatActivity {
             finishAndRemoveTask();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private PinLockListener pinLockListener = new PinLockListener() {
         @Override
         public void onComplete(String pin) {
             if (newPin) {
                 sharedPref.edit().putString("tempPin", pin).apply();
-                Intent intent = new Intent(EnterPIN.this, EnterPIN.class);
+                Intent intent = new Intent(EnterPINActivity.this, EnterPINActivity.class);
                 intent.putExtra("confirm", true);
                 startActivity(intent);
                 finish();
@@ -63,30 +111,30 @@ public class EnterPIN extends AppCompatActivity {
                 if (pin.contains(sharedPref.getString("tempPin", null))) {
                     sharedPref.edit().putString("userPin", pin).apply();
                     sharedPref.edit().putBoolean("pinEnabled", true).apply();
-                    Toast.makeText(EnterPIN.this, R.string.saved, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EnterPINActivity.this, R.string.saved, Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
                     pinLockView.resetPinLockView();
-                    Toast.makeText(EnterPIN.this, getString(R.string.incorrect_pin), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EnterPINActivity.this, getString(R.string.incorrect_pin), Toast.LENGTH_SHORT).show();
                 }
             } else if (validate) {
                 if (pin.contains(sharedPref.getString("userPin", null))) {
-                    Intent intent = new Intent(EnterPIN.this, EnterPIN.class);
+                    Intent intent = new Intent(EnterPINActivity.this, EnterPINActivity.class);
                     intent.putExtra("newPin", true);
                     startActivity(intent);
                     finish();
                 } else {
                     pinLockView.resetPinLockView();
-                    Toast.makeText(EnterPIN.this, getString(R.string.incorrect_pin), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EnterPINActivity.this, getString(R.string.incorrect_pin), Toast.LENGTH_SHORT).show();
                 }
             } else {
                 if (pin.contains(sharedPref.getString("userPin", null))) {
-                    Intent intent = new Intent(EnterPIN.this, MainActivity.class);
+                    Intent intent = new Intent(EnterPINActivity.this, MainActivity.class);
                     intent.putExtra("pinCompleted", true);
                     startActivity(intent);
                 } else {
                     pinLockView.resetPinLockView();
-                    Toast.makeText(EnterPIN.this, getString(R.string.incorrect_pin), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EnterPINActivity.this, getString(R.string.incorrect_pin), Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -101,8 +149,4 @@ public class EnterPIN extends AppCompatActivity {
 
         }
     };
-
-    public void goBack(View view) {
-        finish();
-    }
 }

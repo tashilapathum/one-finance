@@ -2,7 +2,6 @@ package com.tantalum.onefinance.investments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +33,7 @@ public class InvestmentsFragment extends Fragment {
     private InvestmentsAdapter investmentsAdapter;
     private LinearLayout inv_instructions;
     private FloatingActionButton invFAB;
+    private OnInvestmentClickListener listener;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +59,7 @@ public class InvestmentsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.scheduleLayoutAnimation();
         investmentsAdapter = new InvestmentsAdapter();
+        investmentsAdapter.setOnItemClickListener(investment -> listener.onClick(investment));
         recyclerView.setAdapter(investmentsAdapter);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -145,14 +146,12 @@ public class InvestmentsFragment extends Fragment {
         investmentsViewModel.insert(investment);
     }
 
-    public void openInvestment(Investment investment) {
-        if (getChildFragmentManager().findFragmentByTag("InvestmentView") == null) { //avoid opening over and over
-            getChildFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new InvestmentView(investment), "InvestmentView")
-                    .addToBackStack(null)
-                    .commit();
-            invFAB.hide();
-        }
+    public interface OnInvestmentClickListener {
+        void onClick(Investment investment);
+    }
+
+    public void setInvestmentClickListener(OnInvestmentClickListener listener) {
+        this.listener = listener;
     }
 
     public void updateInvestment(Investment editingInvestment) {

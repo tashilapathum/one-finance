@@ -17,6 +17,7 @@ import com.tantalum.onefinance.DateTimeHandler;
 import com.tantalum.onefinance.R;
 
 public class InvestmentsAdapter extends ListAdapter<Investment, InvestmentsAdapter.InvestmentViewHolder> {
+    private OnItemClickListener listener;
 
     public InvestmentsAdapter() {
         super(DIFF_CALLBACK);
@@ -66,12 +67,7 @@ public class InvestmentsAdapter extends ListAdapter<Investment, InvestmentsAdapt
         String passedTime = new DateTimeHandler(String.valueOf(currentInvestment.getDateInMillis())).getPassedTime(context);
         holder.tvTimePassed.setText(passedTime);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                InvestmentsFragment.getInstance().openInvestment(currentInvestment);
-            }
-        });
+        holder.itemView.setOnClickListener(v -> listener.onClick(currentInvestment));
     }
 
     @Override
@@ -82,6 +78,14 @@ public class InvestmentsAdapter extends ListAdapter<Investment, InvestmentsAdapt
     @Override
     public int getItemViewType(int position) {
         return position;
+    }
+
+    public interface OnItemClickListener {
+        void onClick(Investment investment);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     class InvestmentViewHolder extends RecyclerView.ViewHolder {

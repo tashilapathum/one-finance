@@ -1,6 +1,5 @@
 package com.tantalum.onefinance.loans;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.transition.MaterialSharedAxis;
 import com.tantalum.onefinance.R;
-import com.tantalum.onefinance.pro.UpgradeHandler;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -62,12 +60,7 @@ public class LoansFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
 
         FloatingActionButton loansFAB = view.findViewById(R.id.loansFAB);
-        loansFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickFAB();
-            }
-        });
+        loansFAB.setOnClickListener(view -> onClickFAB());
 
         loansViewModel = new ViewModelProvider(getActivity(), ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(LoansViewModel.class);
         return view;
@@ -110,12 +103,7 @@ public class LoansFragment extends Fragment {
         new MaterialAlertDialogBuilder(getActivity())
                 .setTitle(R.string.confirm)
                 .setMessage(R.string.confirm_item_delete)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        loansViewModel.delete(loan);
-                    }
-                })
+                .setPositiveButton(R.string.yes, (dialogInterface, i) -> loansViewModel.delete(loan))
                 .setNegativeButton(R.string.no, null)
                 .show();
     }

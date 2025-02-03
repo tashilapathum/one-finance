@@ -12,7 +12,6 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/ll"
         android:layoutAnimation="@anim/cascade_anim"
         tools:visibility="gone"/>
 
@@ -59,23 +58,6 @@
         android:src="@drawable/ic_add"
         app:borderWidth="0dp"/>
 
-    <LinearLayout
-        android:id="@+id/ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
-        android:orientation="vertical">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            tools:ignore="MissingConstraints" />
-
         <LinearLayout
             android:id="@+id/qlContainer"
             android:layout_width="match_parent"
@@ -86,7 +68,5 @@
             <!--quick list items dynamically added here-->
 
         </LinearLayout>
-
-    </LinearLayout>
 
 </RelativeLayout>

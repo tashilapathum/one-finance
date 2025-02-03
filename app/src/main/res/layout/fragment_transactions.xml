@@ -12,7 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorAccentTransparent"
+        android:background="@android:color/transparent"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -59,7 +59,7 @@
         app:cardElevation="0dp"
         app:strokeWidth="0dp"
         tools:visibility="visible"
-        app:cardBackgroundColor="@color/colorAccentTransparent">
+        app:cardBackgroundColor="@android:color/transparent">
 
         <HorizontalScrollView
             android:layout_width="wrap_content"

@@ -1,6 +1,12 @@
 package com.tantalum.onefinance;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,55 +38,54 @@ public class InitialSetupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
+        sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
+        String theme = sharedPref.getString("theme", "light");
+        Log.i(TAG, "onCreate: THEME: " + theme);
+        if (theme.equalsIgnoreCase("dark")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            setTheme(R.style.AppTheme);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_setup);
-        sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
+
+        View root = findViewById(R.id.root_layout);
+        EdgeToEdge.enable(this);
+        ViewCompat.setOnApplyWindowInsetsListener(root, (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        getSupportActionBar().setTitle(null);
+        if (theme.equalsIgnoreCase("dark"))
+            root.setBackground(AppCompatResources.getDrawable(this, R.drawable.background_gradient_dark));
+        else
+            root.setBackground(AppCompatResources.getDrawable(this, R.drawable.background_gradient_light));
+
+
         radioGroup = findViewById(R.id.radioGroup);
         RadioButton rb1 = findViewById(R.id.otEnglish);
         RadioButton rb2 = findViewById(R.id.otSinhala);
         tilCurrency = findViewById(R.id.addCurrency);
         etCurrency = tilCurrency.getEditText();
-        rb1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveLangRadio(view.getId());
-            }
-        });
-        rb2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveLangRadio(view.getId());
-            }
-        });
-        findViewById(R.id.more).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CurrencyPicker picker = CurrencyPicker.newInstance("Select currency");  // dialog title
-                picker.setListener(new CurrencyPickerListener() {
-                    @Override
-                    public void onSelectCurrency(String name, String code, String symbol, int flagDrawableResID) {
-                        etCurrency.setText(symbol);
-                        picker.dismiss();
-                    }
-                });
-                picker.show(getSupportFragmentManager(), "CURRENCY_PICKER");
-            }
+        rb1.setOnClickListener(view -> saveLangRadio(view.getId()));
+        rb2.setOnClickListener(view -> saveLangRadio(view.getId()));
+        findViewById(R.id.more).setOnClickListener(v -> {
+            CurrencyPicker picker = CurrencyPicker.newInstance("Select currency");  // dialog title
+            picker.setListener((name, code, symbol, flagDrawableResID) -> {
+                etCurrency.setText(symbol);
+                picker.dismiss();
+            });
+            picker.show(getSupportFragmentManager(), "CURRENCY_PICKER");
         });
 
         Button btnContinue = findViewById(R.id.btnContinue);
-        btnContinue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickContinue();
-            }
-        });
-        ((CheckBox) findViewById(R.id.agreeCheck)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                btnContinue.setEnabled(b);
-            }
-        });
+        btnContinue.setOnClickListener(view -> onClickContinue());
+        ((CheckBox) findViewById(R.id.agreeCheck)).setOnCheckedChangeListener((compoundButton, b) ->
+                btnContinue.setEnabled(b)
+        );
     }
 
     @Override

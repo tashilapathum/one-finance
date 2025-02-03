@@ -16,31 +16,43 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".categories.CategoriesActivity"
+            android:parentActivityName=".MainActivity"
             android:label="@string/categories" />
-        <activity android:name=".WebViewActivity" />
-
-        <activity android:name=".EnterPIN" />
+        <activity android:name=".EnterPINActivity" />
         <activity android:name=".Insights" />
-        <activity android:name=".AboutActivity" />
+        <activity
+            android:name=".AboutActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/about"/>
         <activity
             android:name=".accounts.AccountManager"
-            android:label="Account Manager" />
-        <activity android:name=".pro.UpgradeToProActivity" />
-        <activity android:name=".accounts.AccountDetails" />
-        <activity android:name=".accounts.NewAccount" />
+            android:label="Account Manager"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".pro.UpgradeToProActivity"
+            android:label="@string/upgrade_to_pro"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".accounts.AccountDetails"
+            android:label="@string/account_details"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".accounts.NewAccount"
+            android:label="@string/new_account"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".InitialSetupActivity" />
         <activity
             android:name=".reports.ReportsActivity"
-            android:label="@string/reports" />
+            android:label="@string/reports"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".quicklist.QuickListActivity"
-            android:label="@string/settings_quick_list" />
-        <activity
-            android:name=".transactions.TransactionsActivity"
-            android:label="@string/recent_transactions" />
+            android:label="@string/settings_quick_list"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".settings.SettingsActivity"
-            android:label="@string/settings" />
+            android:label="@string/settings"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

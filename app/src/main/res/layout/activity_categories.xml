@@ -1,51 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/drawer_layout"
-    android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context=".categories.CategoriesActivity">
 
-    <RelativeLayout
-        android:id="@+id/rootLayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            tools:ignore="MissingConstraints" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/toolbar"
             android:animateLayoutChanges="true"
-            android:padding="12dp"/>
+            android:padding="12dp" />
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/chart"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_below="@id/chipGroup"
-            android:layout_margin="32dp"/>
+            android:layout_margin="32dp" />
+    </LinearLayout>
 
-    </RelativeLayout>
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="256dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"
-        app:itemTextAppearance="@style/DrawerTextStyle"
-        app:menu="@menu/drawer_menu" />
-</androidx.drawerlayout.widget.DrawerLayout>
+</ScrollView>

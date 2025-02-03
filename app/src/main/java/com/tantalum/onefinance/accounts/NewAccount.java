@@ -1,6 +1,10 @@
 package com.tantalum.onefinance.accounts;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -59,6 +63,14 @@ public class NewAccount extends AppCompatActivity {
             setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_account);
+        EdgeToEdge.enable(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.rootLayout), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
 
         tilAccountName = findViewById(R.id.accName);
@@ -202,10 +214,9 @@ public class NewAccount extends AppCompatActivity {
         etAdditional.setText(account.getMoreDetails());
 
         //change texts
-        TextView title = findViewById(R.id.title);
+        getSupportActionBar().setTitle(R.string.edit_account);
         Button add = findViewById(R.id.add);
         TextView bottomNote = findViewById(R.id.bottomNote);
-        title.setText(R.string.edit_account);
         add.setText(getString(R.string.save));
         tilAccountName.setHelperText(null);
         bottomNote.setText(null);

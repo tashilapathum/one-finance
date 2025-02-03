@@ -1,7 +1,11 @@
 package com.tantalum.onefinance.accounts;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -49,15 +53,18 @@ public class AccountManager extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_manager);
+        EdgeToEdge.enable(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.rootLayout), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         //Button button;
         FloatingActionButton actionButton = findViewById(R.id.actionButton);
-        actionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickFAB();
-            }
-        });
+        actionButton.setOnClickListener(view -> onClickFAB());
     }
 
     @Override //so the language change works with dark mode
@@ -86,12 +93,9 @@ public class AccountManager extends AppCompatActivity {
 
         AccountsViewModel accountsViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(getApplication())).get(AccountsViewModel.class);
-        accountsViewModel.getAllAccountsLive().observe(this, new Observer<List<Account>>() {
-            @Override
-            public void onChanged(List<Account> accounts) {
-                recyclerView.scheduleLayoutAnimation();
-                accountsAdapter.submitList(accounts);
-            }
+        accountsViewModel.getAllAccountsLive().observe(this, accounts -> {
+            recyclerView.scheduleLayoutAnimation();
+            accountsAdapter.submitList(accounts);
         });
     }
 
@@ -107,12 +111,9 @@ public class AccountManager extends AppCompatActivity {
                 new MaterialAlertDialogBuilder(this)
                         .setTitle(R.string.reached_acc_limit)
                         .setMessage(R.string.r_a_l_des)
-                        .setPositiveButton(R.string.buy, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(AccountManager.this, UpgradeToProActivity.class);
-                                startActivity(intent);
-                            }
+                        .setPositiveButton(R.string.buy, (dialog, which) -> {
+                            Intent intent1 = new Intent(AccountManager.this, UpgradeToProActivity.class);
+                            startActivity(intent1);
                         })
                         .setNegativeButton(R.string.cancel, null)
                         .create()

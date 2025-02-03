@@ -1,7 +1,6 @@
 package com.tantalum.onefinance.reports;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -11,14 +10,13 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -26,35 +24,24 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
-import com.tantalum.onefinance.AboutActivity;
-import com.tantalum.onefinance.categories.CategoriesActivity;
 import com.tantalum.onefinance.DatePickerFragment;
-import com.tantalum.onefinance.MainActivity;
 import com.tantalum.onefinance.R;
-import com.tantalum.onefinance.settings.SettingsActivity;
-import com.tantalum.onefinance.transactions.TransactionsActivity;
-import com.tantalum.onefinance.pro.UpgradeToProActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class ReportsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ReportsActivity extends AppCompatActivity {
     SharedPreferences sharedPref;
-    private DrawerLayout drawer;
     public static final String TAG = "Reports";
     private ViewPager viewPager;
     private ViewPagerAdapter viewPagerAdapter;
-    private NavigationView navigationView;
-
 
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         /*------------------------------Essential for every activity------------------------------*/
-        Toolbar toolbar;
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
 
         //language
@@ -73,31 +60,19 @@ public class ReportsActivity extends AppCompatActivity implements NavigationView
         String theme = sharedPref.getString("theme", "light");
         if (theme.equalsIgnoreCase("dark")) {
             setTheme(R.style.AppThemeDark);
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_reports);
-            toolbar = findViewById(R.id.toolbar);
-            toolbar.setBackground(getDrawable(R.color.colorToolbarDark));
         } else {
             setTheme(R.style.AppTheme);
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_reports);
-            toolbar = findViewById(R.id.toolbar);
         }
-
-        setSupportActionBar(toolbar);
-        drawer = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        if (sharedPref.getBoolean("MyWalletPro", false)) {
-            View navHeader = navigationView.getHeaderView(0);
-            TextView tvAppName = navHeader.findViewById(R.id.appName);
-            tvAppName.setText(R.string.my_wallet_pro);
-        }
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_open);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_reports);
+        EdgeToEdge.enable(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root_layout), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         /*----------------------------------------------------------------------------------------*/
 
         viewPager = findViewById(R.id.reports_view_pager);
@@ -133,7 +108,6 @@ public class ReportsActivity extends AppCompatActivity implements NavigationView
     @Override
     protected void onResume() {
         super.onResume();
-        navigationView.setCheckedItem(R.id.nav_reports);
         if (sharedPref.getBoolean("exit", false))
             finishAndRemoveTask();
 
@@ -160,107 +134,6 @@ public class ReportsActivity extends AppCompatActivity implements NavigationView
         super.applyOverrideConfiguration(overrideConfiguration);
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_home: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_home)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, MainActivity.class);
-                    intent.putExtra("showPinScreen", false);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_recent_trans: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_recent_trans)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, TransactionsActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_categories: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_categories)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, CategoriesActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_reports: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_reports)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, ReportsActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_settings: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_settings)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, SettingsActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_pro: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_pro)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, UpgradeToProActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_share: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_share)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("text/plain");
-                    intent.putExtra(Intent.EXTRA_SUBJECT, "Share One Finance");
-                    intent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.tantalum.onefinance");
-                    startActivity(Intent.createChooser(intent, "Share One Finance"));
-                }
-                break;
-            }
-            case R.id.nav_about: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_about)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, AboutActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_exit: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_exit)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    sharedPref.edit().putBoolean("exit", true).apply();
-                    finishAndRemoveTask();
-                }
-                break;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
     private void pickDate() {
         DialogFragment datePicker = new DatePickerFragment();
         Bundle bundle = new Bundle();
@@ -283,16 +156,13 @@ public class ReportsActivity extends AppCompatActivity implements NavigationView
         TextView tvShowingData = findViewById(R.id.showingData);
         tvShowingData.setText("Showing data from: " + " Year " + year + " | Month " + month + " | Week " + week + " | Day " + dayOfMonth);
         ImageButton ibClearFilter = findViewById(R.id.clearFilter);
-        ibClearFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                filtersCard.setVisibility(View.GONE);
-                sharedPref.edit().putInt("reports_year", 0).apply();
-                sharedPref.edit().putInt("reports_month", 0).apply();
-                sharedPref.edit().putInt("reports_week", 0).apply();
-                sharedPref.edit().putInt("reports_day", 0).apply();
-                viewPagerAdapter.notifyDataSetChanged();
-            }
+        ibClearFilter.setOnClickListener(v -> {
+            filtersCard.setVisibility(View.GONE);
+            sharedPref.edit().putInt("reports_year", 0).apply();
+            sharedPref.edit().putInt("reports_month", 0).apply();
+            sharedPref.edit().putInt("reports_week", 0).apply();
+            sharedPref.edit().putInt("reports_day", 0).apply();
+            viewPagerAdapter.notifyDataSetChanged();
         });
     }
 

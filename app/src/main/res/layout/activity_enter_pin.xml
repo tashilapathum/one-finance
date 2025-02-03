@@ -1,49 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_centerVertical="true"
+    android:gravity="center"
+    android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".EnterPIN">
+    android:id="@+id/root_layout"
+    tools:context=".EnterPINActivity">
 
-    <ImageButton
-        android:id="@+id/back_arrow"
+    <TextView
+        android:id="@+id/pinTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?android:selectableItemBackgroundBorderless"
-        android:contentDescription="go back"
-        android:padding="8dp"
-        android:src="?attr/homeAsUpIndicator"
-        android:onClick="goBack"/>
+        android:text="@string/enter_pin"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <com.andrognito.pinlockview.IndicatorDots
+        android:id="@+id/indicator_dots"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:layout_centerVertical="true">
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp" />
 
-        <TextView
-            android:id="@+id/pinTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/enter_pin"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+    <com.andrognito.pinlockview.PinLockView
+        android:id="@+id/pin_lock_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:keypadTextColor="@color/colorAccent" />
 
-        <com.andrognito.pinlockview.IndicatorDots
-            android:id="@+id/indicator_dots"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="32dp"/>
-
-        <com.andrognito.pinlockview.PinLockView
-            android:id="@+id/pin_lock_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:keypadTextColor="@color/colorAccent"/>
-
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

@@ -31,7 +31,6 @@ import androidx.viewpager.widget.ViewPager;
 
 public class BillsFragment extends Fragment {
     public static final String TAG = "BillsFragment";
-    View view;
     private static BillsFragment instance;
     private BillsViewModel billsViewModel;
 
@@ -45,7 +44,7 @@ public class BillsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.frag_bills, container, false);
+        View view = inflater.inflate(R.layout.frag_bills, container, false);
         instance = this;
 
         ViewPager viewPager = view.findViewById(R.id.bills_view_pager);
@@ -128,10 +127,10 @@ public class BillsFragment extends Fragment {
 
     //------------------------------- for tabbed layout ----------------------------------//
 
-    private class ViewPagerAdapter extends FragmentPagerAdapter {
+    private static class ViewPagerAdapter extends FragmentPagerAdapter {
 
-        private List<Fragment> fragmentList = new ArrayList<>();
-        private List<String> fragmentTitlesList = new ArrayList<>();
+        private final List<Fragment> fragmentList = new ArrayList<>();
+        private final List<String> fragmentTitlesList = new ArrayList<>();
 
         public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
             super(fm, behavior);

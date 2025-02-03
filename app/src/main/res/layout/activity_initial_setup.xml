@@ -1,278 +1,281 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_centerVertical="true"
+    android:background="@drawable/background_gradient_light"
     android:fadeScrollbars="false"
-    android:paddingVertical="16dp"
     tools:context=".InitialSetupActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contentDescription="logo"
-            android:paddingBottom="8dp"
-            android:src="@mipmap/ic_launcher" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingBottom="24dp"
-            android:text="@string/one_time_setup"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:text="@string/choose_language"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/otEnglish"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="@string/english" />
-
-            <RadioButton
-                android:id="@+id/otSinhala"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:text="@string/sinhala" />
-
-        </RadioGroup>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/addCurrency"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:helperText="@string/type_in_or_select_the_currency">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/currency"
-                android:inputType="textCapSentences" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                style="?android:attr/buttonBarStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/dollar"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
-                    android:backgroundTint="@color/colorAccent"
-                    android:minWidth="2dp"
-                    android:minHeight="2dp"
-                    android:onClick="setQuickCurrency"
-                    android:text="$"
-                    android:textColor="@color/colorBlack" />
-
-                <Button
-                    android:id="@+id/euro"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
-                    android:backgroundTint="@color/colorAccent"
-                    android:minWidth="2dp"
-                    android:minHeight="2dp"
-                    android:onClick="setQuickCurrency"
-                    android:text="€"
-                    android:textColor="@color/colorBlack"/>
-
-                <Button
-                    android:id="@+id/yen"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
-                    android:backgroundTint="@color/colorAccent"
-                    android:minWidth="2dp"
-                    android:minHeight="2dp"
-                    android:onClick="setQuickCurrency"
-                    android:text="¥"
-                    android:textColor="@color/colorBlack" />
-
-                <Button
-                    android:id="@+id/pound"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
-                    android:backgroundTint="@color/colorAccent"
-                    android:minWidth="2dp"
-                    android:minHeight="2dp"
-                    android:onClick="setQuickCurrency"
-                    android:text="£"
-                    android:textColor="@color/colorBlack"/>
-
-                <Button
-                    android:id="@+id/rupee"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
-                    android:backgroundTint="@color/colorAccent"
-                    android:minWidth="2dp"
-                    android:minHeight="2dp"
-                    android:onClick="setQuickCurrency"
-                    android:text="₹"
-                    android:textColor="@color/colorBlack" />
-
-                <Button
-                    android:id="@+id/ru"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
-                    android:backgroundTint="@color/colorAccent"
-                    android:minWidth="2dp"
-                    android:minHeight="2dp"
-                    android:onClick="setQuickCurrency"
-                    android:text="රු"
-                    android:textColor="@color/colorBlack" />
-
-                <Button
-                    android:id="@+id/rs"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
-                    android:backgroundTint="@color/colorAccent"
-                    android:minWidth="2dp"
-                    android:minHeight="2dp"
-                    android:onClick="setQuickCurrency"
-                    android:text="Rs."
-                    android:textColor="@color/colorBlack"/>
-
-                <Button
-                    android:id="@+id/more"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="4dp"
-                    android:minWidth="2dp"
-                    android:minHeight="2dp"
-                    android:onClick="setQuickCurrency"
-                    android:text="More"/>
-            </LinearLayout>
-        </HorizontalScrollView>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/addBalance"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            app:helperText="@string/add_balance">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/balance"
-                android:inputType="numberDecimal" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/addBudget"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            app:helperText="@string/weekly_and_daily_budgets_will_be_calculated_based_on_this">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/monthly_budget"
-                android:inputType="numberDecimal" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/btnContinue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="32dp"
-            android:enabled="false"
-            android:onClick="onClickContinue"
-            android:text="@string/continue_next"
-            android:textAllCaps="false"
-            app:cornerRadius="16dp" />
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="32dp"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <CheckBox
-                android:id="@+id/agreeCheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="I have read the " />
-
-            <TextView
+            <ImageView
+                android:id="@+id/logo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="openPrivacyPolicy"
-                android:text="Privacy Policy"
-                android:textAlignment="center"
-                android:textColor="@color/colorLinks" />
+                android:contentDescription="logo"
+                android:paddingBottom="8dp"
+                android:src="@mipmap/ic_launcher" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" and " />
+                android:layout_gravity="center"
+                android:paddingBottom="24dp"
+                android:text="@string/one_time_setup"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:text="@string/choose_language"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/otEnglish"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/english" />
+
+                <RadioButton
+                    android:id="@+id/otSinhala"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:text="@string/sinhala" />
+
+            </RadioGroup>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/addCurrency"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="openTC"
-                android:text="Terms of Service"
-                android:textAlignment="center"
-                android:textColor="@color/colorLinks" />
+                app:helperText="@string/type_in_or_select_the_currency">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/currency"
+                    android:inputType="textCapSentences" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    style="?android:attr/buttonBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/dollar"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="4dp"
+                        android:backgroundTint="@color/colorAccent"
+                        android:minWidth="2dp"
+                        android:minHeight="2dp"
+                        android:onClick="setQuickCurrency"
+                        android:text="$"
+                        android:textColor="@color/colorBlack" />
+
+                    <Button
+                        android:id="@+id/euro"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="4dp"
+                        android:backgroundTint="@color/colorAccent"
+                        android:minWidth="2dp"
+                        android:minHeight="2dp"
+                        android:onClick="setQuickCurrency"
+                        android:text="€"
+                        android:textColor="@color/colorBlack" />
+
+                    <Button
+                        android:id="@+id/yen"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="4dp"
+                        android:backgroundTint="@color/colorAccent"
+                        android:minWidth="2dp"
+                        android:minHeight="2dp"
+                        android:onClick="setQuickCurrency"
+                        android:text="¥"
+                        android:textColor="@color/colorBlack" />
+
+                    <Button
+                        android:id="@+id/pound"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="4dp"
+                        android:backgroundTint="@color/colorAccent"
+                        android:minWidth="2dp"
+                        android:minHeight="2dp"
+                        android:onClick="setQuickCurrency"
+                        android:text="£"
+                        android:textColor="@color/colorBlack" />
+
+                    <Button
+                        android:id="@+id/rupee"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="4dp"
+                        android:backgroundTint="@color/colorAccent"
+                        android:minWidth="2dp"
+                        android:minHeight="2dp"
+                        android:onClick="setQuickCurrency"
+                        android:text="₹"
+                        android:textColor="@color/colorBlack" />
+
+                    <Button
+                        android:id="@+id/ru"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="4dp"
+                        android:backgroundTint="@color/colorAccent"
+                        android:minWidth="2dp"
+                        android:minHeight="2dp"
+                        android:onClick="setQuickCurrency"
+                        android:text="රු"
+                        android:textColor="@color/colorBlack" />
+
+                    <Button
+                        android:id="@+id/rs"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="4dp"
+                        android:backgroundTint="@color/colorAccent"
+                        android:minWidth="2dp"
+                        android:minHeight="2dp"
+                        android:onClick="setQuickCurrency"
+                        android:text="Rs."
+                        android:textColor="@color/colorBlack" />
+
+                    <Button
+                        android:id="@+id/more"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="4dp"
+                        android:minWidth="2dp"
+                        android:minHeight="2dp"
+                        android:onClick="setQuickCurrency"
+                        android:text="More" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/addBalance"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                app:helperText="@string/add_balance">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/balance_"
+                    android:inputType="numberDecimal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/addBudget"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                app:helperText="@string/weekly_and_daily_budgets_will_be_calculated_based_on_this">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/monthly_budget"
+                    android:inputType="numberDecimal" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnContinue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="32dp"
+                android:enabled="false"
+                android:onClick="onClickContinue"
+                android:text="@string/continue_next"
+                android:textAllCaps="false" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/agreeCheck"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="-4dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="I have read the " />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="openPrivacyPolicy"
+                    android:text="Privacy Policy"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorLinks" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" and " />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="openTC"
+                    android:text="Terms of Service"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorLinks" />
+
+            </LinearLayout>
         </LinearLayout>
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</RelativeLayout>

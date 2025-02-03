@@ -164,10 +164,7 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
             sharedPref.edit().putString("balance", newBalance).apply();
 
             //save changes
-            if (isFromFragment)
-                TransactionsFragment.getInstance().updateTransaction(transactionItem);
-            else
-                ((TransactionsActivity) getActivity()).updateTransaction(transactionItem);
+            TransactionsFragment.getInstance().updateTransaction(transactionItem);
             dialog.cancel();
         } else {
             TextView tvBottomNote = view.findViewById(R.id.bottomNote);

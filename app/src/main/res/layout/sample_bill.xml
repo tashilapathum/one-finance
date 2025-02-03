@@ -11,14 +11,14 @@
     android:animateLayoutChanges="true"
     android:clickable="true"
     android:focusable="true"
-    app:cardElevation="8dp"
+    app:cardElevation="4dp"
     app:strokeWidth="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
-        android:padding="8dp">
+        android:padding="16dp">
 
         <RelativeLayout
             android:id="@+id/visible_part"
@@ -66,7 +66,8 @@
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:contentDescription="mark as paid"
                 android:padding="8dp"
-                android:src="@drawable/ic_paid" />
+                android:src="@drawable/ic_paid"
+                app:tint="@color/colorAccent" />
         </RelativeLayout>
 
         <LinearLayout
@@ -134,7 +135,8 @@
                     android:padding="8dp"
                     android:src="@drawable/ic_undo"
                     android:visibility="gone"
-                    tools:visibility="visible"/>
+                    tools:visibility="visible"
+                    app:tint="@color/colorAccent" />
 
                 <ImageButton
                     android:id="@+id/edit"
@@ -144,7 +146,8 @@
                     android:background="?android:selectableItemBackgroundBorderless"
                     android:contentDescription="delete bill"
                     android:padding="8dp"
-                    android:src="@drawable/ic_edit" />
+                    android:src="@drawable/ic_edit"
+                    app:tint="@color/colorAccent"  />
 
                 <ImageButton
                     android:id="@+id/delete"
@@ -154,7 +157,8 @@
                     android:background="?android:selectableItemBackgroundBorderless"
                     android:contentDescription="delete bill"
                     android:padding="8dp"
-                    android:src="@drawable/ic_delete" />
+                    android:src="@drawable/ic_delete"
+                    app:tint="@android:color/holo_red_light"  />
 
             </LinearLayout>
         </LinearLayout>

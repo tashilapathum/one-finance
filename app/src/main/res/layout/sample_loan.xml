@@ -11,14 +11,14 @@
     android:animateLayoutChanges="true"
     android:clickable="true"
     android:focusable="true"
-    app:cardElevation="8dp"
+    app:cardElevation="4dp"
     app:strokeWidth="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
-        android:padding="8dp">
+        android:padding="16dp">
 
         <RelativeLayout
             android:id="@+id/visible_part"
@@ -137,17 +137,19 @@
                     android:background="?android:selectableItemBackgroundBorderless"
                     android:contentDescription="delete loan"
                     android:padding="8dp"
-                    android:src="@drawable/ic_edit" />
+                    android:src="@drawable/ic_edit"
+                    app:tint="@color/colorAccent" />
 
                 <ImageButton
                     android:id="@+id/delete"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height ="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:background="?android:selectableItemBackgroundBorderless"
                     android:contentDescription="delete loan"
                     android:padding="8dp"
-                    android:src="@drawable/ic_delete" />
+                    android:src="@drawable/ic_delete"
+                    app:tint="@android:color/holo_red_light"  />
 
             </LinearLayout>
         </LinearLayout>

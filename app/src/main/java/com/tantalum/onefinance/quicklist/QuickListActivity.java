@@ -1,9 +1,13 @@
 package com.tantalum.onefinance.quicklist;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,42 +42,26 @@ public class QuickListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Toolbar toolbar;
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
 
         String theme = sharedPref.getString("theme", "light");
-        if (theme.equalsIgnoreCase("dark")) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_edit_quicklist);
-            toolbar = findViewById(R.id.toolbar);
-            toolbar.setBackground(getDrawable(R.color.colorToolbarDark));
-        } else {
+        if (!theme.equalsIgnoreCase("dark")) {
             setTheme(R.style.AppTheme);
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_edit_quicklist);
-            toolbar = findViewById(R.id.toolbar);
         }
-
-        //toolbar
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
-                dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
-            }
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_edit_quicklist);
+        EdgeToEdge.enable(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.rootLayout), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
         });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         //Button button;
         FloatingActionButton actionButton = findViewById(R.id.actionButton);
-        actionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickFAB();
-            }
-        });
+        actionButton.setOnClickListener(view -> onClickFAB());
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -82,15 +70,9 @@ public class QuickListActivity extends AppCompatActivity {
         recyclerView.setAdapter(quickListAdapter);
         quickListViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory
                 .getInstance(getApplication())).get(QuickListViewModel.class);
-        quickListViewModel.getQuickItemsLiveData().observe(this, new Observer<List<QuickItem>>() {
-            @Override
-            public void onChanged(List<QuickItem> quickItems) {
-                quickListAdapter.submitList(quickItems);
-                if (quickItems.size() == 0)
-                    showInstructions(true);
-                else
-                    showInstructions(false);
-            }
+        quickListViewModel.getQuickItemsLiveData().observe(this, quickItems -> {
+            quickListAdapter.submitList(quickItems);
+            showInstructions(quickItems.isEmpty());
         });
     }
 

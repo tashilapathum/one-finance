@@ -1,64 +1,47 @@
 package com.tantalum.onefinance.settings;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.DialogFragment;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import android.app.AlarmManager;
 
 import android.app.PendingIntent;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.materialswitch.MaterialSwitch;
-import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.tantalum.onefinance.AboutActivity;
 import com.tantalum.onefinance.AlertReceiver;
-import com.tantalum.onefinance.categories.CategoriesActivity;
 import com.tantalum.onefinance.quicklist.QuickListActivity;
-import com.tantalum.onefinance.EnterPIN;
+import com.tantalum.onefinance.EnterPINActivity;
 import com.tantalum.onefinance.MainActivity;
 import com.tantalum.onefinance.R;
-import com.tantalum.onefinance.reports.ReportsActivity;
-import com.tantalum.onefinance.transactions.TransactionsActivity;
 import com.tantalum.onefinance.pro.UpgradeToProActivity;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
-public class SettingsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class SettingsActivity extends AppCompatActivity {
     public static final String TAG = "SettingsActivity";
     SharedPreferences sharedPref;
-    private DrawerLayout drawer;
     String timeString;
     private MaterialSwitch exitCheckBox;
     private MaterialSwitch negativeCheckBox;
     private FirebaseAnalytics firebaseAnalytics;
-    private NavigationView navigationView;
     private boolean isMyWalletPro;
     private final String HOME_OPTION_WALLET = "Wallet";
     private final String HOME_OPTION_BANK = "Bank";
@@ -69,7 +52,6 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         /*------------------------------Essential for every activity------------------------------*/
-        Toolbar toolbar;
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
 
         //language
@@ -84,63 +66,44 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
 
         //theme
         String theme = sharedPref.getString("theme", "light");
-        if (theme.equalsIgnoreCase("dark")) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_settings);
-            toolbar = findViewById(R.id.toolbar);
-            toolbar.setBackground(getDrawable(R.color.colorToolbarDark));
-        } else {
+        if (!theme.equalsIgnoreCase("dark")) {
             setTheme(R.style.AppTheme);
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_settings);
-            toolbar = findViewById(R.id.toolbar);
         }
-
-        setSupportActionBar(toolbar);
-        drawer = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        if (sharedPref.getBoolean("MyWalletPro", false)) {
-            View navHeader = navigationView.getHeaderView(0);
-            TextView tvAppName = navHeader.findViewById(R.id.appName);
-            tvAppName.setText(R.string.my_wallet_pro);
-        }
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_open);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
+        EdgeToEdge.enable(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root_layout), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         /*----------------------------------------------------------------------------------------*/
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         isMyWalletPro = sharedPref.getBoolean("MyWalletPro", false);
-        ViewGroup viewGroup = (ViewGroup) findViewById(android.R.id.content);
+        ViewGroup viewGroup = findViewById(android.R.id.content);
 
         if (isMyWalletPro) hideProLabels(viewGroup);
 
         //exit confirm setting
         exitCheckBox = findViewById(R.id.exitCheck);
-        exitCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (compoundButton.isChecked())
-                    sharedPref.edit().putBoolean("exitConfirmation", true).apply();
-                else
-                    sharedPref.edit().putBoolean("exitConfirmation", false).apply();
-            }
+        exitCheckBox.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (compoundButton.isChecked())
+                sharedPref.edit().putBoolean("exitConfirmation", true).apply();
+            else
+                sharedPref.edit().putBoolean("exitConfirmation", false).apply();
         });
         boolean confirmExitEnabled = sharedPref.getBoolean("exitConfirmation", false);
         if (confirmExitEnabled) exitCheckBox.setChecked(true);
 
         //negative setting
         negativeCheckBox = findViewById(R.id.negativeCheck);
-        negativeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (compoundButton.isChecked())
-                    sharedPref.edit().putBoolean("negativeEnabled", true).apply();
-                else
-                    sharedPref.edit().putBoolean("negativeEnabled", false).apply();
-            }
+        negativeCheckBox.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (compoundButton.isChecked())
+                sharedPref.edit().putBoolean("negativeEnabled", true).apply();
+            else
+                sharedPref.edit().putBoolean("negativeEnabled", false).apply();
         });
         boolean negativeEnabled = sharedPref.getBoolean("negativeEnabled", false);
         if (negativeEnabled) negativeCheckBox.setChecked(true);
@@ -159,7 +122,6 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
     @Override
     protected void onResume() {
         super.onResume();
-        navigationView.setCheckedItem(R.id.nav_settings);
         if (sharedPref.getBoolean("exit", false)) {
             finishAndRemoveTask();
         }
@@ -170,108 +132,6 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
     protected void onDestroy() {
         super.onDestroy();
         sharedPref.edit().putBoolean("exit", false).apply();
-    }
-
-    //nav drawer
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_home: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_home)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, MainActivity.class);
-                    intent.putExtra("showPinScreen", false);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_recent_trans: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_recent_trans)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, TransactionsActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_categories: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_categories)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, CategoriesActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_reports: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_reports)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, ReportsActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_settings: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_settings)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, SettingsActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_pro: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_pro)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, UpgradeToProActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_share: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_share)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("text/plain");
-                    intent.putExtra(Intent.EXTRA_SUBJECT, "Share One Finance");
-                    intent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.tantalum.onefinance");
-                    startActivity(Intent.createChooser(intent, "Share One Finance"));
-                }
-                break;
-            }
-            case R.id.nav_about: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_about)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, AboutActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_exit: {
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_exit)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    sharedPref.edit().putBoolean("exit", true).apply();
-                    finishAndRemoveTask();
-                }
-                break;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
     }
 
     private void hideProLabels(ViewGroup viewGroup) {
@@ -367,10 +227,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
         Intent intent = new Intent(this, AlertReceiver.class);
         int reqCode = (int) System.currentTimeMillis();
         PendingIntent pendingIntent;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M)
-            pendingIntent = PendingIntent.getBroadcast(this, reqCode, intent, PendingIntent.FLAG_IMMUTABLE);
-        else
-            pendingIntent = PendingIntent.getBroadcast(this, reqCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        pendingIntent = PendingIntent.getBroadcast(this, reqCode, intent, PendingIntent.FLAG_IMMUTABLE);
         alarmManager.cancel(pendingIntent);
         alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
@@ -410,24 +267,10 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                                     getString(R.string.tools)
                             },
                             getCheckedHomeIndex(),
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int checkedIndex) {
-                                    home[0] = checkedIndex;
-                                }
-                            }
+                            (dialogInterface, checkedIndex) -> home[0] = checkedIndex
                     )
-                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    })
-                    .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            saveCheckedHome(home[0]);
-                        }
-                    })
+                    .setNegativeButton(R.string.cancel, (dialog, which) -> {})
+                    .setPositiveButton(R.string.save, (dialog, which) -> saveCheckedHome(home[0]))
                     .show();
         } else purchaseProForThis();
     }
@@ -563,7 +406,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                         .setPositiveButton(R.string.change, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Intent intent = new Intent(SettingsActivity.this, EnterPIN.class);
+                                Intent intent = new Intent(SettingsActivity.this, EnterPINActivity.class);
                                 intent.putExtra("validate", true);
                                 startActivity(intent);
                             }
@@ -577,7 +420,7 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
                         })
                         .show();
             } else {
-                Intent intent = new Intent(this, EnterPIN.class);
+                Intent intent = new Intent(this, EnterPINActivity.class);
                 intent.putExtra("newPin", true);
                 startActivity(intent);
             }
@@ -589,12 +432,9 @@ public class SettingsActivity extends AppCompatActivity implements NavigationVie
         new MaterialAlertDialogBuilder(this)
                 .setTitle(R.string.pro_feature)
                 .setMessage(R.string.buy_pro_for_this)
-                .setPositiveButton(R.string.buy, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(SettingsActivity.this, UpgradeToProActivity.class);
-                        startActivity(intent);
-                    }
+                .setPositiveButton(R.string.buy, (dialog, which) -> {
+                    Intent intent = new Intent(SettingsActivity.this, UpgradeToProActivity.class);
+                    startActivity(intent);
                 })
                 .setNegativeButton(R.string.cancel, null)
                 .show();

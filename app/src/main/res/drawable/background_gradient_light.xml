@@ -5,7 +5,19 @@
             <gradient
                 android:centerX="80%"
                 android:centerY="-30%"
-                android:endColor="#00FFFFFF"
+                android:endColor="@android:color/white"
+                android:gradientRadius="500dp"
+                android:startColor="?attr/colorPrimary"
+                android:type="radial"
+                android:useLevel="false" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:centerX="20%"
+                android:centerY="130%"
+                android:endColor="@android:color/transparent"
                 android:gradientRadius="500dp"
                 android:startColor="?attr/colorPrimary"
                 android:type="radial"

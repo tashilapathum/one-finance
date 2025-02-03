@@ -24,7 +24,6 @@ import com.tantalum.onefinance.investments.DialogAddInvestment;
 import com.tantalum.onefinance.loans.DialogAddLoan;
 import com.tantalum.onefinance.reports.ReportsActivity;
 import com.tantalum.onefinance.transactions.DialogTransactionEditor;
-import com.tantalum.onefinance.transactions.TransactionsActivity;
 import com.tantalum.onefinance.wallet.DialogWalletInput;
 
 public class DatePickerFragment extends DialogFragment {
@@ -80,10 +79,6 @@ public class DatePickerFragment extends DialogFragment {
             case "fromInvestmentsFragment" -> DialogAddInvestment.getInstance().setDate(date, Long.parseLong(dateInMillis));
             case "fromReports" -> ((ReportsActivity) getActivity()).applyFilter(year, month, week, dayOfYear, dayOfMonth);
             case "fromTransactionEditor" -> DialogTransactionEditor.getInstance().setDate(date, dateInMillis);
-            case "fromTransactionFilter" -> {
-                DateTimeHandler dateTimeHandler = new DateTimeHandler(dateInMillis);
-                ((TransactionsActivity) getActivity()).filterByDate(dateTimeHandler.getDayOfYear());
-            }
         }
     }
 }

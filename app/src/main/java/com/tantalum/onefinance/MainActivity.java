@@ -3,12 +3,16 @@ package com.tantalum.onefinance;
 import static com.tantalum.onefinance.Constants.SP_HOME_SCREEN;
 import static com.tantalum.onefinance.pro.UpgradeHandler.ONE_FINANCE_PRO;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.content.ContextCompat;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -16,17 +20,14 @@ import androidx.fragment.app.FragmentManager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationBarView;
@@ -34,12 +35,11 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.tantalum.onefinance.bank.BankFragment;
 import com.tantalum.onefinance.categories.CategoriesActivity;
+import com.tantalum.onefinance.investments.InvestmentViewFragment;
 import com.tantalum.onefinance.investments.InvestmentsFragment;
-import com.tantalum.onefinance.pro.UpgradeHandler;
 import com.tantalum.onefinance.pro.UpgradeToProActivity;
 import com.tantalum.onefinance.reports.ReportsActivity;
 import com.tantalum.onefinance.settings.SettingsActivity;
-import com.tantalum.onefinance.transactions.TransactionsActivity;
 import com.tantalum.onefinance.transactions.TransactionsFragment;
 import com.tantalum.onefinance.wallet.WalletFragment;
 
@@ -48,16 +48,16 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String TAG = "MainActivity";
-    private Context context;
     private DrawerLayout drawer;
     private SharedPreferences sharedPref;
     private BottomNavigationView bottomNav;
     private FirebaseAnalytics firebaseAnalytics;
     private NavigationView navigationView;
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        context = this;
+        EdgeToEdge.enable(this);
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
 
         //to exit the app
@@ -69,14 +69,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (getIntent().getBooleanExtra("showPinScreen", true)) {
                 boolean isPinCompleted = getIntent().getBooleanExtra("pinCompleted", false);
                 if (!isPinCompleted) {
-                    startActivity(new Intent(this, EnterPIN.class));
+                    startActivity(new Intent(this, EnterPINActivity.class));
                     finish();
                 }
             }
         }
 
         /*------------------------------Essential for every activity------------------------------*/
-        MaterialToolbar toolbar;
 
         //language
         String language = sharedPref.getString("language", "english");
@@ -91,35 +90,52 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         config.setLocale(locale);
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 
-
         //theme
-        String theme = sharedPref.getString("theme", "light");
+        String theme = sharedPref.getString("theme", "");
         if (theme.equalsIgnoreCase("dark")) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-            toolbar = findViewById(R.id.toolbar);
-            toolbar.setBackground(getDrawable(R.color.colorToolbarDark));
-        } else {
+        } else if (theme.equalsIgnoreCase("light")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             setTheme(R.style.AppTheme);
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-            toolbar = findViewById(R.id.toolbar);
+        } else {
+            int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            switch (nightModeFlags) {
+                case Configuration.UI_MODE_NIGHT_YES:
+                    sharedPref.edit().putString("theme", "dark").apply();
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    break;
+
+                case Configuration.UI_MODE_NIGHT_NO:
+                case Configuration.UI_MODE_NIGHT_UNDEFINED:
+                    sharedPref.edit().putString("theme", "light").apply();
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    setTheme(R.style.AppTheme);
+                    break;
+            }
         }
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        toolbar.setTitle(R.string.app_name);
-        toolbar.setTitleCentered(true);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.drawer_layout), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
         drawer = findViewById(R.id.drawer_layout);
+        if (theme.equalsIgnoreCase("dark"))
+            drawer.setBackground(AppCompatResources.getDrawable(this, R.drawable.background_gradient_dark));
+        else
+            drawer.setBackground(AppCompatResources.getDrawable(this, R.drawable.background_gradient_light));
+
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+        toggle = new ActionBarDrawerToggle(this, drawer,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_open);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         /*----------------------------------------------------------------------------------------*/
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
@@ -154,6 +170,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //updates
         UpdateManager updateManager = new UpdateManager(this);
         updateManager.checkForUpdates();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Handle the drawer toggle click event
+        if (toggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override //so the language change works with dark mode
@@ -196,16 +221,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     drawer.closeDrawer(GravityCompat.START);
                 else {
                     Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
-                }
-                break;
-            }
-            case R.id.nav_recent_trans: {
-                bundle.putString("feature", "transactions");
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_recent_trans)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, TransactionsActivity.class);
                     startActivity(intent);
                 }
                 break;
@@ -300,11 +315,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START))
             drawer.closeDrawer(GravityCompat.START);
 
-        else if (childFm != null) {
+        if (fm.getBackStackEntryCount() > 0)
+            fm.popBackStack();
+
+        else if (childFm != null)
             if (childFm.getBackStackEntryCount() > 0)
                 childFm.popBackStack();
             else processExit();
-        } else processExit();
+        else processExit();
     }
 
     private void setNotification() {
@@ -319,10 +337,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent notifyIntent = new Intent(this, AlertReceiver.class);
             PendingIntent pendingIntent = null;
             int requestCode = 1;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                pendingIntent = PendingIntent.getBroadcast(this, requestCode, notifyIntent, PendingIntent.FLAG_IMMUTABLE);
-            else
-                pendingIntent = PendingIntent.getBroadcast(this, requestCode, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            pendingIntent = PendingIntent.getBroadcast(this, requestCode, notifyIntent, PendingIntent.FLAG_IMMUTABLE);
 
             alarmManager.cancel(pendingIntent);
             alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
@@ -336,12 +351,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             new MaterialAlertDialogBuilder(this)
                     .setTitle(R.string.confirm)
                     .setMessage(R.string.exit_confirm)
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            sharedPref.edit().putBoolean("exit", true).apply();
-                            finishAndRemoveTask();
-                        }
+                    .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
+                        sharedPref.edit().putBoolean("exit", true).apply();
+                        finishAndRemoveTask();
                     })
                     .setNegativeButton(R.string.no, null)
                     .show();
@@ -373,26 +385,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     case R.id.nav_wallet: {
                         selectedFragment = new WalletFragment();
                         fragmentTag = "WalletFragment";
+                        getSupportActionBar().setSubtitle(R.string.wallet);
                         break;
                     }
                     case R.id.nav_bank: {
                         selectedFragment = new BankFragment();
                         fragmentTag = "BankFragment";
+                        getSupportActionBar().setSubtitle(R.string.bank);
                         break;
                     }
                     case R.id.nav_trans: {
                         selectedFragment = new TransactionsFragment();
                         fragmentTag = "TransactionsFragment";
+                        getSupportActionBar().setSubtitle(R.string.transactions);
                         break;
                     }
                     case R.id.nav_invest: {
                         selectedFragment = new InvestmentsFragment();
                         fragmentTag = "InvestmentsFragment";
+                        setInvestmentsNavigator((InvestmentsFragment) selectedFragment);
+                        getSupportActionBar().setSubtitle(R.string.investments);
                         break;
                     }
                     case R.id.nav_tools: {
                         selectedFragment = new ToolsFragment();
                         fragmentTag = "ToolsFragment";
+                        setToolsNavigator((ToolsFragment) selectedFragment);
+                        getSupportActionBar().setSubtitle(R.string.tools);
                         break;
                     }
                 }
@@ -402,13 +421,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private final NavigationBarView.OnItemReselectedListener navReListener = item -> {
         if (item.getItemId() == R.id.nav_tools) {
-            Fragment selectedFragment = new ToolsFragment();
+            ToolsFragment selectedFragment = new ToolsFragment();
             String fragmentTag = "ToolsFragment";
+            setToolsNavigator(selectedFragment);
             navigateScreens(selectedFragment, fragmentTag, item.getItemId());
         }
     };
 
+    private void setToolsNavigator(ToolsFragment toolsFragment) {
+        toolsFragment.setToolSelectedListener((fragment1, fragmentTag1) ->
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, fragment1, fragmentTag1)
+                        .addToBackStack(fragmentTag1)
+                        .commit()
+        );
+    }
+
+    private void setInvestmentsNavigator(InvestmentsFragment investmentsFragment) {
+        investmentsFragment.setInvestmentClickListener(investment ->
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new InvestmentViewFragment(investment))
+                        .addToBackStack(null)
+                        .commit()
+        );
+    }
+
     private void navigateScreens(Fragment selectedFragment, String fragmentTag, int itemId) {
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        if (selectedFragment instanceof ToolsFragment)
+            setToolsNavigator((ToolsFragment) selectedFragment);
+        else if (selectedFragment instanceof InvestmentsFragment)
+            setInvestmentsNavigator((InvestmentsFragment) selectedFragment);
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, selectedFragment, fragmentTag)
                 .commit();

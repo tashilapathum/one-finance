@@ -1,630 +1,598 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".settings.SettingsActivity">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_alignParentTop="true"
-            android:background="@color/colorPrimary"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="16dp"
+            android:text="@string/general"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="?colorThemeBasedAccent" />
 
-        <ScrollView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/toolbar">
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="editQuickList"
+            android:paddingVertical="16dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/image1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="20dp"
-                    android:paddingTop="16dp"
-                    android:text="@string/general"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    android:textColor="?colorThemeBasedAccent" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="editQuickList"
-                    android:paddingVertical="16dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp">
-
-                    <ImageView
-                        android:id="@+id/image1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="8dp"
-                        android:paddingEnd="8dp"
-                        android:src="@drawable/ic_quick_list" />
-
-                    <TextView
-                        android:id="@+id/setting1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/image1"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@string/settings_quick_list"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                    <TextView
-                        android:id="@+id/description1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/setting1"
-                        android:layout_toEndOf="@id/image1"
-                        android:text="@string/edit_quick_list_items" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="editBudget"
-                    android:paddingVertical="16dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp">
-
-                    <ImageView
-                        android:id="@+id/image4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="8dp"
-                        android:paddingEnd="8dp"
-                        android:src="@drawable/ic_budget" />
-
-                    <TextView
-                        android:id="@+id/setting4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/image4"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@string/budget"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                    <TextView
-                        android:id="@+id/description4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/setting4"
-                        android:layout_toEndOf="@id/image4"
-                        android:text="@string/edit_your_monthly_budget_weekly_and_daily_budgets_will_be_calculated_based_on_this" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:onClick="exitConfirm"
-                    android:paddingVertical="16dp"
-                    android:paddingStart="8dp">
-
-                    <ImageView
-                        android:id="@+id/image8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="8dp"
-                        android:paddingEnd="8dp"
-                        android:src="@drawable/ic_exit_confirm" />
-
-                    <TextView
-                        android:id="@+id/setting8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toStartOf="@id/exitCheck"
-                        android:layout_toEndOf="@id/image8"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@string/exit_confirmation"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                    <TextView
-                        android:id="@+id/description8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/setting8"
-                        android:layout_toStartOf="@id/exitCheck"
-                        android:layout_toEndOf="@id/image8"
-                        android:text="@string/show_confirm_dialog_when_trying_to_exit_the_app" />
-
-                    <com.google.android.material.materialswitch.MaterialSwitch
-                        android:id="@+id/exitCheck"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:paddingHorizontal="8dp" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="selectCurrency"
-                    android:paddingVertical="16dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp">
-
-                    <ImageView
-                        android:id="@+id/image3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="8dp"
-                        android:paddingEnd="8dp"
-                        android:src="@drawable/ic_currency" />
-
-                    <TextView
-                        android:id="@+id/setting3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/image3"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@string/currency"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                    <TextView
-                        android:id="@+id/description3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/setting3"
-                        android:layout_toEndOf="@id/image3"
-                        android:text="@string/set_your_country_s_currency" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="selectLanguage"
-                    android:paddingVertical="16dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp">
-
-                    <ImageView
-                        android:id="@+id/image2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="8dp"
-                        android:paddingEnd="8dp"
-                        android:src="@drawable/ic_language" />
-
-                    <TextView
-                        android:id="@+id/setting2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/image2"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@string/language"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                    <TextView
-                        android:id="@+id/description2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/setting2"
-                        android:layout_toEndOf="@id/image2"
-                        android:text="@string/set_your_preferred_language" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:onClick="editNotifyTime"
-                    android:paddingVertical="16dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp">
-
-                    <ImageView
-                        android:id="@+id/image5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="8dp"
-                        android:paddingEnd="8dp"
-                        android:src="@drawable/ic_reminder" />
-
-                    <TextView
-                        android:id="@+id/setting5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/image5"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@string/notification_time"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                    <TextView
-                        android:id="@+id/description5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/setting5"
-                        android:layout_toStartOf="@id/description5"
-                        android:layout_toEndOf="@id/image5"
-                        android:text="@string/change_the_time_you_receive_the_daily_reminder" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:paddingStart="8dp"
-                        android:paddingEnd="8dp"
-                        android:text="@string/pro"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textStyle="bold|italic" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="notifications"
-                    android:paddingVertical="16dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp">
-
-                    <ImageView
-                        android:id="@+id/image17"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="8dp"
-                        android:paddingEnd="8dp"
-                        android:src="@drawable/ic_notifications" />
-
-                    <TextView
-                        android:id="@+id/setting17"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/image17"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@string/notifications"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                    <TextView
-                        android:id="@+id/description17"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/setting17"
-                        android:layout_toEndOf="@id/image17"
-                        android:text="@string/manage_notifications_sent_by_the_app" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="pin"
-                    android:paddingVertical="16dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp">
-
-                    <ImageView
-                        android:id="@+id/image21"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="8dp"
-                        android:paddingEnd="8dp"
-                        android:src="@drawable/ic_pin" />
-
-                    <TextView
-                        android:id="@+id/setting21"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/image21"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@string/pin"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                    <TextView
-                        android:id="@+id/description21"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/setting21"
-                        android:layout_toEndOf="@id/image21"
-                        android:text="@string/add_a_pin_to_secure_the_app" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:paddingStart="8dp"
-                        android:paddingEnd="8dp"
-                        android:text="@string/pro"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textStyle="bold|italic" />
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="8dp"
-                    android:background="@color/colorDividerLight" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="20dp"
-                    android:paddingTop="16dp"
-                    android:text="@string/customization"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    android:textColor="?colorThemeBasedAccent" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:onClick="setTheme"
-                    android:paddingVertical="16dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp">
-
-                    <ImageView
-                        android:id="@+id/image6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="8dp"
-                        android:paddingEnd="8dp"
-                        android:src="@drawable/ic_theme" />
-
-                    <TextView
-                        android:id="@+id/setting6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/image6"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@string/theme"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                    <TextView
-                        android:id="@+id/description6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/setting6"
-                        android:layout_toStartOf="@id/description6"
-                        android:layout_toEndOf="@id/image6"
-                        android:text="@string/choose_between_dark_and_light_themes" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:paddingStart="8dp"
-                        android:paddingEnd="8dp"
-                        android:text="@string/pro"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textStyle="bold|italic" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:onClick="chooseHome"
-                    android:paddingVertical="16dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp">
-
-                    <ImageView
-                        android:id="@+id/image7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="8dp"
-                        android:paddingEnd="8dp"
-                        android:src="@drawable/ic_home" />
-
-                    <TextView
-                        android:id="@+id/setting7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/image7"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@string/home_screen"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                    <TextView
-                        android:id="@+id/description7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/setting7"
-                        android:layout_toStartOf="@id/pro3"
-                        android:layout_toEndOf="@id/image7"
-                        android:text="@string/change_the_screen_which_shows_up_when_starting_the_app" />
-
-                    <TextView
-                        android:id="@+id/pro3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:paddingStart="8dp"
-                        android:paddingEnd="8dp"
-                        android:text="@string/pro"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textStyle="bold|italic" />
-
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="8dp"
-                    android:background="@color/colorDividerLight" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="20dp"
-                    android:paddingTop="16dp"
-                    android:text="@string/advanced"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    android:textColor="?colorThemeBasedAccent" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:onClick="negativeBalance"
-                    android:paddingVertical="16dp"
-                    android:paddingStart="8dp">
-
-                    <ImageView
-                        android:id="@+id/image13"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="8dp"
-                        android:paddingEnd="8dp"
-                        android:src="@drawable/ic_negative" />
-
-                    <TextView
-                        android:id="@+id/setting13"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toStartOf="@id/negativeCheck"
-                        android:layout_toEndOf="@id/image13"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@string/allow_negative_balance"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                    <TextView
-                        android:id="@+id/description13"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/setting13"
-                        android:layout_toStartOf="@id/negativeCheck"
-                        android:layout_toEndOf="@id/image13"
-                        android:text="@string/when_enabled_you_can_spend_money_even_when_you_have_a_negative_balance_in_the_wallet_or_the_bank" />
-
-                    <com.google.android.material.materialswitch.MaterialSwitch
-                        android:id="@+id/negativeCheck"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:paddingHorizontal="8dp"/>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:onClick="restoreDefaults"
-                    android:paddingVertical="16dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp">
-
-                    <ImageView
-                        android:id="@+id/image15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_margin="8dp"
-                        android:paddingEnd="8dp"
-                        android:src="@drawable/ic_restore" />
-
-                    <TextView
-                        android:id="@+id/setting15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/image15"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="@string/restore_default_settings"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                    <TextView
-                        android:id="@+id/description15"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/setting15"
-                        android:layout_toEndOf="@id/image15"
-                        android:text="@string/this_will_restore_all_settings_to_defaults_including_budget_and_currency_balance_transactions_accounts_and_other_stored_data_won_t_be_affected" />
-
-                </RelativeLayout>
-
-            </LinearLayout>
-        </ScrollView>
-    </RelativeLayout>
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="256dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"
-        app:itemTextAppearance="@style/DrawerTextStyle"
-        app:menu="@menu/drawer_menu" />
-
-</androidx.drawerlayout.widget.DrawerLayout>
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="8dp"
+                android:paddingEnd="8dp"
+                android:src="@drawable/ic_quick_list" />
+
+            <TextView
+                android:id="@+id/setting1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/image1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/settings_quick_list"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <TextView
+                android:id="@+id/description1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setting1"
+                android:layout_toEndOf="@id/image1"
+                android:text="@string/edit_quick_list_items" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="editBudget"
+            android:paddingVertical="16dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <ImageView
+                android:id="@+id/image4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="8dp"
+                android:paddingEnd="8dp"
+                android:src="@drawable/ic_budget" />
+
+            <TextView
+                android:id="@+id/setting4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/image4"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/budget"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <TextView
+                android:id="@+id/description4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setting4"
+                android:layout_toEndOf="@id/image4"
+                android:text="@string/edit_your_monthly_budget_weekly_and_daily_budgets_will_be_calculated_based_on_this" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="exitConfirm"
+            android:paddingVertical="16dp"
+            android:paddingStart="8dp">
+
+            <ImageView
+                android:id="@+id/image8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="8dp"
+                android:paddingEnd="8dp"
+                android:src="@drawable/ic_exit_confirm" />
+
+            <TextView
+                android:id="@+id/setting8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@id/exitCheck"
+                android:layout_toEndOf="@id/image8"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/exit_confirmation"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <TextView
+                android:id="@+id/description8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setting8"
+                android:layout_toStartOf="@id/exitCheck"
+                android:layout_toEndOf="@id/image8"
+                android:text="@string/show_confirm_dialog_when_trying_to_exit_the_app" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/exitCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:paddingHorizontal="8dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="selectCurrency"
+            android:paddingVertical="16dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <ImageView
+                android:id="@+id/image3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="8dp"
+                android:paddingEnd="8dp"
+                android:src="@drawable/ic_currency" />
+
+            <TextView
+                android:id="@+id/setting3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/image3"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/currency"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <TextView
+                android:id="@+id/description3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setting3"
+                android:layout_toEndOf="@id/image3"
+                android:text="@string/set_your_country_s_currency" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="selectLanguage"
+            android:paddingVertical="16dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <ImageView
+                android:id="@+id/image2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="8dp"
+                android:paddingEnd="8dp"
+                android:src="@drawable/ic_language" />
+
+            <TextView
+                android:id="@+id/setting2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/image2"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/language"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <TextView
+                android:id="@+id/description2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setting2"
+                android:layout_toEndOf="@id/image2"
+                android:text="@string/set_your_preferred_language" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="editNotifyTime"
+            android:paddingVertical="16dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <ImageView
+                android:id="@+id/image5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="8dp"
+                android:paddingEnd="8dp"
+                android:src="@drawable/ic_reminder" />
+
+            <TextView
+                android:id="@+id/setting5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/image5"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/notification_time"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <TextView
+                android:id="@+id/description5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setting5"
+                android:layout_toStartOf="@id/description5"
+                android:layout_toEndOf="@id/image5"
+                android:text="@string/change_the_time_you_receive_the_daily_reminder" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/pro"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold|italic" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="notifications"
+            android:paddingVertical="16dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <ImageView
+                android:id="@+id/image17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="8dp"
+                android:paddingEnd="8dp"
+                android:src="@drawable/ic_notifications" />
+
+            <TextView
+                android:id="@+id/setting17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/image17"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/notifications"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <TextView
+                android:id="@+id/description17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setting17"
+                android:layout_toEndOf="@id/image17"
+                android:text="@string/manage_notifications_sent_by_the_app" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="pin"
+            android:paddingVertical="16dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <ImageView
+                android:id="@+id/image21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="8dp"
+                android:paddingEnd="8dp"
+                android:src="@drawable/ic_pin" />
+
+            <TextView
+                android:id="@+id/setting21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/image21"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/pin"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <TextView
+                android:id="@+id/description21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setting21"
+                android:layout_toEndOf="@id/image21"
+                android:text="@string/add_a_pin_to_secure_the_app" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/pro"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold|italic" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="8dp"
+            android:background="@color/colorDividerLight" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="16dp"
+            android:text="@string/customization"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="?colorThemeBasedAccent" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="setTheme"
+            android:paddingVertical="16dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <ImageView
+                android:id="@+id/image6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="8dp"
+                android:paddingEnd="8dp"
+                android:src="@drawable/ic_theme" />
+
+            <TextView
+                android:id="@+id/setting6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/image6"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/theme"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <TextView
+                android:id="@+id/description6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setting6"
+                android:layout_toStartOf="@id/description6"
+                android:layout_toEndOf="@id/image6"
+                android:text="@string/choose_between_dark_and_light_themes" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/pro"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold|italic" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="chooseHome"
+            android:paddingVertical="16dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <ImageView
+                android:id="@+id/image7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="8dp"
+                android:paddingEnd="8dp"
+                android:src="@drawable/ic_home" />
+
+            <TextView
+                android:id="@+id/setting7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/image7"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/home_screen"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <TextView
+                android:id="@+id/description7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setting7"
+                android:layout_toStartOf="@id/pro3"
+                android:layout_toEndOf="@id/image7"
+                android:text="@string/change_the_screen_which_shows_up_when_starting_the_app" />
+
+            <TextView
+                android:id="@+id/pro3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/pro"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold|italic" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="8dp"
+            android:background="@color/colorDividerLight" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="16dp"
+            android:text="@string/advanced"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="?colorThemeBasedAccent" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="negativeBalance"
+            android:paddingVertical="16dp"
+            android:paddingStart="8dp">
+
+            <ImageView
+                android:id="@+id/image13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="8dp"
+                android:paddingEnd="8dp"
+                android:src="@drawable/ic_negative" />
+
+            <TextView
+                android:id="@+id/setting13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@id/negativeCheck"
+                android:layout_toEndOf="@id/image13"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/allow_negative_balance"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <TextView
+                android:id="@+id/description13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setting13"
+                android:layout_toStartOf="@id/negativeCheck"
+                android:layout_toEndOf="@id/image13"
+                android:text="@string/when_enabled_you_can_spend_money_even_when_you_have_a_negative_balance_in_the_wallet_or_the_bank" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/negativeCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:paddingHorizontal="8dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="restoreDefaults"
+            android:paddingVertical="16dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <ImageView
+                android:id="@+id/image15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="8dp"
+                android:paddingEnd="8dp"
+                android:src="@drawable/ic_restore" />
+
+            <TextView
+                android:id="@+id/setting15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/image15"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/restore_default_settings"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <TextView
+                android:id="@+id/description15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setting15"
+                android:layout_toEndOf="@id/image15"
+                android:text="@string/this_will_restore_all_settings_to_defaults_including_budget_and_currency_balance_transactions_accounts_and_other_stored_data_won_t_be_affected" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>

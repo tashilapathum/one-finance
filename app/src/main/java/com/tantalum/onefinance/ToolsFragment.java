@@ -21,6 +21,7 @@ import com.tantalum.onefinance.loans.LoansFragment;
 public class ToolsFragment extends Fragment {
     private View view;
     private static ToolsFragment instance;
+    private ToolSelectedListener listener;
 
     public static ToolsFragment getInstance() {
         return instance;
@@ -53,17 +54,17 @@ public class ToolsFragment extends Fragment {
         view.findViewById(R.id.cart).setOnClickListener(v -> {
             fragment[0] = new CartFragment();
             fragmentTag[0] = "CartFragment";
-            openPage(fragment[0], fragmentTag[0]);
+            listener.onToolSelected(fragment[0], fragmentTag[0]);
         });
         view.findViewById(R.id.bills).setOnClickListener(v -> {
             fragment[0] = new BillsFragment();
             fragmentTag[0] = "BillsFragment";
-            openPage(fragment[0], fragmentTag[0]);
+            listener.onToolSelected(fragment[0], fragmentTag[0]);
         });
         view.findViewById(R.id.loans).setOnClickListener(v -> {
             fragment[0] = new LoansFragment();
             fragmentTag[0] = "LoansFragment";
-            openPage(fragment[0], fragmentTag[0]);
+            listener.onToolSelected(fragment[0], fragmentTag[0]);
         });
         view.findViewById(R.id.calc).setOnClickListener(v -> {
             CalcDialog calcDialog = new CalcDialog();
@@ -74,12 +75,12 @@ public class ToolsFragment extends Fragment {
         return view;
     }
 
-    private void openPage(Fragment fragment, String fragmentTag) {
-        getChildFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, fragment, fragmentTag)
-                .addToBackStack(null)
-                .commit();
+    public interface ToolSelectedListener {
+        void onToolSelected(Fragment fragment, String fragmentTag);
     }
 
+    public void setToolSelectedListener(ToolSelectedListener listener) {
+        this.listener = listener;
+    }
 
 }

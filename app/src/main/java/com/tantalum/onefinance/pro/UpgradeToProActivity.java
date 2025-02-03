@@ -1,9 +1,13 @@
 package com.tantalum.onefinance.pro;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -41,28 +45,38 @@ public class UpgradeToProActivity extends AppCompatActivity implements BillingPr
     protected void onCreate(Bundle savedInstanceState) {
         context = this;
 
-        /*------------------------------Essential for every activity-----------------------------*/
-
+        /*------------------------------Essential for every activity------------------------------*/
         sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
 
         //language
         String language = sharedPref.getString("language", "english");
-        if (language.equals("සිංහල")) {
-            Locale locale = new Locale("si");
-            Locale.setDefault(locale);
-            Configuration config = new Configuration();
-            config.setLocale(locale);
-            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-        }
+        Locale locale;
+        if (language.equals("සිංහල"))
+            locale = new Locale("si");
+        else
+            locale = new Locale("en");
 
-        //theme
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
         String theme = sharedPref.getString("theme", "light");
-        if (!theme.equalsIgnoreCase("dark")) {
+        if (theme.equalsIgnoreCase("dark")) {
+            setTheme(R.style.AppThemeDark);
+        } else {
             setTheme(R.style.AppTheme);
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upgrade_to_pro);
-
+        EdgeToEdge.enable(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.root_layout), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         /*----------------------------------------------------------------------------------------*/
 
         btnBuy = findViewById(R.id.btnBuy);

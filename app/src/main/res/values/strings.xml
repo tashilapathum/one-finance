@@ -9,6 +9,7 @@
     <string name="about">About</string>
     <string name="developed_by_tashila_pathum">Developed by Tashila Pathum</string>
     <string name="balance">Balance:</string>
+    <string name="balance_">Balance</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="wallet">Wallet</string>

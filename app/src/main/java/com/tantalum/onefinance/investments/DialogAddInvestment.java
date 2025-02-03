@@ -130,7 +130,7 @@ public class DialogAddInvestment extends BottomSheetDialogFragment {
                         editingInvestment.getReturnValue(), dateInMillis, tag, editingInvestment.getHistory());
                 investment.setId(editingInvestment.getId());
                 InvestmentsFragment.getInstance().updateInvestment(investment);
-                InvestmentView.getInstance().showDetails(investment);
+                InvestmentViewFragment.getInstance().showDetails(investment);
             } else { //when creating new investment
                 List<String> history = new ArrayList<>();
                 history.add(getString(R.string.created_investment) + "###" + dateInMillis);
