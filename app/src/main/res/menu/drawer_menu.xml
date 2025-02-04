@@ -18,18 +18,26 @@
             android:icon="@drawable/ic_reports"
             android:title="@string/reports" />
         <item
+            android:id="@+id/nav_quick_list"
+            android:icon="@drawable/ic_quick_list"
+            android:title="@string/quick_list" />
+        <item
+            android:id="@+id/nav_accounts"
+            android:icon="@drawable/ic_accounts"
+            android:title="@string/accounts" />
+        <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings"
             android:title="@string/settings" />
-        <item
-            android:id="@+id/nav_pro"
-            android:icon="@drawable/ic_get_pro"
-            android:title="@string/upgrade_to_pro" />
     </group>
 
     <group
         android:id="@+id/bottom_group"
         android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_pro"
+            android:icon="@drawable/ic_get_pro"
+            android:title="@string/upgrade_to_pro" />
         <item
             android:id="@+id/nav_share"
             android:icon="@drawable/ic_share"

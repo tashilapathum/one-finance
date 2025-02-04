@@ -33,11 +33,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.tantalum.onefinance.accounts.AccountManager;
 import com.tantalum.onefinance.bank.BankFragment;
 import com.tantalum.onefinance.categories.CategoriesActivity;
 import com.tantalum.onefinance.investments.InvestmentViewFragment;
 import com.tantalum.onefinance.investments.InvestmentsFragment;
 import com.tantalum.onefinance.pro.UpgradeToProActivity;
+import com.tantalum.onefinance.quicklist.QuickListActivity;
 import com.tantalum.onefinance.reports.ReportsActivity;
 import com.tantalum.onefinance.settings.SettingsActivity;
 import com.tantalum.onefinance.transactions.TransactionsFragment;
@@ -151,17 +153,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigateScreens(new BankFragment(), "BankFragment", R.id.nav_bank);
             sharedPref.edit().putBoolean("reqOpenBank", false).apply();
         }
-        //when set as home screen (won't set it back to false)
-        else if (homeScreen.equalsIgnoreCase("bank"))
-            navigateScreens(new BankFragment(), "BankFragment", R.id.nav_bank);
-        else if (homeScreen.equalsIgnoreCase("transactions"))
-            navigateScreens(new TransactionsFragment(), "BillsFragment", R.id.nav_trans);
-        else if (homeScreen.equalsIgnoreCase("investments"))
-            navigateScreens(new InvestmentsFragment(), "BillsFragment", R.id.nav_invest);
-        else if (homeScreen.equalsIgnoreCase("tools"))
-            navigateScreens(new ToolsFragment(), "BillsFragment", R.id.nav_tools);
-        else //when starting the app normally
-            navigateScreens(new WalletFragment(), "WalletFragment", R.id.nav_wallet);
+        else { // when set as home screen (won't set it back to false)
+            switch (homeScreen.toLowerCase()) {
+                case "bank":
+                    navigateScreens(new BankFragment(), "BankFragment", R.id.nav_bank);
+                    break;
+                case "transactions":
+                    navigateScreens(new TransactionsFragment(), "BillsFragment", R.id.nav_trans);
+                    break;
+                case "investments":
+                    navigateScreens(new InvestmentsFragment(), "BillsFragment", R.id.nav_invest);
+                    break;
+                case "tools":
+                    navigateScreens(new ToolsFragment(), "BillsFragment", R.id.nav_tools);
+                    break;
+                default:
+                    navigateScreens(new WalletFragment(), "WalletFragment", R.id.nav_wallet);
+                    break;
+            }
+        }
 
         sharedPref.edit().putBoolean("MyWalletPro", true).apply(); //DO NOT CHANGE
         if (getPackageName().contains("debug"))
@@ -175,9 +185,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         // Handle the drawer toggle click event
-        if (toggle.onOptionsItemSelected(item)) {
-            return true;
-        }
+        if (toggle.onOptionsItemSelected(item)) return true;
         return super.onOptionsItemSelected(item);
     }
 
@@ -213,93 +221,59 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //nav drawer
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Bundle bundle = new Bundle();
+        Intent intent = null;
         switch (item.getItemId()) {
-            case R.id.nav_home: {
-                bundle.putString("feature", "home");
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_home)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
-                }
+            case R.id.nav_home:
+                firebaseAnalytics.logEvent("drawer_home", null);
+                intent = new Intent(this, MainActivity.class);
                 break;
-            }
-            case R.id.nav_categories: {
-                bundle.putString("feature", "categories");
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_categories)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, CategoriesActivity.class);
-                    startActivity(intent);
-                }
+            case R.id.nav_categories:
+                firebaseAnalytics.logEvent("drawer_categories", null);
+                intent = new Intent(this, CategoriesActivity.class);
                 break;
-            }
-            case R.id.nav_reports: {
-                bundle.putString("feature", "reports");
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_reports)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, ReportsActivity.class);
-                    startActivity(intent);
-                }
+            case R.id.nav_reports:
+                firebaseAnalytics.logEvent("drawer_reports", null);
+                intent = new Intent(this, ReportsActivity.class);
                 break;
-            }
-            case R.id.nav_settings: {
-                bundle.putString("feature", "settings");
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_settings)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, SettingsActivity.class);
-                    startActivity(intent);
-                }
+            case R.id.nav_quick_list:
+                firebaseAnalytics.logEvent("drawer_quick_list", null);
+                intent = new Intent(this, QuickListActivity.class);
                 break;
-            }
-            case R.id.nav_pro: {
-                bundle.putString("feature", "pro");
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_pro)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, UpgradeToProActivity.class);
-                    startActivity(intent);
-                }
+            case R.id.nav_accounts:
+                firebaseAnalytics.logEvent("drawer_accounts", null);
+                intent = new Intent(this, AccountManager.class);
                 break;
-            }
-            case R.id.nav_share: {
-                bundle.putString("feature", "share");
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_share)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("text/plain");
-                    intent.putExtra(Intent.EXTRA_SUBJECT, "Share One Finance");
-                    intent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.tantalum.onefinance");
-                    startActivity(Intent.createChooser(intent, "Share One Finance"));
-                }
+            case R.id.nav_settings:
+                firebaseAnalytics.logEvent("drawer_settings", null);
+                intent = new Intent(this, SettingsActivity.class);
                 break;
-            }
-            case R.id.nav_about: {
-                bundle.putString("feature", "about");
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_about)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    Intent intent = new Intent(this, AboutActivity.class);
-                    startActivity(intent);
-                }
+            case R.id.nav_pro:
+                firebaseAnalytics.logEvent("drawer_pro", null);
+                intent = new Intent(this, UpgradeToProActivity.class);
                 break;
-            }
-            case R.id.nav_exit: {
-                bundle.putString("feature", "exit");
-                if (navigationView.getCheckedItem().getItemId() == R.id.nav_exit)
-                    drawer.closeDrawer(GravityCompat.START);
-                else {
-                    sharedPref.edit().putBoolean("exit", true).apply();
-                    finishAndRemoveTask();
-                }
+            case R.id.nav_share:
+                firebaseAnalytics.logEvent("drawer_share", null);
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Share One Finance");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=com.tantalum.onefinance");
+                startActivity(Intent.createChooser(shareIntent, "Share One Finance"));
                 break;
-            }
+            case R.id.nav_about:
+                firebaseAnalytics.logEvent("drawer_about", null);
+                intent = new Intent(this, AboutActivity.class);
+                break;
+            case R.id.nav_exit:
+                firebaseAnalytics.logEvent("drawer_exit", null);
+                sharedPref.edit().putBoolean("exit", true).apply();
+                finishAndRemoveTask();
+                break;
         }
-        firebaseAnalytics.logEvent("used_feature", bundle);
+
+        if (intent != null && navigationView.getCheckedItem().getItemId() != item.getItemId())
+            startActivity(intent);
+        else
+            drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
