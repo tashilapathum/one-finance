@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">One Finance</string>
     <string name="my_wallet_pro" translatable="false">One Finance</string>
-    <string name="version" translatable="false">Version 1.1.14</string>
     <string name="recent_transactions">Transactions</string>
     <string name="reports">Reports</string>
     <string name="settings">Settings</string>
@@ -520,10 +519,12 @@
     <string name="what_s_new_in_version" translatable="false">What\'s new</string>
 
     <!-- WHAT'S NEW -->
+    <string name="version" translatable="false">Version 1.2.0</string>
     <string name="whats_new_descr" translatable="false">
-        \nv1.1.14\n
+        \nv1.2.0\n
+        - Overhauled UI look and feel\n
+        - Updated navigation drawer for ease of use\n
         - Added support for Android 14 and 15\n
-        - UI/UX improvements\n
         \nv1.1.11\n
         - Removed all ads thanks to AdMob restriction\n
         - Allow multiline transaction descriptions\n
