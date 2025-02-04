@@ -79,7 +79,8 @@
             android:id="@+id/content_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:animateLayoutChanges="true">
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/quickChipGroup"
@@ -88,7 +89,8 @@
                 android:layout_marginVertical="8dp"
                 app:chipSpacingVertical="0dp"
                 android:padding="6dp"
-                android:clipToPadding="false">
+                android:clipToPadding="false"
+                android:animateLayoutChanges="true">
                 <!--quick list items are added here-->
             </com.google.android.material.chip.ChipGroup>
 

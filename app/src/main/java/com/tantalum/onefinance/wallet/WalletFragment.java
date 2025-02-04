@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -232,37 +233,47 @@ public class WalletFragment extends Fragment {
         QuickListViewModel quickListViewModel = new ViewModelProvider(getActivity(), ViewModelProvider.AndroidViewModelFactory
                 .getInstance(getActivity().getApplication())).get(QuickListViewModel.class);
         List<QuickItem> fullQuickList = quickListViewModel.getQuickItemsList();
-        if (fullQuickList.size() != 0) {
+        if (!fullQuickList.isEmpty()) {
             for (int i = 0; i < fullQuickList.size(); i++) {
                 ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 ChipGroup chipGroup = view.findViewById(R.id.quickChipGroup);
-                Chip chip = new Chip(getActivity());
-                chip.setText(fullQuickList.get(i).getItemName() + " (" + currency + fullQuickList.get(i).getItemPrice() + ")");
-                chip.setElevation(8f);
-                chip.setChipStrokeWidth(0f);
-                chip.setHint(fullQuickList.get(i).getCategory());
-                chip.setChipCornerRadius(64f);
-                chip.setChipStrokeColorResource(R.color.colorAccentTransparent);
-                chip.setOnClickListener(view -> addExpense(
-                        chip.getText().toString().split("\\(")[0], //item name
-                        chip.getText().toString().split("\\(")[1]
-                                .replace(currency, "")
-                                .replace(")", ""), //price
-                        chip.getHint().toString() //category + color (previously set as hint)
-                ));
+                Chip chip = getChip(fullQuickList, i);
                 chipGroup.addView(chip, i, params);
             }
-        } else {
+        } else if (!sharedPref.getBoolean("quick_list_helper_dismissed", false)) {
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             ChipGroup chipGroup = view.findViewById(R.id.quickChipGroup);
             Chip chip = new Chip(getActivity());
             chip.setText(R.string.example_quick_item_text);
+            chip.setChipIcon(AppCompatResources.getDrawable(getActivity(), R.drawable.ic_quick_list));
             chip.setElevation(8f);
             chip.setChipStrokeWidth(0f);
-            chip.setChipStrokeColorResource(R.color.colorAccent);
+            chip.setChipCornerRadius(64f);
+            chip.setCloseIconVisible(true);
             chip.setOnClickListener(view -> startActivity(new Intent(getActivity(), QuickListActivity.class)));
+            chip.setOnCloseIconClickListener(view1 -> {
+                sharedPref.edit().putBoolean("quick_list_helper_dismissed", true).apply();
+                chip.setVisibility(View.GONE);
+            });
             chipGroup.addView(chip, 0, params);
         }
+    }
+
+    private Chip getChip(List<QuickItem> fullQuickList, int i) {
+        Chip chip = new Chip(getActivity());
+        chip.setText(fullQuickList.get(i).getItemName() + " (" + currency + fullQuickList.get(i).getItemPrice() + ")");
+        chip.setElevation(8f);
+        chip.setChipStrokeWidth(0f);
+        chip.setHint(fullQuickList.get(i).getCategory());
+        chip.setChipCornerRadius(64f);
+        chip.setOnClickListener(view -> addExpense(
+                chip.getText().toString().split("\\(")[0], //item name
+                chip.getText().toString().split("\\(")[1]
+                        .replace(currency, "")
+                        .replace(")", ""), //price
+                chip.getHint().toString() //category + color (previously set for hint)
+        ));
+        return chip;
     }
 
     private void addExpense(String itemName, String price, String category) {

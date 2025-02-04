@@ -49,22 +49,12 @@ public class DialogAddQuickItem extends DialogFragment {
         if (bundle == null) {
             builder.setTitle(R.string.add_q_item)
                     .setView(view)
-                    .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    })
+                    .setPositiveButton(R.string.add, (dialogInterface, i) -> {})
                     .setNegativeButton(R.string.cancel, null);
         } else {
             builder.setTitle(R.string.edit_q_item)
                     .setView(view)
-                    .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-
-                        }
-                    })
+                    .setPositiveButton(R.string.save, (dialogInterface, i) -> {})
                     .setNegativeButton(R.string.cancel, null);
         }
 
@@ -84,12 +74,7 @@ public class DialogAddQuickItem extends DialogFragment {
     public void onResume() {
         super.onResume();
         dialog = (AlertDialog) getDialog();
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickAdd();
-            }
-        });
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(view -> onClickAdd());
     }
 
     private boolean validateItem() {
@@ -181,14 +166,8 @@ public class DialogAddQuickItem extends DialogFragment {
             chip.setChipBackgroundColor(ColorStateList.valueOf(Integer.parseInt(categoryItem.split("###")[1])));
             chip.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_Medium);
             chip.setCheckable(true);
-            chip.setCheckedIconResource(R.drawable.ic_checked_box);
             chip.setCheckedIconVisible(true);
-            chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    chip.setChecked(isChecked);
-                }
-            });
+            chip.setOnCheckedChangeListener((buttonView, isChecked) -> chip.setChecked(isChecked));
             chipGroup.addView(chip);
         }
     }
