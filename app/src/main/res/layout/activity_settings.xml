@@ -27,47 +27,6 @@
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="editQuickList"
-            android:paddingVertical="16dp"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp">
-
-            <ImageView
-                android:id="@+id/image1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_margin="8dp"
-                android:paddingEnd="8dp"
-                android:src="@drawable/ic_quick_list" />
-
-            <TextView
-                android:id="@+id/setting1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/image1"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@string/settings_quick_list"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-            <TextView
-                android:id="@+id/description1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/setting1"
-                android:layout_toEndOf="@id/image1"
-                android:text="@string/edit_quick_list_items" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
             android:onClick="editBudget"
             android:paddingVertical="16dp"
             android:paddingStart="8dp"
@@ -100,54 +59,6 @@
                 android:layout_below="@+id/setting4"
                 android:layout_toEndOf="@id/image4"
                 android:text="@string/edit_your_monthly_budget_weekly_and_daily_budgets_will_be_calculated_based_on_this" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:onClick="exitConfirm"
-            android:paddingVertical="16dp"
-            android:paddingStart="8dp">
-
-            <ImageView
-                android:id="@+id/image8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_margin="8dp"
-                android:paddingEnd="8dp"
-                android:src="@drawable/ic_exit_confirm" />
-
-            <TextView
-                android:id="@+id/setting8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toStartOf="@id/exitCheck"
-                android:layout_toEndOf="@id/image8"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@string/exit_confirmation"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-            <TextView
-                android:id="@+id/description8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/setting8"
-                android:layout_toStartOf="@id/exitCheck"
-                android:layout_toEndOf="@id/image8"
-                android:text="@string/show_confirm_dialog_when_trying_to_exit_the_app" />
-
-            <com.google.android.material.materialswitch.MaterialSwitch
-                android:id="@+id/exitCheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:paddingHorizontal="8dp" />
 
         </RelativeLayout>
 
@@ -372,6 +283,54 @@
                 android:text="@string/pro"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textStyle="bold|italic" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="exitConfirm"
+            android:paddingVertical="16dp"
+            android:paddingStart="8dp">
+
+            <ImageView
+                android:id="@+id/image8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="8dp"
+                android:paddingEnd="8dp"
+                android:src="@drawable/ic_exit_confirm" />
+
+            <TextView
+                android:id="@+id/setting8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@id/exitCheck"
+                android:layout_toEndOf="@id/image8"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/exit_confirmation"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <TextView
+                android:id="@+id/description8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/setting8"
+                android:layout_toStartOf="@id/exitCheck"
+                android:layout_toEndOf="@id/image8"
+                android:text="@string/show_confirm_dialog_when_trying_to_exit_the_app" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/exitCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:paddingHorizontal="8dp" />
+
         </RelativeLayout>
 
         <View

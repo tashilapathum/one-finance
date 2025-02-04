@@ -146,56 +146,35 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    public void editQuickList(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putString("setting", "edit_quick_list");
-        firebaseAnalytics.logEvent("used_setting", bundle);
-        Intent intent = new Intent(SettingsActivity.this, QuickListActivity.class);
-        startActivity(intent);
-    }
-
     public void selectLanguage(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putString("setting", "select_lang");
-        firebaseAnalytics.logEvent("used_setting", bundle);
         DialogLanguage dialogLanguage = new DialogLanguage();
         dialogLanguage.show(getSupportFragmentManager(), "language dialog");
+        firebaseAnalytics.logEvent("setting_language", null);
     }
 
     public void selectCurrency(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putString("setting", "select_currency");
-        firebaseAnalytics.logEvent("used_setting", bundle);
         DialogCurrency dialogCurrency = new DialogCurrency();
         dialogCurrency.show(getSupportFragmentManager(), "currency dialog");
+        firebaseAnalytics.logEvent("setting_currency", null);
     }
 
     public void editBudget(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putString("setting", "edit_budget");
-        firebaseAnalytics.logEvent("used_setting", bundle);
+        firebaseAnalytics.logEvent("setting_budget", null);
         DialogBudget dialogBudget = new DialogBudget();
         dialogBudget.show(getSupportFragmentManager(), "budget dialog");
     }
 
     public void exitConfirm(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putString("setting", "exit_confirm_checkbox");
-        firebaseAnalytics.logEvent("used_setting", bundle);
-        if (!exitCheckBox.isChecked())
-            exitCheckBox.setChecked(true);
-        else
-            exitCheckBox.setChecked(false);
+        exitCheckBox.setChecked(!exitCheckBox.isChecked());
+        firebaseAnalytics.logEvent("setting_currency", null);
     }
 
     /*-------------------------Notification time--------------------------*/
 
     public void editNotifyTime(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putString("setting", "edit_notify_time");
-        firebaseAnalytics.logEvent("used_setting", bundle);
         if (isMyWalletPro) showTimePicker();
         else purchaseProForThis();
+        firebaseAnalytics.logEvent("setting_notification_time", null);
     }
 
     private void showTimePicker() {
@@ -241,20 +220,15 @@ public class SettingsActivity extends AppCompatActivity {
     /*------------------end of notification time------------------*/
 
     public void setTheme(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putString("setting", "set_theme");
-        firebaseAnalytics.logEvent("used_setting", bundle);
         if (isMyWalletPro) {
             DialogTheme dialogTheme = new DialogTheme();
             dialogTheme.show(getSupportFragmentManager(), "theme dialog");
         } else purchaseProForThis();
+        firebaseAnalytics.logEvent("setting_theme", null);
     }
 
     //choose home screen
     public void chooseHome(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putString("setting", "set_home");
-        firebaseAnalytics.logEvent("used_setting", bundle);
         if (isMyWalletPro) {
             final int[] home = {0};
             new MaterialAlertDialogBuilder(this)
@@ -273,6 +247,7 @@ public class SettingsActivity extends AppCompatActivity {
                     .setPositiveButton(R.string.save, (dialog, which) -> saveCheckedHome(home[0]))
                     .show();
         } else purchaseProForThis();
+        firebaseAnalytics.logEvent("setting_home", null);
     }
 
     private int getCheckedHomeIndex() {
@@ -333,13 +308,8 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void negativeBalance(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putString("setting", "negative_enabled_checkbox");
-        firebaseAnalytics.logEvent("used_setting", bundle);
-        if (!negativeCheckBox.isChecked())
-            negativeCheckBox.setChecked(true);
-        else
-            negativeCheckBox.setChecked(false);
+        negativeCheckBox.setChecked(!negativeCheckBox.isChecked());
+        firebaseAnalytics.logEvent("setting_negative_balance", null);
     }
 
     public void restoreDefaults(View view) {
@@ -380,10 +350,6 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     public void notifications(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putString("setting", "notifications_option");
-        firebaseAnalytics.logEvent("used_setting", bundle);
-
         Intent intent = new Intent();
         intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
         //for Android 5-7
@@ -392,13 +358,10 @@ public class SettingsActivity extends AppCompatActivity {
         //for Android 8 and above
         intent.putExtra("android.provider.extra.APP_PACKAGE", getPackageName());
         startActivity(intent);
+        firebaseAnalytics.logEvent("setting_notifications", null);
     }
 
     public void pin(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putString("setting", "pin");
-        firebaseAnalytics.logEvent("used_setting", bundle);
-
         if (isMyWalletPro) {
             if (sharedPref.getBoolean("pinEnabled", false)) {
                 new MaterialAlertDialogBuilder(this)
@@ -426,6 +389,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         } else
             purchaseProForThis();
+        firebaseAnalytics.logEvent("setting_pin", null);
     }
 
     public void purchaseProForThis() {
