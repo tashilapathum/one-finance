@@ -1,5 +1,7 @@
 package com.tantalum.onefinance.wallet;
 
+import static android.view.View.VISIBLE;
+
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -101,8 +104,23 @@ public class WalletFragment extends Fragment {
         sharedPref.edit().putInt("reports_week", 0).apply();
         sharedPref.edit().putInt("reports_day", 0).apply();
 
+        ImageView overlay = view.findViewById(R.id.overlay);
         fab = view.findViewById(R.id.fab);
         fab.inflate(R.menu.wallet_fab_menu);
+        fab.setOnChangeListener(new SpeedDialView.OnChangeListener() {
+            @Override
+            public boolean onMainActionSelected() {
+                return false;
+            }
+
+            @Override
+            public void onToggleChanged(boolean isOpen) {
+                float alpha;
+                if (isOpen) alpha = 0.5f;
+                else alpha = 0f;
+                overlay.animate().alpha(alpha).setDuration(300).start();
+            }
+        });
         fab.setOnActionSelectedListener(actionItem -> {
             int transactionType = 0;
             switch (actionItem.getId()) {
@@ -305,7 +323,7 @@ public class WalletFragment extends Fragment {
             tvBalance.setTextColor(getActivity().getResources().getColor(android.R.color.holo_red_light));
             tvCurrency.setTextColor(getActivity().getResources().getColor(android.R.color.holo_red_light));
             if (!sharedPref.getBoolean("negativeEnabled", false)) {
-                imWarning.setVisibility(View.VISIBLE);
+                imWarning.setVisibility(VISIBLE);
                 imWarning.setOnClickListener(view -> new MaterialAlertDialogBuilder(getActivity())
                         .setTitle(R.string.neg_balance)
                         .setMessage(R.string.update_balance_des)

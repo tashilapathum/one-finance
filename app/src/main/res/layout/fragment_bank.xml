@@ -1,111 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/chipGroup"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_toStartOf="@id/accounts"
-        android:animateLayoutChanges="true"
-        android:paddingVertical="4dp"
-        app:selectionRequired="true"
-        app:singleSelection="true">
-        <!--accounts added here-->
-    </com.google.android.material.chip.ChipGroup>
+        android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/accounts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:contentDescription="account manager"
-        android:padding="8dp"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_accounts"
-        android:textAllCaps="false" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/acc_name_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_below="@id/chipGroup"
-        android:orientation="horizontal">
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_toStartOf="@id/accounts"
+                android:animateLayoutChanges="true"
+                android:paddingVertical="4dp"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+                <!--accounts added here-->
+            </com.google.android.material.chip.ChipGroup>
 
-        <TextView
-            android:id="@+id/tv1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed"
-            android:text="@string/main_account"
-            android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textStyle="bold" />
+            <ImageButton
+                android:id="@+id/accounts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="16dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="account manager"
+                android:padding="8dp"
+                android:src="@drawable/ic_accounts"
+                android:textAllCaps="false" />
 
-        <TextView
-            android:id="@+id/accountName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:alpha="0.7"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:focusable="true"
-            android:fontFamily="sans-serif-condensed"
-            android:text="N/A"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/acc_name_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/chipGroup"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
 
-    <LinearLayout
-        android:id="@+id/balance_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_below="@id/acc_name_layout"
-        android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/main_account"
+                    android:textAllCaps="true"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed"
-            android:text="@string/main_balance"
-            android:textAllCaps="true"
-            android:textStyle="bold"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+                <TextView
+                    android:id="@+id/accountName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:alpha="0.7"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="N/A"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/currency"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textColor="@android:color/holo_green_dark"
-            tools:text="$" />
+            <LinearLayout
+                android:id="@+id/balance_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/acc_name_layout"
+                android:layout_marginStart="16dp"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/accountBalance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed"
-            android:text="@string/_0_00"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textColor="@android:color/holo_green_dark" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tv2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/main_balance"
+                    android:textAllCaps="true"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textStyle="bold" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/balance_layout"
-        android:padding="16dp"
-        android:layoutAnimation="@anim/cascade_anim"/>
+                <TextView
+                    android:id="@+id/currency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@android:color/holo_green_dark"
+                    tools:text="$" />
+
+                <TextView
+                    android:id="@+id/accountBalance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/_0_00"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@android:color/holo_green_dark" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/balance_layout"
+                android:layoutAnimation="@anim/cascade_anim"
+                android:padding="16dp" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBlack"
+            android:visibility="gone"
+            android:alpha="0"/>
+    </FrameLayout>
 
     <com.leinardi.android.speeddial.SpeedDialView
         android:id="@+id/fab"
@@ -115,7 +133,7 @@
         android:layout_alignParentBottom="true"
         app:sdMainFabAnimationRotateAngle="180"
         app:sdMainFabClosedSrc="@drawable/ic_up"
-        app:sdUseReverseAnimationOnClose="true"/>
+        app:sdUseReverseAnimationOnClose="true" />
 
     <LinearLayout
         android:id="@+id/placeholder_layout"
@@ -144,12 +162,12 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/addAccount"
+            style="@style/Widget.Material3.Button.TonalButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/add_account"
             android:layout_marginVertical="8dp"
             android:drawableStart="@drawable/ic_add"
-            style="@style/Widget.Material3.Button.TonalButton"/>
+            android:text="@string/add_account" />
 
     </LinearLayout>
 

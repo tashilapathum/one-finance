@@ -6,96 +6,113 @@
     android:layout_height="match_parent"
     android:transitionGroup="true">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/balance_strip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="-24dp"
-        app:cardCornerRadius="48dp"
-        app:cardElevation="4dp"
-        app:strokeWidth="0dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginVertical="8dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/txtBalance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginTop="2dp"
-                android:src="@drawable/ic_balance" />
-
-            <TextView
-                android:id="@+id/currency"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/quicksand_medium"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                android:textColor="@android:color/holo_green_dark"
-                tools:text="$" />
-
-            <com.robinhood.ticker.TickerView
-                android:id="@+id/balance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:fontFamily="@font/quicksand_medium"
-                android:gravity="start"
-                android:text="@string/_0_00"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-                android:textColor="@android:color/holo_green_dark"
-                app:ticker_animationDuration="1000" />
-
-            <ImageButton
-                android:id="@+id/warning"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:background="?android:selectableItemBackgroundBorderless"
-                android:contentDescription="negative balance warning"
-                android:src="@drawable/ic_warning"
-                android:visibility="gone" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <androidx.core.widget.NestedScrollView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/balance_strip"
-        android:layout_marginHorizontal="16dp">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/content_container"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/balance_strip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="-24dp"
+                app:cardCornerRadius="48dp"
+                app:cardElevation="4dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="32dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/txtBalance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+                        android:layout_marginTop="2dp"
+                        android:src="@drawable/ic_balance" />
+
+                    <TextView
+                        android:id="@+id/currency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                        android:textColor="@android:color/holo_green_dark"
+                        tools:text="$" />
+
+                    <com.robinhood.ticker.TickerView
+                        android:id="@+id/balance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:fontFamily="@font/quicksand_medium"
+                        android:gravity="start"
+                        android:text="@string/_0_00"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+                        android:textColor="@android:color/holo_green_dark"
+                        app:ticker_animationDuration="1000" />
+
+                    <ImageButton
+                        android:id="@+id/warning"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:background="?android:selectableItemBackgroundBorderless"
+                        android:contentDescription="negative balance warning"
+                        android:src="@drawable/ic_warning"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/balance_strip"
+                android:layout_marginHorizontal="16dp">
+
+                <LinearLayout
+                    android:id="@+id/content_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/quickChipGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="8dp"
+                        android:animateLayoutChanges="true"
+                        android:clipToPadding="false"
+                        android:padding="6dp"
+                        app:chipSpacingVertical="0dp">
+                        <!--quick list items are added here-->
+                    </com.google.android.material.chip.ChipGroup>
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:animateLayoutChanges="true">
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/quickChipGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
-                app:chipSpacingVertical="0dp"
-                android:padding="6dp"
-                android:clipToPadding="false"
-                android:animateLayoutChanges="true">
-                <!--quick list items are added here-->
-            </com.google.android.material.chip.ChipGroup>
-
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+            android:background="@color/colorBlack"
+            android:alpha="0"/>
+    </FrameLayout>
 
     <com.leinardi.android.speeddial.SpeedDialView
         android:id="@+id/fab"

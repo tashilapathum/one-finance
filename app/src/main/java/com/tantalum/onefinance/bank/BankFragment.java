@@ -1,5 +1,7 @@
 package com.tantalum.onefinance.bank;
 
+import static android.view.View.VISIBLE;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -76,7 +79,7 @@ public class BankFragment extends Fragment implements DialogInterface.OnDismissL
     }
 
     private void showPlaceholder() {
-        view.findViewById(R.id.placeholder_layout).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.placeholder_layout).setVisibility(VISIBLE);
         view.findViewById(R.id.addAccount).setOnClickListener(view -> showNewAccount());
         fab.setOnClickListener(view -> showNoAccount() );
     }
@@ -154,6 +157,22 @@ public class BankFragment extends Fragment implements DialogInterface.OnDismissL
     }
 
     private void setupFab() {
+        ImageView overlay = view.findViewById(R.id.overlay);
+        fab.setOnChangeListener(new SpeedDialView.OnChangeListener() {
+            @Override
+            public boolean onMainActionSelected() {
+                return false;
+            }
+
+            @Override
+            public void onToggleChanged(boolean isOpen) {
+                overlay.setVisibility(VISIBLE);
+                float alpha;
+                if (isOpen) alpha = 0.5f;
+                else alpha = 0f;
+                overlay.animate().alpha(alpha).setDuration(300).start();
+            }
+        });
         fab.inflate(R.menu.bank_fab_menu);
         fab.setOnActionSelectedListener(actionItem -> {
             int transactionType = 0;
