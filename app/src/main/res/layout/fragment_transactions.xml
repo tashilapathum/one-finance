@@ -33,7 +33,10 @@
                 android:hint="@string/search"
                 android:importantForAutofill="no"
                 android:inputType="textCapSentences"
-                android:textColorHint="@color/colorDivider" />
+                android:textColorHint="@color/colorDivider"
+                android:drawableStart="@drawable/ic_search"
+                android:drawableTint="@color/colorDivider"
+                android:drawablePadding="16dp"/>
 
             <ImageButton
                 android:id="@+id/toggleFilters"
