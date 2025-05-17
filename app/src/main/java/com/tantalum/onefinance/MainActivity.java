@@ -25,6 +25,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -468,9 +469,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.tantalum.onefinance"));
                         startActivity(intent);
                     })
-                    .setNegativeButton("Later", (dialogInterface, i) -> sharedPref.edit().putInt("actionCount", 1).apply())
+                    .setNegativeButton("Later", (dialogInterface, i) -> sharedPref.edit().putInt("actionCount", actionCount+1).apply())
                     .setNeutralButton("Never", (dialogInterface, i) -> sharedPref.edit().putBoolean("alreadyRated", true).apply())
-                    .setOnDismissListener(dialogInterface -> sharedPref.edit().putInt("actionCount", 0).apply())
+                    .setOnDismissListener(dialogInterface -> sharedPref.edit().putInt("actionCount", actionCount+1).apply())
                     .show();
         }
     }
