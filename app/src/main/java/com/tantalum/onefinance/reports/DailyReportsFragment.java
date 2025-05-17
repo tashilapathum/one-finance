@@ -70,6 +70,7 @@ public class DailyReportsFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new DailyReportsAdapter(isFromWallet);
+        recyclerView.setItemAnimator(null);
         recyclerView.setLayoutAnimation(new AnimationHandler().getSlideUpController());
         recyclerView.setAdapter(adapter);
 
@@ -212,6 +213,14 @@ public class DailyReportsFragment extends Fragment {
         adapter.notifyItemInserted(adapter.getItemCount() + 1);
     }
 
+    public void showUpdatedReports() {
+        dailyReportList = new ArrayList<>();
+        adapter.submitList(dailyReportList);
+        day = LocalDate.now().getDayOfYear();
+        pickedYear = LocalDate.now().getYear();
+        calculateDailyReport(day);
+    }
+
     static class DailyReport {
         final private String date;
         final private String income;
@@ -271,20 +280,5 @@ public class DailyReportsFragment extends Fragment {
         public String getExpensesDiff() {
             return expensesDiff;
         }
-    }
-
-    public void purchaseProForThis() {
-        new MaterialAlertDialogBuilder(getActivity())
-                .setTitle(R.string.pro_feature)
-                .setMessage(R.string.buy_the_pro_version_to_see_more_into_the_history)
-                .setPositiveButton(R.string.buy, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(getActivity(), UpgradeToProActivity.class);
-                        startActivity(intent);
-                    }
-                })
-                .setNegativeButton(R.string.cancel, null)
-                .show();
     }
 }

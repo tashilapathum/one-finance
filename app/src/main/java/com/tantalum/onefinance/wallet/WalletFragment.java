@@ -243,8 +243,13 @@ public class WalletFragment extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putBoolean("fromWallet", true);
             fragment.setArguments(bundle);
-            getActivity().getSupportFragmentManager().beginTransaction().add(containerId, fragment, fragmentTag).commit();
+            getChildFragmentManager().beginTransaction().add(containerId, fragment, fragmentTag).commit();
         }
+    }
+
+    private void updateContent() {
+        DailyReportsFragment dailyReportsFragment = ((DailyReportsFragment) getChildFragmentManager().findFragmentByTag("TODAY_REPORT"));
+        dailyReportsFragment.showUpdatedReports();
     }
 
     private void loadQuickChips() {
@@ -312,6 +317,7 @@ public class WalletFragment extends Fragment {
         tvBalance.setText(balance);
 
         showNegativeWarning();
+        updateContent();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             requestNotificationPermission();
     }
