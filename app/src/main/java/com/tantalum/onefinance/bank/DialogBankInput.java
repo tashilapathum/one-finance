@@ -162,17 +162,14 @@ public class DialogBankInput extends BottomSheetDialogFragment {
                 chip.setCheckable(true);
                 chip.setCheckedIconVisible(true);
                 chip.setChipStrokeWidth(0f);
-                chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        chip.setChecked(isChecked);
-                        if (isChecked) {
-                            chip.setChipBackgroundColorResource(R.color.colorSelectedChip);
-                            chip.setTextColor(getResources().getColor(R.color.colorWhite));
-                        } else {
-                            chip.setChipBackgroundColorResource(R.color.colorDeselectedChip);
-                            chip.setTextColor(getResources().getColor(R.color.colorBlack));
-                        }
+                chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    chip.setChecked(isChecked);
+                    if (isChecked) {
+                        chip.setChipBackgroundColorResource(R.color.colorSelectedChip);
+                        chip.setTextColor(getResources().getColor(R.color.colorWhite));
+                    } else {
+                        chip.setChipBackgroundColorResource(R.color.colorDeselectedChip);
+                        chip.setTextColor(getResources().getColor(R.color.colorBlack));
                     }
                 });
                 chipGroup.addView(chip);

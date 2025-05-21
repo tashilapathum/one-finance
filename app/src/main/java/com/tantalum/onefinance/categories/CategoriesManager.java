@@ -67,6 +67,7 @@ public class CategoriesManager {
             chip.setChipBackgroundColor(ColorStateList.valueOf(Integer.parseInt(categoryItem.split("###")[1])));
             chip.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_Medium);
             chip.setCheckable(true);
+            chip.setChipStrokeWidth(0f);
             chip.setCheckedIconVisible(true);
             chip.setOnCheckedChangeListener((buttonView, isChecked) -> chip.setChecked(isChecked));
             categories.add(chip);

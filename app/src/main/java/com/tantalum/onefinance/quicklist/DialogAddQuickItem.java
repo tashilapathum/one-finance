@@ -140,17 +140,9 @@ public class DialogAddQuickItem extends DialogFragment {
     }
 
     public void loadCategoryChips() {
-        List<String> categories = new CategoriesManager(requireActivity()).getCategoryItems();
+        List<Chip> categories = new CategoriesManager(requireActivity()).getCategoryChips();
         chipGroup = view.findViewById(R.id.chipGroup);
-        for (String categoryItem : categories) {
-            Chip chip = new Chip(getActivity());
-            chip.setText(categoryItem.split("###")[0]);
-            chip.setChipBackgroundColor(ColorStateList.valueOf(Integer.parseInt(categoryItem.split("###")[1])));
-            chip.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_Medium);
-            chip.setCheckable(true);
-            chip.setChipStrokeWidth(0f);
-            chip.setCheckedIconVisible(true);
-            chip.setOnCheckedChangeListener((buttonView, isChecked) -> chip.setChecked(isChecked));
+        for (Chip chip : categories) {
             chipGroup.addView(chip);
         }
     }
