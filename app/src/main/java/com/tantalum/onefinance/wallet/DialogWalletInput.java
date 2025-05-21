@@ -168,97 +168,90 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
     }
 
     private void addTransaction() {
-        if (isAmountValid() && isDescriptionValid()) {
-            String balance = sharedPref.getString(Constants.SP_BALANCE, "0.00");
-            String prefix = "";
-            String amount = etAmount.getText().toString().replace(",", "."); //comma decimal place countries fix
-            String description = etDescription.getText().toString();
-            String date;
-            if (timeInMillis != null)
-                date = timeInMillis;
-            else
-                date = String.valueOf(System.currentTimeMillis());
-            String category = null;
-            double newBalance = 0;
-            boolean showNegativeWarning = false;
+        if (!isAmountValid() || !isDescriptionValid()) return;
 
-            switch (transactionType) {
-                case Constants.INCOME: {
-                    prefix = "+";
-                    category = getString(R.string.income);
-                    newBalance = Double.parseDouble(balance) + Double.parseDouble(amount);
-                    break;
+        String balanceStr = Amount.getStoredBalance(getActivity());
+        Amount balance = new Amount(getActivity(), balanceStr);
+        String prefix = "";
+        String amountInput = etAmount.getText().toString().replace(",", ".");
+        Amount amount = new Amount(getActivity(), amountInput);
+        String description = etDescription.getText().toString();
+        String date = (timeInMillis != null) ? timeInMillis : String.valueOf(System.currentTimeMillis());
+        String category;
+        Amount newBalance;
+        boolean showNegativeWarning = false;
+
+        switch (transactionType) {
+            case Constants.INCOME:
+                prefix = "+";
+                category = getString(R.string.income);
+                newBalance = new Amount(getActivity(), balance.getAmountValue() + amount.getAmountValue());
+                break;
+
+            case Constants.EXPENSE:
+                prefix = "-";
+                if (!chipGroup.getCheckedChipIds().isEmpty()) {
+                    Chip catChip = chipGroup.findViewById(chipGroup.getCheckedChipId());
+                    category = catChip.getText().toString()
+                            + "###"
+                            + catChip.getChipBackgroundColor().getDefaultColor();
+                } else {
+                    category = getString(R.string.uncategorized);
                 }
-                case Constants.EXPENSE: {
-                    prefix = "-";
-                    //category
-                    if (!chipGroup.getCheckedChipIds().isEmpty()) {
-                        Chip catChip = chipGroup.findViewById(chipGroup.getCheckedChipId());
-                        category = catChip.getText().toString()
-                                + "###"
-                                + catChip.getChipBackgroundColor().getDefaultColor();
+                newBalance = new Amount(getActivity(), balance.getAmountValue() - amount.getAmountValue());
+                if (newBalance.getAmountValue() < 0 && !sharedPref.getBoolean("negativeEnabled", false)) {
+                    showNegativeWarning = true;
+                }
+                break;
+
+            case Constants.TRANSFER:
+                Chip accChip = chipGroup.findViewById(chipGroup.getCheckedChipId());
+                Account selectedAccount = null;
+                for (Account account : accountList) {
+                    if (accChip.getText().equals(account.getAccName())) {
+                        selectedAccount = account;
+                        break;
                     }
-                    else {
-                        Chip chip = new Chip(getActivity());
-                        category = getString(R.string.uncategorized);
-                    }
-                    //balance
-                    newBalance = Double.parseDouble(balance) - Double.parseDouble(amount);
-                    if (newBalance < 0)
-                        if (!sharedPref.getBoolean("negativeEnabled", false))
-                            showNegativeWarning = true;
-                    break;
                 }
-                case Constants.TRANSFER: {
-                    Chip accChip = chipGroup.findViewById(chipGroup.getCheckedChipId());
-                    //find selected account
-                    Account selectedAccount = null;
-                    for (Account account : accountList)
-                        if (accChip.getText().equals(account.getAccName()))
-                            selectedAccount = account;
 
-                    description = getString(R.string.deposit_from_wallet_to) + selectedAccount.getAccName();
+                description = getString(R.string.deposit_from_wallet_to) + selectedAccount.getAccName();
+                category = getString(R.string.acc_transfer);
 
-                    category = getString(R.string.acc_transfer);
+                double finalBalance = Double.parseDouble(selectedAccount.getAccBalance()) + amount.getAmountValue();
+                selectedAccount.setAccBalance(String.valueOf(finalBalance));
+                accountsViewModel.update(selectedAccount);
 
-                    //update balance
-                    double finalBalance = Double.parseDouble(selectedAccount.getAccBalance()) + Double.parseDouble(amount);
-                    selectedAccount.setAccBalance(String.valueOf(finalBalance));
-                    accountsViewModel.update(selectedAccount);
+                List<String> accHistory = selectedAccount.getActivities();
+                String activity;
+                if (sinhala)
+                    activity = amount.getAmountString() + "ක් තැන්පත් කරන ලදී" + "###" + date;
+                else
+                    activity = "Deposited " + amount.getAmountString() + "###" + date;
+                accHistory.add(0, activity);
+                selectedAccount.setActivities(accHistory);
 
-                    //update transaction
-                    List<String> accHistory = selectedAccount.getActivities();
-                    String activity;
-                    if (sinhala)
-                        activity = new Amount(getActivity(), amount).getAmountString() + "ක් තැන්පත් කරන ලදී" + "###" + date;
-                    else
-                        activity = "Deposited " + new Amount(getActivity(), amount).getAmountString() + "###" + date;
-                    accHistory.add(0, activity);
-                    selectedAccount.setActivities(accHistory);
+                newBalance = new Amount(getActivity(), balance.getAmountValue() - amount.getAmountValue());
+                break;
 
-                    newBalance = Double.parseDouble(balance) - Double.parseDouble(amount);
-
-                    break;
-                }
-            }
-
-            if (showNegativeWarning)
-                Toast.makeText(getActivity(), getResources().getString(R.string.spend_more_than_have), Toast.LENGTH_LONG).show();
-            else {
-                //add transaction
-                TransactionItem transactionItem = new TransactionItem(balance, prefix, amount, description, date, category);
-                TransactionsViewModel transactionsViewModel = new ViewModelProvider(this, ViewModelProvider
-                        .AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(TransactionsViewModel.class);
-                transactionsViewModel.insert(transactionItem);
-
-                //show
-                Toast.makeText(getActivity(), R.string.added, Toast.LENGTH_SHORT).show();
-                WalletFragment.getInstance().setNewBalance(String.valueOf(newBalance));
-                dialog.dismiss();
-            }
-
+            default:
+                // handle other cases if any
+                return;
         }
+
+        if (showNegativeWarning) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.spend_more_than_have), Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        TransactionItem transactionItem = new TransactionItem(balanceStr, prefix, amountInput, description, date, category);
+        TransactionsViewModel transactionsViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(TransactionsViewModel.class);
+        transactionsViewModel.insert(transactionItem);
+
+        Toast.makeText(getActivity(), R.string.added, Toast.LENGTH_SHORT).show();
+        WalletFragment.getInstance().setNewBalance(String.valueOf(newBalance.getAmountValue()));
+        dialog.dismiss();
     }
+
 
     private boolean isAmountValid() {
         if (etAmount.getText().toString().isEmpty()) {

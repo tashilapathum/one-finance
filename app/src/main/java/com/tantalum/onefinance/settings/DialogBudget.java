@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.tantalum.onefinance.Amount;
 import com.tantalum.onefinance.R;
 
 import androidx.annotation.NonNull;
@@ -55,7 +56,7 @@ public class DialogBudget extends DialogFragment {
         if (!monthlyBudget.isEmpty())
             sharedPref.edit().putString("monthlyBudget", monthlyBudget).apply();
         else
-            sharedPref.edit().putString("monthlyBudget", "0.00").apply();
+            sharedPref.edit().putString("monthlyBudget", Amount.zero()).apply();
 
         Toast.makeText(getActivity(), R.string.saved, Toast.LENGTH_SHORT).show();
     }

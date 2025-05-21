@@ -12,6 +12,7 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
+import com.tantalum.onefinance.Amount;
 import com.tantalum.onefinance.Constants;
 import com.tantalum.onefinance.R;
 
@@ -110,10 +111,9 @@ public class DialogAddQuickItem extends DialogFragment {
             category = getString(R.string.uncategorized) + "###" + chip.getChipBackgroundColor().getDefaultColor();
         }
 
-        DecimalFormat df = new DecimalFormat("#.00");
         if (validateItem() & validatePrice()) {
             dialog.dismiss();
-            price = df.format(Double.parseDouble(price));
+            price = new Amount(requireActivity(), price).getAmountString();
             QuickItem quickItem = new QuickItem(item, price, category);
             if (bundle == null)
                 ((QuickListActivity) getActivity()).addItemNEW(quickItem);

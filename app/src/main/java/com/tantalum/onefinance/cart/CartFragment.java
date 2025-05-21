@@ -17,6 +17,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.transition.MaterialSharedAxis;
+import com.tantalum.onefinance.Amount;
 import com.tantalum.onefinance.R;
 import com.tantalum.onefinance.pro.UpgradeHandler;
 
@@ -195,7 +196,7 @@ public class CartFragment extends Fragment {
                     cartViewModel.deleteAllCartItems();
                     showTotal(0);
                     total = 0;
-                    sharedPref.edit().putString("cartTotal", "0.00").apply();
+                    sharedPref.edit().putString("cartTotal", Amount.zero()).apply();
                 })
                 .setNegativeButton(R.string.no, null)
                 .show();
@@ -213,7 +214,7 @@ public class CartFragment extends Fragment {
         DecimalFormat df = new DecimalFormat("#.00");
         String totalStr = df.format(total);
         if (total == 0)
-            totalStr = "0.00";
+            totalStr = Amount.zero();
         tvTotal.setText(currency + totalStr);
     }
 
@@ -222,7 +223,7 @@ public class CartFragment extends Fragment {
         if (!total.isEmpty())
             showTotal(Double.parseDouble(total));
         else
-            tvTotal.setText(currency + "0.00");
+            tvTotal.setText(currency + Amount.zero());
     }
 
     private String getItemTotal(String itemPrice, int intQuantity) {
@@ -230,8 +231,8 @@ public class CartFragment extends Fragment {
         double itemTotal = price * (double) intQuantity;
         DecimalFormat df = new DecimalFormat("#.00");
         String itemTotalStr = df.format(itemTotal);
-        if (itemPrice.equals("0.00"))
-            itemTotalStr = "0.00";
+        if (itemPrice.equals(Amount.zero()))
+            itemTotalStr = Amount.zero();
         return currency + itemTotalStr;
     }
 

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.tantalum.onefinance.Amount;
 import com.tantalum.onefinance.R;
 
 import java.text.DecimalFormat;
@@ -31,20 +32,15 @@ public class DialogUpdateBalance extends DialogFragment {
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_update_balance, null);
         sharedPref = context.getSharedPreferences("myPref", Context.MODE_PRIVATE);
         final EditText etBalance = view.findViewById(R.id.editBalance);
-        etBalance.setText(sharedPref.getString("balance", "0.00"));
+        etBalance.setText(sharedPref.getString("balance", Amount.zero()));
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
         builder.setView(view)
                 .setTitle(R.string.edit_balance)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        newBalance = etBalance.getText().toString().replace(",", ".");
-                        Log.i(TAG, "newBalance.isEmpty(): " + newBalance.isEmpty());
-                        if (!newBalance.isEmpty()) {
-                            DecimalFormat df = new DecimalFormat("#.00");
-                            newBalance = df.format(Double.parseDouble(newBalance));
-                            WalletFragment.getInstance().setNewBalance(newBalance);
-                        }
+                .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
+                    newBalance = etBalance.getText().toString();
+                    if (!newBalance.isEmpty()) {
+                        Amount amount = new Amount(context, newBalance);
+                        WalletFragment.getInstance().setNewBalance(amount.getFormattedAmountString());
                     }
                 })
                 .setNegativeButton(R.string.cancel, null);

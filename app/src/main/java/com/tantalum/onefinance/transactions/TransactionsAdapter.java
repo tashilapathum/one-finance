@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
+import com.tantalum.onefinance.Amount;
 import com.tantalum.onefinance.DateTimeHandler;
 import com.tantalum.onefinance.R;
 
@@ -55,7 +56,8 @@ public class TransactionsAdapter extends ListAdapter<TransactionItem, Transactio
     public void onBindViewHolder(@NonNull TransactionsViewHolder holder, int position) {
         TransactionItem currentItem = getItem(position);
         //amount
-        holder.mAmount.setText(currentItem.getPrefix() + currency + currentItem.getAmount());
+        Amount amount = new Amount(context, currentItem.getAmount());
+        holder.mAmount.setText(currentItem.getPrefix() + amount.getAmountString());
         if (currentItem.getPrefix().equals("+"))
             holder.mAmount.setTextColor(context.getResources().getColor(android.R.color.holo_green_dark));
         else

@@ -181,139 +181,119 @@ public class DialogBankInput extends BottomSheetDialogFragment {
     }
 
     private void addTransaction() {
-        if (isAmountValid() && isDescriptionValid() && isAccountSelectionValid()) {
-            String selectedAccBalance = selectedAccount.getAccBalance();
-            String prefix = "";
-            String amount = new Amount(
-                    getActivity(), etAmount.getText().toString().replace(",", ".")
-            ).getAmountStringWithoutCurrency(); //comma decimal place countries fix
-            String description = etDescription.getText().toString();
-            String activity = null;
-            String date;
-            if (timeInMillis != null)
-                date = timeInMillis;
-            else
-                date = String.valueOf(System.currentTimeMillis());
-            String category = null;
-            double newBalance = 0;
+        if (!isAmountValid() || !isDescriptionValid() || !isAccountSelectionValid()) return;
 
-            switch (transactionType) {
-                case Constants.DEPOSIT: {
-                    newBalance = Double.parseDouble(selectedAccBalance) + Double.parseDouble(amount);
+        Amount amountObj = new Amount(requireContext(), etAmount.getText().toString());
+        double amountValue = amountObj.getAmountValue();
+        String amountStr = amountObj.getAmountString();
+        String plainAmountStr = amountObj.getAmountStringWithoutCurrency();
 
-                    if (description.isEmpty())
-                    activity = getString(R.string.deposit_prefix)
-                            + currency + amount
-                            + getString(R.string.deposit_mid)
-                            + selectedAccount.getAccName()
-                            + getString(R.string.deposit_suffix);
-                    else
-                        activity = description + " (" + currency + amount + " " + getString(R.string.deposit) + ") " ;
-                    break;
+        String selectedAccBalance = selectedAccount.getAccBalance();
+        String description = etDescription.getText().toString();
+        String date = (timeInMillis != null) ? timeInMillis : String.valueOf(System.currentTimeMillis());
+
+        double newBalance = 0;
+        String activity = null;
+        String category = null;
+
+        switch (transactionType) {
+            case Constants.DEPOSIT: {
+                newBalance = Double.parseDouble(selectedAccBalance) + amountValue;
+                activity = description.isEmpty()
+                        ? getString(R.string.deposit_prefix) + amountStr +
+                        getString(R.string.deposit_mid) + selectedAccount.getAccName() +
+                        getString(R.string.deposit_suffix)
+                        : description + " (" + amountStr + " " + getString(R.string.deposit) + ")";
+                break;
+            }
+
+            case Constants.WITHDRAWAL: {
+                newBalance = Double.parseDouble(selectedAccBalance) - amountValue;
+
+                double currentWalletBalance = Double.parseDouble(sharedPref.getString("balance", Amount.zero()));
+                String newWalletBalance = String.valueOf(currentWalletBalance + amountValue);
+                sharedPref.edit().putString("balance", newWalletBalance).apply();
+
+                category = getString(R.string.withdrawal);
+                activity = getString(R.string.withdraw_prefix) + amountStr +
+                        getString(R.string.withdraw_mid) + selectedAccount.getAccName() +
+                        getString(R.string.withdraw_suffix);
+                break;
+            }
+
+            case Constants.PAYMENT: {
+                newBalance = Double.parseDouble(selectedAccBalance) - amountValue;
+
+                if (!chipGroup.getCheckedChipIds().isEmpty()) {
+                    Chip catChip = chipGroup.findViewById(chipGroup.getCheckedChipId());
+                    category = catChip.getText().toString() + "###" +
+                            catChip.getChipBackgroundColor().getDefaultColor();
+                } else {
+                    Chip chip = new Chip(requireContext());
+                    category = getString(R.string.uncategorized) + "###" +
+                            chip.getChipBackgroundColor().getDefaultColor();
                 }
-                case Constants.WITHDRAWAL: {
-                    newBalance = Double.parseDouble(selectedAccBalance) - Double.parseDouble(amount);
 
-                    //update wallet balance
-                    double currentBalance = Double.parseDouble(sharedPref.getString("balance", "0.00"));
-                    String newWalletBalance = String.valueOf(currentBalance + Double.parseDouble(amount));
-                    sharedPref.edit().putString("balance", newWalletBalance).apply();
+                activity = description + " (" + amountStr + getString(R.string.payment) + ")";
+                break;
+            }
 
-                    category = getString(R.string.withdrawal);
+            case Constants.TRANSFER: {
+                newBalance = Double.parseDouble(selectedAccBalance) - amountValue;
 
-                    activity = getString(R.string.withdraw_prefix)
-                            + currency + amount
-                            + getString(R.string.withdraw_mid)
-                            + selectedAccount.getAccName()
-                            + getString(R.string.withdraw_suffix);
-                    break;
-                }
-                case Constants.PAYMENT: {
-                    newBalance = Double.parseDouble(selectedAccBalance) - Double.parseDouble(amount);
-
-                    //category
-                    if (!chipGroup.getCheckedChipIds().isEmpty()) {
-                        Chip catChip = chipGroup.findViewById(chipGroup.getCheckedChipId());
-                        category = catChip.getText().toString()
-                                + "###"
-                                + catChip.getChipBackgroundColor().getDefaultColor();
-                    } else {
-                        Chip chip = new Chip(getActivity());
-                        category = getString(R.string.uncategorized) + "###" + chip.getChipBackgroundColor().getDefaultColor();
+                Chip accChip = chipGroup.findViewById(chipGroup.getCheckedChipId());
+                Account transferringAccount = null;
+                for (Account account : accountList) {
+                    if (accChip.getText().equals(account.getAccName())) {
+                        transferringAccount = account;
+                        break;
                     }
-
-                    activity = description + " (" + currency + amount + getString(R.string.payment) + ")";
-                    break;
                 }
-                case Constants.TRANSFER: {
-                    newBalance = Double.parseDouble(selectedAccBalance) - Double.parseDouble(amount);
 
-                    //find transferring account
-                    Chip accChip = chipGroup.findViewById(chipGroup.getCheckedChipId());
-                    Account transferringAccount = null;
-                    for (Account account : accountList)
-                        if (accChip.getText().equals(account.getAccName()))
-                            transferringAccount = account;
-
-                    //update balance
-                    double transferringAccBalance = Double.parseDouble(transferringAccount.getAccBalance()) + Double.parseDouble(amount);
+                if (transferringAccount != null) {
+                    double transferringAccBalance = Double.parseDouble(transferringAccount.getAccBalance()) + amountValue;
                     transferringAccount.setAccBalance(String.valueOf(transferringAccBalance));
 
-                    //add activity
                     List<String> accHistory = transferringAccount.getActivities();
-                    String transferringAccActivity;
-                    transferringAccActivity =
-                            getString(R.string.transfer_from_prefix)
-                                    + currency + amount
-                                    + getString(R.string.transfer_from_mid)
-                                    + selectedAccount.getAccName()
-                                    + getString(R.string.transfer_from_suffix)
-                                    + "###" + date;
-                    accHistory.add(0, transferringAccActivity);
+                    String transferringActivity = getString(R.string.transfer_from_prefix) + amountStr +
+                            getString(R.string.transfer_from_mid) + selectedAccount.getAccName() +
+                            getString(R.string.transfer_from_suffix) + "###" + date;
+                    accHistory.add(0, transferringActivity);
                     transferringAccount.setActivities(accHistory);
 
-                    //add to balance history
                     List<String> balanceHistory = transferringAccount.getBalanceHistory();
                     balanceHistory.add(String.valueOf(newBalance));
                     transferringAccount.setBalanceHistory(balanceHistory);
 
                     accountsViewModel.update(transferringAccount);
 
-                    activity = getString(R.string.transfer_to_prefix)
-                            + currency + amount
-                            + getString(R.string.transfer_to_mid)
-                            + transferringAccount.getAccName()
-                            + getString(R.string.transfer_to_suffix);
-                    break;
+                    activity = getString(R.string.transfer_to_prefix) + amountStr +
+                            getString(R.string.transfer_to_mid) + transferringAccount.getAccName() +
+                            getString(R.string.transfer_to_suffix);
                 }
+                break;
             }
-
-            //add transaction
-            if (transactionType == Constants.PAYMENT) {
-                TransactionItem transactionItem = new TransactionItem(selectedAccBalance, prefix, amount, description, date, category);
-                TransactionsViewModel transactionsViewModel = new ViewModelProvider(this, ViewModelProvider
-                        .AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(TransactionsViewModel.class);
-                transactionsViewModel.insert(transactionItem);
-            }
-
-            //save
-            //balance
-            selectedAccount.setAccBalance(String.valueOf(newBalance));
-            //activities
-            List<String> selectedAccActivities = selectedAccount.getActivities();
-            selectedAccActivities.add(0, activity + "###" + date);
-            selectedAccount.setActivities(selectedAccActivities);
-            //balance history
-            List<String> balanceHistory = selectedAccount.getBalanceHistory();
-            balanceHistory.add(String.valueOf(newBalance));
-            selectedAccount.setBalanceHistory(balanceHistory);
-            //update
-            accountsViewModel.update(selectedAccount);
-
-            //show
-            Toast.makeText(getActivity(), R.string.updated, Toast.LENGTH_SHORT).show();
-            dialog.dismiss();
         }
+
+        // Insert transaction if payment
+        if (transactionType == Constants.PAYMENT) {
+            TransactionItem transactionItem = new TransactionItem(
+                    selectedAccBalance, "", plainAmountStr, description, date, category
+            );
+            new ViewModelProvider(this,
+                    ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
+                    .get(TransactionsViewModel.class)
+                    .insert(transactionItem);
+        }
+
+        // Save updates to selected account
+        selectedAccount.setAccBalance(String.valueOf(newBalance));
+        selectedAccount.getActivities().add(0, activity + "###" + date);
+        selectedAccount.getBalanceHistory().add(String.valueOf(newBalance));
+        accountsViewModel.update(selectedAccount);
+
+        Toast.makeText(requireContext(), R.string.updated, Toast.LENGTH_SHORT).show();
+        dialog.dismiss();
     }
 
     public void loadCategoryChips() {

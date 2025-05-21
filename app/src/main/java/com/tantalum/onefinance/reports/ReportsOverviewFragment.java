@@ -19,6 +19,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.tantalum.onefinance.Amount;
 import com.tantalum.onefinance.DateTimeHandler;
 import com.tantalum.onefinance.R;
 import com.tantalum.onefinance.transactions.TransactionItem;
@@ -196,7 +197,7 @@ public class ReportsOverviewFragment extends Fragment {
         String currency = sharedPref.getString("currency", "");
         DecimalFormat df = new DecimalFormat("#.00");
         if (value == 0)
-            textView.append(currency + "0.00");
+            textView.append(currency + Amount.zero());
         else
             textView.append(currency + df.format(value));
     }

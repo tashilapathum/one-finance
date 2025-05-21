@@ -16,6 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.tantalum.onefinance.Amount;
 import com.tantalum.onefinance.DatePickerFragment;
 import com.tantalum.onefinance.DateTimeHandler;
 import com.tantalum.onefinance.R;
@@ -126,13 +127,12 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
     }
 
     private void save() {
-        DecimalFormat df = new DecimalFormat("#.00");
         if (validateAmount() & validateDescription()) {
             String oldAmountStr = transactionItem.getAmount();
             String newAmountStr = etAmount.getText().toString().replace(",", ".");
             String description = etDescription.getText().toString().trim();
             String category = etCategory.getText().toString();
-            transactionItem.setAmount(df.format(Double.parseDouble(newAmountStr)));
+            transactionItem.setAmount(new Amount(requireActivity(), newAmountStr).getAmountString());
             transactionItem.setDescription(description);
             transactionItem.setCategory(category);
 
@@ -159,9 +159,7 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
                 else
                     balance = balance + (oldAmount - newAmount);
             }
-
-            String newBalance = df.format(balance);
-            sharedPref.edit().putString("balance", newBalance).apply();
+            Amount.storeBalance(requireActivity(), String.valueOf(balance));
 
             //save changes
             TransactionsFragment.getInstance().updateTransaction(transactionItem);

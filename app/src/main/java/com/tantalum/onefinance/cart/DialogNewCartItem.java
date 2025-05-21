@@ -12,6 +12,7 @@ import android.widget.EditText;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.tantalum.onefinance.Amount;
 import com.tantalum.onefinance.R;
 
 import androidx.annotation.NonNull;
@@ -65,7 +66,7 @@ public class DialogNewCartItem extends BottomSheetDialogFragment {
         if (!strQuantity.isEmpty())
             quantity = Integer.parseInt(strQuantity);
         if (itemPrice.isEmpty())
-            itemPrice = "0.00";
+            itemPrice = Amount.zero();
         if (!itemName.isEmpty()) {
             CartFragment.getInstance().addItem(itemName, itemPrice, quantity);
         }
@@ -98,7 +99,7 @@ public class DialogNewCartItem extends BottomSheetDialogFragment {
         else
             newQuantity = 1;
         if (newItemPrice.isEmpty())
-            newItemPrice = "0.00";
+            newItemPrice = Amount.zero();
         if (!itemName.isEmpty()) {
             CartFragment.getInstance().updateItem(dbID, itemName, oldItemPrice, newItemPrice, oldQuantity, newQuantity, isChecked);
         }

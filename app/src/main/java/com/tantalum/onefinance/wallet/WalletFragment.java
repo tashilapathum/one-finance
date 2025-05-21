@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,7 +95,7 @@ public class WalletFragment extends Fragment {
             DialogUpdateBalance dialogUpdateBalance = new DialogUpdateBalance(getActivity());
             dialogUpdateBalance.show(getActivity().getSupportFragmentManager(), "update balance dialog");
         });
-        tvBalance.setText(sharedPref.getString("balance", "0.00"));
+        tvBalance.setText(Amount.getStoredBalance(getActivity()));
 
         //reset picked date (for bug fix only)
         sharedPref.edit().putInt("reports_year", 0).apply();
@@ -300,7 +299,7 @@ public class WalletFragment extends Fragment {
     }
 
     private void addExpense(String itemName, String price, String category) {
-        String balance = sharedPref.getString("balance", "0.00");
+        String balance = sharedPref.getString("balance", Amount.zero());
         TransactionItem transactionItem = new TransactionItem(
                 balance, "-", price, itemName, String.valueOf(System.currentTimeMillis()), category
         );
@@ -323,7 +322,7 @@ public class WalletFragment extends Fragment {
     }
 
     private void showNegativeWarning() {
-        String balance = sharedPref.getString("balance", "0.00");
+        String balance = sharedPref.getString("balance", Amount.zero());
         ImageButton imWarning = view.findViewById(R.id.warning);
         if (balance.contains("-")) {
             tvBalance.setTextColor(getActivity().getResources().getColor(android.R.color.holo_red_light));

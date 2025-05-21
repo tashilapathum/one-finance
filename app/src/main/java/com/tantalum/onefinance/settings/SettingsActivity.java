@@ -25,6 +25,7 @@ import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.tantalum.onefinance.AlertReceiver;
+import com.tantalum.onefinance.Amount;
 import com.tantalum.onefinance.quicklist.QuickListActivity;
 import com.tantalum.onefinance.EnterPINActivity;
 import com.tantalum.onefinance.MainActivity;
@@ -326,7 +327,7 @@ public class SettingsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //get needed data
-                        String balance = sharedPref.getString("balance", "0.00");
+                        String balance = sharedPref.getString("balance", Amount.zero());
                         boolean alreadyInit = sharedPref.getBoolean("alreadyDidInitSetup", false);
                         boolean hasAccounts = sharedPref.getBoolean("haveAccounts", false);
                         boolean isPro = sharedPref.getBoolean("MyWalletPro", false);
