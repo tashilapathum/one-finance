@@ -249,6 +249,10 @@ public class WalletFragment extends Fragment {
     private void updateContent() {
         DailyReportsFragment dailyReportsFragment = ((DailyReportsFragment) getChildFragmentManager().findFragmentByTag("TODAY_REPORT"));
         dailyReportsFragment.showUpdatedReports();
+        WeeklyReportsFragment weeklyReportsFragment = ((WeeklyReportsFragment) getChildFragmentManager().findFragmentByTag("THIS_WEEK_REPORT"));
+        weeklyReportsFragment.showUpdatedReports();
+        MonthlyReportsFragment monthlyReportsFragment = ((MonthlyReportsFragment) getChildFragmentManager().findFragmentByTag("THIS_MONTH_REPORT"));
+        monthlyReportsFragment.showUpdatedReports();
     }
 
     private void loadQuickChips() {

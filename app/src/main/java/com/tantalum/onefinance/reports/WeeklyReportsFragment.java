@@ -86,6 +86,7 @@ public class WeeklyReportsFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new WeeklyReportsAdapter(isFromWallet);
+        recyclerView.setItemAnimator(null);
         recyclerView.setLayoutAnimation(new AnimationHandler().getSlideUpController());
         recyclerView.setAdapter(adapter);
         calculateWeeklyReport(week, year);
@@ -182,19 +183,6 @@ public class WeeklyReportsFragment extends Fragment {
                         }
                     }
                 }
-
-                /*for (int d = 0; d < 7; d++) {
-                    if (d + 1 == transactionDay) {
-                        if (currentTransaction.getPrefix().equals("+")) {
-                            double dailyTotal = Double.parseDouble(dailyIncomes.get(d)) + currentTransaction.getAmountValue();
-                            dailyIncomes.set(d, String.valueOf(dailyTotal)); // Use set to update the value
-                        } else {
-                            double dailyTotal = Double.parseDouble(dailyExpenses.get(d)) + currentTransaction.getAmountValue();
-                            dailyExpenses.set(d, String.valueOf(dailyTotal)); // Use set to update the value
-                        }
-                    }
-                }*/
-
             }
         }
 
@@ -296,6 +284,14 @@ public class WeeklyReportsFragment extends Fragment {
         weeklyReportList.add(weeklyReport);
         adapter.submitList(weeklyReportList);
         adapter.notifyItemInserted(adapter.getItemCount() + 1);
+    }
+
+    public void showUpdatedReports() {
+        weeklyReportList = new ArrayList<>();
+        adapter.submitList(weeklyReportList);
+        week = LocalDate.now().get(weekFields.weekOfWeekBasedYear());
+        pickedYear = LocalDate.now().getYear();
+        calculateWeeklyReport(week, pickedYear);
     }
 
     static class WeeklyReport {

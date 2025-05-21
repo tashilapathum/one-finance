@@ -77,6 +77,7 @@ public class MonthlyReportsFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new MonthlyReportsAdapter(isFromWallet);
+        recyclerView.setItemAnimator(null);
         recyclerView.setLayoutAnimation(new AnimationHandler().getSlideUpController());
         recyclerView.setAdapter(adapter);
         calculateMonthlyReport(month, year);
@@ -289,6 +290,14 @@ public class MonthlyReportsFragment extends Fragment {
         monthlyReportList.add(monthlyReport);
         adapter.submitList(monthlyReportList);
         adapter.notifyItemInserted(adapter.getItemCount() + 1);
+    }
+
+    public void showUpdatedReports() {
+        monthlyReportList = new ArrayList<>();
+        adapter.submitList(monthlyReportList);
+        month = LocalDate.now().getMonthValue();
+        year = LocalDate.now().getYear();
+        calculateMonthlyReport(month, year);
     }
 
     static class MonthlyReport {
