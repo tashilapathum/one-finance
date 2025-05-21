@@ -48,6 +48,7 @@ public class Amount {
 
             // Keep digits and decimal separator only
             cleanedString = cleanedString.replaceAll("[^\\d" + decimalSeparator + "]", "");
+            if (cleanedString.isEmpty()) cleanedString = "0";
 
             Number parsedNumber = numberFormatter.parse(cleanedString);
             this.value = new BigDecimal(parsedNumber.toString())
