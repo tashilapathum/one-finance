@@ -131,10 +131,8 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
             String oldAmountStr = transactionItem.getAmount();
             String newAmountStr = etAmount.getText().toString().replace(",", ".");
             String description = etDescription.getText().toString().trim();
-            String category = etCategory.getText().toString();
-            transactionItem.setAmount(new Amount(requireActivity(), newAmountStr).getAmountString());
+            transactionItem.setAmount(new Amount(requireActivity(), newAmountStr).getAmountStringWithoutCurrency());
             transactionItem.setDescription(description);
-            transactionItem.setCategory(category);
 
             if (dateInMillis != null) {
                 if (new DateTimeHandler(transactionItem.getTimeInMillis()).getDayOfYear() != new DateTimeHandler(dateInMillis).getDayOfYear())
