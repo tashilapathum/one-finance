@@ -89,6 +89,8 @@ public class LoansAdapter extends ListAdapter<Loan, LoansAdapter.LoanHolder> {
         holder.lottieAnimationView.setMinAndMaxProgress(0.4f, 1.0f); //to show empty circle on start
         if (currentLoan.isSettled())
             holder.lottieAnimationView.playAnimation();
+        else
+            holder.lottieAnimationView.setProgress(0.4f);
     }
 
     class LoanHolder extends RecyclerView.ViewHolder {
