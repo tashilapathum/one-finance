@@ -30,6 +30,7 @@ import com.tantalum.onefinance.DateTimeHandler;
 import com.tantalum.onefinance.R;
 import com.tantalum.onefinance.accounts.Account;
 import com.tantalum.onefinance.accounts.AccountsViewModel;
+import com.tantalum.onefinance.categories.CategoriesManager;
 import com.tantalum.onefinance.transactions.TransactionItem;
 import com.tantalum.onefinance.transactions.TransactionsViewModel;
 
@@ -297,41 +298,9 @@ public class DialogBankInput extends BottomSheetDialogFragment {
     }
 
     public void loadCategoryChips() {
-        String allCategories = sharedPref.getString(Constants.SP_CATEGORIES, null);
-        List<String> categories = new ArrayList<>();
-        if (allCategories == null) { //for first time loading
-            //assign colors
-            categories.add("Food###" + (int) (Math.random() * 1000000000));
-            categories.add("Transport###" + (int) (Math.random() * 1000000000));
-            categories.add("Clothes###" + (int) (Math.random() * 1000000000));
-            categories.add("Education###" + (int) (Math.random() * 1000000000));
-            categories.add("Other###" + (int) (Math.random() * 1000000000));
-
-            //save
-            StringBuilder allCategoriesBuilder = new StringBuilder();
-            for (String category : categories)
-                allCategoriesBuilder.append(category).append("~~~");
-            getActivity().getSharedPreferences("myPref", MODE_PRIVATE).edit()
-                    .putString(Constants.SP_CATEGORIES, allCategoriesBuilder.toString()).apply();
-        } else
-            categories.addAll(Arrays.asList(allCategories.split("~~~")));
-
-        for (String categoryItem : categories) {
-            Chip chip = new Chip(getActivity());
-            chip.setText(categoryItem.split("###")[0]);
-            chip.setChipBackgroundColor(ColorStateList.valueOf(Integer.parseInt(categoryItem.split("###")[1])));
-            chip.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_Medium);
-            chip.setCheckable(true);
-            chip.setCheckedIconVisible(true);
-            chip.setChipStrokeWidth(0f);
-            chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    chip.setChecked(isChecked);
-                }
-            });
-            chipGroup.addView(chip);
-        }
+        List<Chip> categories = new CategoriesManager(requireContext()).getCategoryChips();
+        for (Chip category : categories)
+            chipGroup.addView(category);
     }
 
     private boolean isAmountValid() {

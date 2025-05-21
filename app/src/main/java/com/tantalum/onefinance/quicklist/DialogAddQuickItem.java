@@ -15,6 +15,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.tantalum.onefinance.Amount;
 import com.tantalum.onefinance.Constants;
 import com.tantalum.onefinance.R;
+import com.tantalum.onefinance.categories.CategoriesManager;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -139,26 +140,7 @@ public class DialogAddQuickItem extends DialogFragment {
     }
 
     public void loadCategoryChips() {
-        String allCategories = getActivity().getSharedPreferences("myPref", MODE_PRIVATE)
-                .getString(Constants.SP_CATEGORIES, null);
-        List<String> categories = new ArrayList<>();
-        if (allCategories == null) { //for first time loading
-            //assign colors
-            categories.add("Food###" + (int) (Math.random() * 1000000000));
-            categories.add("Transport###" + (int) (Math.random() * 1000000000));
-            categories.add("Clothes###" + (int) (Math.random() * 1000000000));
-            categories.add("Education###" + (int) (Math.random() * 1000000000));
-            categories.add("Other###" + (int) (Math.random() * 1000000000));
-
-            //save
-            StringBuilder allCategoriesBuilder = new StringBuilder();
-            for (String category : categories)
-                allCategoriesBuilder.append(category).append("~~~");
-            getActivity().getSharedPreferences("myPref", MODE_PRIVATE).edit()
-                    .putString(Constants.SP_CATEGORIES, allCategoriesBuilder.toString()).apply();
-        } else
-            categories.addAll(Arrays.asList(allCategories.split("~~~")));
-
+        List<String> categories = new CategoriesManager(requireActivity()).getCategoryItems();
         chipGroup = view.findViewById(R.id.chipGroup);
         for (String categoryItem : categories) {
             Chip chip = new Chip(getActivity());
@@ -166,6 +148,7 @@ public class DialogAddQuickItem extends DialogFragment {
             chip.setChipBackgroundColor(ColorStateList.valueOf(Integer.parseInt(categoryItem.split("###")[1])));
             chip.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_Medium);
             chip.setCheckable(true);
+            chip.setChipStrokeWidth(0f);
             chip.setCheckedIconVisible(true);
             chip.setOnCheckedChangeListener((buttonView, isChecked) -> chip.setChecked(isChecked));
             chipGroup.addView(chip);

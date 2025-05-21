@@ -123,21 +123,9 @@ public class DialogWalletInput extends BottomSheetDialogFragment {
     }
 
     public void loadCategoryChips() {
-        List<String> categories = new CategoriesManager(requireContext()).getCategoryItems();
-
-        for (String categoryItem : categories) {
-            if (!categoryItem.trim().isEmpty()) {
-                Chip chip = new Chip(getActivity());
-                chip.setText(categoryItem.split("###")[0]);
-                chip.setChipBackgroundColor(ColorStateList.valueOf(Integer.parseInt(categoryItem.split("###")[1])));
-                chip.setTextAppearance(android.R.style.TextAppearance_DeviceDefault_Medium);
-                chip.setCheckable(true);
-                chip.setCheckedIconVisible(true);
-                chip.setChipStrokeWidth(0f);
-                chip.setOnCheckedChangeListener((buttonView, isChecked) -> chip.setChecked(isChecked));
-                chipGroup.addView(chip);
-            }
-        }
+        List<Chip> categories = new CategoriesManager(requireContext()).getCategoryChips();
+        for (Chip category : categories)
+            chipGroup.addView(category);
     }
 
     private void loadAccountsChips() {
