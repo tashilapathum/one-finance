@@ -52,11 +52,7 @@ public class NotificationHelper extends ContextWrapper {
     public NotificationCompat.Builder getChannel1Notification(String title, String message) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         int reqCode = (int) System.currentTimeMillis();
-        PendingIntent pendingIntent = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M)
-            pendingIntent = PendingIntent.getActivity(getApplicationContext(), reqCode, intent, PendingIntent.FLAG_IMMUTABLE);
-        else
-            pendingIntent = PendingIntent.getActivity(getApplicationContext(), reqCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), reqCode, intent, PendingIntent.FLAG_IMMUTABLE);
 
         return new NotificationCompat.Builder(getApplicationContext(), channel1ID)
                 .setContentTitle(title)
@@ -69,11 +65,7 @@ public class NotificationHelper extends ContextWrapper {
     public NotificationCompat.Builder getChannel2Notification(String title, String message) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         int reqCode = (int) System.currentTimeMillis();
-        PendingIntent pendingIntent = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M)
-            pendingIntent = PendingIntent.getActivity(getApplicationContext(), reqCode, intent, PendingIntent.FLAG_IMMUTABLE);
-        else
-            pendingIntent = PendingIntent.getActivity(getApplicationContext(), reqCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), reqCode, intent, PendingIntent.FLAG_IMMUTABLE);
 
         return new NotificationCompat.Builder(getApplicationContext(), channel2ID)
                 .setContentTitle(title)
