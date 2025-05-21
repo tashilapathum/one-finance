@@ -134,7 +134,7 @@ public class InitialSetupActivity extends AppCompatActivity {
         //balance
         TextInputLayout tilAddBalance = findViewById(R.id.addBalance);
         EditText addBalance = tilAddBalance.getEditText();
-        Amount.storeBalance(this, String.valueOf(addBalance));
+        Amount.storeBalance(this, addBalance.getText().toString());
 
         //budget
         TextInputLayout tilAddBudget = findViewById(R.id.addBudget);

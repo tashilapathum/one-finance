@@ -144,7 +144,7 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
             }
 
             //update balance
-            double balance = Double.parseDouble(sharedPref.getString("balance", "0"));
+            double balance = Double.parseDouble(Amount.getStoredBalance(requireActivity()));
             double newAmount = Double.parseDouble(newAmountStr);
             double oldAmount = Double.parseDouble(oldAmountStr);
             String prefix = transactionItem.getPrefix();
