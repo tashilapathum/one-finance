@@ -138,13 +138,10 @@ public class TransactionsFragment extends Fragment implements AdapterView.OnItem
             toggleInsVisibility(transactionItems.size());
         });
 
-        transactionsAdapter.setOnTransactionClickListener(new TransactionsAdapter.OnTransactionClickListener() {
-            @Override
-            public void OnTransactionClick(TransactionItem transactionItem, int position) {
-                updatingPosition = position;
-                DialogTransactionEditor transactionEditor = new DialogTransactionEditor(true, transactionItem);
-                transactionEditor.show(getChildFragmentManager(), "transaction editor dialog");
-            }
+        transactionsAdapter.setOnTransactionClickListener((transactionItem, position) -> {
+            updatingPosition = position;
+            DialogTransactionEditor transactionEditor = new DialogTransactionEditor(transactionItem);
+            transactionEditor.show(getChildFragmentManager(), "transaction editor dialog");
         });
     }
 
@@ -191,7 +188,7 @@ public class TransactionsFragment extends Fragment implements AdapterView.OnItem
         Toast.makeText(getActivity(), R.string.updated, Toast.LENGTH_SHORT).show();
     }
 
-    private void deleteTransaction(TransactionItem transactionItem) {
+    public void deleteTransaction(TransactionItem transactionItem) {
         transactionsViewModel.delete(transactionItem);
         String prefix = transactionItem.getPrefix();
         double balance = Double.parseDouble(sharedPref.getString("balance", "0"));

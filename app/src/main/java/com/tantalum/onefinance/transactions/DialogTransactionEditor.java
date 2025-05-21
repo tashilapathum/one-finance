@@ -43,11 +43,8 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
     private TransactionItem transactionItem;
     private BottomSheetDialog dialog;
     private static DialogTransactionEditor instance;
-    private SharedPreferences sharedPref;
     private String dateInMillis;
     private MaterialRadioButton rbIncome;
-    private boolean isFromFragment;
-    private TransactionsViewModel transactionsViewModel;
     private CategoriesManager categoriesManager;
 
 
@@ -55,16 +52,14 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         instance = this;
-        sharedPref = getActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE);
         view = getActivity().getLayoutInflater().inflate(R.layout.dialog_edit_transaction, null);
         dialog = new BottomSheetDialog(getActivity());
         dialog.setContentView(view);
-        transactionsViewModel = new ViewModelProvider(getActivity(), ViewModelProvider.AndroidViewModelFactory
-                .getInstance(getActivity().getApplication())).get(TransactionsViewModel.class);
         categoriesManager = new CategoriesManager(requireContext());
 
         Button btnSave = view.findViewById(R.id.save);
         Button btnCancel = view.findViewById(R.id.cancel);
+        Button btnDelete = view.findViewById(R.id.delete);
         tilAmount = view.findViewById(R.id.amount);
         tilDescription = view.findViewById(R.id.description);
         tilCategory = view.findViewById(R.id.category);
@@ -79,14 +74,14 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
 
         btnSave.setOnClickListener(view -> save());
         btnCancel.setOnClickListener(view -> dialog.cancel());
+        btnDelete.setOnClickListener(view -> delete());
         etCategory.setOnClickListener(view -> showCategoryPicker());
         etDate.setOnClickListener(view -> showDatePicker());
 
         return dialog;
     }
 
-    public DialogTransactionEditor(boolean isFromFragment, TransactionItem transactionItem) {
-        this.isFromFragment = isFromFragment;
+    public DialogTransactionEditor(TransactionItem transactionItem) {
         this.transactionItem = transactionItem;
     }
 
@@ -166,6 +161,18 @@ public class DialogTransactionEditor extends BottomSheetDialogFragment {
             TextView tvBottomNote = view.findViewById(R.id.bottomNote);
             tvBottomNote.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void delete() {
+        new MaterialAlertDialogBuilder(requireActivity())
+                .setTitle(R.string.confirm)
+                .setMessage(R.string.confirm_item_delete)
+                .setPositiveButton(R.string.yes, (dialog, which) -> {
+                    TransactionsFragment.getInstance().deleteTransaction(transactionItem);
+                    DialogTransactionEditor.this.dialog.cancel();
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
     }
 
     /**Show only category names in the dialog but set the full category item to the transaction when selected*/

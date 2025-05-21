@@ -118,11 +118,9 @@
                 android:visibility="gone"
                 tools:visibility="visible" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:orientation="horizontal"
                 android:paddingTop="8dp">
 
                 <com.google.android.material.button.MaterialButton
@@ -131,6 +129,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="4dp"
+                    android:layout_toStartOf="@id/save"
                     android:text="@string/cancel"
                     app:cornerRadius="16dp" />
 
@@ -139,10 +138,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="4dp"
+                    android:layout_alignParentEnd="true"
                     android:text="@string/save"
                     app:cornerRadius="16dp" />
 
-            </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/delete"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/delete"
+                    android:textColor="@android:color/holo_red_light"
+                    app:cornerRadius="16dp" />
+
+            </RelativeLayout>
 
         </LinearLayout>
     </ScrollView>
